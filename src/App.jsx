@@ -5,7 +5,7 @@ import RoomsPage from './pages/RoomsPage';
 import BookingPage from './pages/BookingsPage';
 import UserPage from './pages/UsersPage';
 import ContactPage from './pages/ContactPage';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MainPage from './pages/MainPage';
 
 const PrivateRoute = ({ auth, redirect = "/login", children }) => {
@@ -17,12 +17,14 @@ const PrivateRoute = ({ auth, redirect = "/login", children }) => {
 }
 
 function App() {
-  const [auth, setAuth] = useState(false);
+  const isAuth = localStorage.getItem('auth') ? (localStorage.getItem('auth') === "1" ? true : false) : false;
+  const [auth, setAuth] = useState(isAuth);
+
   const router = createBrowserRouter(createRoutesFromElements(
     <>
       <Route path="/login" element={<LoginPage auth={auth} setAuth={setAuth} />} />
-      <Route element={<PrivateRoute auth={auth}/>}>
-        <Route path="/" element={<MainPage setAuth={setAuth}/>}>
+      <Route element={<PrivateRoute auth={auth} />}>
+        <Route path="/" element={<MainPage setAuth={setAuth} />}>
           <Route index element={<DashboardPage />} />
           <Route path='rooms' element={<RoomsPage />}></Route>
           <Route path='bookings' element={<BookingPage />} />
@@ -32,6 +34,10 @@ function App() {
       </Route>
     </>
   ));
+  
+  useEffect(() => {
+    localStorage.setItem('auth', auth ? '1' : '0');
+  }, [auth]);
 
   return (
     <>

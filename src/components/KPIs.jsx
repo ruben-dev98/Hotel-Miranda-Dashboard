@@ -3,8 +3,8 @@ const KPIs = ({icon, number, text}) => {
 
     return (
         <>
-            <img/>
-            <p>NUMBER / TEXT</p>
+            {icon}
+            <p>{number} / {text}</p>
         </>
     )
 }

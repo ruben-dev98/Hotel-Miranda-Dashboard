@@ -1,17 +1,23 @@
 import { Navigate } from 'react-router-dom';
+import { FaArrowLeft } from "react-icons/fa6";
+import { FaArrowRight } from "react-icons/fa6";
 
-const MenuSuperior = ({setAuth}) => {
+const MenuSuperior = ({setAuth, setVisibleLateral, visibleLateral}) => {
 
-    const onClickHandle = () => {
+    const logOutHandle = () => {
         setAuth(false);
         return <Navigate to="/login" replace/>;
+    }
+
+    const isMenuVisibleHandle = () => {
+        setVisibleLateral(prev => !prev);
     }
 
     return (
         <>
             <ul>
-                <li>
-                    Flecha Lateral Derecha(Si menu lateral recogido)/Flecha Lateral Izquierda(SI menu lateral desplegado)
+                <li onClick={isMenuVisibleHandle}>
+                    {visibleLateral ? <FaArrowLeft/> : <FaArrowRight />}
                 </li>
                 <li>
                     Sobre
@@ -19,7 +25,7 @@ const MenuSuperior = ({setAuth}) => {
                 <li>
                     Campana
                 </li>
-                <li onClick={onClickHandle}>
+                <li onClick={logOutHandle}>
                     Log Out
                 </li>
             </ul>

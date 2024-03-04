@@ -1,6 +1,8 @@
+import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
 
 const LoginPage = ({auth, setAuth}) => {
+    
     if(auth) {
         return <Navigate to={'/'} replace/>
     }

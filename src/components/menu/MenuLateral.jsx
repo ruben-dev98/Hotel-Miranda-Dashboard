@@ -8,7 +8,9 @@ import { MdOutlineContactMail } from "react-icons/md";
 const MenuLateral = () => {
 
 return (
-    <>
+    {
+        visibleLateral &&
+        <>
         <ul>
             <li>
                 <MdOutlineDashboard/>
@@ -36,9 +38,10 @@ return (
             <h2>Rubén Dopico Novo</h2>
             <p>ruben.dopico.dev@gmail.com</p>
             <button>Editar</button>
-        </div> 
-    </> 
-    );
+        </div>
+        </>
+    }    
+    ); 
 }
 
 
