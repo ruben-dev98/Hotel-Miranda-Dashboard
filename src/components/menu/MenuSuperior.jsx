@@ -1,5 +1,11 @@
-const MenuSuperior = () => {
+import { Navigate } from 'react-router-dom';
 
+const MenuSuperior = ({setAuth}) => {
+
+    const onClickHandle = () => {
+        setAuth(false);
+        return <Navigate to="/login" replace/>;
+    }
 
     return (
         <>
@@ -13,7 +19,7 @@ const MenuSuperior = () => {
                 <li>
                     Campana
                 </li>
-                <li>
+                <li onClick={onClickHandle}>
                     Log Out
                 </li>
             </ul>

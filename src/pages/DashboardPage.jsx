@@ -1,17 +1,17 @@
+
+import BookingList from '../components/BookingList';
+import Calendar from '../components/Calendar';
+import KPIs from '../components/KPIs';
+import MenuLateral from '../components/Menu/MenuLateral';
 import MenuSuperior from '../components/Menu/MenuSuperior';
-import MenuLateral from '../components/menu/MenuLateral';
-import KPIs from './../components/KPIs';
-import BookingList from './../components/BookingList';
-import Calendar from './../components/Calendar';
+import MessageList from '../components/MessageList';
 import Stats from '../components/Stats';
-import MessageList from './../components/MessageList';
+
 
 const DashboardPage = () => {
 
     return (
         <>
-            <MenuLateral/>
-            <MenuSuperior/>
             <div>
                 <KPIs></KPIs>
                 <KPIs></KPIs>
