@@ -1,16 +1,16 @@
 import { useState } from "react";
 import MenuLateral from "../components/Menu/MenuLateral"
-import MenuSuperior from "../components/Menu/MenuSuperior"
 import { Outlet } from 'react-router-dom';
+import MenuSuperior from '../components/Menu/MenuSuperior';
 
 const MainPage = ({setAuth}) => {
     const [visibleLateral, setVisibleLateral] = useState(false);
 
     return (
         <>
-            <MenuLateral visibleLateral={visibleLateral}/>
             <MenuSuperior setAuth={setAuth} visibleLateral={visibleLateral} setVisibleLateral={setVisibleLateral}/>
-            <Outlet/>
+            <MenuLateral visibleLateral={visibleLateral}/>
+            <Outlet />
         </>
     )
 }

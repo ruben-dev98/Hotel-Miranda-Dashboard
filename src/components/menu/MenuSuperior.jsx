@@ -1,12 +1,43 @@
 import { Navigate } from 'react-router-dom';
-import { FaArrowLeft } from "react-icons/fa6";
-import { FaArrowRight } from "react-icons/fa6";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
+import { IoMdLogOut } from "react-icons/io";
+import { BiEnvelope } from "react-icons/bi";
+import { CiBellOn } from "react-icons/ci";
+import { themeLight } from '../../styled/theme';
+import styled from 'styled-components';
 
-const MenuSuperior = ({setAuth, setVisibleLateral, visibleLateral}) => {
+const MenuSuperiorStyled = styled.ul`
+    display: flex;
+    justify-content: end;
+    gap: 2rem;
+    list-style: none;
+`;
+
+const FaArrowLeftStyled = styled(FaArrowLeft)`
+    fill: #135846;
+`;
+
+const FaArrowRightStyled = styled(FaArrowRight)`
+    fill: #135846;
+`;
+
+const BiEnvelopeStyled = styled(BiEnvelope)`
+    fill: #135846;
+`;
+
+const CiBellOnStyled = styled(CiBellOn)`
+    fill: #135846;
+`;
+
+const IoMdLogOutStyled = styled(IoMdLogOut)`
+    fill: #135846;
+`;
+
+const MenuSuperior = ({ setAuth, setVisibleLateral, visibleLateral }) => {
 
     const logOutHandle = () => {
         setAuth(false);
-        return <Navigate to="/login" replace/>;
+        return <Navigate to="/login" replace />;
     }
 
     const isMenuVisibleHandle = () => {
@@ -14,22 +45,20 @@ const MenuSuperior = ({setAuth, setVisibleLateral, visibleLateral}) => {
     }
 
     return (
-        <>
-            <ul>
-                <li onClick={isMenuVisibleHandle}>
-                    {visibleLateral ? <FaArrowLeft/> : <FaArrowRight />}
-                </li>
-                <li>
-                    Sobre
-                </li>
-                <li>
-                    Campana
-                </li>
-                <li onClick={logOutHandle}>
-                    Log Out
-                </li>
-            </ul>
-        </>
+        <MenuSuperiorStyled>
+            <li onClick={isMenuVisibleHandle}>
+                {visibleLateral ? <FaArrowLeftStyled /> : <FaArrowRightStyled />}
+            </li>
+            <li>
+                <BiEnvelopeStyled />
+            </li>
+            <li>
+                <CiBellOnStyled />
+            </li>
+            <li onClick={logOutHandle}>
+                <IoMdLogOutStyled />
+            </li>
+        </MenuSuperiorStyled>
     )
 }
 

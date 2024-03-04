@@ -1,0 +1,24 @@
+ul {
+    list-style-type: none;
+}
+
+.kpis {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 2rem;
+}
+
+.menu_lateral {
+    width: 15%;
+    position: relative;
+    display: inline-block;
+    left: 0;
+    right: auto;
+    height: 100vh;
+}
+
+.content {
+    width: 80%;
+    display: inline-block;
+    vertical-align: top;
+}

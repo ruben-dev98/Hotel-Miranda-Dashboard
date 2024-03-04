@@ -13,8 +13,8 @@ import { ImExit } from "react-icons/im";
 const DashboardPage = () => {
 
     return (
-        <>
-            <div>
+        <section className='content'>
+            <div className='kpis'>
                 <KPIs icon={<IoBedOutline />} number={8000} text={'New Booking'}></KPIs>
                 <KPIs icon={<FaCalendarCheck />} number={900} text={'Scheduled Room'}></KPIs>
                 <KPIs icon={<ImEnter />} number={400} text={'Check In'}></KPIs>
@@ -26,7 +26,7 @@ const DashboardPage = () => {
             </div>
             <Stats></Stats>
             <MessageList></MessageList>
-        </>
+        </section>
     )
 }
 
