@@ -24,7 +24,7 @@ function App() {
       <Route element={<PrivateRoute auth={auth}/>}>
         <Route path="/" element={<MainPage setAuth={setAuth}/>}>
           <Route index element={<DashboardPage />} />
-          <Route path='rooms' element={<RoomsPage />} />
+          <Route path='rooms' element={<RoomsPage />}></Route>
           <Route path='bookings' element={<BookingPage />} />
           <Route path='users' element={<UserPage />} />
           <Route path='contact' element={<ContactPage />} />
