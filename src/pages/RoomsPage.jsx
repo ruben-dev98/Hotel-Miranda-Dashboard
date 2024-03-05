@@ -10,7 +10,7 @@ const RoomsPage = () => {
     const dataTable = [
         {
             'label': 'Image',
-            'property': 'foto'
+            display: row => <img src={row.foto}/>
         },
         {
             'label': 'Number',
@@ -38,14 +38,14 @@ const RoomsPage = () => {
         },
         {
             'label': 'Status',
-            display: row => bookings.filter((booking) => booking.number === row.number && (booking.check_in >= new Date(Date.now()) && booking.check_out <= new Date(Date.now()))).length === 0 ? 'Available' : 'Booked'
+            'property': 'status'
         }
     ];
 
     return (
         <section className='content'>
             <Tabs data={rooms}></Tabs>
-            {/*<Table rows={dataRooms} columns={dataTable}></Table>*/}
+            <Table rows={dataRooms} columns={dataTable}></Table>
         </section>
     );
 }

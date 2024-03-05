@@ -3,6 +3,7 @@ import MenuLateral from "../components/Menu/MenuLateral"
 import { Outlet } from 'react-router-dom';
 import MenuSuperior from '../components/Menu/MenuSuperior';
 import styled from "styled-components";
+import { PropTypes } from 'prop-types';
 
 const WindowStyled = styled.div`
     width: 100%;
@@ -52,5 +53,7 @@ const MainPage = ({ setAuth }) => {
         </>
     )
 }
+
+PropTypes
 
 export default MainPage;
