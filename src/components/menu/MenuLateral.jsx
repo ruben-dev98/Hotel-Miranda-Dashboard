@@ -7,6 +7,7 @@ import { MdOutlineContactMail } from "react-icons/md";
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import logo from '../../assets/travl.png'
+import logo_claro from '../../assets/travl_claro.png';
 
 const MenuLateralStyled = styled.menu`
     grid-area: sidebar;
@@ -52,7 +53,7 @@ const MenuLateral = ({ visibleLateral }) => {
     return (
         visibleLateral &&
         <MenuLateralStyled>
-            <img style={{width: 220, height: 57, marginTop: 32, marginLeft: 32, marginBottom: 32}} src={logo}/>
+            <img style={{width: 220, height: 57, marginTop: 32, marginLeft: 32, marginBottom: 32}} src={logo_claro}/>
             <nav>
                 <NavLinkStyled to="/">
                     <MdOutlineDashboard />

@@ -1,5 +1,5 @@
-import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 const LoginPage = ({auth, setAuth}) => {
     
@@ -25,6 +25,11 @@ const LoginPage = ({auth, setAuth}) => {
         </form>
     );
 
+}
+
+LoginPage.propTypes = {
+    auth: PropTypes.bool,
+    setAuth: PropTypes.func
 }
 
 export default LoginPage;

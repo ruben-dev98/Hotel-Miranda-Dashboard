@@ -1,13 +1,16 @@
-import { Navigate, Outlet, Route, RouterProvider, Routes, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
+import { Navigate, Outlet, Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import RoomsPage from './pages/RoomsPage';
-import BookingPage from './pages/BookingsPage';
-import UserPage from './pages/UsersPage';
+import BookingsPage from './pages/BookingsPage';
+import UsersPage from './pages/UsersPage';
 import ContactPage from './pages/ContactPage';
 import { useEffect, useState } from 'react';
 import MainPage from './pages/MainPage';
-import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import UserPage from './pages/UserPage';
+import BookingPage from './pages/BookingPage';
+import RoomPage from './pages/RoomPage';
 
 
 const PrivateRoute = ({ auth, redirect = "/login", children }) => {
@@ -16,6 +19,12 @@ const PrivateRoute = ({ auth, redirect = "/login", children }) => {
   }
 
   return children ? children : <Outlet />;
+}
+
+PrivateRoute.propTypes = {
+  auth: PropTypes.bool,
+  redirect: PropTypes.string,
+  children: PropTypes.node
 }
 
 function App() {
@@ -29,8 +38,11 @@ function App() {
         <Route path="/" element={<MainPage setAuth={setAuth} />}>
           <Route index element={<DashboardPage />} />
           <Route path='rooms' element={<RoomsPage />}></Route>
-          <Route path='bookings' element={<BookingPage />} />
-          <Route path='users' element={<UserPage />} />
+          <Route path='room' element={<RoomPage />}></Route>
+          <Route path='bookings' element={<BookingsPage />} />
+          <Route path='booking/:id' element={<BookingPage />} />
+          <Route path='users' element={<UsersPage />} />
+          <Route path="user" element={<UserPage />}/>
           <Route path='contact' element={<ContactPage />} />
         </Route>
       </Route>

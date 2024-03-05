@@ -1,14 +1,14 @@
-import { usersTabs } from "../assets/data/tabs";
+import { users } from "../assets/data/tabs";
 import Table from "../components/Table";
 import Tabs from "../components/Tabs";
-import usersData from "../assets/data/users.json";
+import data from "../assets/data/users.json";
 
-const UserPage = () => {
-    
+const UsersPage = () => {
+
     const dataTable = [
         {
             'label': 'Image',
-            'property': 'foto'
+            display: row => <img src={row.foto}/>
         },
         {
             'label': 'Full Name',
@@ -24,7 +24,7 @@ const UserPage = () => {
         },
         {
             'label': 'Start Date',
-            'display': row => new Date(row.start_date)
+            display: row => new Date(row.start_date).toLocaleDateString('es-Es')
         },
         {
             'label': 'Description',
@@ -36,16 +36,16 @@ const UserPage = () => {
         },
         {
             'label': 'Status',
-            'property': row => row.status ? 'Active' : 'Inactive'
+            display: row => row.status ? 'Active' : 'Inactive'
         }
     ];
 
     return (
         <section className='content'>
-            <Tabs data={usersTabs}></Tabs>
-            <Table data={usersData} columns={dataTable}></Table>
+            <Tabs data={users}></Tabs>
+            <Table rows={data} columns={dataTable}></Table>
         </section>
     );
 }
 
-export default UserPage;
+export default UsersPage;

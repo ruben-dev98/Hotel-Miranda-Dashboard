@@ -1,6 +1,7 @@
-import { roomsTabs } from "../assets/data/tabs";
+import { rooms } from "../assets/data/tabs";
 import Tabs from "../components/Tabs";
-import Table from './../components/Table';
+import Table from '../components/Table';
+import dataRooms from '../assets/data/rooms.json'
 
 const RoomsPage = () => {
 
@@ -33,18 +34,18 @@ const RoomsPage = () => {
         },
         {
             'label': 'Offer Price',
-            'display': row => row.price - (row.price * row.discount / 100) 
+            display: row => row.price - (row.price * row.discount / 100) 
         },
         {
             'label': 'Status',
-            'display': row => bookings.filter((booking) => booking.number === row.number && (booking.check_in >= new Date(Date.now()) && booking.check_out <= new Date(Date.now()))).length === 0 ? 'Available' : 'Booked'
+            display: row => bookings.filter((booking) => booking.number === row.number && (booking.check_in >= new Date(Date.now()) && booking.check_out <= new Date(Date.now()))).length === 0 ? 'Available' : 'Booked'
         }
     ];
 
     return (
         <section className='content'>
-            <Tabs data={roomsTabs}></Tabs>
-            {/*<Table rows={dataTable} columns={dataTable.length}></Table>*/}
+            <Tabs data={rooms}></Tabs>
+            {/*<Table rows={dataRooms} columns={dataTable}></Table>*/}
         </section>
     );
 }

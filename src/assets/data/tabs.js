@@ -1,7 +1,8 @@
-export const bookingsTabs = ["All Bookings", "Checking In", "Checking Out", "In Progress"]; // Buscador por nombre de cliente
+const tabs = {
+    bookings: ["All Bookings", "Checking In", "Checking Out", "In Progress"],
+    rooms: ["All Rooms"],
+    message: ["All Contact", "Archived"],
+    users: ["All Employee", "Active Employee", "Inactive Employee"]
+}
 
-export const roomsTabs = ["All Rooms"];
-
-export const messageTabs = ["All Contact", "Archived"];
-
-export const usersTabs = ["All Employee", "Active Employee", "Inactive Employee"]; // Buscador por nombre de empleado
+export const { bookings, rooms, message, users } = tabs; 
