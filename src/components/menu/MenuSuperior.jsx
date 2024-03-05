@@ -6,31 +6,27 @@ import { CiBellOn } from "react-icons/ci";
 import { themeLight } from '../../styled/theme';
 import styled from 'styled-components';
 
-const MenuSuperiorStyled = styled.ul`
+const HeaderStyled = styled.header`
+    width: 75%;
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+`;
+
+const IconsListStyled = styled.ul`
     display: flex;
     justify-content: end;
     gap: 2rem;
     list-style: none;
 `;
 
-const FaArrowLeftStyled = styled(FaArrowLeft)`
-    fill: #135846;
-`;
+const IconStyled = styled.li`
 
-const FaArrowRightStyled = styled(FaArrowRight)`
-    fill: #135846;
-`;
-
-const BiEnvelopeStyled = styled(BiEnvelope)`
-    fill: #135846;
-`;
-
-const CiBellOnStyled = styled(CiBellOn)`
-    fill: #135846;
-`;
-
-const IoMdLogOutStyled = styled(IoMdLogOut)`
-    fill: #135846;
+    svg {
+        width: 28px;
+        height: 28px;
+        fill: #135846;
+    }
 `;
 
 const MenuSuperior = ({ setAuth, setVisibleLateral, visibleLateral }) => {
@@ -45,20 +41,22 @@ const MenuSuperior = ({ setAuth, setVisibleLateral, visibleLateral }) => {
     }
 
     return (
-        <MenuSuperiorStyled>
-            <li onClick={isMenuVisibleHandle}>
-                {visibleLateral ? <FaArrowLeftStyled /> : <FaArrowRightStyled />}
-            </li>
-            <li>
-                <BiEnvelopeStyled />
-            </li>
-            <li>
-                <CiBellOnStyled />
-            </li>
-            <li onClick={logOutHandle}>
-                <IoMdLogOutStyled />
-            </li>
-        </MenuSuperiorStyled>
+        <HeaderStyled>
+            <IconStyled onClick={isMenuVisibleHandle}>
+                {visibleLateral ? <FaArrowLeft /> : <FaArrowRight />}
+            </IconStyled>
+            <IconsListStyled>
+                <IconStyled>
+                    <BiEnvelope />
+                </IconStyled>
+                <IconStyled>
+                    <CiBellOn />
+                </IconStyled>
+                <IconStyled onClick={logOutHandle}>
+                    <IoMdLogOut />
+                </IconStyled>
+            </IconsListStyled>
+        </HeaderStyled>
     )
 }
 

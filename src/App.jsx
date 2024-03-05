@@ -32,6 +32,7 @@ function App() {
           <Route path='contact' element={<ContactPage />} />
         </Route>
       </Route>
+      <Route path='/*' element={<Navigate to='/login' replace/>}></Route>
     </>
   ));
   

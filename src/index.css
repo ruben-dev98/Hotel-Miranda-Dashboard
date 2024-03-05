@@ -1,4 +1,4 @@
-ul {
+ul, li {
     list-style-type: none;
 }
 
@@ -9,7 +9,6 @@ ul {
 }
 
 .menu_lateral {
-    width: 15%;
     position: relative;
     display: inline-block;
     left: 0;
@@ -18,7 +17,8 @@ ul {
 }
 
 .content {
-    width: 80%;
+    padding: 2rem;
+    width: 75%;
     display: inline-block;
     vertical-align: top;
     background-color: #f8f8f8;

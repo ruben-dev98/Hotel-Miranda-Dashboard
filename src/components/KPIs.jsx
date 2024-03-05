@@ -7,11 +7,22 @@ const KPIsStyled = styled.div`
     align-items: center;
     height: 125px;
     background-color: #FFFFFF;
-    box-shadow: 0px 16px 30px #00000014;
     border-radius: 12px;
     gap: 32px;
     padding: 0rem 32px;
 
+    &:hover {
+        box-shadow: 0px 16px 30px #00000014;
+
+        div {
+            background-color: #E23428;
+
+            svg {
+                fill: #FFF;
+                stroke: #FFF;
+            }
+        }
+    }
 `;
 
 const TextStyled = styled.span`
@@ -46,14 +57,7 @@ const IconStyled = styled.div`
     }
     
 
-    &:hover {
-        background-color: #E23428;
-
-        svg {
-            fill: #FFF;
-            stroke: #FFF;
-        }
-    }
+    
 `;
 
 const KPIs = ({ icon, number, text }) => {

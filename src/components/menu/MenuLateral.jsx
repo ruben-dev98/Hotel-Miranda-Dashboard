@@ -7,26 +7,41 @@ import { MdOutlineContactMail } from "react-icons/md";
 import styled from 'styled-components';
 
 const MenuLateralStyled = styled.menu`
+    width: 345px;
     background-color: #FFF;
-
+    padding: 0rem;
+    margin: 0rem;
     
 `;
 
 const NavLinkStyled = styled(NavLink)`
     width: 100%;
+    height: 67px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     text-decoration: none;
+    padding: 0rem 32px;
+    gap: 32px;
+    color: #799283;
+
+    &:not(:last-child) {
+        margin-bottom: 15px;
+    }
 
     &.active {
         border-left: 2px #E23428 solid;
+        color: #E23428;
+
+        svg {
+            fill: #E23428;
+        }
     }
 
     svg {
-        width: 40px;
-        height: 40px;
-        fill: #E23428;
+        width: 28px;
+        height: 28px;
+        fill: #799283;
     }
 `;
 
@@ -34,7 +49,7 @@ const MenuLateral = ({ visibleLateral }) => {
 
     return (
         visibleLateral &&
-        <menu className='menu_lateral'>
+        <MenuLateralStyled className='menu_lateral'>
             <nav>
                 <NavLinkStyled to="/">
                     <MdOutlineDashboard />
@@ -63,7 +78,7 @@ const MenuLateral = ({ visibleLateral }) => {
                 <p>ruben.dopico.dev@gmail.com</p>
                 <button>Editar</button>
             </div>
-        </menu>
+        </MenuLateralStyled>
     );
 }
 
