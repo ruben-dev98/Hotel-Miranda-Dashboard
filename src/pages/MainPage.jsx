@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom';
 import MenuSuperior from '../components/Menu/MenuSuperior';
 
 const MainPage = ({setAuth}) => {
-    const [visibleLateral, setVisibleLateral] = useState(false);
+    const [visibleLateral, setVisibleLateral] = useState(true);
 
     return (
         <>
