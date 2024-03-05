@@ -3,44 +3,42 @@ import Tabs from "../components/Tabs";
 import Table from '../components/Table';
 import dataRooms from '../assets/data/rooms.json'
 
+const dataTable = [
+    {
+        'label': 'Image',
+        display: row => <img src={row.foto}/>
+    },
+    {
+        'label': 'Number',
+        'property': 'number'
+    },
+    {
+        'label': 'ID',
+        'property': 'id'
+    },
+    {
+        'label': 'Room Type',
+        'property': 'type'
+    },
+    {
+        'label': 'Amenities',
+        'property': 'amenities'
+    },
+    {
+        'label': 'Price',
+        'property': 'price'
+    },
+    {
+        'label': 'Offer Price',
+        display: row => row.price - (row.price * row.discount / 100) 
+    },
+    {
+        'label': 'Status',
+        'property': 'status'
+    }
+];
+
 const RoomsPage = () => {
-
-    const bookings = [];
-
-    const dataTable = [
-        {
-            'label': 'Image',
-            display: row => <img src={row.foto}/>
-        },
-        {
-            'label': 'Number',
-            'property': 'number'
-        },
-        {
-            'label': 'ID',
-            'property': 'id'
-        },
-        {
-            'label': 'Room Type',
-            'property': 'type'
-        },
-        {
-            'label': 'Amenities',
-            'property': 'amenities'
-        },
-        {
-            'label': 'Price',
-            'property': 'price'
-        },
-        {
-            'label': 'Offer Price',
-            display: row => row.price - (row.price * row.discount / 100) 
-        },
-        {
-            'label': 'Status',
-            'property': 'status'
-        }
-    ];
 
     return (
         <section className='content'>
