@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import PropTypes from 'prop-types';
 
 const KPIsStyled = styled.div`
     width: 100%;
@@ -72,6 +73,12 @@ const KPIs = ({ icon, number, text }) => {
         </KPIsStyled>
     )
 }
+
+KPIs.propTypes = {
+    icon: PropTypes.node,
+    number: PropTypes.number,
+    text: PropTypes.string
+};
 
 export default KPIs;
 

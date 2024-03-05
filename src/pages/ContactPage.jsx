@@ -24,10 +24,10 @@ const ContactPage = () => {
     ];
 
     return (
-        <>
+        <section className='content'>
             <Tabs data={messageTabs}></Tabs>
-            <Table rows={dataTable} columns={dataTable.length}></Table>
-        </>
+            {/*<Table rows={dataTable} columns={dataTable.length}></Table>*/}
+        </section>
     );
 }
 

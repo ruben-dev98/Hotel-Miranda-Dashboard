@@ -9,17 +9,6 @@ import { useEffect, useState } from 'react';
 import MainPage from './pages/MainPage';
 import styled from 'styled-components';
 
-const WindowStyled = styled.div`
-width: 100%;
-height: 100vh;
-display: grid;
-grid-template-columns: 15% 85%;
-grid-template-rows: 10% 90%;
-grid-template-areas: 
-  'sidebar header'
-  'sidebar content'
-;
-`;
 
 const PrivateRoute = ({ auth, redirect = "/login", children }) => {
   if (!auth) {
@@ -54,9 +43,9 @@ function App() {
   }, [auth]);
 
   return (
-    <WindowStyled>
+    <>
       <RouterProvider router={router} />
-    </WindowStyled>
+    </>
   );
 }
 

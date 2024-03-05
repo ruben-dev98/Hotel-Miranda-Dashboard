@@ -41,10 +41,10 @@ const UserPage = () => {
     ];
 
     return (
-        <>
+        <section className='content'>
             <Tabs data={usersTabs}></Tabs>
             <Table data={usersData} columns={dataTable}></Table>
-        </>
+        </section>
     );
 }
 

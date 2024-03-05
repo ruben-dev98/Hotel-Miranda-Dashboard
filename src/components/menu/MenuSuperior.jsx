@@ -1,9 +1,9 @@
+import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 import { IoMdLogOut } from "react-icons/io";
 import { BiEnvelope } from "react-icons/bi";
 import { CiBellOn } from "react-icons/ci";
-import { themeLight } from '../../styled/theme';
 import styled from 'styled-components';
 
 const HeaderStyled = styled.header`
@@ -21,7 +21,6 @@ const IconsListStyled = styled.ul`
 `;
 
 const IconStyled = styled.li`
-
     svg {
         width: 28px;
         height: 28px;
@@ -59,5 +58,11 @@ const MenuSuperior = ({ setAuth, setVisibleLateral, visibleLateral }) => {
         </HeaderStyled>
     )
 }
+
+MenuSuperior.propTypes = {
+    setAuth: PropTypes.func,
+    setVisibleLateral: PropTypes.func,
+    visibleLateral: PropTypes.bool
+};
 
 export default MenuSuperior;

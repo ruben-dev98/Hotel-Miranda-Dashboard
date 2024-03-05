@@ -42,10 +42,10 @@ const RoomsPage = () => {
     ];
 
     return (
-        <>
+        <section className='content'>
             <Tabs data={roomsTabs}></Tabs>
-            <Table rows={dataTable} columns={dataTable.length}></Table>
-        </>
+            {/*<Table rows={dataTable} columns={dataTable.length}></Table>*/}
+        </section>
     );
 }
 
