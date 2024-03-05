@@ -9,10 +9,8 @@ const Table = ({rows, columns}) => {
 
     return (
         <table>
-            <thead>
-            </thead>
-            <tbody>
-            </tbody>
+            {/*rows.map((element, index) => <th key={index}>{element.label}</th>)*/}
+            {/*rows.map((element, index) => <tr key={index}>{element.property}</tr>)*/}
         </table>
     );
 }

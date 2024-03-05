@@ -2,10 +2,10 @@ import styled from "styled-components";
 
 const KPIsStyled = styled.div`
     width: 100%;
+    height: 125px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    height: 125px;
     background-color: #FFFFFF;
     border-radius: 12px;
     gap: 32px;

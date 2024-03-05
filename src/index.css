@@ -6,6 +6,7 @@ ul, li {
     display: flex;
     justify-content: space-evenly;
     gap: 2rem;
+    margin-bottom: 40px;
 }
 
 .menu_lateral {
@@ -17,9 +18,9 @@ ul, li {
 }
 
 .content {
+    grid-area: content;
     padding: 2rem;
-    width: 75%;
-    display: inline-block;
-    vertical-align: top;
+    /*display: inline-block;*/
+    /*vertical-align: top;*/
     background-color: #f8f8f8;
 }

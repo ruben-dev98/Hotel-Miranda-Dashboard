@@ -1,6 +1,7 @@
 import { usersTabs } from "../assets/data/tabs";
 import Table from "../components/Table";
 import Tabs from "../components/Tabs";
+import usersData from "../assets/data/users.json";
 
 const UserPage = () => {
     
@@ -42,7 +43,7 @@ const UserPage = () => {
     return (
         <>
             <Tabs data={usersTabs}></Tabs>
-            <Table rows={dataTable} columns={dataTable.length}></Table>
+            <Table data={usersData} columns={dataTable}></Table>
         </>
     );
 }

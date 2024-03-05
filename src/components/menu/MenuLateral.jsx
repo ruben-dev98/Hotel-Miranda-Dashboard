@@ -7,7 +7,8 @@ import { MdOutlineContactMail } from "react-icons/md";
 import styled from 'styled-components';
 
 const MenuLateralStyled = styled.menu`
-    width: 345px;
+    grid-area: sidebar;
+    width: 100%;
     background-color: #FFF;
     padding: 0rem;
     margin: 0rem;
@@ -15,7 +16,6 @@ const MenuLateralStyled = styled.menu`
 `;
 
 const NavLinkStyled = styled(NavLink)`
-    width: 100%;
     height: 67px;
     display: flex;
     justify-content: flex-start;
@@ -49,7 +49,7 @@ const MenuLateral = ({ visibleLateral }) => {
 
     return (
         visibleLateral &&
-        <MenuLateralStyled className='menu_lateral'>
+        <MenuLateralStyled>
             <nav>
                 <NavLinkStyled to="/">
                     <MdOutlineDashboard />

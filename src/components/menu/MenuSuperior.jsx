@@ -7,8 +7,8 @@ import { themeLight } from '../../styled/theme';
 import styled from 'styled-components';
 
 const HeaderStyled = styled.header`
-    width: 75%;
-    display: inline-flex;
+    grid-area: header;
+    display: flex;
     justify-content: space-between;
     align-items: center;
 `;
