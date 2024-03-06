@@ -28,7 +28,7 @@ const IconStyled = styled.li`
     }
 `;
 
-const MenuSuperior = ({ setAuth, setVisibleLateral, visibleLateral }) => {
+const TopBarComponent = ({ setAuth, setVisibleLateral, visibleLateral }) => {
 
     const logOutHandle = () => {
         setAuth(false);
@@ -59,10 +59,10 @@ const MenuSuperior = ({ setAuth, setVisibleLateral, visibleLateral }) => {
     )
 }
 
-MenuSuperior.propTypes = {
+TopBarComponent.propTypes = {
     setAuth: PropTypes.func,
     setVisibleLateral: PropTypes.func,
     visibleLateral: PropTypes.bool
 };
 
-export default MenuSuperior;
+export default TopBarComponent;

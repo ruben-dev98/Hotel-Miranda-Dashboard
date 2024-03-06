@@ -1,4 +1,4 @@
-const Booking = () => {
+const BookingComponent = () => {
 
 
     return (
@@ -10,4 +10,4 @@ const Booking = () => {
     );
 };
 
-export default Booking;
+export default BookingComponent;

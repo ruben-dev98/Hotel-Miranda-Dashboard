@@ -1,4 +1,4 @@
-const Message = () => {
+const MessageComponent = () => {
 
 
     return (
@@ -13,4 +13,4 @@ const Message = () => {
     );
 };
 
-export default Message;
+export default MessageComponent;

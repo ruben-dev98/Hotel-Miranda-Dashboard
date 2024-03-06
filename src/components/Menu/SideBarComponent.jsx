@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import logo from '../../assets/travl.png'
 import logo_claro from '../../assets/travl_claro.png';
 
-const MenuLateralStyled = styled.menu`
+const SideBarStyled = styled.menu`
     grid-area: sidebar;
     width: 100%;
     background-color: #FFF;
@@ -48,11 +48,11 @@ const NavLinkStyled = styled(NavLink)`
     }
 `;
 
-const MenuLateral = ({ visibleLateral }) => {
+const SideBarComponent = ({ visibleLateral }) => {
 
     return (
         visibleLateral &&
-        <MenuLateralStyled>
+        <SideBarStyled>
             <img style={{width: 220, height: 57, marginTop: 32, marginLeft: 32, marginBottom: 32}} src={logo_claro}/>
             <nav>
                 <NavLinkStyled to="/">
@@ -82,12 +82,12 @@ const MenuLateral = ({ visibleLateral }) => {
                 <p>ruben.dopico.dev@gmail.com</p>
                 <button>Editar</button>
             </div>
-        </MenuLateralStyled>
+        </SideBarStyled>
     );
 }
 
-MenuLateral.propTypes = {
+SideBarComponent.propTypes = {
     visibleLateral: PropTypes.bool
 };
 
-export default MenuLateral;
+export default SideBarComponent;

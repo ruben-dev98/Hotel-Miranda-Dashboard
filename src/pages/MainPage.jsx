@@ -1,9 +1,9 @@
 import { useState } from "react";
-import MenuLateral from "../components/Menu/MenuLateral"
-import { Outlet } from 'react-router-dom';
-import MenuSuperior from '../components/Menu/MenuSuperior';
+import { Outlet, useLocation } from 'react-router-dom';
 import styled from "styled-components";
 import PropTypes from 'prop-types';
+import SideBarComponent from "../components/Menu/SideBarComponent";
+import TopBarComponent from "../components/Menu/TopBarComponent";
 
 const WindowStyled = styled.div`
     width: 100%;
@@ -22,11 +22,11 @@ const WindowStyledCollapse = styled(WindowStyled)`
     'content content';
 `;
 
-const content = (setAuth, visibleLateral, setVisibleLateral) => {
+const content = (setAuth, visibleLateral, setVisibleLateral, title) => {
     return (
     <>
-        <MenuLateral visibleLateral={visibleLateral} />
-        <MenuSuperior setAuth={setAuth} visibleLateral={visibleLateral} setVisibleLateral={setVisibleLateral} />
+        <SideBarComponent visibleLateral={visibleLateral} />
+        <TopBarComponent setAuth={setAuth} visibleLateral={visibleLateral} setVisibleLateral={setVisibleLateral} title={title}/>
         <Outlet />
     </>
     );
@@ -36,14 +36,15 @@ const content = (setAuth, visibleLateral, setVisibleLateral) => {
 
 const MainPage = ({ setAuth }) => {
     const [visibleLateral, setVisibleLateral] = useState(true);
+    const title = useLocation().key;
 
     const initLabel = visibleLateral ? 
     <WindowStyled>
-        {content(setAuth, visibleLateral, setVisibleLateral)}
+        {content(setAuth, visibleLateral, setVisibleLateral, title)}
     </WindowStyled> 
     : 
     <WindowStyledCollapse>
-        {content(setAuth, visibleLateral, setVisibleLateral)}
+        {content(setAuth, visibleLateral, setVisibleLateral, title)}
     </WindowStyledCollapse>;
 
 

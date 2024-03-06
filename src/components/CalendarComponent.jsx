@@ -1,4 +1,4 @@
-const Calendar = () => {
+const CalendarComponent = () => {
     
 
     return (
@@ -8,4 +8,4 @@ const Calendar = () => {
     );
 }
 
-export default Calendar;
+export default CalendarComponent;

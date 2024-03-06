@@ -45,4 +45,10 @@ const BookingsPage = () => {
     );
 }
 
+//props => props && css``;
+//Login form
+//event.StopPropagation
+//booking details enlace en toda la row o en cada un td que no es un boton
+// Utilizar useState en el componente de arriba
+
 export default BookingsPage;

@@ -1,4 +1,4 @@
-const Stats = () => {
+const StatsComponent = () => {
 
 
     return (
@@ -9,4 +9,4 @@ const Stats = () => {
     );
 }
 
-export default Stats;
+export default StatsComponent;
