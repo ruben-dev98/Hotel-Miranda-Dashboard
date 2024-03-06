@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 import { IoMdLogOut } from "react-icons/io";
 import { BiEnvelope } from "react-icons/bi";
@@ -11,16 +11,29 @@ const HeaderStyled = styled.header`
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    div {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+
+        span {
+            font-size: 2rem;
+            font-weight: 600;
+            letter-spacing: 0rem;
+        }
+    }
 `;
 
 const IconsListStyled = styled.ul`
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     gap: 2rem;
     list-style: none;
 `;
 
 const IconStyled = styled.li`
+    cursor: pointer;
     svg {
         width: 28px;
         height: 28px;
@@ -28,11 +41,11 @@ const IconStyled = styled.li`
     }
 `;
 
-const MenuSuperior = ({ setAuth, setVisibleLateral, visibleLateral }) => {
-
+const TopBarComponent = ({ setAuth, setVisibleLateral, visibleLateral, title}) => {
+    const navigate = useNavigate();
     const logOutHandle = () => {
         setAuth(false);
-        return <Navigate to="/login" replace />;
+        navigate("/login");
     }
 
     const isMenuVisibleHandle = () => {
@@ -41,9 +54,12 @@ const MenuSuperior = ({ setAuth, setVisibleLateral, visibleLateral }) => {
 
     return (
         <HeaderStyled>
-            <IconStyled onClick={isMenuVisibleHandle}>
-                {visibleLateral ? <FaArrowLeft /> : <FaArrowRight />}
-            </IconStyled>
+            <div>
+                <IconStyled onClick={isMenuVisibleHandle}>
+                    {visibleLateral ? <FaArrowLeft /> : <FaArrowRight />}
+                </IconStyled>
+                <span>{title}</span>
+            </div>
             <IconsListStyled>
                 <IconStyled>
                     <BiEnvelope />
@@ -59,10 +75,11 @@ const MenuSuperior = ({ setAuth, setVisibleLateral, visibleLateral }) => {
     )
 }
 
-MenuSuperior.propTypes = {
+TopBarComponent.propTypes = {
     setAuth: PropTypes.func,
     setVisibleLateral: PropTypes.func,
-    visibleLateral: PropTypes.bool
+    visibleLateral: PropTypes.bool,
+    title: PropTypes.string
 };
 
-export default MenuSuperior;
+export default TopBarComponent;

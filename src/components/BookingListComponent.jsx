@@ -1,4 +1,4 @@
-import Booking from "./Booking";
+import Booking from "./BookingComponent";
 
 const BookingList = () => {
     const bookings = [];

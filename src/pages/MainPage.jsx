@@ -1,9 +1,9 @@
 import { useState } from "react";
-import MenuLateral from "../components/Menu/MenuLateral"
-import { Outlet } from 'react-router-dom';
-import MenuSuperior from '../components/Menu/MenuSuperior';
+import { Outlet, useLocation } from 'react-router-dom';
 import styled from "styled-components";
 import PropTypes from 'prop-types';
+import SideBarComponent from "../components/Menu/SideBarComponent";
+import TopBarComponent from "../components/Menu/TopBarComponent";
 
 const WindowStyled = styled.div`
     width: 100%;
@@ -22,28 +22,50 @@ const WindowStyledCollapse = styled(WindowStyled)`
     'content content';
 `;
 
-const content = (setAuth, visibleLateral, setVisibleLateral) => {
+const content = (setAuth, visibleLateral, setVisibleLateral, title) => {
     return (
     <>
-        <MenuLateral visibleLateral={visibleLateral} />
-        <MenuSuperior setAuth={setAuth} visibleLateral={visibleLateral} setVisibleLateral={setVisibleLateral} />
+        <SideBarComponent visibleLateral={visibleLateral} />
+        <TopBarComponent setAuth={setAuth} visibleLateral={visibleLateral} setVisibleLateral={setVisibleLateral} title={title}/>
         <Outlet />
     </>
     );
 };
-    
+
+const title = (name) => {
+    switch(name) {
+        case '/':
+            return 'Dashboard';
+        case '/rooms':
+            return 'Rooms'
+        case '/rooms/room':
+            return 'New Room';
+        case '/bookings':
+            return 'Bookings';
+        case '/bookings/booking':
+            return 'New Booking';
+        case '/users':
+            return 'Employees';
+        case '/users/user':
+            return 'New Employees';
+        case '/contact':
+            return 'Messages';
+    }
+};
 
 
 const MainPage = ({ setAuth }) => {
     const [visibleLateral, setVisibleLateral] = useState(true);
+    const name = useLocation().pathname;
+    
 
     const initLabel = visibleLateral ? 
     <WindowStyled>
-        {content(setAuth, visibleLateral, setVisibleLateral)}
+        {content(setAuth, visibleLateral, setVisibleLateral, title(name))}
     </WindowStyled> 
     : 
     <WindowStyledCollapse>
-        {content(setAuth, visibleLateral, setVisibleLateral)}
+        {content(setAuth, visibleLateral, setVisibleLateral, title(name))}
     </WindowStyledCollapse>;
 
 
@@ -55,7 +77,7 @@ const MainPage = ({ setAuth }) => {
 }
 
 MainPage.propTypes = {
-    setAuth: PropTypes.bool
+    setAuth: PropTypes.func
 }
 
 export default MainPage;

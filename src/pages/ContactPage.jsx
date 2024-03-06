@@ -1,7 +1,8 @@
 import { message } from "../assets/data/tabs";
 import messages from "../assets/data/messages.json";
-import Table from "../components/Table";
-import Tabs from "../components/Tabs";
+import TableComponent from "../components/TableComponent";
+import TabsComponent from "../components/TabsComponent";
+import MessageListComponent from './../components/MessageListComponent';
 
 const dataTable = [
     {
@@ -26,8 +27,9 @@ const ContactPage = () => {
 
     return (
         <section className='content'>
-            <Tabs data={message}></Tabs>
-            <Table rows={messages} columns={dataTable}></Table>
+            <MessageListComponent/>
+            <TabsComponent data={message}></TabsComponent>
+            <TableComponent  rows={messages.toSpliced(10, 30)} columns={dataTable}></TableComponent>
         </section>
     );
 }

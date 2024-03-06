@@ -1,12 +1,13 @@
 import { users } from "../assets/data/tabs";
-import Table from "../components/Table";
-import Tabs from "../components/Tabs";
+import TableComponent from "../components/TableComponent";
+import TabsComponent from "../components/TabsComponent";
 import data from "../assets/data/users.json";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 const dataTable = [
     {
         'label': 'Image',
-        display: row => <img src={row.foto}/>
+        display: row => <img src={row.foto} />
     },
     {
         'label': 'Full Name',
@@ -39,12 +40,17 @@ const dataTable = [
 ];
 
 const UsersPage = () => {
-
+    const loc = useLocation();
+    const navigate = useNavigate();
     return (
-        <section className='content'>
-            <Tabs data={users}></Tabs>
-            <Table rows={data} columns={dataTable}></Table>
-        </section>
+        loc.pathname !== '/users' ?
+            <Outlet></Outlet>
+            :
+            <section className='content'>
+                <button onClick={() => navigate('user')}>+ New Employee</button>
+                <TabsComponent data={users}></TabsComponent>
+                <TableComponent rows={data.toSpliced(10, 40)} columns={dataTable} path={'user'}></TableComponent>
+            </section>
     );
 }
 

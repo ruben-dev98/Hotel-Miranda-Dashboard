@@ -1,7 +1,8 @@
 import { bookings } from "../assets/data/tabs";
-import Table from "../components/Table";
-import Tabs from "../components/Tabs";
+import TableComponent from "../components/TableComponent";
+import TabsComponent from "../components/TabsComponent";
 import dataBookings from '../assets/data/bookings.json';
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 const dataTable = [
     {
@@ -22,7 +23,7 @@ const dataTable = [
     },
     {
         'label': 'Special Request',
-        display: row => row.special_request ? <button>View Notes</button> : <button disabled>View Notes</button>
+        display: row => row.special_request ? <button onClick={(event) => event.stopPropagation()}>View Notes</button> : <button disabled>View Notes</button>
     },
     {
         'label': 'Room Type',
@@ -35,12 +36,20 @@ const dataTable = [
 ];
 
 const BookingsPage = () => {
+    const loc = useLocation();
+    const navigate = useNavigate();
+    
 
     return (
-        <section className='content'>
-            <Tabs data={bookings}></Tabs>
-            <Table rows={dataBookings} columns={dataTable}></Table>
-        </section>
+            loc.pathname !== "/bookings" ? 
+                <Outlet/>
+            :
+                <section className='content'>
+                    <button onClick={() => navigate('booking')}>+ New Booking</button>
+                    <TabsComponent data={bookings}></TabsComponent>
+                    <TableComponent rows={dataBookings.toSpliced(10, 30)} columns={dataTable} path={'booking'}></TableComponent>
+                </section>
+        
         
     );
 }

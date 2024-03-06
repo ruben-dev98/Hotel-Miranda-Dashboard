@@ -61,7 +61,7 @@ const IconStyled = styled.div`
     
 `;
 
-const KPIs = ({ icon, number, text }) => {
+const KPIsComponent = ({ icon, number, text }) => {
 
     return (
         <KPIsStyled>
@@ -74,11 +74,11 @@ const KPIs = ({ icon, number, text }) => {
     )
 }
 
-KPIs.propTypes = {
+KPIsComponent.propTypes = {
     icon: PropTypes.node,
     number: PropTypes.number,
     text: PropTypes.string
 };
 
-export default KPIs;
+export default KPIsComponent;
 

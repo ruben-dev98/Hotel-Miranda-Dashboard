@@ -14,9 +14,9 @@ import RoomPage from './pages/RoomPage';
 
 
 const PrivateRoute = ({ auth, redirect = "/login", children }) => {
-  return !auth ? 
-    <Navigate to={redirect} replace /> 
-    : 
+  return !auth ?
+    <Navigate to={redirect} replace />
+    :
     children ? children : <Outlet />;
 }
 
@@ -32,12 +32,18 @@ const router = (auth, setAuth) => createBrowserRouter(createRoutesFromElements(
     <Route element={<PrivateRoute auth={auth} />}>
       <Route path="/" element={<MainPage setAuth={setAuth} />}>
         <Route index element={<DashboardPage />} />
-        <Route path='rooms' element={<RoomsPage />}></Route>
-        <Route path='room' element={<RoomPage />}></Route>
-        <Route path='bookings' element={<BookingsPage />} />
-        <Route path='booking/:id' element={<BookingPage />} />
-        <Route path='users' element={<UsersPage />} />
-        <Route path="user" element={<UserPage />} />
+        <Route path='rooms' element={<RoomsPage />} >
+          <Route path='room' element={<RoomPage />} ></Route>
+          <Route path='room/:id' element={<RoomPage />} ></Route>
+        </Route>
+        <Route path='bookings' element={<BookingsPage />}>
+          <Route path='booking' element={<BookingPage />} />
+          <Route path='booking/:id' element={<BookingPage />} />
+        </Route>
+        <Route path='users' element={<UsersPage />}>
+          <Route path="user" element={<UserPage />} />
+          <Route path="user/:id" element={<UserPage />} />
+        </Route>
         <Route path='contact' element={<ContactPage />} />
       </Route>
     </Route>
