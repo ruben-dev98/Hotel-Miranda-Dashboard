@@ -27,7 +27,7 @@ const ContactPage = () => {
     return (
         <section className='content'>
             <TabsComponent data={message}></TabsComponent>
-            <TableComponent  rows={messages} columns={dataTable}></TableComponent>
+            <TableComponent  rows={messages.toSpliced(10, 30)} columns={dataTable}></TableComponent>
         </section>
     );
 }

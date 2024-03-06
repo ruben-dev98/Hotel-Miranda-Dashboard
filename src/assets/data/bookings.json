@@ -7,6 +7,7 @@
         "check_out": "1680520915000",
         "special_request": "Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo.",
         "number": 51,
+        "price": 477.7,
         "type": "Double Bed",
         "status": "In Progress"
     },
@@ -18,6 +19,7 @@
         "check_out": "1663225725000",
         "special_request": "Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo.",
         "number": 81,
+        "price": 389.5,
         "type": "Single Bed",
         "status": "In Progress"
     },
@@ -29,6 +31,7 @@
         "check_out": "1694733700000",
         "special_request": "Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo.",
         "number": 36,
+        "price": 482.46,
         "type": "Double Superior",
         "status": "Check In"
     },
@@ -40,6 +43,7 @@
         "check_out": "1671918151000",
         "special_request": "Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo.",
         "number": 19,
+        "price": 345.99,
         "type": "Single Bed",
         "status": "Check In"
     },
@@ -51,6 +55,7 @@
         "check_out": "1695391451000",
         "special_request": "Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo.",
         "number": 12,
+        "price": 392.63,
         "type": "Double Bed",
         "status": "Check In"
     },
@@ -62,6 +67,7 @@
         "check_out": "1667465501000",
         "special_request": "Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo.",
         "number": 67,
+        "price": 389.35,
         "type": "Double Bed",
         "status": "Check Out"
     },
@@ -73,6 +79,7 @@
         "check_out": "1696723168000",
         "special_request": "Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo.",
         "number": 45,
+        "price": 495.93,
         "type": "Single Bed",
         "status": "Check In"
     },
@@ -84,6 +91,7 @@
         "check_out": "1660680944000",
         "special_request": "Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo.",
         "number": 64,
+        "price": 440.89,
         "type": "Double Superior",
         "status": "In Progress"
     },
@@ -95,6 +103,7 @@
         "check_out": "1708225775000",
         "special_request": "Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo.",
         "number": 21,
+        "price": 483.62,
         "type": "Suite",
         "status": "In Progress"
     },
@@ -106,6 +115,7 @@
         "check_out": "1673113248000",
         "special_request": "Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo.",
         "number": 82,
+        "price": 497.84,
         "type": "Double Superior",
         "status": "Check In"
     },
@@ -117,6 +127,7 @@
         "check_out": "1674110771000",
         "special_request": "Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo.",
         "number": 26,
+        "price": 497.94,
         "type": "Suite",
         "status": "Check In"
     },
@@ -128,6 +139,7 @@
         "check_out": "1664647231000",
         "special_request": "Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo.",
         "number": 93,
+        "price": 328.23,
         "type": "Double Bed",
         "status": "In Progress"
     },
@@ -139,6 +151,7 @@
         "check_out": "1678152885000",
         "special_request": "Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo.",
         "number": 72,
+        "price": 336.33,
         "type": "Single Bed",
         "status": "Check In"
     },
@@ -150,6 +163,7 @@
         "check_out": "1656813580000",
         "special_request": "Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo.",
         "number": 61,
+        "price": 480.88,
         "type": "Single Bed",
         "status": "Check Out"
     },
@@ -161,6 +175,7 @@
         "check_out": "1690144301000",
         "special_request": "Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo.",
         "number": 18,
+        "price": 484.07,
         "type": "Suite",
         "status": "In Progress"
     },
@@ -172,6 +187,7 @@
         "check_out": "1701606824000",
         "special_request": "Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo.",
         "number": 78,
+        "price": 420.96,
         "type": "Suite",
         "status": "In Progress"
     },
@@ -183,6 +199,7 @@
         "check_out": "1685353276000",
         "special_request": "Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo.",
         "number": 26,
+        "price": 471.35,
         "type": "Single Bed",
         "status": "In Progress"
     },
@@ -194,6 +211,7 @@
         "check_out": "1688984662000",
         "special_request": "Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo.",
         "number": 80,
+        "price": 342.76,
         "type": "Double Superior",
         "status": "Check In"
     },
@@ -205,6 +223,7 @@
         "check_out": "1679098034000",
         "special_request": "Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo.",
         "number": 75,
+        "price": 459.89,
         "type": "Double Bed",
         "status": "Check In"
     },
@@ -216,6 +235,7 @@
         "check_out": "1685464314000",
         "special_request": "Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo.",
         "number": 29,
+        "price": 396.29,
         "type": "Single Bed",
         "status": "Check Out"
     },
@@ -227,6 +247,7 @@
         "check_out": "1681148730000",
         "special_request": "Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo.",
         "number": 94,
+        "price": 409.04,
         "type": "Double Superior",
         "status": "Check Out"
     },
@@ -238,6 +259,7 @@
         "check_out": "1686326319000",
         "special_request": "Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo.",
         "number": 87,
+        "price": 427.05,
         "type": "Suite",
         "status": "Check Out"
     },
@@ -249,6 +271,7 @@
         "check_out": "1671794697000",
         "special_request": "Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo.",
         "number": 91,
+        "price": 437.26,
         "type": "Suite",
         "status": "Check In"
     },
@@ -260,6 +283,7 @@
         "check_out": "1672203921000",
         "special_request": "Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo.",
         "number": 13,
+        "price": 394.09,
         "type": "Double Bed",
         "status": "Check Out"
     },
@@ -271,6 +295,7 @@
         "check_out": "1670831042000",
         "special_request": "Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo.",
         "number": 40,
+        "price": 457.94,
         "type": "Single Bed",
         "status": "Check In"
     },
@@ -282,6 +307,7 @@
         "check_out": "1683396814000",
         "special_request": "Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo.",
         "number": 93,
+        "price": 303.61,
         "type": "Suite",
         "status": "In Progress"
     },
@@ -293,6 +319,7 @@
         "check_out": "1660947952000",
         "special_request": "Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo.",
         "number": 22,
+        "price": 486.27,
         "type": "Double Superior",
         "status": "In Progress"
     },
@@ -304,6 +331,7 @@
         "check_out": "1690249076000",
         "special_request": "Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo.",
         "number": 54,
+        "price": 345.44,
         "type": "Double Superior",
         "status": "Check Out"
     },
@@ -315,6 +343,7 @@
         "check_out": "1695786524000",
         "special_request": "",
         "number": 80,
+        "price": 382.22,
         "type": "Double Bed",
         "status": "In Progress"
     },
@@ -326,6 +355,7 @@
         "check_out": "1666258873000",
         "special_request": "",
         "number": 75,
+        "price": 340.52,
         "type": "Double Superior",
         "status": "Check In"
     }

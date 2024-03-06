@@ -6,7 +6,7 @@ import data from "../assets/data/users.json";
 const dataTable = [
     {
         'label': 'Image',
-        display: row => <img src={row.foto}/>
+        display: row => <img src={row.foto} />
     },
     {
         'label': 'Full Name',
@@ -43,7 +43,7 @@ const UsersPage = () => {
     return (
         <section className='content'>
             <TabsComponent data={users}></TabsComponent>
-            <TableComponent  rows={data} columns={dataTable}></TableComponent>
+            <TableComponent rows={data.toSpliced(10, 40)} columns={dataTable}></TableComponent>
         </section>
     );
 }

@@ -30,9 +30,11 @@ const formControl = [
     },
     {
         'label': 'Special Request',
-        'textarea': ''
+        'input': 'textarea'
     }
 ]
+
+const object__fields = ['id', 'check_in', 'check_out', 'full_name', 'type', 'price', 'special_request'];
 
 const BookingPage = () => {
     const { id } = useParams();
@@ -44,7 +46,7 @@ const BookingPage = () => {
 
     return (
         <section className="content">
-            <FormComponent formControl={formControl}></FormComponent>
+            <FormComponent formControl={formControl} data={booking} object__fields={object__fields}></FormComponent>
         </section>
     );
 

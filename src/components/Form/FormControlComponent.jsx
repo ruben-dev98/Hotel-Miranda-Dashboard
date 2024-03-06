@@ -7,7 +7,7 @@ const FormControlComponent = ({label, inputType}) => {
     return (
         <>
             <label>{label}</label>
-            <input type={inputType}/>
+            {inputType === 'textarea' ? <textarea></textarea> : <input type={inputType}/>}
         </>
     );
 }

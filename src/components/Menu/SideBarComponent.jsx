@@ -1,13 +1,10 @@
 import { NavLink } from 'react-router-dom';
-import { MdOutlineDashboard } from "react-icons/md";
-import { PiKey } from "react-icons/pi";
-import { FaCalendarAlt } from "react-icons/fa";
-import { FaUser } from "react-icons/fa";
-import { MdOutlineContactMail } from "react-icons/md";
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import logo from '../../assets/travl.png'
-import logo_claro from '../../assets/travl_claro.png';
+import logo from '../../assets/img/travl.png'
+import logo_claro from '../../assets/img/travl_claro.png';
+import { links } from '../../assets/data/navlink';
+import React from 'react';
 
 const SideBarStyled = styled.menu`
     grid-area: sidebar;
@@ -55,26 +52,12 @@ const SideBarComponent = ({ visibleLateral }) => {
         <SideBarStyled>
             <img style={{width: 220, height: 57, marginTop: 32, marginLeft: 32, marginBottom: 32}} src={logo_claro}/>
             <nav>
-                <NavLinkStyled to="/">
-                    <MdOutlineDashboard />
-                    Dashboard
-                </NavLinkStyled>
-                <NavLinkStyled to="/bookings">
-                    <FaCalendarAlt />
-                    Bookings
-                </NavLinkStyled>
-                <NavLinkStyled to="/rooms">
-                    <PiKey />
-                    Rooms
-                </NavLinkStyled>
-                <NavLinkStyled to="/users">
-                    <FaUser />
-                    Users
-                </NavLinkStyled>
-                <NavLinkStyled to="/contact">
-                    <MdOutlineContactMail />
-                    Contact
-                </NavLinkStyled>
+                {links.map(({icon, text, path}, index) => 
+                    <NavLinkStyled to={path} key={index}>
+                        {React.createElement(icon)}
+                        {text}
+                    </NavLinkStyled>)
+                }
             </nav>
             <div>
                 <img src='' alt='' />
