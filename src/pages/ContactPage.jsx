@@ -3,26 +3,26 @@ import messages from "../assets/data/messages.json";
 import Table from "../components/Table";
 import Tabs from "../components/Tabs";
 
-const ContactPage = () => {
+const dataTable = [
+    {
+        'label': 'Date',
+        display: row => `${new Date(parseInt(row.date)).toLocaleString('es-Es')} ${row.id}`
+    },
+    {
+        'label': 'Customer',
+        display: row => `${row.full_name} ${row.email} ${row.phone}`
+    },
+    {
+        'label': 'Comment',
+        display: row => `${row.subject} ${row.message}`
+    },
+    {
+        'label': 'Action',
+        display: row => <button>Archive</button> 
+    }
+];
 
-    const dataTable = [
-        {
-            'label': 'Date',
-            display: row => `${new Date(row.date * 1000).toLocaleString('es-Es')} ${row.id}`
-        },
-        {
-            'label': 'Customer',
-            display: row => `${row.full_name} ${row.email} ${row.phone}`
-        },
-        {
-            'label': 'Comment',
-            display: row => `${row.subject} ${row.message}`
-        },
-        {
-            'label': 'Action',
-            display: row => <button>Archive</button> 
-        }
-    ];
+const ContactPage = () => {
 
     return (
         <section className='content'>

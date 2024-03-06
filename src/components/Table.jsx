@@ -11,7 +11,9 @@ const Table = ({rows, columns}) => {
     return (
         <table>
             <thead>
-                {columns.map((element, index) => <th key={index}>{element.label}</th>)}
+                <tr>
+                    {columns.map((element, index) => <th key={index}>{element.label}</th>)}
+                </tr>
             </thead>
             <tbody>
                 {rows.map((row, index) => {

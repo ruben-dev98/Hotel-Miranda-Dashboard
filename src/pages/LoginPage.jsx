@@ -1,21 +1,21 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import PropTypes from 'prop-types';
 
 const LoginPage = ({auth, setAuth}) => {
-    
-    if(auth) {
-        return <Navigate to={'/'} replace/>
-    }
+    const navigate = useNavigate();
 
     const onSubmitHandle = (event) => {
         event.preventDefault();
         if(event.target.user.value === 'user' && event.target.password.value === 'admin') {
             setAuth(true);
         }
-        return <Navigate to={'/'} replace/>
+        navigate('/');
     }
 
     return (
+        auth ? 
+        <Navigate to='/' replace/> 
+        :
         <form onSubmit={onSubmitHandle}>
             <label>Username</label>
             <input type="text" name="user"/>

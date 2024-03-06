@@ -14,11 +14,10 @@ import RoomPage from './pages/RoomPage';
 
 
 const PrivateRoute = ({ auth, redirect = "/login", children }) => {
-  if (!auth) {
-    return <Navigate to={redirect} replace />
-  }
-
-  return children ? children : <Outlet />;
+  return !auth ? 
+    <Navigate to={redirect} replace /> 
+    : 
+    children ? children : <Outlet />;
 }
 
 PrivateRoute.propTypes = {
@@ -27,36 +26,36 @@ PrivateRoute.propTypes = {
   children: PropTypes.node
 }
 
+const router = (auth, setAuth) => createBrowserRouter(createRoutesFromElements(
+  <>
+    <Route path="/login" element={<LoginPage auth={auth} setAuth={setAuth} />} />
+    <Route element={<PrivateRoute auth={auth} />}>
+      <Route path="/" element={<MainPage setAuth={setAuth} />}>
+        <Route index element={<DashboardPage />} />
+        <Route path='rooms' element={<RoomsPage />}></Route>
+        <Route path='room' element={<RoomPage />}></Route>
+        <Route path='bookings' element={<BookingsPage />} />
+        <Route path='booking/:id' element={<BookingPage />} />
+        <Route path='users' element={<UsersPage />} />
+        <Route path="user" element={<UserPage />} />
+        <Route path='contact' element={<ContactPage />} />
+      </Route>
+    </Route>
+    <Route path='/*' element={<Navigate to='/login' replace />}></Route>
+  </>
+));
+
 function App() {
   const isAuth = localStorage.getItem('auth') ? (localStorage.getItem('auth') === "1" ? true : false) : false;
   const [auth, setAuth] = useState(isAuth);
 
-  const router = createBrowserRouter(createRoutesFromElements(
-    <>
-      <Route path="/login" element={<LoginPage auth={auth} setAuth={setAuth} />} />
-      <Route element={<PrivateRoute auth={auth} />}>
-        <Route path="/" element={<MainPage setAuth={setAuth} />}>
-          <Route index element={<DashboardPage />} />
-          <Route path='rooms' element={<RoomsPage />}></Route>
-          <Route path='room' element={<RoomPage />}></Route>
-          <Route path='bookings' element={<BookingsPage />} />
-          <Route path='booking/:id' element={<BookingPage />} />
-          <Route path='users' element={<UsersPage />} />
-          <Route path="user" element={<UserPage />}/>
-          <Route path='contact' element={<ContactPage />} />
-        </Route>
-      </Route>
-      <Route path='/*' element={<Navigate to='/login' replace/>}></Route>
-    </>
-  ));
-  
   useEffect(() => {
     localStorage.setItem('auth', auth ? '1' : '0');
   }, [auth]);
 
   return (
     <>
-      <RouterProvider router={router} />
+      <RouterProvider router={router(auth, setAuth)} />
     </>
   );
 }
