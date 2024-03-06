@@ -1,6 +1,6 @@
 import { rooms } from "../assets/data/tabs";
-import Tabs from "../components/Tabs";
-import Table from '../components/Table';
+import TabsComponent from "../components/TabsComponent";
+import TableComponent from '../components/TableComponent';
 import dataRooms from '../assets/data/rooms.json'
 
 const dataTable = [
@@ -42,8 +42,8 @@ const RoomsPage = () => {
 
     return (
         <section className='content'>
-            <Tabs data={rooms}></Tabs>
-            <Table rows={dataRooms} columns={dataTable}></Table>
+            <TabsComponent data={rooms}></TabsComponent>
+            <TableComponent  rows={dataRooms} columns={dataTable}></TableComponent>
         </section>
     );
 }

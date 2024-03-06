@@ -6,7 +6,7 @@ const ListStyled = styled.ul`
     justify-content: space-evenly;
 `;
 
-const Tabs = ({data}) => {
+const TabsComponent = ({data}) => {
 
     return (
         <ListStyled>
@@ -15,8 +15,8 @@ const Tabs = ({data}) => {
     )
 };
 
-Tabs.propTypes = {
+TabsComponent.propTypes = {
     data: PropTypes.array
 }
 
-export default Tabs;
+export default TabsComponent;

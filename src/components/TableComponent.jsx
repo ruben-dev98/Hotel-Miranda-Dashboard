@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const Table = ({rows, columns}) => {
+const TableComponent = ({rows, columns}) => {
     /*const a = [
         {
             "label": "Guest",
@@ -28,10 +28,10 @@ const Table = ({rows, columns}) => {
     );
 }
 
-Table.propTypes = {
+TableComponent.propTypes = {
     rows: PropTypes.array,
     columns: PropTypes.array,
     
 };
 
-export default Table;
+export default TableComponent;

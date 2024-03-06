@@ -1,6 +1,6 @@
 import { bookings } from "../assets/data/tabs";
-import Table from "../components/Table";
-import Tabs from "../components/Tabs";
+import TableComponent from "../components/TableComponent";
+import TabsComponent from "../components/TabsComponent";
 import dataBookings from '../assets/data/bookings.json';
 
 const dataTable = [
@@ -38,8 +38,8 @@ const BookingsPage = () => {
 
     return (
         <section className='content'>
-            <Tabs data={bookings}></Tabs>
-            <Table rows={dataBookings} columns={dataTable}></Table>
+            <TabsComponent data={bookings}></TabsComponent>
+            <TableComponent  rows={dataBookings} columns={dataTable}></TableComponent>
         </section>
         
     );

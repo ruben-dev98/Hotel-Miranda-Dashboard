@@ -1,6 +1,6 @@
 import { users } from "../assets/data/tabs";
-import Table from "../components/Table";
-import Tabs from "../components/Tabs";
+import TableComponent from "../components/TableComponent";
+import TabsComponent from "../components/TabsComponent";
 import data from "../assets/data/users.json";
 
 const dataTable = [
@@ -42,8 +42,8 @@ const UsersPage = () => {
 
     return (
         <section className='content'>
-            <Tabs data={users}></Tabs>
-            <Table rows={data} columns={dataTable}></Table>
+            <TabsComponent data={users}></TabsComponent>
+            <TableComponent  rows={data} columns={dataTable}></TableComponent>
         </section>
     );
 }
