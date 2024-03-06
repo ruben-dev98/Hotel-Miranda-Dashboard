@@ -1,6 +1,17 @@
 import PropTypes from 'prop-types';
+import { Navigate, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
-const TableComponent = ({rows, columns}) => {
+const TableStyled = styled.table`
+    background-color: #FFF;
+    tbody > tr {
+        cursor: pointer;
+        height: 120px;
+    }
+`;
+
+const TableComponent = ({rows, columns, path}) => {
+    const navigate = useNavigate();
     /*const a = [
         {
             "label": "Guest",
@@ -9,7 +20,7 @@ const TableComponent = ({rows, columns}) => {
     ];*/
 
     return (
-        <table>
+        <TableStyled>
             <thead>
                 <tr>
                     {columns.map((element, index) => <th key={index}>{element.label}</th>)}
@@ -17,20 +28,26 @@ const TableComponent = ({rows, columns}) => {
             </thead>
             <tbody>
                 {rows.map((row, index) => {
-                    return <tr key={index}>
-                        {columns.map((column, indx) => {
+                    return (
+                        <tr onClick={(event) => {
+                            event.stopPropagation();
+                            navigate(`${path}/${row.id}`);
+                        }} key={index}>
+                            {columns.map((column, indx) => {
                             return <td key={indx}>{row[column.property] ? row[column.property]  : column.display(row)}</td>;
-                        })}
-                    </tr>;
+                            })}
+                        </tr>
+                    );
                 })}
             </tbody>
-        </table>
+        </TableStyled>
     );
 }
 
 TableComponent.propTypes = {
     rows: PropTypes.array,
     columns: PropTypes.array,
+    path: PropTypes.string
     
 };
 

@@ -43,7 +43,7 @@ const UsersPage = () => {
     return (
         <section className='content'>
             <TabsComponent data={users}></TabsComponent>
-            <TableComponent rows={data.toSpliced(10, 40)} columns={dataTable}></TableComponent>
+            <TableComponent rows={data.toSpliced(10, 40)} columns={dataTable} path={'/user'}></TableComponent>
         </section>
     );
 }

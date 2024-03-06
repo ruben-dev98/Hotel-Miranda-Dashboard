@@ -39,7 +39,7 @@ const BookingsPage = () => {
     return (
         <section className='content'>
             <TabsComponent data={bookings}></TabsComponent>
-            <TableComponent rows={dataBookings.toSpliced(10, 30)} columns={dataTable}></TableComponent>
+            <TableComponent rows={dataBookings.toSpliced(10, 30)} columns={dataTable} path={'/booking'}></TableComponent>
         </section>
         
     );

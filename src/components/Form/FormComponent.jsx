@@ -1,5 +1,10 @@
+import styled from "styled-components";
 import FormControlComponent from "./FormControlComponent";
 import PropTypes from 'prop-types';
+
+const FormStyled = styled.form`
+
+`;
 
 const FormComponent = ( {formControl, data, object__fields} ) => {
 

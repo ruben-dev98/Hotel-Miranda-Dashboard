@@ -3,12 +3,11 @@ import PropTypes from 'prop-types';
 
 const FormControlComponent = ({label, inputType}) => {
 
-
     return (
-        <>
+        <div>
             <label>{label}</label>
             {inputType === 'textarea' ? <textarea></textarea> : <input type={inputType}/>}
-        </>
+        </div>
     );
 }
 
