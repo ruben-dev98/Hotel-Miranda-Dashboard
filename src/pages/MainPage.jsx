@@ -38,10 +38,16 @@ const title = (name) => {
             return 'Dashboard';
         case '/rooms':
             return 'Rooms'
+        case '/rooms/room':
+            return 'New Room';
         case '/bookings':
             return 'Bookings';
+        case '/bookings/booking':
+            return 'New Booking';
         case '/users':
             return 'Employees';
+        case '/users/user':
+            return 'New Employees';
         case '/contact':
             return 'Messages';
     }

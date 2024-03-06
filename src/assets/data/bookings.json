@@ -9,7 +9,14 @@
         "number": 51,
         "price": 477.7,
         "type": "Double Bed",
-        "status": "In Progress"
+        "status": "In Progress",
+        "amenities": [
+            "Expert Team",
+            "Smart Security",
+            "Shower"
+        ],
+        "room_status": "Booked",
+        "foto": "http://dummyimage.com/137x100.png/5fa2dd/ffffff"
     },
     {
         "id": 2,
@@ -21,7 +28,14 @@
         "number": 81,
         "price": 389.5,
         "type": "Single Bed",
-        "status": "In Progress"
+        "status": "In Progress",
+        "amenities": [
+            "Expert Team",
+            "Smart Security",
+            "Shower"
+        ],
+        "room_status": "Booked",
+        "foto": "http://dummyimage.com/137x100.png/5fa2dd/ffffff"
     },
     {
         "id": 3,
@@ -33,7 +47,14 @@
         "number": 36,
         "price": 482.46,
         "type": "Double Superior",
-        "status": "Check In"
+        "status": "Check In",
+        "amenities": [
+            "Expert Team",
+            "Smart Security",
+            "Shower"
+        ],
+        "room_status": "Booked",
+        "foto": "http://dummyimage.com/137x100.png/5fa2dd/ffffff"
     },
     {
         "id": 4,
@@ -45,7 +66,14 @@
         "number": 19,
         "price": 345.99,
         "type": "Single Bed",
-        "status": "Check In"
+        "status": "Check In",
+        "amenities": [
+            "Expert Team",
+            "Smart Security",
+            "Shower"
+        ],
+        "room_status": "Booked",
+        "foto": "http://dummyimage.com/137x100.png/5fa2dd/ffffff"
     },
     {
         "id": 5,
@@ -57,7 +85,14 @@
         "number": 12,
         "price": 392.63,
         "type": "Double Bed",
-        "status": "Check In"
+        "status": "Check In",
+        "amenities": [
+            "Expert Team",
+            "Smart Security",
+            "Shower"
+        ],
+        "room_status": "Booked",
+        "foto": "http://dummyimage.com/137x100.png/5fa2dd/ffffff"
     },
     {
         "id": 6,
@@ -69,7 +104,14 @@
         "number": 67,
         "price": 389.35,
         "type": "Double Bed",
-        "status": "Check Out"
+        "status": "Check Out",
+        "amenities": [
+            "Expert Team",
+            "Smart Security",
+            "Shower"
+        ],
+        "room_status": "Booked",
+        "foto": "http://dummyimage.com/137x100.png/5fa2dd/ffffff"
     },
     {
         "id": 7,
@@ -81,7 +123,14 @@
         "number": 45,
         "price": 495.93,
         "type": "Single Bed",
-        "status": "Check In"
+        "status": "Check In",
+        "amenities": [
+            "Expert Team",
+            "Smart Security",
+            "Shower"
+        ],
+        "room_status": "Booked",
+        "foto": "http://dummyimage.com/137x100.png/5fa2dd/ffffff"
     },
     {
         "id": 8,
@@ -93,7 +142,14 @@
         "number": 64,
         "price": 440.89,
         "type": "Double Superior",
-        "status": "In Progress"
+        "status": "In Progress",
+        "amenities": [
+            "Expert Team",
+            "Smart Security",
+            "Shower"
+        ],
+        "room_status": "Booked",
+        "foto": "http://dummyimage.com/137x100.png/5fa2dd/ffffff"
     },
     {
         "id": 9,
@@ -105,7 +161,14 @@
         "number": 21,
         "price": 483.62,
         "type": "Suite",
-        "status": "In Progress"
+        "status": "In Progress",
+        "amenities": [
+            "Expert Team",
+            "Smart Security",
+            "Shower"
+        ],
+        "room_status": "Booked",
+        "foto": "http://dummyimage.com/137x100.png/5fa2dd/ffffff"
     },
     {
         "id": 10,
@@ -117,7 +180,14 @@
         "number": 82,
         "price": 497.84,
         "type": "Double Superior",
-        "status": "Check In"
+        "status": "Check In",
+        "amenities": [
+            "Expert Team",
+            "Smart Security",
+            "Shower"
+        ],
+        "room_status": "Booked",
+        "foto": "http://dummyimage.com/137x100.png/5fa2dd/ffffff"
     },
     {
         "id": 11,
@@ -129,7 +199,14 @@
         "number": 26,
         "price": 497.94,
         "type": "Suite",
-        "status": "Check In"
+        "status": "Check In",
+        "amenities": [
+            "Expert Team",
+            "Smart Security",
+            "Shower"
+        ],
+        "room_status": "Booked",
+        "foto": "http://dummyimage.com/137x100.png/5fa2dd/ffffff"
     },
     {
         "id": 12,
@@ -141,7 +218,14 @@
         "number": 93,
         "price": 328.23,
         "type": "Double Bed",
-        "status": "In Progress"
+        "status": "In Progress",
+        "amenities": [
+            "Expert Team",
+            "Smart Security",
+            "Shower"
+        ],
+        "room_status": "Booked",
+        "foto": "http://dummyimage.com/137x100.png/5fa2dd/ffffff"
     },
     {
         "id": 13,
@@ -153,7 +237,14 @@
         "number": 72,
         "price": 336.33,
         "type": "Single Bed",
-        "status": "Check In"
+        "status": "Check In",
+        "amenities": [
+            "Expert Team",
+            "Smart Security",
+            "Shower"
+        ],
+        "room_status": "Booked",
+        "foto": "http://dummyimage.com/137x100.png/5fa2dd/ffffff"
     },
     {
         "id": 14,
@@ -165,7 +256,14 @@
         "number": 61,
         "price": 480.88,
         "type": "Single Bed",
-        "status": "Check Out"
+        "status": "Check Out",
+        "amenities": [
+            "Expert Team",
+            "Smart Security",
+            "Shower"
+        ],
+        "room_status": "Booked",
+        "foto": "http://dummyimage.com/137x100.png/5fa2dd/ffffff"
     },
     {
         "id": 15,
@@ -177,7 +275,14 @@
         "number": 18,
         "price": 484.07,
         "type": "Suite",
-        "status": "In Progress"
+        "status": "In Progress",
+        "amenities": [
+            "Expert Team",
+            "Smart Security",
+            "Shower"
+        ],
+        "room_status": "Booked",
+        "foto": "http://dummyimage.com/137x100.png/5fa2dd/ffffff"
     },
     {
         "id": 16,
@@ -189,7 +294,14 @@
         "number": 78,
         "price": 420.96,
         "type": "Suite",
-        "status": "In Progress"
+        "status": "In Progress",
+        "amenities": [
+            "Expert Team",
+            "Smart Security",
+            "Shower"
+        ],
+        "room_status": "Booked",
+        "foto": "http://dummyimage.com/137x100.png/5fa2dd/ffffff"
     },
     {
         "id": 17,
@@ -201,7 +313,14 @@
         "number": 26,
         "price": 471.35,
         "type": "Single Bed",
-        "status": "In Progress"
+        "status": "In Progress",
+        "amenities": [
+            "Expert Team",
+            "Smart Security",
+            "Shower"
+        ],
+        "room_status": "Booked",
+        "foto": "http://dummyimage.com/137x100.png/5fa2dd/ffffff"
     },
     {
         "id": 18,
@@ -213,7 +332,14 @@
         "number": 80,
         "price": 342.76,
         "type": "Double Superior",
-        "status": "Check In"
+        "status": "Check In",
+        "amenities": [
+            "Expert Team",
+            "Smart Security",
+            "Shower"
+        ],
+        "room_status": "Booked",
+        "foto": "http://dummyimage.com/137x100.png/5fa2dd/ffffff"
     },
     {
         "id": 19,
@@ -225,7 +351,14 @@
         "number": 75,
         "price": 459.89,
         "type": "Double Bed",
-        "status": "Check In"
+        "status": "Check In",
+        "amenities": [
+            "Expert Team",
+            "Smart Security",
+            "Shower"
+        ],
+        "room_status": "Booked",
+        "foto": "http://dummyimage.com/137x100.png/5fa2dd/ffffff"
     },
     {
         "id": 20,
@@ -237,7 +370,14 @@
         "number": 29,
         "price": 396.29,
         "type": "Single Bed",
-        "status": "Check Out"
+        "status": "Check Out",
+        "amenities": [
+            "Expert Team",
+            "Smart Security",
+            "Shower"
+        ],
+        "room_status": "Booked",
+        "foto": "http://dummyimage.com/137x100.png/5fa2dd/ffffff"
     },
     {
         "id": 21,
@@ -249,7 +389,14 @@
         "number": 94,
         "price": 409.04,
         "type": "Double Superior",
-        "status": "Check Out"
+        "status": "Check Out",
+        "amenities": [
+            "Expert Team",
+            "Smart Security",
+            "Shower"
+        ],
+        "room_status": "Booked",
+        "foto": "http://dummyimage.com/137x100.png/5fa2dd/ffffff"
     },
     {
         "id": 22,
@@ -261,7 +408,14 @@
         "number": 87,
         "price": 427.05,
         "type": "Suite",
-        "status": "Check Out"
+        "status": "Check Out",
+        "amenities": [
+            "Expert Team",
+            "Smart Security",
+            "Shower"
+        ],
+        "room_status": "Booked",
+        "foto": "http://dummyimage.com/137x100.png/5fa2dd/ffffff"
     },
     {
         "id": 23,
@@ -273,7 +427,14 @@
         "number": 91,
         "price": 437.26,
         "type": "Suite",
-        "status": "Check In"
+        "status": "Check In",
+        "amenities": [
+            "Expert Team",
+            "Smart Security",
+            "Shower"
+        ],
+        "room_status": "Booked",
+        "foto": "http://dummyimage.com/137x100.png/5fa2dd/ffffff"
     },
     {
         "id": 24,
@@ -285,7 +446,14 @@
         "number": 13,
         "price": 394.09,
         "type": "Double Bed",
-        "status": "Check Out"
+        "status": "Check Out",
+        "amenities": [
+            "Expert Team",
+            "Smart Security",
+            "Shower"
+        ],
+        "room_status": "Booked",
+        "foto": "http://dummyimage.com/137x100.png/5fa2dd/ffffff"
     },
     {
         "id": 25,
@@ -297,7 +465,14 @@
         "number": 40,
         "price": 457.94,
         "type": "Single Bed",
-        "status": "Check In"
+        "status": "Check In",
+        "amenities": [
+            "Expert Team",
+            "Smart Security",
+            "Shower"
+        ],
+        "room_status": "Booked",
+        "foto": "http://dummyimage.com/137x100.png/5fa2dd/ffffff"
     },
     {
         "id": 26,
@@ -309,7 +484,14 @@
         "number": 93,
         "price": 303.61,
         "type": "Suite",
-        "status": "In Progress"
+        "status": "In Progress",
+        "amenities": [
+            "Expert Team",
+            "Smart Security",
+            "Shower"
+        ],
+        "room_status": "Booked",
+        "foto": "http://dummyimage.com/137x100.png/5fa2dd/ffffff"
     },
     {
         "id": 27,
@@ -321,7 +503,14 @@
         "number": 22,
         "price": 486.27,
         "type": "Double Superior",
-        "status": "In Progress"
+        "status": "In Progress",
+        "amenities": [
+            "Expert Team",
+            "Smart Security",
+            "Shower"
+        ],
+        "room_status": "Booked",
+        "foto": "http://dummyimage.com/137x100.png/5fa2dd/ffffff"
     },
     {
         "id": 28,
@@ -333,7 +522,14 @@
         "number": 54,
         "price": 345.44,
         "type": "Double Superior",
-        "status": "Check Out"
+        "status": "Check Out",
+        "amenities": [
+            "Expert Team",
+            "Smart Security",
+            "Shower"
+        ],
+        "room_status": "Booked",
+        "foto": "http://dummyimage.com/137x100.png/5fa2dd/ffffff"
     },
     {
         "id": 29,
@@ -345,7 +541,14 @@
         "number": 80,
         "price": 382.22,
         "type": "Double Bed",
-        "status": "In Progress"
+        "status": "In Progress",
+        "amenities": [
+            "Expert Team",
+            "Smart Security",
+            "Shower"
+        ],
+        "room_status": "Booked",
+        "foto": "http://dummyimage.com/137x100.png/5fa2dd/ffffff"
     },
     {
         "id": 30,
@@ -357,6 +560,13 @@
         "number": 75,
         "price": 340.52,
         "type": "Double Superior",
-        "status": "Check In"
+        "status": "Check In",
+        "amenities": [
+            "Expert Team",
+            "Smart Security",
+            "Shower"
+        ],
+        "room_status": "Booked",
+        "foto": "http://dummyimage.com/137x100.png/5fa2dd/ffffff"
     }
 ]

@@ -2,7 +2,7 @@ import { bookings } from "../assets/data/tabs";
 import TableComponent from "../components/TableComponent";
 import TabsComponent from "../components/TabsComponent";
 import dataBookings from '../assets/data/bookings.json';
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 const dataTable = [
     {
@@ -23,7 +23,7 @@ const dataTable = [
     },
     {
         'label': 'Special Request',
-        display: row => row.special_request ? <button>View Notes</button> : <button disabled>View Notes</button>
+        display: row => row.special_request ? <button onClick={(event) => event.stopPropagation()}>View Notes</button> : <button disabled>View Notes</button>
     },
     {
         'label': 'Room Type',
@@ -37,6 +37,7 @@ const dataTable = [
 
 const BookingsPage = () => {
     const loc = useLocation();
+    const navigate = useNavigate();
     
 
     return (
@@ -44,6 +45,7 @@ const BookingsPage = () => {
                 <Outlet/>
             :
                 <section className='content'>
+                    <button onClick={() => navigate('booking')}>+ New Booking</button>
                     <TabsComponent data={bookings}></TabsComponent>
                     <TableComponent rows={dataBookings.toSpliced(10, 30)} columns={dataTable} path={'booking'}></TableComponent>
                 </section>
@@ -51,11 +53,5 @@ const BookingsPage = () => {
         
     );
 }
-
-//props => props && css``;
-//Login form
-//event.StopPropagation
-//booking details enlace en toda la row o en cada un td que no es un boton
-// Utilizar useState en el componente de arriba
 
 export default BookingsPage;

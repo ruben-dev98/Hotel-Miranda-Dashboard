@@ -2,7 +2,7 @@ import { rooms } from "../assets/data/tabs";
 import TabsComponent from "../components/TabsComponent";
 import TableComponent from '../components/TableComponent';
 import dataRooms from '../assets/data/rooms.json'
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 const dataTable = [
     {
@@ -41,12 +41,14 @@ const dataTable = [
 
 const RoomsPage = () => {
     const loc = useLocation();
+    const navigate = useNavigate();
 
     return (
         loc.pathname !== '/rooms' ?
             <Outlet></Outlet>
             :
             <section className='content'>
+                <button onClick={() => navigate('room')}>+ New Room</button>
                 <TabsComponent data={rooms}></TabsComponent>
                 <TableComponent rows={dataRooms.toSpliced(10, 30)} columns={dataTable} path={'room'}></TableComponent>
             </section>
