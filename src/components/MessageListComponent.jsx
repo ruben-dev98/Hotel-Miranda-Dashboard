@@ -29,8 +29,8 @@ const MessageListComponent = () => {
             //navigation
             //pagination={{ clickable: true }}
             //scrollbar={{ draggable: true }}
-            onSwiper={(swiper) => console.log(swiper)}
-            onSlideChange={() => console.log('slide change')}
+            onSwiper={(swiper) => {}}
+            onSlideChange={() => {}}
         >
             
             {messages.map((message, index) => {

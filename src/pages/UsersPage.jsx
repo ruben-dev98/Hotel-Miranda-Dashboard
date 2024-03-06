@@ -2,6 +2,7 @@ import { users } from "../assets/data/tabs";
 import TableComponent from "../components/TableComponent";
 import TabsComponent from "../components/TabsComponent";
 import data from "../assets/data/users.json";
+import { Outlet, useLocation } from "react-router-dom";
 
 const dataTable = [
     {
@@ -39,12 +40,15 @@ const dataTable = [
 ];
 
 const UsersPage = () => {
-
+    const loc = useLocation();
     return (
-        <section className='content'>
-            <TabsComponent data={users}></TabsComponent>
-            <TableComponent rows={data.toSpliced(10, 40)} columns={dataTable} path={'/user'}></TableComponent>
-        </section>
+        loc.pathname !== '/users' ?
+            <Outlet></Outlet>
+            :
+            <section className='content'>
+                <TabsComponent data={users}></TabsComponent>
+                <TableComponent rows={data.toSpliced(10, 40)} columns={dataTable} path={'user'}></TableComponent>
+            </section>
     );
 }
 

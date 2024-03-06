@@ -51,14 +51,7 @@ const formControl = [
     }
 ]
 
-const object__fields = [
-    {
-    'field':'id',
-    'label':'p'
-    }, 
-    {
-        'field':'check_in',
-    }, 'check_out', 'full_name', 'type', 'special_request', {room : ['price', 'foto', ]}];
+const object__fields = ['id','check_in', 'check_out', 'full_name', 'type', 'special_request', {room : ['price', 'foto', 'type', 'number']}];
 
 
 const BookingPage = () => {

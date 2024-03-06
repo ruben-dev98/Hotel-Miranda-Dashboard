@@ -2,6 +2,7 @@ import { bookings } from "../assets/data/tabs";
 import TableComponent from "../components/TableComponent";
 import TabsComponent from "../components/TabsComponent";
 import dataBookings from '../assets/data/bookings.json';
+import { Outlet, useLocation } from "react-router-dom";
 
 const dataTable = [
     {
@@ -35,12 +36,18 @@ const dataTable = [
 ];
 
 const BookingsPage = () => {
+    const loc = useLocation();
+    
 
     return (
-        <section className='content'>
-            <TabsComponent data={bookings}></TabsComponent>
-            <TableComponent rows={dataBookings.toSpliced(10, 30)} columns={dataTable} path={'/booking'}></TableComponent>
-        </section>
+            loc.pathname !== "/bookings" ? 
+                <Outlet/>
+            :
+                <section className='content'>
+                    <TabsComponent data={bookings}></TabsComponent>
+                    <TableComponent rows={dataBookings.toSpliced(10, 30)} columns={dataTable} path={'booking'}></TableComponent>
+                </section>
+        
         
     );
 }
