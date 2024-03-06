@@ -12,12 +12,6 @@ const TableStyled = styled.table`
 
 const TableComponent = ({rows, columns, path}) => {
     const navigate = useNavigate();
-    /*const a = [
-        {
-            "label": "Guest",
-            "property": row.fullname
-        }
-    ];*/
 
     return (
         <TableStyled>
@@ -33,6 +27,7 @@ const TableComponent = ({rows, columns, path}) => {
                             event.stopPropagation();
                             navigate(`${path}/${row.id}`);
                         }} key={index}>
+                        
                             {columns.map((column, indx) => {
                             return <td key={indx}>{row[column.property] ? row[column.property]  : column.display(row)}</td>;
                             })}
