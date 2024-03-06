@@ -34,11 +34,13 @@ const router = (auth, setAuth) => createBrowserRouter(createRoutesFromElements(
         <Route index element={<DashboardPage />} />
         <Route path='rooms' element={<RoomsPage />} ></Route>
         <Route path='room' element={<RoomPage />} ></Route>
+        <Route path='room/:id' element={<RoomPage />} ></Route>
         <Route path='bookings' element={<BookingsPage />} />
         <Route path='booking' element={<BookingPage />} />
         <Route path='booking/:id' element={<BookingPage />} />
         <Route path='users' element={<UsersPage />} />
         <Route path="user" element={<UserPage />} />
+        <Route path="user/:id" element={<UserPage />} />
         <Route path='contact' element={<ContactPage />}/>
       </Route>
     </Route>

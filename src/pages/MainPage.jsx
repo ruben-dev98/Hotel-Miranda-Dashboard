@@ -71,7 +71,7 @@ const MainPage = ({ setAuth }) => {
 }
 
 MainPage.propTypes = {
-    setAuth: PropTypes.bool
+    setAuth: PropTypes.func
 }
 
 export default MainPage;
