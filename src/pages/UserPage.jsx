@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 const formControl = [
     {
         'label': 'Foto',
-        'input': 'image',
+        'input': 'file',
         'name': 'foto'
     },
     {
