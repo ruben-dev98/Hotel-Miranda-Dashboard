@@ -31,20 +31,35 @@ const content = (setAuth, visibleLateral, setVisibleLateral, title) => {
     </>
     );
 };
-    
+
+const title = (name) => {
+    switch(name) {
+        case '/':
+            return 'Dashboard';
+        case '/rooms':
+            return 'Rooms'
+        case '/bookings':
+            return 'Bookings';
+        case '/users':
+            return 'Employees';
+        case '/contact':
+            return 'Messages';
+    }
+};
 
 
 const MainPage = ({ setAuth }) => {
     const [visibleLateral, setVisibleLateral] = useState(true);
-    const title = useLocation().key;
+    const name = useLocation().pathname;
+    
 
     const initLabel = visibleLateral ? 
     <WindowStyled>
-        {content(setAuth, visibleLateral, setVisibleLateral, title)}
+        {content(setAuth, visibleLateral, setVisibleLateral, title(name))}
     </WindowStyled> 
     : 
     <WindowStyledCollapse>
-        {content(setAuth, visibleLateral, setVisibleLateral, title)}
+        {content(setAuth, visibleLateral, setVisibleLateral, title(name))}
     </WindowStyledCollapse>;
 
 

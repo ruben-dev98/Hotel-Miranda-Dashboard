@@ -32,13 +32,14 @@ const router = (auth, setAuth) => createBrowserRouter(createRoutesFromElements(
     <Route element={<PrivateRoute auth={auth} />}>
       <Route path="/" element={<MainPage setAuth={setAuth} />}>
         <Route index element={<DashboardPage />} />
-        <Route path='rooms' element={<RoomsPage />}></Route>
-        <Route path='room' element={<RoomPage />}></Route>
+        <Route path='rooms' element={<RoomsPage />} ></Route>
+        <Route path='room' element={<RoomPage />} ></Route>
         <Route path='bookings' element={<BookingsPage />} />
+        <Route path='booking' element={<BookingPage />} />
         <Route path='booking/:id' element={<BookingPage />} />
         <Route path='users' element={<UsersPage />} />
         <Route path="user" element={<UserPage />} />
-        <Route path='contact' element={<ContactPage />} />
+        <Route path='contact' element={<ContactPage />}/>
       </Route>
     </Route>
     <Route path='/*' element={<Navigate to='/login' replace />}></Route>
