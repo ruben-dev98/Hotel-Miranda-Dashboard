@@ -10,15 +10,15 @@ const dataTable = [
     },
     {
         'label': 'Order Date',
-        display: row => new Date(row.order_date*1000).toLocaleString('es-Es')
+        display: row => new Date(parseInt(row.order_date, 10)).toLocaleString('es-Es')
     },
     {
         'label': 'Check In',
-        display: row => new Date(row.check_in*1000).toLocaleString('es-Es')
+        display: row => new Date(parseInt(row.check_in, 10)).toLocaleString('es-Es')
     },
     {
         'label': 'Check Out',
-        display: row => new Date(row.check_out*1000).toLocaleString('es-Es')
+        display: row => new Date(parseInt(row.check_out, 10)).toLocaleString('es-Es')
     },
     {
         'label': 'Special Request',
@@ -39,7 +39,7 @@ const BookingsPage = () => {
     return (
         <section className='content'>
             <Tabs data={bookings}></Tabs>
-            {<Table rows={dataBookings} columns={dataTable}></Table>}
+            <Table rows={dataBookings} columns={dataTable}></Table>
         </section>
         
     );

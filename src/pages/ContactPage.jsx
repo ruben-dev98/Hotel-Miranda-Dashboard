@@ -6,7 +6,7 @@ import Tabs from "../components/Tabs";
 const dataTable = [
     {
         'label': 'Date',
-        display: row => `${new Date(row.date * 1000).toLocaleString('es-Es')} ${row.id}`
+        display: row => `${new Date(parseInt(row.date)).toLocaleString('es-Es')} ${row.id}`
     },
     {
         'label': 'Customer',

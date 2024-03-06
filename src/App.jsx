@@ -14,11 +14,10 @@ import RoomPage from './pages/RoomPage';
 
 
 const PrivateRoute = ({ auth, redirect = "/login", children }) => {
-  if (!auth) {
-    return <Navigate to={redirect} replace />
-  }
-
-  return children ? children : <Outlet />;
+  return !auth ? 
+    <Navigate to={redirect} replace /> 
+    : 
+    children ? children : <Outlet />;
 }
 
 PrivateRoute.propTypes = {
@@ -38,11 +37,11 @@ const router = (auth, setAuth) => createBrowserRouter(createRoutesFromElements(
         <Route path='bookings' element={<BookingsPage />} />
         <Route path='booking/:id' element={<BookingPage />} />
         <Route path='users' element={<UsersPage />} />
-        <Route path="user" element={<UserPage />}/>
+        <Route path="user" element={<UserPage />} />
         <Route path='contact' element={<ContactPage />} />
       </Route>
     </Route>
-    <Route path='/*' element={<Navigate to='/login' replace/>}></Route>
+    <Route path='/*' element={<Navigate to='/login' replace />}></Route>
   </>
 ));
 
@@ -50,8 +49,6 @@ function App() {
   const isAuth = localStorage.getItem('auth') ? (localStorage.getItem('auth') === "1" ? true : false) : false;
   const [auth, setAuth] = useState(isAuth);
 
-  
-  
   useEffect(() => {
     localStorage.setItem('auth', auth ? '1' : '0');
   }, [auth]);
