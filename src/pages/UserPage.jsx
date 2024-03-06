@@ -38,7 +38,7 @@ const formControl = [
     {
         'label': 'Description',
         'input': 'textarea',
-        'name': 'special_request'
+        'name': 'description'
     },
     {
         'label': 'Status',
@@ -61,7 +61,12 @@ const UserPage = () => {
 
     const onCreateUser = (event) => {
         event.preventDefault();
-        const results = formControl.map((control) => event.target[control.name].value);
+        const results = formControl.map((control) => {
+            if(control.input === 'file') {
+                return event.target[control.name].file;
+            }
+            return event.target[control.name].value
+        });
         
     }
 

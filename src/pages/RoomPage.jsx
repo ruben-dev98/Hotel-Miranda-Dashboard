@@ -6,7 +6,7 @@ import FormComponent from '../components/Form/FormComponent';
 const formControl = [
     {
         'label': 'Foto',
-        'input': 'image',
+        'input': 'file',
         'name': 'foto'
     },
     {
@@ -16,41 +16,43 @@ const formControl = [
         'name': 'full_name'
     },
     {
-        'label': 'Puesto',
-        'input': 'select',
-        'data': ['Manager', 'Recepción', 'Servicio de Habitaciones'],
-        'name': ''
-    },
-    {
-        'label': 'Email',
-        'input': 'email',
-        'name': 'email'
-    },
-    {
-        'label': 'Phone',
-        'input': 'text',
-        'name': 'phone'
-    },
-    {
-        'label': 'Start Date',
-        'input': 'date',
-        'name': 'start_date'
+        'label': 'Room Number',
+        'input': 'number',
+        'name': 'number'
     },
     {
         'label': 'Description',
         'input': 'textarea',
-        'name': 'special_request'
+        'name': 'description'
     },
     {
-        'label': 'Status',
+        'label': 'Offer',
         'input': 'select',
-        'data': ['Activo', 'Inactivo'],
-        'name': 'status'
+        'data': ['Yes', 'No'],
+        'name': 'offer'
     },
     {
-        'label': 'Password',
-        'input': 'password',
-        'name': 'password'
+        'label': 'Price',
+        'input': 'number',
+        'name': 'price'
+    },
+    {
+        'label': 'Discount',
+        'input': 'number',
+        'name': 'discount'
+    },
+    {
+        'label': 'Cancellation',
+        'input': 'textarea',
+        'name': 'cancellation'
+    },
+    {
+        'label': 'Amenities',
+        'input': 'select multiple',
+        'data': ["Breakfast", "Smart Security", "Strong Locker","Shower",
+        "24/7 Online Support", "Kitchen", "Cleaning", "Expert Team", "High speed WiFi",
+        "Air conditioner", "Towels", "Grocery", "Single bed", "Shop near"],
+        'name': 'amenities'
     },
 ]
 
@@ -63,8 +65,20 @@ const RoomPage = () => {
 
     const onCreateRoom = (event) => {
         event.preventDefault();
-        const results = formControl.map((control) => event.target[control.name].value);
-        
+        const results = formControl.map((control) => {
+            if(control.input === 'file') {
+                return event.target[control.name].value;
+            } else if(control.input === 'select multiple') {
+                const selectedOptions = event.target[control.name].selectedOptions;
+                const values = [];
+                for (let i = 0; i < selectedOptions.length; i++) {
+                    values.push(selectedOptions[i].value);
+                }
+                return values;
+            }
+            return event.target[control.name].value
+        });
+        console.log(results);
     }
 
     useEffect(() => {
