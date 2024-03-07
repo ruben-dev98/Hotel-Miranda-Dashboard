@@ -7,13 +7,24 @@ const TableStyled = styled.table`
     border-radius: 20px;
     background-color: #FFF;
 
+    thead > tr {
+        height: 100px;
+        th {
+            padding: 1rem;
+        }
+    }
+
     tbody > tr {
         cursor: ${(props) =>  props.$path === '' ? 'default' : 'pointer'};
         height: 200px;
         
         td:not(button), td:not(span) {
-            padding: 2rem;
+            padding: 2rem 1rem;
         }
+    }
+
+    tbody > tr:hover {
+        box-shadow: 5px 5px 5px 5px #393939;
     }
 
     

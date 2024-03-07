@@ -9,6 +9,11 @@ const MessageComponentStyled = styled.div`
     background-color: #FFF;
     border-radius: 20px;
     padding: 0.5rem 2.5rem;
+
+    &:hover {
+        box-shadow: 5px 5px 5px 5px #393939;
+    }
+
     div {
         display: flex;
         justify-content: flex-start;
@@ -30,14 +35,17 @@ const MessageComponentStyled = styled.div`
     }
 `;
 
+const SpanStyled = styled.span`
+    font-size: 1rem;
+    color: #393939;
+`;
+
+const SpanStyledHour= styled(SpanStyled)`
+    font-size: 0.8em;
+    color: #799283;
+`;
+
 const MessageComponent = ({message}) => {
-    const timeElipsed = new Date(Math.floor((Date.now() - parseInt(message.date)) / 1000));
-    const hours = timeElipsed.getHours();
-    const minutes = timeElipsed.getMinutes();
-    const seconds = timeElipsed.getSeconds();
-    
-    const days = timeElipsed.getDay();
-    const month = timeElipsed.getMonth();
 
     return (
         <MessageComponentStyled>
@@ -45,8 +53,8 @@ const MessageComponent = ({message}) => {
             <div>
                 <img src={message.foto} />
                 <p>
-                    <span>{message.full_name}</span>
-                    <span>{`${days} ${month} ${hours}:${minutes}:${seconds}`}</span>
+                    <SpanStyled>{message.full_name}</SpanStyled>
+                    <SpanStyledHour>{message.time_passed}</SpanStyledHour>
                 </p>
             </div>
         </MessageComponentStyled>

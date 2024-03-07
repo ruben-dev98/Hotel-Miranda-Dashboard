@@ -55,14 +55,14 @@ const FormStyled = styled.form`
     }
 `;
 
-const FormComponent = ({ formControl, data, object__fields, onHandleSubmit }) => {
+const FormComponent = ({ formControl, data, object__fields, onHandleSubmit, path }) => {
     const nav = useNavigate();
 
     return (
         <>
             <ButtonStyled onClick={() => nav(-1)}>Back</ButtonStyled>
 
-            {data ?
+            {data && !path.includes('edit') ?
                 <DetailsComponent data={data} object__fields={object__fields}></DetailsComponent>
                 :
                 <FormStyled onSubmit={onHandleSubmit}>
@@ -72,7 +72,7 @@ const FormComponent = ({ formControl, data, object__fields, onHandleSubmit }) =>
                                 label={control.label}
                                 inputType={control.input}
                                 name={control.name}
-                                data={control.data}></FormControlComponent>)
+                                data={control.data} values={data}></FormControlComponent>)
                     }
                     <div>
                         <ButtonStyled type="submit">Create</ButtonStyled>
@@ -86,7 +86,8 @@ FormComponent.propTypes = {
     formControl: PropTypes.array,
     data: PropTypes.object,
     object__fields: PropTypes.array,
-    onHandleSubmit: PropTypes.func
+    onHandleSubmit: PropTypes.func,
+    path: PropTypes.string
 }
 
 export default FormComponent;

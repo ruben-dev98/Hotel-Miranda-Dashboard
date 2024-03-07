@@ -1,7 +1,7 @@
 import FormComponent from '../components/Form/FormComponent';
 import dataUser from '../assets/data/users.json';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 const formControl = [
     {
@@ -83,12 +83,13 @@ const object__fields = [
         'type' : 'text'
     },
     { 
-        'field' : 'status',
+        display : data => data.status ? 'Activo' : 'Inactivo',
         'type' : 'text'
     }
 ];
 
 const UserPage = () => {
+    const loc = useLocation().pathname;
     const { id } = useParams();
     const [user, setUser] = useState(null);
 
@@ -110,7 +111,7 @@ const UserPage = () => {
 
     return (
         <section className="content">
-            <FormComponent data={user} formControl={formControl} object__fields={object__fields} onHandleSubmit={onCreateUser}></FormComponent>
+            <FormComponent path={loc} data={user} formControl={formControl} object__fields={object__fields} onHandleSubmit={onCreateUser}></FormComponent>
         </section>
     )
 }
