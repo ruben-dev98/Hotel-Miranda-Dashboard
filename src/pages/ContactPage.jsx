@@ -3,6 +3,7 @@ import messages from "../assets/data/messages.json";
 import TableComponent from "../components/TableComponent";
 import TabsComponent from "../components/TabsComponent";
 import MessageListComponent from './../components/MessageListComponent';
+import { ButtonStyledViewNotes } from "../styled/ButtonsStyled";
 
 const dataTable = [
     {
@@ -19,7 +20,7 @@ const dataTable = [
     },
     {
         'label': 'Action',
-        display: row => <button>Archive</button> 
+        display: row => <ButtonStyledViewNotes>Archive</ButtonStyledViewNotes> 
     }
 ];
 
@@ -29,7 +30,7 @@ const ContactPage = () => {
         <section className='content'>
             <MessageListComponent/>
             <TabsComponent data={message}></TabsComponent>
-            <TableComponent  rows={messages.toSpliced(10, 30)} columns={dataTable}></TableComponent>
+            <TableComponent  rows={messages.toSpliced(10, 30)} columns={dataTable} path={''}></TableComponent>
         </section>
     );
 }

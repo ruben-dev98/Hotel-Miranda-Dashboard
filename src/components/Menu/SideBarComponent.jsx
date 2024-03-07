@@ -5,6 +5,7 @@ import logo from '../../assets/img/travl.png'
 import logo_claro from '../../assets/img/travl_claro.png';
 import { links } from '../../assets/data/navlink';
 import React from 'react';
+import { ButtonStyledViewNotes } from '../../styled/ButtonsStyled';
 
 const SideBarStyled = styled.menu`
     grid-area: sidebar;
@@ -63,7 +64,7 @@ const SideBarComponent = ({ visibleLateral }) => {
                 <img src='' alt='' />
                 <h2>Rubén Dopico Novo</h2>
                 <p>ruben.dopico.dev@gmail.com</p>
-                <button>Editar</button>
+                <ButtonStyledViewNotes>Editar</ButtonStyledViewNotes>
             </div>
         </SideBarStyled>
     );

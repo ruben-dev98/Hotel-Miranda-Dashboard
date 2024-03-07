@@ -96,7 +96,7 @@ const UserPage = () => {
         event.preventDefault();
         const results = formControl.map((control) => {
             if(control.input === 'file') {
-                return event.target[control.name].file;
+                return event.target[control.name].value;
             }
             return event.target[control.name].value
         });

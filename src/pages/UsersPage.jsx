@@ -3,6 +3,7 @@ import TableComponent from "../components/TableComponent";
 import TabsComponent from "../components/TabsComponent";
 import data from "../assets/data/users.json";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { SpanStyled, SpanStyledCheckOut } from "../styled/SpanStyled";
 
 const dataTable = [
     {
@@ -35,7 +36,9 @@ const dataTable = [
     },
     {
         'label': 'Status',
-        display: row => row.status ? 'Active' : 'Inactive'
+        display: row => row.status ?
+            <SpanStyled>Active</SpanStyled> :
+            <SpanStyledCheckOut>Inactive</SpanStyledCheckOut>
     }
 ];
 

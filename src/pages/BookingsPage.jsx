@@ -3,8 +3,19 @@ import TableComponent from "../components/TableComponent";
 import TabsComponent from "../components/TabsComponent";
 import dataBookings from '../assets/data/bookings.json';
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { ButtonStyledViewNotes } from "../styled/ButtonsStyled";
+import { SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress } from "../styled/SpanStyled";
 
-const dataTable = [
+const handleClickEdit = (id, event, nav) => {
+    event.stopPropagation();
+    nav(`booking/${id}`);
+}
+
+const action = (id, nav) => {
+    return <ButtonStyledViewNotes onClick={(event) => handleClickEdit(id, event, nav)}>Edit</ButtonStyledViewNotes>
+} 
+
+const dataTable = (nav) =>  [
     {
         'label': 'Guest',
         display: row => `${row.full_name} ${row.id}`
@@ -23,7 +34,10 @@ const dataTable = [
     },
     {
         'label': 'Special Request',
-        display: row => row.special_request ? <button onClick={(event) => event.stopPropagation()}>View Notes</button> : <button disabled>View Notes</button>
+        display: row => row.special_request ? 
+        <ButtonStyledViewNotes onClick={(event) => event.stopPropagation()}>View Notes</ButtonStyledViewNotes> 
+        : 
+        <ButtonStyledViewNotes disabled>View Notes</ButtonStyledViewNotes>
     },
     {
         'label': 'Room Type',
@@ -31,17 +45,21 @@ const dataTable = [
     },
     {
         'label': 'Status',
-        'property': 'status'
+        display: row => {
+            if(row.status === 'Check In') {
+                return <SpanStyledCheckIn>{row.status}</SpanStyledCheckIn>
+            } else if (row.status === 'Check Out') {
+                return <SpanStyledCheckOut>{row.status}</SpanStyledCheckOut>
+            } else {
+                return <SpanStyledInProgress>{row.status}</SpanStyledInProgress>
+            }
+        }
     },
     {
         'label' : 'Actions',
-        display: row => action(row.id)
+        display: row => action(row.id, nav)
     }
 ];
-
-const action = (id) => {
-    return <button onClick={() => navigate(`edit/${id}`)}>Edit</button>
-} 
 
 const BookingsPage = () => {
     const loc = useLocation();
@@ -55,7 +73,7 @@ const BookingsPage = () => {
                 <section className='content'>
                     <button onClick={() => navigate('booking')}>+ New Booking</button>
                     <TabsComponent data={bookings}></TabsComponent>
-                    <TableComponent rows={dataBookings.toSpliced(10, 30)} columns={dataTable} path={'booking'}></TableComponent>
+                    <TableComponent rows={dataBookings.toSpliced(10, 30)} columns={dataTable(navigate)} path={'booking'}></TableComponent>
                 </section>
         
         

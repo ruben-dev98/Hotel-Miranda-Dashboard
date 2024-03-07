@@ -2,6 +2,7 @@ import styled from "styled-components";
 import FormControlComponent from "./FormControlComponent";
 import PropTypes from 'prop-types';
 import DetailsComponent from "../Details/DetailsComponent";
+import { ButtonStyled } from "../../styled/ButtonsStyled";
 
 const FormStyled = styled.form`
     
@@ -46,14 +47,10 @@ const FormStyled = styled.form`
     }
 
     button {
-        color: #FFF;
-        border: 0rem;
         display: block;
         width: 200px;
         height: 100px;
         margin: 40px 35px 0 auto;
-        font-family: "Poppins", sans-serif;
-        background-color: #135846;
     }
 `;
 
@@ -74,7 +71,7 @@ const FormComponent = ( {formControl, data, object__fields, onHandleSubmit} ) =>
                     data={control.data}></FormControlComponent>)
             }
             <div>
-                <button type="submit">Create</button>
+                <ButtonStyled type="submit">Create</ButtonStyled>
             </div>
         </FormStyled>
     );

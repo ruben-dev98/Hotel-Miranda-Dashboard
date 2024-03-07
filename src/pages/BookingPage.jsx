@@ -97,7 +97,7 @@ const object__fields = [
         'type' : 'array'
     },
     { 
-        'field' : 'room_status',
+        'field' : 'status',
         'type' : 'text'
     }
 ];

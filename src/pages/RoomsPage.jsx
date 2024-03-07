@@ -3,11 +3,12 @@ import TabsComponent from "../components/TabsComponent";
 import TableComponent from '../components/TableComponent';
 import dataRooms from '../assets/data/rooms.json'
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { SpanStyled, SpanStyledCheckOut } from "../styled/SpanStyled";
 
 const dataTable = [
     {
         'label': 'Image',
-        display: row => <img src={row.foto} style={{width: 200, height: 100}} />
+        display: row => <img src={row.foto} style={{ width: 200, height: 100 }} />
     },
     {
         'label': 'Number',
@@ -35,7 +36,10 @@ const dataTable = [
     },
     {
         'label': 'Status',
-        'property': 'status'
+        display: row => row.status === 'Available' ?
+            <SpanStyled>Available</SpanStyled>
+            :
+            <SpanStyledCheckOut>Booked</SpanStyledCheckOut>
     }
 ];
 

@@ -3,27 +3,27 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const TableStyled = styled.table`
-    padding: 2rem 2rem;
+    padding: 2rem;
     border-radius: 20px;
     background-color: #FFF;
-    
+
     tbody > tr {
-        cursor: pointer;
+        cursor: ${(props) =>  props.$path === '' ? 'default' : 'pointer'};
         height: 200px;
         
-        td {
-            padding: 2rem 2rem;
+        td:not(button), td:not(span) {
+            padding: 2rem;
         }
     }
 
-    ${(props) => props.path === '/contact'}
+    
 `;
 
 const TableComponent = ({rows, columns, path}) => {
     const navigate = useNavigate();
 
     return (
-        <TableStyled>
+        <TableStyled $path={path}>
             <thead>
                 <tr>
                     {columns.map((element, index) => <th key={index}>{element.label}</th>)}
@@ -32,7 +32,12 @@ const TableComponent = ({rows, columns, path}) => {
             <tbody>
                 {rows.map((row, index) => {
                     return (
-                        <tr onClick={(event) =>navigate(`${path}/${row.id}`)} key={index}>
+                        <tr onClick={(event) => {
+                            if(path !== '') {
+                                return navigate(`${path}/${row.id}`)
+                            }
+                                return '';
+                            }} key={index}>
                             {columns.map((column, indx) => {
                             return <td key={indx}>{row[column.property] ? row[column.property]  : column.display(row)}</td>;
                             })}
