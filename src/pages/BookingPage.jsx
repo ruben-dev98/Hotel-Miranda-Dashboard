@@ -53,53 +53,53 @@ const formControl = [
 ]
 
 const object__fields = [
-    { 
-        'field' : 'id',
-        'type' : 'text'
+    {
+        'field': 'id',
+        'type': 'text'
     },
-    { 
-        'field' : 'check_in',
-        'type' : 'date'
+    {
+        'field': 'check_in',
+        'type': 'date'
     },
-    { 
-        'field' : 'check_out',
-        'type' : 'date'
+    {
+        'field': 'check_out',
+        'type': 'date'
     },
-    { 
-        'field' : 'full_name',
-        'type' : 'text'
+    {
+        'field': 'full_name',
+        'type': 'text'
     },
-    { 
-        'field' : 'number',
-        'type' : 'text'
+    {
+        'field': 'number',
+        'type': 'text'
     },
-    { 
-        'field' : 'special_request',
-        'type' : 'text'
+    {
+        'field': 'special_request',
+        'type': 'text'
     },
-    { 
-        'field' : 'price',
-        'type' : 'text'
+    {
+        'field': 'price',
+        'type': 'text'
     },
-    { 
-        'field' : 'foto',
-        'type' : 'swiper'
+    {
+        'field': 'foto',
+        'type': 'swiper'
     },
-    { 
-        'field' : 'description',
-        'type' : 'text'
+    {
+        'field': 'description',
+        'type': 'text'
     },
-    { 
-        'field' : 'type',
-        'type' : 'text'
+    {
+        'field': 'type',
+        'type': 'text'
     },
-    { 
-        'field' : 'amenities',
-        'type' : 'array'
+    {
+        'field': 'amenities',
+        'type': 'array'
     },
-    { 
-        'field' : 'status',
-        'type' : 'text'
+    {
+        'field': 'status',
+        'type': 'text'
     }
 ];
 
@@ -108,7 +108,7 @@ const BookingPage = () => {
     const nav = useNavigate();
     const { id } = useParams();
     const [booking, setBooking] = useState(null);
-    
+
     const onCreateBooking = (event) => {
         event.preventDefault();
         const results = formControl.map((control) => event.target[control.name].value);
@@ -125,25 +125,5 @@ const BookingPage = () => {
     );
 
 }
-
-
-/*
-Izquierda
-Nombre y apellidos
-ID de la reserva
-Check in (Fecha de entrada)
-Check out (Fecha de salida)
-Room info (Número de habitación)
-Price (Precio de la reserva completa)
-Special request (el mensaje completo)
-Amenities que incluye la habitación
-
-A la derecha
-Carrusel de fotos (de la habitación)
-Tipo de habitación
-Descripción (de la habitación)
-Estado (CHECK IN verde, CHECK OUT rojo, IN PROGRESS amarillo)
-
-*/
 
 export default BookingPage;
