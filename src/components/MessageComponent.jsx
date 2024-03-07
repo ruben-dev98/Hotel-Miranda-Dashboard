@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import Swal from 'sweetalert2';
 
 const MessageComponentStyled = styled.div`
     display: flex;
@@ -49,7 +50,7 @@ const MessageComponent = ({message}) => {
 
     return (
         <MessageComponentStyled>
-            <p>{message.messages.slice(0, 50).concat('...')}</p>
+            <p style={{cursor: 'pointer'}} onClick={() => Swal.fire(message.messages)}>{message.messages.slice(0, 50).concat('...')}</p>
             <div>
                 <img src={message.foto} />
                 <p>

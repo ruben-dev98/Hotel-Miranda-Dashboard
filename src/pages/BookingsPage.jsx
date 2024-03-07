@@ -7,10 +7,11 @@ import { ButtonStyledNew, ButtonStyledViewNotes } from "../styled/ButtonsStyled"
 import { SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress } from "../styled/SpanStyled";
 import OrderComponent from "../components/OrderComponent";
 import { bookingsOrder } from "../assets/data/order";
+import Swal from 'sweetalert2'
 
 const handleClickEdit = (event) => {
     event.stopPropagation();
-    alert('Cancelada');
+    Swal.fire('Cancelada');
 }
 
 const action = () => {
@@ -37,7 +38,10 @@ const dataTable = () =>  [
     {
         'label': 'Special Request',
         display: row => row.special_request ? 
-        <ButtonStyledViewNotes onClick={(event) => event.stopPropagation()}>View Notes</ButtonStyledViewNotes> 
+        <ButtonStyledViewNotes onClick={(event) => {
+            event.stopPropagation()
+            return Swal.fire(row.special_request)
+        }}>View Notes</ButtonStyledViewNotes> 
         : 
         <ButtonStyledViewNotes disabled>View Notes</ButtonStyledViewNotes>
     },
