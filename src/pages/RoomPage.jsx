@@ -1,6 +1,6 @@
 import dataRoom from '../assets/data/rooms.json';
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import FormComponent from '../components/Form/FormComponent';
 
 const formControl = [
@@ -93,6 +93,7 @@ const object__fields = [
 
 
 const RoomPage = () => {
+    const loc = useLocation().pathname;
     const { id } = useParams();
     const [room, setRoom] = useState(null);
 
@@ -120,7 +121,7 @@ const RoomPage = () => {
 
     return (
         <section className="content">
-            <FormComponent data={room} formControl={formControl} object__fields={object__fields} onHandleSubmit={onCreateRoom}></FormComponent>
+            <FormComponent path={loc} data={room} formControl={formControl} object__fields={object__fields} onHandleSubmit={onCreateRoom}></FormComponent>
         </section>
     )
 }

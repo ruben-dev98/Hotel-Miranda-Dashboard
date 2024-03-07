@@ -10,6 +10,20 @@ const FormStyled = styled.form`
     div {
         margin: 0 auto;
         width: 60%;
+
+        div {
+            margin-bottom: 20px;
+            
+            .rooms{
+                width: 200px;
+                height: 100px;
+            }
+
+            .users {
+                width: 80px;
+                height: 80px;
+            }
+        }
     }
     
     label {
@@ -64,7 +78,7 @@ const FormComponent = ({ formControl, data, object__fields, onHandleSubmit, path
 
             {data && !path.includes('edit') ?
                 <DetailsComponent data={data} object__fields={object__fields}></DetailsComponent>
-                :
+                :  
                 <FormStyled onSubmit={onHandleSubmit}>
                     {
                         formControl.map((control, index) =>

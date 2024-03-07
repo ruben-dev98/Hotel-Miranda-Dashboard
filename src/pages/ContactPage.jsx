@@ -4,6 +4,8 @@ import TableComponent from "../components/TableComponent";
 import TabsComponent from "../components/TabsComponent";
 import MessageListComponent from './../components/MessageListComponent';
 import { ButtonStyledArchived, ButtonStyledPublish } from "../styled/ButtonsStyled";
+import { messageOrder } from "../assets/data/order";
+import OrderComponent from "../components/OrderComponent";
 
 const dataTable = [
     {
@@ -32,6 +34,9 @@ const ContactPage = () => {
     return (
         <section className='content'>
             <MessageListComponent/>
+            <div className="top__menu-table">
+                <OrderComponent data={messageOrder}/>
+            </div>
             <TabsComponent data={message}></TabsComponent>
             <TableComponent  rows={messages.toSpliced(10, 30)} columns={dataTable} path={''}></TableComponent>
         </section>

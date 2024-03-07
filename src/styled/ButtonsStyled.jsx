@@ -22,3 +22,7 @@ export const ButtonStyledViewNotes = styled(ButtonStyled)`
     background-color: #EEF9F2;
     color: #393939;
 `;
+
+export const ButtonStyledNew = styled(ButtonStyled)`
+    width: 200px;
+`;

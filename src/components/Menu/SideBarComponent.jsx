@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import logo from '../../assets/img/travl.png'
 import logo_claro from '../../assets/img/travl_claro.png';
+import me from '../../assets/img/CV.png';
 import { links } from '../../assets/data/navlink';
 import React from 'react';
 import { ButtonStyledViewNotes } from '../../styled/ButtonsStyled';
@@ -13,7 +14,30 @@ const SideBarStyled = styled.menu`
     background-color: #FFF;
     padding: 0rem;
     margin: 0rem;
+
+    & > img {
+        width: 220px;
+        height: 57px;
+        margin: 32px 0px 32px 32px;
+    }
     
+    div {
+        margin: 30px 20px 0px 20px;
+        padding: 32px;
+        box-shadow: 2px 2px 2px 2px #393939;
+    
+        img {
+            display: block;
+            margin: 0 auto;
+            width: 120px;
+            height: 120px;
+        }
+    }
+
+    button {
+        display: block;
+        margin: 0 auto;
+    }
 `;
 
 const NavLinkStyled = styled(NavLink)`
@@ -25,6 +49,8 @@ const NavLinkStyled = styled(NavLink)`
     padding: 0rem 32px;
     gap: 32px;
     color: #799283;
+
+    
 
     &:not(:last-child) {
         margin-bottom: 15px;
@@ -44,6 +70,8 @@ const NavLinkStyled = styled(NavLink)`
         height: 28px;
         fill: #799283;
     }
+
+    
 `;
 
 const SideBarComponent = ({ visibleLateral }) => {
@@ -51,7 +79,7 @@ const SideBarComponent = ({ visibleLateral }) => {
     return (
         visibleLateral &&
         <SideBarStyled>
-            <img style={{width: 220, height: 57, marginTop: 32, marginLeft: 32, marginBottom: 32}} src={logo_claro}/>
+            <img src={logo_claro}/>
             <nav>
                 {links.map(({icon, text, path}, index) => 
                     <NavLinkStyled to={path} key={index}>
@@ -61,7 +89,7 @@ const SideBarComponent = ({ visibleLateral }) => {
                 }
             </nav>
             <div>
-                <img src='' alt='' />
+                <img src={me} alt='' />
                 <h2>Rubén Dopico Novo</h2>
                 <p>ruben.dopico.dev@gmail.com</p>
                 <ButtonStyledViewNotes>Editar</ButtonStyledViewNotes>

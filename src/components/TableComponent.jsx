@@ -8,18 +8,18 @@ const TableStyled = styled.table`
     background-color: #FFF;
 
     thead > tr {
-        height: 100px;
+        height: 50px;
         th {
-            padding: 1rem;
+            padding: 0.5rem;
         }
     }
 
     tbody > tr {
         cursor: ${(props) =>  props.$path === '' ? 'default' : 'pointer'};
-        height: 200px;
+        height: 100px;
         
         td:not(button), td:not(span) {
-            padding: 2rem 1rem;
+            padding: 0.5rem 0.5rem;
         }
     }
 

@@ -105,7 +105,6 @@ const object__fields = [
 
 
 const BookingPage = () => {
-    const nav = useNavigate();
     const { id } = useParams();
     const [booking, setBooking] = useState(null);
 
@@ -120,7 +119,7 @@ const BookingPage = () => {
 
     return (
         <section className="content">
-            <FormComponent formControl={formControl} data={booking} object__fields={object__fields} onHandleSubmit={onCreateBooking}></FormComponent>
+            <FormComponent path={''} formControl={formControl} data={booking} object__fields={object__fields} onHandleSubmit={onCreateBooking}></FormComponent>
         </section>
     );
 

@@ -4,7 +4,9 @@ import TableComponent from '../components/TableComponent';
 import dataRooms from '../assets/data/rooms.json'
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { SpanStyled, SpanStyledCheckOut } from "../styled/SpanStyled";
-import { ButtonStyledViewNotes } from "../styled/ButtonsStyled";
+import { ButtonStyledNew, ButtonStyledViewNotes } from "../styled/ButtonsStyled";
+import OrderComponent from "../components/OrderComponent";
+import { roomsOrder } from "../assets/data/order";
 
 const handleClickEdit = (id, event, nav) => {
     event.stopPropagation();
@@ -66,7 +68,10 @@ const RoomsPage = () => {
             <Outlet></Outlet>
             :
             <section className='content'>
-                <button onClick={() => navigate('room')}>+ New Room</button>
+            <div className="top__menu-table">
+                <ButtonStyledNew onClick={() => navigate('room')}>+ New Room</ButtonStyledNew>
+                <OrderComponent data={roomsOrder}/>
+            </div>
                 <TabsComponent data={rooms}></TabsComponent>
                 <TableComponent rows={dataRooms.toSpliced(10, 30)} columns={dataTable(navigate)} path={'room'}></TableComponent>
             </section>
