@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import FormControlComponent from "./FormControlComponent";
 import PropTypes from 'prop-types';
+import DetailsComponent from "../Details/DetailsComponent";
 
 const FormStyled = styled.form`
     
@@ -61,9 +62,7 @@ const FormComponent = ( {formControl, data, object__fields, onHandleSubmit} ) =>
 
     return (
         data ?
-        <ul>
-            {object__fields.map((field, index) => <li key={index}>{data[field]}</li>)}
-        </ul>
+        <DetailsComponent data={data} object__fields={object__fields}></DetailsComponent>
         : 
         <FormStyled onSubmit={onHandleSubmit}>
             {

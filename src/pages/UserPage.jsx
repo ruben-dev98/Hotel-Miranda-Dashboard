@@ -53,7 +53,40 @@ const formControl = [
     },
 ]
 
-const object__fields = ['id', 'foto','full_name', 'start_date', 'description', 'contact', 'status'];
+const object__fields = [
+    { 
+        'field' : 'id',
+        'type' : 'text'
+    },
+    { 
+        'field' : 'start_date',
+        'type' : 'date'
+    },
+    { 
+        'field' : 'full_name',
+        'type' : 'text'
+    },
+    { 
+        'field' : 'contact',
+        'type' : 'text'
+    },
+    { 
+        'field' : 'foto',
+        'type' : 'img'
+    },
+    { 
+        'field' : 'description',
+        'type' : 'text'
+    },
+    {
+        'field' : 'email',
+        'type' : 'text'
+    },
+    { 
+        'field' : 'status',
+        'type' : 'text'
+    }
+];
 
 const UserPage = () => {
     const { id } = useParams();

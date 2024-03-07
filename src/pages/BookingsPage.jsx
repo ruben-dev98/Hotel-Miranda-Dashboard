@@ -33,7 +33,15 @@ const dataTable = [
         'label': 'Status',
         'property': 'status'
     },
+    {
+        'label' : 'Actions',
+        display: row => action(row.id)
+    }
 ];
+
+const action = (id) => {
+    return <button onClick={() => navigate(`edit/${id}`)}>Edit</button>
+} 
 
 const BookingsPage = () => {
     const loc = useLocation();

@@ -7,7 +7,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 const dataTable = [
     {
         'label': 'Image',
-        display: row => <img src={row.foto} />
+        display: row => <img src={row.foto} style={{width: 200, height: 100}} />
     },
     {
         'label': 'Number',
