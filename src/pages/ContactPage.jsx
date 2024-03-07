@@ -34,9 +34,6 @@ const ContactPage = () => {
     return (
         <section className='content'>
             <MessageListComponent/>
-            <div className="top__menu-table">
-                <OrderComponent data={messageOrder}/>
-            </div>
             <TabsComponent data={message}></TabsComponent>
             <TableComponent  rows={messages.toSpliced(10, 30)} columns={dataTable} path={''}></TableComponent>
         </section>

@@ -4,6 +4,10 @@ import styled from 'styled-components';
 const ListStyled = styled.ul`
     display: flex;
     justify-content: space-evenly;
+    
+    li {
+        cursor: pointer;
+    }
 `;
 
 const TabsComponent = ({data}) => {
