@@ -15,7 +15,7 @@ const TableStyled = styled.table`
     }
 
     tbody > tr {
-        cursor: ${(props) =>  props.$path === '' ? 'default' : 'pointer'};
+        cursor: ${(props) => props.$path === '' ? 'default' : 'pointer'};
         height: 100px;
         
         td:not(button), td:not(span) {
@@ -30,7 +30,7 @@ const TableStyled = styled.table`
     
 `;
 
-const TableComponent = ({rows, columns, path}) => {
+const TableComponent = ({ rows, columns, path }) => {
     const navigate = useNavigate();
 
     return (
@@ -44,13 +44,13 @@ const TableComponent = ({rows, columns, path}) => {
                 {rows.map((row, index) => {
                     return (
                         <tr onClick={(event) => {
-                            if(path !== '') {
+                            if (path !== '') {
                                 return navigate(`${row.id}`)
                             }
-                                return '';
-                            }} key={index}>
+                            return '';
+                        }} key={index}>
                             {columns.map((column, indx) => {
-                            return <td key={indx}>{row[column.property] ? row[column.property]  : column.display(row)}</td>;
+                                return <td key={indx}>{row[column.property] ? row[column.property] : column.display(row)}</td>;
                             })}
                         </tr>
                     );
@@ -64,7 +64,7 @@ TableComponent.propTypes = {
     rows: PropTypes.array,
     columns: PropTypes.array,
     path: PropTypes.string
-    
+
 };
 
 export default TableComponent;

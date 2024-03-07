@@ -57,7 +57,7 @@ const TopBarComponent = ({ setAuth, setVisibleLateral, visibleLateral, title}) =
             <div>
                 <IconStyled onClick={isMenuVisibleHandle}>
                     {visibleLateral ? <FaArrowLeft /> : <FaArrowRight />}
-                    <span>{title}</span>
+                    <span style={{marginLeft: 30}}>{title}</span>
                 </IconStyled>
             </div>
             <IconsListStyled>
