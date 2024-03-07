@@ -4,8 +4,18 @@ import TableComponent from '../components/TableComponent';
 import dataRooms from '../assets/data/rooms.json'
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { SpanStyled, SpanStyledCheckOut } from "../styled/SpanStyled";
+import { ButtonStyledViewNotes } from "../styled/ButtonsStyled";
 
-const dataTable = [
+const handleClickEdit = (id, event, nav) => {
+    event.stopPropagation();
+    nav(`edit/${id}`);
+}
+
+const action = (id, nav) => {
+    return <ButtonStyledViewNotes onClick={(event) => handleClickEdit(id, event, nav)}>Edit</ButtonStyledViewNotes>
+}
+
+const dataTable = (nav) => [
     {
         'label': 'Image',
         display: row => <img src={row.foto} style={{ width: 200, height: 100 }} />
@@ -40,6 +50,10 @@ const dataTable = [
             <SpanStyled>Available</SpanStyled>
             :
             <SpanStyledCheckOut>Booked</SpanStyledCheckOut>
+    },
+    {
+        'label' : 'Actions',
+        display: row => action(row.id, nav)
     }
 ];
 
@@ -54,7 +68,7 @@ const RoomsPage = () => {
             <section className='content'>
                 <button onClick={() => navigate('room')}>+ New Room</button>
                 <TabsComponent data={rooms}></TabsComponent>
-                <TableComponent rows={dataRooms.toSpliced(10, 30)} columns={dataTable} path={'room'}></TableComponent>
+                <TableComponent rows={dataRooms.toSpliced(10, 30)} columns={dataTable(navigate)} path={'room'}></TableComponent>
             </section>
     );
 }

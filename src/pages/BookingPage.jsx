@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import dataBookings from "../assets/data/bookings.json";
 import dataRooms from "../assets/data/rooms.json";
 import FormComponent from './../components/Form/FormComponent';
+import { ButtonStyled } from './../styled/ButtonsStyled';
 
 const sortRoomNumbers = () => {
     return dataRooms.map((room) => room.number).sort((a, b) => {
@@ -104,14 +105,13 @@ const object__fields = [
 
 
 const BookingPage = () => {
-    const { id, action } = useParams();
+    const nav = useNavigate();
+    const { id } = useParams();
     const [booking, setBooking] = useState(null);
     
     const onCreateBooking = (event) => {
         event.preventDefault();
         const results = formControl.map((control) => event.target[control.name].value);
-
-
     }
 
     useEffect(() => {

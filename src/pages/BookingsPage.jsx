@@ -6,16 +6,16 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { ButtonStyledViewNotes } from "../styled/ButtonsStyled";
 import { SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress } from "../styled/SpanStyled";
 
-const handleClickEdit = (id, event, nav) => {
+const handleClickEdit = (event) => {
     event.stopPropagation();
-    nav(`booking/${id}`);
+    alert('Cancelada');
 }
 
-const action = (id, nav) => {
-    return <ButtonStyledViewNotes onClick={(event) => handleClickEdit(id, event, nav)}>Edit</ButtonStyledViewNotes>
+const action = () => {
+    return <ButtonStyledViewNotes onClick={(event) => handleClickEdit(event)}>Cancelada</ButtonStyledViewNotes>
 } 
 
-const dataTable = (nav) =>  [
+const dataTable = () =>  [
     {
         'label': 'Guest',
         display: row => `${row.full_name} ${row.id}`
@@ -57,7 +57,7 @@ const dataTable = (nav) =>  [
     },
     {
         'label' : 'Actions',
-        display: row => action(row.id, nav)
+        display: row => action()
     }
 ];
 
@@ -73,7 +73,7 @@ const BookingsPage = () => {
                 <section className='content'>
                     <button onClick={() => navigate('booking')}>+ New Booking</button>
                     <TabsComponent data={bookings}></TabsComponent>
-                    <TableComponent rows={dataBookings.toSpliced(10, 30)} columns={dataTable(navigate)} path={'booking'}></TableComponent>
+                    <TableComponent rows={dataBookings.toSpliced(10, 30)} columns={dataTable()} path={'booking'}></TableComponent>
                 </section>
         
         

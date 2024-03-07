@@ -32,40 +32,48 @@ const content = (setAuth, visibleLateral, setVisibleLateral, title) => {
     );
 };
 
-const title = (name) => {
-    switch(name) {
-        case '/':
-            return 'Dashboard';
-        case '/rooms':
-            return 'Rooms'
-        case '/rooms/room':
+const title = (path) => {
+    switch(true) {
+        case path.startsWith('/rooms/room'):
             return 'New Room';
-        case '/bookings':
-            return 'Bookings';
-        case '/bookings/booking':
+        case path.startsWith('/rooms/'):
+            return 'Rooms > Room';
+        case path.startsWith('/rooms'):
+            return 'Rooms';
+        case path.startsWith('/bookings/booking'):
             return 'New Booking';
-        case '/users':
-            return 'Employees';
-        case '/users/user':
+        case path.startsWith('/bookings/'):
+            return 'Bookings > Booking';
+        case path.startsWith('/bookings'):
+            return 'Bookings';
+        case path.startsWith('/users/user'):
             return 'New Employees';
-        case '/contact':
+        case path.startsWith('/users/'):
+            return 'Users > User';
+        case path.startsWith('/users'):
+            return 'Employees';
+        case path.startsWith('/contact'):
             return 'Messages';
+        default:
+            return 'Dashboard';
     }
+
+    
 };
 
 
 const MainPage = ({ setAuth }) => {
     const [visibleLateral, setVisibleLateral] = useState(true);
-    const name = useLocation().pathname;
+    const path = useLocation().pathname;
     
 
     const initLabel = visibleLateral ? 
     <WindowStyled>
-        {content(setAuth, visibleLateral, setVisibleLateral, title(name))}
+        {content(setAuth, visibleLateral, setVisibleLateral, title(path))}
     </WindowStyled> 
     : 
     <WindowStyledCollapse>
-        {content(setAuth, visibleLateral, setVisibleLateral, title(name))}
+        {content(setAuth, visibleLateral, setVisibleLateral, title(path))}
     </WindowStyledCollapse>;
 
 

@@ -34,7 +34,7 @@ const TableComponent = ({rows, columns, path}) => {
                     return (
                         <tr onClick={(event) => {
                             if(path !== '') {
-                                return navigate(`${path}/${row.id}`)
+                                return navigate(`${row.id}`)
                             }
                                 return '';
                             }} key={index}>

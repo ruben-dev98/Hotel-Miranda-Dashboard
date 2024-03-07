@@ -2,13 +2,31 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const MessageComponentStyled = styled.div`
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
     height: 100%;
     background-color: #FFF;
     border-radius: 20px;
     padding: 0.5rem 2.5rem;
     div {
         display: flex;
-        justify-content: space-evenly;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 32px;
+
+        img {
+            width: 50px;
+            height: 50px;
+        }
+
+        span {
+            display: block;
+
+            :not(:last-child) {
+                margin: 12px;
+            }
+        }
     }
 `;
 
@@ -25,17 +43,10 @@ const MessageComponent = ({message}) => {
         <MessageComponentStyled>
             <p>{message.messages.slice(0, 50).concat('...')}</p>
             <div>
-                <p> 
-                    {message.full_name}
-                    <br/>
-                    {new Date(parseInt(message.date)).toLocaleString('es-Es')}
-                    <br/>
-                    {`${days} ${month} ${hours}:${minutes}:${seconds}`}
-                </p>
+                <img src={message.foto} />
                 <p>
-                    Hora Actual
-                    <br/>
-                    {Date.now()}
+                    <span>{message.full_name}</span>
+                    <span>{`${days} ${month} ${hours}:${minutes}:${seconds}`}</span>
                 </p>
             </div>
         </MessageComponentStyled>

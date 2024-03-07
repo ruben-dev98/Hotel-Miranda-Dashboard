@@ -3,6 +3,7 @@ import FormControlComponent from "./FormControlComponent";
 import PropTypes from 'prop-types';
 import DetailsComponent from "../Details/DetailsComponent";
 import { ButtonStyled } from "../../styled/ButtonsStyled";
+import { useNavigate } from "react-router-dom";
 
 const FormStyled = styled.form`
     
@@ -54,26 +55,30 @@ const FormStyled = styled.form`
     }
 `;
 
-const FormComponent = ( {formControl, data, object__fields, onHandleSubmit} ) => {
-
+const FormComponent = ({ formControl, data, object__fields, onHandleSubmit }) => {
+    const nav = useNavigate();
 
     return (
-        data ?
-        <DetailsComponent data={data} object__fields={object__fields}></DetailsComponent>
-        : 
-        <FormStyled onSubmit={onHandleSubmit}>
-            {
-                formControl.map((control, index) => 
-                    <FormControlComponent key={index}
-                    label={control.label} 
-                    inputType={control.input} 
-                    name={control.name} 
-                    data={control.data}></FormControlComponent>)
-            }
-            <div>
-                <ButtonStyled type="submit">Create</ButtonStyled>
-            </div>
-        </FormStyled>
+        <>
+            <ButtonStyled onClick={() => nav(-1)}>Back</ButtonStyled>
+
+            {data ?
+                <DetailsComponent data={data} object__fields={object__fields}></DetailsComponent>
+                :
+                <FormStyled onSubmit={onHandleSubmit}>
+                    {
+                        formControl.map((control, index) =>
+                            <FormControlComponent key={index}
+                                label={control.label}
+                                inputType={control.input}
+                                name={control.name}
+                                data={control.data}></FormControlComponent>)
+                    }
+                    <div>
+                        <ButtonStyled type="submit">Create</ButtonStyled>
+                    </div>
+                </FormStyled>}
+        </>
     );
 }
 

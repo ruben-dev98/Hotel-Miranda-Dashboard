@@ -4,14 +4,18 @@ import TabsComponent from "../components/TabsComponent";
 import data from "../assets/data/users.json";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { SpanStyled, SpanStyledCheckOut } from "../styled/SpanStyled";
+import { ButtonStyledViewNotes } from "../styled/ButtonsStyled";
+
+const handleClickEdit = (id, event, nav) => {
+    event.stopPropagation();
+    nav(`edit/${id}`);
+}
 
 const action = (id, nav) => {
     return <ButtonStyledViewNotes onClick={(event) => handleClickEdit(id, event, nav)}>Edit</ButtonStyledViewNotes>
 }
 
-
-
-const dataTable = [
+const dataTable = (nav) => [
     {
         'label': 'Image',
         display: row => <img src={row.foto} />
@@ -46,7 +50,10 @@ const dataTable = [
             <SpanStyled>Active</SpanStyled> :
             <SpanStyledCheckOut>Inactive</SpanStyledCheckOut>
     },
-
+    {
+        'label' : 'Actions',
+        display: row => action(row.id, nav)
+    }
 ];
 
 const UsersPage = () => {
@@ -59,7 +66,7 @@ const UsersPage = () => {
             <section className='content'>
                 <button onClick={() => navigate('user')}>+ New Employee</button>
                 <TabsComponent data={users}></TabsComponent>
-                <TableComponent rows={data.toSpliced(10, 40)} columns={dataTable} path={'user'}></TableComponent>
+                <TableComponent rows={data.toSpliced(10, 40)} columns={dataTable(navigate)} path={'user'}></TableComponent>
             </section>
     );
 }
