@@ -111,7 +111,6 @@ const RoomPage = () => {
             }
             return event.target[control.name].value
         });
-        console.log(results);
     }
 
     useEffect(() => {

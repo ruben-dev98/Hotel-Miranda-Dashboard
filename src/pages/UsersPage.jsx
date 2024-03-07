@@ -5,6 +5,12 @@ import data from "../assets/data/users.json";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { SpanStyled, SpanStyledCheckOut } from "../styled/SpanStyled";
 
+const action = (id, nav) => {
+    return <ButtonStyledViewNotes onClick={(event) => handleClickEdit(id, event, nav)}>Edit</ButtonStyledViewNotes>
+}
+
+
+
 const dataTable = [
     {
         'label': 'Image',
@@ -39,7 +45,8 @@ const dataTable = [
         display: row => row.status ?
             <SpanStyled>Active</SpanStyled> :
             <SpanStyledCheckOut>Inactive</SpanStyledCheckOut>
-    }
+    },
+
 ];
 
 const UsersPage = () => {

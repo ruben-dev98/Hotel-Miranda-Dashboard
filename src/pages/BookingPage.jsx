@@ -104,12 +104,14 @@ const object__fields = [
 
 
 const BookingPage = () => {
-    const { id } = useParams();
+    const { id, action } = useParams();
     const [booking, setBooking] = useState(null);
     
     const onCreateBooking = (event) => {
         event.preventDefault();
         const results = formControl.map((control) => event.target[control.name].value);
+
+
     }
 
     useEffect(() => {

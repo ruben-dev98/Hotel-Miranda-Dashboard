@@ -3,7 +3,7 @@ import messages from "../assets/data/messages.json";
 import TableComponent from "../components/TableComponent";
 import TabsComponent from "../components/TabsComponent";
 import MessageListComponent from './../components/MessageListComponent';
-import { ButtonStyledViewNotes } from "../styled/ButtonsStyled";
+import { ButtonStyledArchived, ButtonStyledPublish } from "../styled/ButtonsStyled";
 
 const dataTable = [
     {
@@ -20,7 +20,10 @@ const dataTable = [
     },
     {
         'label': 'Action',
-        display: row => <ButtonStyledViewNotes>Archive</ButtonStyledViewNotes> 
+        display: row => row.archived ?
+        <ButtonStyledPublish>Publish</ButtonStyledPublish>
+        :
+        <ButtonStyledArchived>Archive</ButtonStyledArchived>
     }
 ];
 

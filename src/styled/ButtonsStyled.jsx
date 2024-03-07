@@ -10,6 +10,14 @@ export const ButtonStyled = styled.button`
     border: 0rem;
 `;
 
+export const ButtonStyledPublish = styled(ButtonStyled)`
+    background-color: #5AD07A;
+`;
+
+export const ButtonStyledArchived = styled(ButtonStyled)`
+    background-color: #E23428;
+`;
+
 export const ButtonStyledViewNotes = styled(ButtonStyled)`
     background-color: #EEF9F2;
     color: #393939;
