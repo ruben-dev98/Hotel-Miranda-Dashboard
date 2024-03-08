@@ -33,3 +33,8 @@ ul, li {
         margin-right: 20px;
     }
 }
+
+.no__use {
+    width: 60%;
+    margin: 0 auto;
+}

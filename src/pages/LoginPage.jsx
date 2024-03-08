@@ -54,11 +54,11 @@ const LoginPage = ({auth, setAuth}) => {
         <FormStyled onSubmit={onSubmitHandle}>
             <div>
                 <label>Username</label>
-                <input type="text" name="user" placeholder="user"/>
+                <input type="text" defaultValue={'user'} name="user" placeholder="user"/>
             </div>
             <div>
                 <label>Password</label>
-                <input type="password" name="password" placeholder="admin"/>
+                <input type="password" defaultValue={'admin'} name="password" placeholder="admin"/>
             </div>
             <div>
                 <ButtonStyled type="submit">Login</ButtonStyled>

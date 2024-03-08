@@ -58,7 +58,7 @@ const UsersPage = () => {
     return (
             <section className='content'>
                 <div className="top__menu-table">
-                    <ButtonStyledNew as={LinkStyled} to={'users/user'}>+ New Employee</ButtonStyledNew>
+                    <ButtonStyledNew as={LinkStyled} to={'user'}>+ New Employee</ButtonStyledNew>
                     <OrderComponent data={usersOrder}></OrderComponent>
                 </div>
                 <TabsComponent data={users}></TabsComponent>
