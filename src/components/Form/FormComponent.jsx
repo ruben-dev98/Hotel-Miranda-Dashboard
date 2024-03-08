@@ -59,6 +59,7 @@ const FormStyled = styled.form`
         width: 96.3%;
         display: block;
         margin-bottom: 0.75rem;
+        background-color: #FFF;
     }
 
     button {

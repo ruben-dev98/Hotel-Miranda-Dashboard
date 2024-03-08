@@ -24,7 +24,7 @@ const SideBarStyled = styled.menu`
     div {
         margin: 30px 20px 0px 20px;
         padding: 32px;
-        box-shadow: 2px 2px 2px 2px #393939;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     
         img {
             display: block;

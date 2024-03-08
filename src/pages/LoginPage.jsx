@@ -7,7 +7,7 @@ const FormStyled = styled.form`
     padding: 4rem;
     width: 50%;
     margin: 200px auto 0 auto;
-    box-shadow: 10px 10px 10px 10px #135846;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 
     div {
         width: 60%;
