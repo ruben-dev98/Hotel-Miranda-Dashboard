@@ -2,12 +2,13 @@ import { bookings } from "../assets/data/tabs";
 import TableComponent from "../components/TableComponent";
 import TabsComponent from "../components/TabsComponent";
 import dataBookings from '../assets/data/bookings.json';
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { ButtonStyledNew, ButtonStyledViewNotes } from "../styled/ButtonsStyled";
 import { SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress } from "../styled/SpanStyled";
 import OrderComponent from "../components/OrderComponent";
 import { bookingsOrder } from "../assets/data/order";
 import Swal from 'sweetalert2'
+import { LinkStyled } from "../styled/LinkStyled";
 
 const handleClickEdit = (event) => {
     event.stopPropagation();
@@ -18,7 +19,7 @@ const action = () => {
     return <ButtonStyledViewNotes onClick={(event) => handleClickEdit(event)}>Cancelada</ButtonStyledViewNotes>
 } 
 
-const dataTable = () =>  [
+const dataTable = [
     {
         'label': 'Guest',
         display: row => `${row.full_name} ${row.id}`
@@ -69,7 +70,6 @@ const dataTable = () =>  [
 
 const BookingsPage = () => {
     const loc = useLocation();
-    const navigate = useNavigate();
     
 
     return (
@@ -78,11 +78,11 @@ const BookingsPage = () => {
             :
                 <section className='content'>
                     <div className="top__menu-table">
-                        <ButtonStyledNew onClick={() => navigate('booking')}>+ New Booking</ButtonStyledNew>
+                        <ButtonStyledNew as={LinkStyled} to={'room'}>+ New Booking</ButtonStyledNew>
                         <OrderComponent data={bookingsOrder}/>
                     </div>
                     <TabsComponent data={bookings}></TabsComponent>
-                    <TableComponent rows={dataBookings.toSpliced(10, 30)} columns={dataTable()} path={'booking'}></TableComponent>
+                    <TableComponent rows={dataBookings.toSpliced(10, 30)} columns={dataTable} path={'booking'}></TableComponent>
                 </section>
         
         

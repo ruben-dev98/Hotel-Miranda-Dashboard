@@ -29,7 +29,7 @@ ul, li {
     justify-content: flex-end;
     margin: 30px 0px;
 
-    button {
+    a {
         margin-right: 20px;
     }
 }

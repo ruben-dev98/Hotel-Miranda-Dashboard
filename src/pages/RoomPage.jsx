@@ -1,5 +1,5 @@
 import dataRoom from '../assets/data/rooms.json';
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import FormComponent from '../components/Form/FormComponent';
 
@@ -95,7 +95,7 @@ const object__fields = [
 const RoomPage = () => {
     const loc = useLocation().pathname;
     const { id } = useParams();
-    const [room, setRoom] = useState(null);
+    const room = dataRoom.find((room) => room.id === parseInt(id));
 
     const onCreateRoom = (event) => {
         event.preventDefault();
@@ -113,11 +113,6 @@ const RoomPage = () => {
             return event.target[control.name].value
         });
     }
-
-    useEffect(() => {
-        setRoom(dataRoom.find((room) => room.id === parseInt(id)));
-    }, [id]);
-
 
     return (
         <section className="content">

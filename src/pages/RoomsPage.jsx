@@ -2,22 +2,18 @@ import { rooms } from "../assets/data/tabs";
 import TabsComponent from "../components/TabsComponent";
 import TableComponent from '../components/TableComponent';
 import dataRooms from '../assets/data/rooms.json'
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { SpanStyled, SpanStyledCheckOut } from "../styled/SpanStyled";
 import { ButtonStyledNew, ButtonStyledViewNotes } from "../styled/ButtonsStyled";
 import OrderComponent from "../components/OrderComponent";
 import { roomsOrder } from "../assets/data/order";
+import { LinkStyled } from "../styled/LinkStyled";
 
-const handleClickEdit = (id, event, nav) => {
-    event.stopPropagation();
-    nav(`edit/${id}`);
+const action = (id) => {
+    return <ButtonStyledViewNotes as={LinkStyled} to={`edit/${id}`} onClick={(event) => event.stopPropagation()}>Edit</ButtonStyledViewNotes>
 }
 
-const action = (id, nav) => {
-    return <ButtonStyledViewNotes onClick={(event) => handleClickEdit(id, event, nav)}>Edit</ButtonStyledViewNotes>
-}
-
-const dataTable = (nav) => [
+const dataTable = [
     {
         'label': 'Image',
         display: row => <img src={row.foto} style={{ width: 200, height: 100 }} />
@@ -55,13 +51,12 @@ const dataTable = (nav) => [
     },
     {
         'label' : 'Actions',
-        display: row => action(row.id, nav)
+        display: row => action(row.id)
     }
 ];
 
 const RoomsPage = () => {
     const loc = useLocation();
-    const navigate = useNavigate();
 
     return (
         loc.pathname !== '/rooms' ?
@@ -69,11 +64,11 @@ const RoomsPage = () => {
             :
             <section className='content'>
             <div className="top__menu-table">
-                <ButtonStyledNew onClick={() => navigate('room')}>+ New Room</ButtonStyledNew>
+                <ButtonStyledNew as={LinkStyled} to={'room'}>+ New Room</ButtonStyledNew>
                 <OrderComponent data={roomsOrder}/>
             </div>
                 <TabsComponent data={rooms}></TabsComponent>
-                <TableComponent rows={dataRooms.toSpliced(10, 30)} columns={dataTable(navigate)} path={'room'}></TableComponent>
+                <TableComponent rows={dataRooms.toSpliced(10, 30)} columns={dataTable} path={'room'}></TableComponent>
             </section>
     );
 }

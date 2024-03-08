@@ -4,8 +4,6 @@ import TableComponent from "../components/TableComponent";
 import TabsComponent from "../components/TabsComponent";
 import MessageListComponent from './../components/MessageListComponent';
 import { ButtonStyledArchived, ButtonStyledPublish } from "../styled/ButtonsStyled";
-import { messageOrder } from "../assets/data/order";
-import OrderComponent from "../components/OrderComponent";
 
 const dataTable = [
     {

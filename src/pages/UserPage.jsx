@@ -1,6 +1,5 @@
 import FormComponent from '../components/Form/FormComponent';
 import dataUser from '../assets/data/users.json';
-import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 
 const formControl = [
@@ -91,7 +90,7 @@ const object__fields = [
 const UserPage = () => {
     const loc = useLocation().pathname;
     const { id } = useParams();
-    const [user, setUser] = useState(null);
+    const user = dataUser.find((user) => user.id === parseInt(id));
 
     const onCreateUser = (event) => {
         event.preventDefault();
@@ -103,11 +102,6 @@ const UserPage = () => {
         });
         
     }
-
-    useEffect(() => {
-        setUser(dataUser.find((user) => user.id === parseInt(id)));
-    }, [id]);
-
 
     return (
         <section className="content">
