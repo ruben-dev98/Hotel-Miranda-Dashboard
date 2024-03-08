@@ -5,7 +5,7 @@ import { useLocation, useParams } from 'react-router-dom';
 const formControl = [
     {
         'label': 'Foto',
-        'input': 'file',
+        'input': 'text',
         'name': 'foto'
     },
     {

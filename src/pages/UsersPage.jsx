@@ -2,8 +2,7 @@ import { users } from "../assets/data/tabs";
 import { usersOrder } from "../assets/data/order";
 import TableComponent from "../components/TableComponent";
 import TabsComponent from "../components/TabsComponent";
-import data from "../assets/data/users.json"; 
-import { Outlet, useLocation } from "react-router-dom";
+import data from "../assets/data/users.json";
 import { SpanStyled, SpanStyledCheckOut } from "../styled/SpanStyled";
 import { ButtonStyledNew, ButtonStyledViewNotes } from "../styled/ButtonsStyled";
 import OrderComponent from './../components/OrderComponent';
@@ -55,19 +54,15 @@ const dataTable = [
 ];
 
 const UsersPage = () => {
-    const loc = useLocation();
 
     return (
-        loc.pathname !== '/users' ?
-            <Outlet></Outlet>
-            :
             <section className='content'>
                 <div className="top__menu-table">
-                    <ButtonStyledNew as={LinkStyled} to={'user'}>+ New Employee</ButtonStyledNew>
+                    <ButtonStyledNew as={LinkStyled} to={'users/user'}>+ New Employee</ButtonStyledNew>
                     <OrderComponent data={usersOrder}></OrderComponent>
                 </div>
                 <TabsComponent data={users}></TabsComponent>
-                <TableComponent rows={data.toSpliced(10, 40)} columns={dataTable} path={'user'}></TableComponent>
+                <TableComponent rows={data.toSpliced(10, 40)} columns={dataTable} path={'users'}></TableComponent>
             </section>
     );
 }

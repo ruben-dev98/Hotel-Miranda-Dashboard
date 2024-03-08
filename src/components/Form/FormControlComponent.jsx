@@ -34,7 +34,7 @@ const FormControlComponent = ({ label, inputType, name, data = [], values }) => 
     return (
         <div>
             
-                {inputType === 'file' && values && 
+                {name === 'foto' && values && 
                     <div>
                         <img src={values[name]} ></img>
                     </div>    

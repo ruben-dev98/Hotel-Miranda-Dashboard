@@ -6,7 +6,7 @@ import FormComponent from '../components/Form/FormComponent';
 const formControl = [
     {
         'label': 'Foto',
-        'input': 'file',
+        'input': 'text',
         'name': 'foto'
     },
     {

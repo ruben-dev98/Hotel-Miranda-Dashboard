@@ -17,7 +17,7 @@ const handleClickEdit = (event) => {
 
 const action = () => {
     return <ButtonStyledViewNotes onClick={(event) => handleClickEdit(event)}>Cancelada</ButtonStyledViewNotes>
-} 
+}
 
 const dataTable = [
     {
@@ -38,13 +38,13 @@ const dataTable = [
     },
     {
         'label': 'Special Request',
-        display: row => row.special_request ? 
-        <ButtonStyledViewNotes onClick={(event) => {
-            event.stopPropagation()
-            return Swal.fire(row.special_request)
-        }}>View Notes</ButtonStyledViewNotes> 
-        : 
-        <ButtonStyledViewNotes disabled>View Notes</ButtonStyledViewNotes>
+        display: row => row.special_request ?
+            <ButtonStyledViewNotes onClick={(event) => {
+                event.stopPropagation()
+                return Swal.fire(row.special_request)
+            }}>View Notes</ButtonStyledViewNotes>
+            :
+            <ButtonStyledViewNotes disabled>View Notes</ButtonStyledViewNotes>
     },
     {
         'label': 'Room Type',
@@ -53,7 +53,7 @@ const dataTable = [
     {
         'label': 'Status',
         display: row => {
-            if(row.status === 'Check In') {
+            if (row.status === 'Check In') {
                 return <SpanStyledCheckIn>{row.status}</SpanStyledCheckIn>
             } else if (row.status === 'Check Out') {
                 return <SpanStyledCheckOut>{row.status}</SpanStyledCheckOut>
@@ -63,29 +63,26 @@ const dataTable = [
         }
     },
     {
-        'label' : 'Actions',
+        'label': 'Actions',
         display: row => action()
     }
 ];
 
 const BookingsPage = () => {
     const loc = useLocation();
-    
+
 
     return (
-            loc.pathname !== "/bookings" ? 
-                <Outlet/>
-            :
-                <section className='content'>
-                    <div className="top__menu-table">
-                        <ButtonStyledNew as={LinkStyled} to={'room'}>+ New Booking</ButtonStyledNew>
-                        <OrderComponent data={bookingsOrder}/>
-                    </div>
-                    <TabsComponent data={bookings}></TabsComponent>
-                    <TableComponent rows={dataBookings.toSpliced(10, 30)} columns={dataTable} path={'booking'}></TableComponent>
-                </section>
-        
-        
+        <section className='content'>
+            <div className="top__menu-table">
+                <ButtonStyledNew as={LinkStyled} to={'booking'}>+ New Booking</ButtonStyledNew>
+                <OrderComponent data={bookingsOrder} />
+            </div>
+            <TabsComponent data={bookings}></TabsComponent>
+            <TableComponent rows={dataBookings.toSpliced(10, 30)} columns={dataTable} path={'bookings'}></TableComponent>
+        </section>
+
+
     );
 }
 

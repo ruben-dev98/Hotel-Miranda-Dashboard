@@ -32,20 +32,17 @@ const router = (auth, setAuth) => createBrowserRouter(createRoutesFromElements(
     <Route element={<PrivateRoute auth={auth} />}>
       <Route path="/" element={<MainPage setAuth={setAuth} />}>
         <Route index element={<DashboardPage />} />
-        <Route path='rooms' element={<RoomsPage />} >
-          <Route path='room' element={<RoomPage />} ></Route>
-          <Route path=':id' element={<RoomPage />} ></Route>
-          <Route path='edit/:id' element={<RoomPage />} ></Route>
-        </Route>
-        <Route path='bookings' element={<BookingsPage />}>
-          <Route path='booking' element={<BookingPage />} />
-          <Route path=':id' element={<BookingPage />} />
-        </Route>
-        <Route path='users' element={<UsersPage />}>
-          <Route path="user" element={<UserPage />} />
-          <Route path=":id" element={<UserPage />} />
-          <Route path="edit/:id" element={<UserPage />} />
-        </Route>
+        <Route path='rooms' element={<RoomsPage />} />
+        <Route path='rooms/room' element={<RoomPage />} />
+        <Route path='rooms/:id' element={<RoomPage />} />
+        <Route path='rooms/edit/:id' element={<RoomPage /> }/>
+        <Route path='bookings' element={<BookingsPage />} />
+        <Route path='bookings/booking' element={<BookingPage />} />
+        <Route path='bookings/:id' element={<BookingPage />} />
+        <Route path='users' element={<UsersPage />} />
+        <Route path="users/user" element={<UserPage />} />
+        <Route path="users/:id" element={<UserPage />} />
+        <Route path="users/edit/:id" element={<UserPage />} />
         <Route path='contact' element={<ContactPage />} />
       </Route>
     </Route>

@@ -2,7 +2,6 @@ import { rooms } from "../assets/data/tabs";
 import TabsComponent from "../components/TabsComponent";
 import TableComponent from '../components/TableComponent';
 import dataRooms from '../assets/data/rooms.json'
-import { Outlet, useLocation } from "react-router-dom";
 import { SpanStyled, SpanStyledCheckOut } from "../styled/SpanStyled";
 import { ButtonStyledNew, ButtonStyledViewNotes } from "../styled/ButtonsStyled";
 import OrderComponent from "../components/OrderComponent";
@@ -56,19 +55,15 @@ const dataTable = [
 ];
 
 const RoomsPage = () => {
-    const loc = useLocation();
 
     return (
-        loc.pathname !== '/rooms' ?
-            <Outlet></Outlet>
-            :
             <section className='content'>
             <div className="top__menu-table">
                 <ButtonStyledNew as={LinkStyled} to={'room'}>+ New Room</ButtonStyledNew>
                 <OrderComponent data={roomsOrder}/>
             </div>
                 <TabsComponent data={rooms}></TabsComponent>
-                <TableComponent rows={dataRooms.toSpliced(10, 30)} columns={dataTable} path={'room'}></TableComponent>
+                <TableComponent rows={dataRooms.toSpliced(10, 30)} columns={dataTable} path={'rooms'}></TableComponent>
             </section>
     );
 }
