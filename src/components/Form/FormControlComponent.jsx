@@ -1,6 +1,5 @@
 
 import PropTypes from 'prop-types';
-import { useLocation } from 'react-router-dom';
 
 const renderSwitch = (inputType, data, name, values) => {
     switch (inputType) {
@@ -19,29 +18,29 @@ const renderSwitch = (inputType, data, name, values) => {
                 })}
             </select>)
         default:
-                if(inputType == 'date') {
-                    const date = new Date(values ? values[name] : '');
-                    const month = date.getMonth() + 1;
-                    const day = date.getDate();
-                    return <input defaultValue={values ? `${date.getFullYear()}-${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}` : undefined} name={name} type={inputType} />
-                }
+            if (inputType == 'date') {
+                const date = new Date(values ? values[name] : '');
+                const month = date.getMonth() + 1;
+                const day = date.getDate();
+                return <input defaultValue={values ? `${date.getFullYear()}-${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}` : undefined} name={name} type={inputType} />
+            }
             return <input defaultValue={values ? values[name] : ''} name={name} type={inputType} />
     }
 }
 
 const FormControlComponent = ({ label, inputType, name, data = [], values }) => {
-    const loc = useLocation().pathname;
+
     return (
         <div>
-            
-                {name === 'foto' && values && 
-                    <div>
-                        <img src={values[name]} ></img>
-                    </div>    
-                }
+
+            {name === 'foto' && values &&
+                <div>
+                    <img src={values[name]} ></img>
+                </div>
+            }
             <label>{label}</label>
             {
-                renderSwitch(inputType, data, name, values) 
+                renderSwitch(inputType, data, name, values)
             }
         </div>
     );

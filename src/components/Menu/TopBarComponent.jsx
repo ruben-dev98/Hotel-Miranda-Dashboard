@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
+import { AiOutlineMenuFold } from "react-icons/ai";
+import { FaArrowRight } from "react-icons/fa6";
 import { IoMdLogOut } from "react-icons/io";
 import { BiEnvelope } from "react-icons/bi";
 import { CiBellOn } from "react-icons/ci";
@@ -38,6 +39,10 @@ const IconStyled = styled.li`
         width: 28px;
         height: 28px;
         fill: #135846;
+
+        path {
+            fill: #135846;
+        }
     }
 `;
 
@@ -56,7 +61,7 @@ const TopBarComponent = ({ setAuth, setVisibleLateral, visibleLateral, title}) =
         <HeaderStyled>
             <div>
                 <IconStyled onClick={isMenuVisibleHandle}>
-                    {visibleLateral ? <FaArrowLeft /> : <FaArrowRight />}
+                    {visibleLateral ? <AiOutlineMenuFold/> : <FaArrowRight />}
                     <span style={{marginLeft: 30}}>{title}</span>
                 </IconStyled>
             </div>

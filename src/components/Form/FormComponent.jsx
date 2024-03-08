@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import DetailsComponent from "../Details/DetailsComponent";
 import { ButtonStyled } from "../../styled/ButtonsStyled";
 import { useNavigate } from "react-router-dom";
+import { FaArrowLeft } from 'react-icons/fa6';
 
 const FormStyled = styled.form`
     
@@ -70,13 +71,25 @@ const FormStyled = styled.form`
     }
 `;
 
+const FaArrowLeftStyled = styled(FaArrowLeft)`
+    width: 30px;
+    height: 30px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+
+
 const FormComponent = ({ formControl, data, object__fields, onHandleSubmit, path }) => {
     const nav = useNavigate();
 
     return (
         <>
-            <ButtonStyled onClick={() => nav(-1)}>Back</ButtonStyled>
-
+            <ButtonStyled onClick={() => nav(-1)}>
+                <FaArrowLeftStyled/>
+            </ButtonStyled>
             {data && !path.includes('edit') ?
                 <DetailsComponent data={data} object__fields={object__fields}></DetailsComponent>
                 :  

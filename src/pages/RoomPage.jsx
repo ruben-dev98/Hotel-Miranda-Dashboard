@@ -26,12 +26,6 @@ const formControl = [
         'name': 'description'
     },
     {
-        'label': 'Offer',
-        'input': 'select',
-        'data': ['Yes', 'No'],
-        'name': 'offer'
-    },
-    {
         'label': 'Price',
         'input': 'number',
         'name': 'price'
