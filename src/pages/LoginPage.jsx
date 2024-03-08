@@ -1,6 +1,7 @@
 import { Navigate, useNavigate } from "react-router-dom";
 import PropTypes from 'prop-types';
 import styled from "styled-components";
+import { ButtonStyled } from "../styled/ButtonsStyled";
 
 const FormStyled = styled.form`
     padding: 4rem;
@@ -29,15 +30,8 @@ const FormStyled = styled.form`
     }
 
     button {
-        font-family: "Poppins", sans-serif;
         display: block;
         margin: 0 0 0 auto;
-        border-radius: 20px;
-        width: 100px;
-        height: 50px;
-        border: 0rem;
-        background-color: #135846;
-        color: #FFF;
     }
 
 `;
@@ -60,14 +54,14 @@ const LoginPage = ({auth, setAuth}) => {
         <FormStyled onSubmit={onSubmitHandle}>
             <div>
                 <label>Username</label>
-                <input type="text" name="user"/>
+                <input type="text" name="user" placeholder="user"/>
             </div>
             <div>
                 <label>Password</label>
-                <input type="password" name="password"/>
+                <input type="password" name="password" placeholder="admin"/>
             </div>
             <div>
-                <button type="submit">Login</button>
+                <ButtonStyled type="submit">Login</ButtonStyled>
             </div>
         </FormStyled>
     );

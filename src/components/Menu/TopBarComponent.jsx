@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 import { IoMdLogOut } from "react-icons/io";
 import { BiEnvelope } from "react-icons/bi";
@@ -57,8 +57,8 @@ const TopBarComponent = ({ setAuth, setVisibleLateral, visibleLateral, title}) =
             <div>
                 <IconStyled onClick={isMenuVisibleHandle}>
                     {visibleLateral ? <FaArrowLeft /> : <FaArrowRight />}
+                    <span style={{marginLeft: 30}}>{title}</span>
                 </IconStyled>
-                <span>{title}</span>
             </div>
             <IconsListStyled>
                 <IconStyled>

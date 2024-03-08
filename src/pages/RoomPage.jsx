@@ -1,6 +1,6 @@
 import dataRoom from '../assets/data/rooms.json';
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import FormComponent from '../components/Form/FormComponent';
 
 const formControl = [
@@ -56,10 +56,44 @@ const formControl = [
     },
 ]
 
-const object__fields = ['id', 'foto','full_name', 'start_date', 'description', 'contact', 'status'];
+const object__fields = [
+    { 
+        'field' : 'id',
+        'type' : 'text'
+    },
+    { 
+        'field' : 'number',
+        'type' : 'text'
+    },
+    { 
+        display : field => field.offer === true ? field.price - (field.price * field.discount / 100) : field.price, 
+        'type' : 'text'
+    },
+    { 
+        'field' : 'foto',
+        'type' : 'swiper'
+    },
+    { 
+        'field' : 'description',
+        'type' : 'text'
+    },
+    { 
+        'field' : 'type',
+        'type' : 'text'
+    },
+    { 
+        'field' : 'amenities',
+        'type' : 'array'
+    },
+    { 
+        'field' : 'status',
+        'type' : 'text'
+    }
+];
 
 
 const RoomPage = () => {
+    const loc = useLocation().pathname;
     const { id } = useParams();
     const [room, setRoom] = useState(null);
 
@@ -78,7 +112,6 @@ const RoomPage = () => {
             }
             return event.target[control.name].value
         });
-        console.log(results);
     }
 
     useEffect(() => {
@@ -88,7 +121,7 @@ const RoomPage = () => {
 
     return (
         <section className="content">
-            <FormComponent data={room} formControl={formControl} object__fields={object__fields} onHandleSubmit={onCreateRoom}></FormComponent>
+            <FormComponent path={loc} data={room} formControl={formControl} object__fields={object__fields} onHandleSubmit={onCreateRoom}></FormComponent>
         </section>
     )
 }

@@ -3,8 +3,22 @@ import TableComponent from "../components/TableComponent";
 import TabsComponent from "../components/TabsComponent";
 import dataBookings from '../assets/data/bookings.json';
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { ButtonStyledNew, ButtonStyledViewNotes } from "../styled/ButtonsStyled";
+import { SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress } from "../styled/SpanStyled";
+import OrderComponent from "../components/OrderComponent";
+import { bookingsOrder } from "../assets/data/order";
+import Swal from 'sweetalert2'
 
-const dataTable = [
+const handleClickEdit = (event) => {
+    event.stopPropagation();
+    Swal.fire('Cancelada');
+}
+
+const action = () => {
+    return <ButtonStyledViewNotes onClick={(event) => handleClickEdit(event)}>Cancelada</ButtonStyledViewNotes>
+} 
+
+const dataTable = () =>  [
     {
         'label': 'Guest',
         display: row => `${row.full_name} ${row.id}`
@@ -23,7 +37,13 @@ const dataTable = [
     },
     {
         'label': 'Special Request',
-        display: row => row.special_request ? <button onClick={(event) => event.stopPropagation()}>View Notes</button> : <button disabled>View Notes</button>
+        display: row => row.special_request ? 
+        <ButtonStyledViewNotes onClick={(event) => {
+            event.stopPropagation()
+            return Swal.fire(row.special_request)
+        }}>View Notes</ButtonStyledViewNotes> 
+        : 
+        <ButtonStyledViewNotes disabled>View Notes</ButtonStyledViewNotes>
     },
     {
         'label': 'Room Type',
@@ -31,8 +51,20 @@ const dataTable = [
     },
     {
         'label': 'Status',
-        'property': 'status'
+        display: row => {
+            if(row.status === 'Check In') {
+                return <SpanStyledCheckIn>{row.status}</SpanStyledCheckIn>
+            } else if (row.status === 'Check Out') {
+                return <SpanStyledCheckOut>{row.status}</SpanStyledCheckOut>
+            } else {
+                return <SpanStyledInProgress>{row.status}</SpanStyledInProgress>
+            }
+        }
     },
+    {
+        'label' : 'Actions',
+        display: row => action()
+    }
 ];
 
 const BookingsPage = () => {
@@ -45,9 +77,12 @@ const BookingsPage = () => {
                 <Outlet/>
             :
                 <section className='content'>
-                    <button onClick={() => navigate('booking')}>+ New Booking</button>
+                    <div className="top__menu-table">
+                        <ButtonStyledNew onClick={() => navigate('booking')}>+ New Booking</ButtonStyledNew>
+                        <OrderComponent data={bookingsOrder}/>
+                    </div>
                     <TabsComponent data={bookings}></TabsComponent>
-                    <TableComponent rows={dataBookings.toSpliced(10, 30)} columns={dataTable} path={'booking'}></TableComponent>
+                    <TableComponent rows={dataBookings.toSpliced(10, 30)} columns={dataTable()} path={'booking'}></TableComponent>
                 </section>
         
         

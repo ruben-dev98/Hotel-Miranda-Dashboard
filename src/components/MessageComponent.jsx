@@ -1,41 +1,61 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import Swal from 'sweetalert2';
 
 const MessageComponentStyled = styled.div`
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
     height: 100%;
     background-color: #FFF;
     border-radius: 20px;
     padding: 0.5rem 2.5rem;
+
+    &:hover {
+        box-shadow: 5px 5px 5px 5px #393939;
+    }
+
     div {
         display: flex;
-        justify-content: space-evenly;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 32px;
+
+        img {
+            width: 50px;
+            height: 50px;
+        }
+
+        span {
+            display: block;
+
+            :not(:last-child) {
+                margin: 12px;
+            }
+        }
     }
 `;
 
+const SpanStyled = styled.span`
+    font-size: 1rem;
+    color: #393939;
+`;
+
+const SpanStyledHour= styled(SpanStyled)`
+    font-size: 0.8em;
+    color: #799283;
+`;
+
 const MessageComponent = ({message}) => {
-    const timeElipsed = new Date(Math.floor((Date.now() - parseInt(message.date)) / 1000));
-    const hours = timeElipsed.getHours();
-    const minutes = timeElipsed.getMinutes();
-    const seconds = timeElipsed.getSeconds();
-    
-    const days = timeElipsed.getDay();
-    const month = timeElipsed.getMonth();
 
     return (
         <MessageComponentStyled>
-            <p>{message.messages.slice(0, 50).concat('...')}</p>
+            <p style={{cursor: 'pointer'}} onClick={() => Swal.fire(message.messages)}>{message.messages.slice(0, 50).concat('...')}</p>
             <div>
-                <p> 
-                    {message.full_name}
-                    <br/>
-                    {new Date(parseInt(message.date)).toLocaleString('es-Es')}
-                    <br/>
-                    {`${days} ${month} ${hours}:${minutes}:${seconds}`}
-                </p>
+                <img src={message.foto} />
                 <p>
-                    Hora Actual
-                    <br/>
-                    {Date.now()}
+                    <SpanStyled>{message.full_name}</SpanStyled>
+                    <SpanStyledHour>{message.time_passed}</SpanStyledHour>
                 </p>
             </div>
         </MessageComponentStyled>

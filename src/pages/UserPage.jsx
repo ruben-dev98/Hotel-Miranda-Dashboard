@@ -1,7 +1,7 @@
 import FormComponent from '../components/Form/FormComponent';
 import dataUser from '../assets/data/users.json';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 const formControl = [
     {
@@ -53,9 +53,43 @@ const formControl = [
     },
 ]
 
-const object__fields = ['id', 'foto','full_name', 'start_date', 'description', 'contact', 'status'];
+const object__fields = [
+    { 
+        'field' : 'id',
+        'type' : 'text'
+    },
+    { 
+        'field' : 'start_date',
+        'type' : 'date'
+    },
+    { 
+        'field' : 'full_name',
+        'type' : 'text'
+    },
+    { 
+        'field' : 'contact',
+        'type' : 'text'
+    },
+    { 
+        'field' : 'foto',
+        'type' : 'img'
+    },
+    { 
+        'field' : 'description',
+        'type' : 'text'
+    },
+    {
+        'field' : 'email',
+        'type' : 'text'
+    },
+    { 
+        display : data => data.status ? 'Activo' : 'Inactivo',
+        'type' : 'text'
+    }
+];
 
 const UserPage = () => {
+    const loc = useLocation().pathname;
     const { id } = useParams();
     const [user, setUser] = useState(null);
 
@@ -63,7 +97,7 @@ const UserPage = () => {
         event.preventDefault();
         const results = formControl.map((control) => {
             if(control.input === 'file') {
-                return event.target[control.name].file;
+                return event.target[control.name].value;
             }
             return event.target[control.name].value
         });
@@ -77,7 +111,7 @@ const UserPage = () => {
 
     return (
         <section className="content">
-            <FormComponent data={user} formControl={formControl} object__fields={object__fields} onHandleSubmit={onCreateUser}></FormComponent>
+            <FormComponent path={loc} data={user} formControl={formControl} object__fields={object__fields} onHandleSubmit={onCreateUser}></FormComponent>
         </section>
     )
 }

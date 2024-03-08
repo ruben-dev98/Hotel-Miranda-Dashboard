@@ -2,6 +2,10 @@ body {
     font-family: "Poppins", sans-serif;
 }
 
+button {
+    cursor: pointer;
+}
+
 ul, li {
     list-style-type: none;
 }
@@ -13,19 +17,19 @@ ul, li {
     margin-bottom: 40px;
 }
 
-.menu_lateral {
-    position: relative;
-    display: inline-block;
-    left: 0;
-    right: auto;
-    height: 100vh;
-}
-
 .content {
     grid-area: content;
     padding: 2rem;
-    /*display: inline-block;*/
-    /*vertical-align: top;*/
     background-color: #f8f8f8;
     height: max-content;
+}
+
+.top__menu-table {
+    display: flex;
+    justify-content: flex-end;
+    margin: 30px 0px;
+
+    button {
+        margin-right: 20px;
+    }
 }

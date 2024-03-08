@@ -1,12 +1,29 @@
 import styled from "styled-components";
 import FormControlComponent from "./FormControlComponent";
 import PropTypes from 'prop-types';
+import DetailsComponent from "../Details/DetailsComponent";
+import { ButtonStyled } from "../../styled/ButtonsStyled";
+import { useNavigate } from "react-router-dom";
 
 const FormStyled = styled.form`
     
     div {
         margin: 0 auto;
         width: 60%;
+
+        div {
+            margin-bottom: 20px;
+            
+            .rooms{
+                width: 200px;
+                height: 100px;
+            }
+
+            .users {
+                width: 80px;
+                height: 80px;
+            }
+        }
     }
     
     label {
@@ -45,39 +62,37 @@ const FormStyled = styled.form`
     }
 
     button {
-        color: #FFF;
-        border: 0rem;
         display: block;
         width: 200px;
         height: 100px;
         margin: 40px 35px 0 auto;
-        font-family: "Poppins", sans-serif;
-        background-color: #135846;
     }
 `;
 
-const FormComponent = ( {formControl, data, object__fields, onHandleSubmit} ) => {
-
+const FormComponent = ({ formControl, data, object__fields, onHandleSubmit, path }) => {
+    const nav = useNavigate();
 
     return (
-        data ?
-        <ul>
-            {object__fields.map((field, index) => <li key={index}>{data[field]}</li>)}
-        </ul>
-        : 
-        <FormStyled onSubmit={onHandleSubmit}>
-            {
-                formControl.map((control, index) => 
-                    <FormControlComponent key={index}
-                    label={control.label} 
-                    inputType={control.input} 
-                    name={control.name} 
-                    data={control.data}></FormControlComponent>)
-            }
-            <div>
-                <button type="submit">Create</button>
-            </div>
-        </FormStyled>
+        <>
+            <ButtonStyled onClick={() => nav(-1)}>Back</ButtonStyled>
+
+            {data && !path.includes('edit') ?
+                <DetailsComponent data={data} object__fields={object__fields}></DetailsComponent>
+                :  
+                <FormStyled onSubmit={onHandleSubmit}>
+                    {
+                        formControl.map((control, index) =>
+                            <FormControlComponent key={index}
+                                label={control.label}
+                                inputType={control.input}
+                                name={control.name}
+                                data={control.data} values={data}></FormControlComponent>)
+                    }
+                    <div>
+                        <ButtonStyled type="submit">Create</ButtonStyled>
+                    </div>
+                </FormStyled>}
+        </>
     );
 }
 
@@ -85,7 +100,8 @@ FormComponent.propTypes = {
     formControl: PropTypes.array,
     data: PropTypes.object,
     object__fields: PropTypes.array,
-    onHandleSubmit: PropTypes.func
+    onHandleSubmit: PropTypes.func,
+    path: PropTypes.string
 }
 
 export default FormComponent;
