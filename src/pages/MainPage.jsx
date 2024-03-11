@@ -6,7 +6,7 @@ import TopBarComponent from "../components/Menu/TopBarComponent";
 
 const WindowStyled = styled.div`
     width: 100%;
-    height: 100vh;
+    height: 80vh;
     display: grid;
     grid-template-columns: 20% 80%;
     grid-template-rows: 10% 90%;

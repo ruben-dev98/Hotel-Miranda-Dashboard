@@ -7,9 +7,10 @@ import OrderComponent from "../components/OrderComponent";
 import { roomsOrder } from "../assets/data/order";
 import { LinkStyled } from "../styled/LinkStyled";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getAllRooms, roomsStatus } from "../features/rooms/roomsSlice";
 import { getRooms } from "../features/rooms/roomsAsyncThunk";
+import Loading from "../components/Loading";
 
 const action = (id) => {
     return <ButtonStyledViewNotes as={LinkStyled} to={`edit/${id}`} onClick={(event) => event.stopPropagation()}>Edit</ButtonStyledViewNotes>
@@ -52,7 +53,7 @@ const dataTable = [
             <SpanStyledCheckOut>Booked</SpanStyledCheckOut>
     },
     {
-        'label' : 'Actions',
+        'label': 'Actions',
         display: row => action(row.id)
     }
 ];
@@ -61,28 +62,29 @@ const RoomsPage = () => {
     const dispatch = useDispatch();
     const [showSpinner, setShowSpinner] = useState(true);
     const data = useSelector(getAllRooms);
-    const status = useSelector(roomsStatus);
+
+    const result = useCallback(async () => {
+        await dispatch(getRooms()).unwrap();
+        setShowSpinner(false);
+    }, [dispatch]);
 
     useEffect(() => {
-        if(status === 'idle') {
-            dispatch(getRooms());
-        } else if (status === 'pending') {
-            setShowSpinner(true);
-        } else if (status === 'fulfilled') {
-            setShowSpinner(false);
-        }
-    }, [status, dispatch])
+        result();
+    }, [result]);
 
 
     return (
-        showSpinner ? <span>Loading</span> :
             <section className='content'>
-            <div className="top__menu-table">
-                <ButtonStyledNew as={LinkStyled} to={'room'}>+ New Room</ButtonStyledNew>
-                <OrderComponent data={roomsOrder}/>
-            </div>
-                <TabsComponent data={rooms}></TabsComponent>
-                <TableComponent rows={data} columns={dataTable} path={'rooms'}></TableComponent>
+                {showSpinner ? <Loading></Loading> :
+                    <>
+                        <div className="top__menu-table">
+                            <ButtonStyledNew as={LinkStyled} to={'room'}>+ New Room</ButtonStyledNew>
+                            <OrderComponent data={roomsOrder} />
+                        </div>
+                        <TabsComponent data={rooms}></TabsComponent>
+                        <TableComponent rows={data} columns={dataTable} path={'rooms'}></TableComponent>
+                    </>
+                }
             </section>
     );
 }

@@ -9,8 +9,9 @@ import Swal from 'sweetalert2'
 import { LinkStyled } from "../styled/LinkStyled";
 import { useDispatch, useSelector } from "react-redux";
 import { bookingsStatus, getAllBookings } from "../features/bookings/bookingsSlice";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getBookings } from "../features/bookings/bookingsAsyncThunk";
+import Loading from "../components/Loading";
 
 const handleClickEdit = (event) => {
     event.stopPropagation();
@@ -76,27 +77,29 @@ const BookingsPage = () => {
     const data = useSelector(getAllBookings);
     const status = useSelector(bookingsStatus);
 
+    const result = useCallback(async () => {
+        await dispatch(getBookings()).unwrap();
+        setShowSpinner(false);
+    }, [dispatch]);
+
     useEffect(() => {
-        if(status === 'idle') {
-            dispatch(getBookings());
-        } else if (status === 'pending') {
-            setShowSpinner(true);
-        } else if (status === 'fulfilled') {
-            setShowSpinner(false);
-        }
-    }, [status, dispatch])
+        result();
+    }, [result]);
 
 
     return (
-        showSpinner ? <span>Loading</span> :
-        <section className='content'>
-            <div className="top__menu-table">
-                <ButtonStyledNew as={LinkStyled} to={'booking'}>+ New Booking</ButtonStyledNew>
-                <OrderComponent data={bookingsOrder} />
-            </div>
-            <TabsComponent data={bookings}></TabsComponent>
-            <TableComponent rows={data} columns={dataTable} path={'bookings'}></TableComponent>
-        </section>
+            <section className='content'>
+                {showSpinner ? <Loading></Loading> :
+                    <>
+                        <div className="top__menu-table">
+                            <ButtonStyledNew as={LinkStyled} to={'booking'}>+ New Booking</ButtonStyledNew>
+                            <OrderComponent data={bookingsOrder} />
+                        </div>
+                        <TabsComponent data={bookings}></TabsComponent>
+                        <TableComponent rows={data} columns={dataTable} path={'bookings'}></TableComponent>
+                    </>
+                }
+            </section>
 
 
     );

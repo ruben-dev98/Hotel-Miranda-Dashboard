@@ -4,9 +4,10 @@ import TabsComponent from "../components/TabsComponent";
 import MessageListComponent from './../components/MessageListComponent';
 import { ButtonStyledArchived, ButtonStyledPublish } from "../styled/ButtonsStyled";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getMessages } from "../features/messages/messagesAsyncThunk";
 import { getAllMessages, messagesStatus } from "../features/messages/messagesSlice";
+import Loading from "../components/Loading";
 
 const dataTable = [
     {
@@ -24,9 +25,9 @@ const dataTable = [
     {
         'label': 'Action',
         display: row => row.archived ?
-        <ButtonStyledPublish>Publish</ButtonStyledPublish>
-        :
-        <ButtonStyledArchived>Archive</ButtonStyledArchived>
+            <ButtonStyledPublish>Publish</ButtonStyledPublish>
+            :
+            <ButtonStyledArchived>Archive</ButtonStyledArchived>
     }
 ];
 
@@ -34,26 +35,27 @@ const ContactPage = () => {
     const dispatch = useDispatch();
     const [showSpinner, setShowSpinner] = useState(true);
     const data = useSelector(getAllMessages);
-    const status = useSelector(messagesStatus);
+
+    const result = useCallback(async () => {
+        await dispatch(getMessages()).unwrap();
+        setShowSpinner(false);
+    }, [dispatch]);
 
     useEffect(() => {
-        if(status === 'idle') {
-            dispatch(getMessages());
-        } else if (status === 'pending') {
-            setShowSpinner(true);
-        } else if (status === 'fulfilled') {
-            setShowSpinner(false);
-        }
-    }, [status, dispatch])
+        result();
+    }, [result]);
 
 
     return (
-        showSpinner ? <span>Loading</span> :
-        <section className='content'>
-            <MessageListComponent/>
-            <TabsComponent data={message}></TabsComponent>
-            <TableComponent  rows={data} columns={dataTable} path={''}></TableComponent>
-        </section>
+            <section className='content'>
+                {showSpinner ? <Loading></Loading> :
+                    <>
+                        <MessageListComponent />
+                        <TabsComponent data={message}></TabsComponent>
+                        <TableComponent rows={data} columns={dataTable} path={''}></TableComponent>
+                    </>
+                }
+            </section>
     );
 }
 

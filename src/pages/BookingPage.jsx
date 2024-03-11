@@ -2,9 +2,10 @@ import { useParams } from "react-router-dom";
 import dataRooms from "../assets/data/rooms.json";
 import FormComponent from './../components/Form/FormComponent';
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import { getBooking } from "../features/bookings/bookingsAsyncThunk";
-import { bookingStatus, getOneBooking } from "../features/bookings/bookingsSlice";
+import { useCallback, useEffect, useState } from "react";
+import { addBooking, getBooking } from "../features/bookings/bookingsAsyncThunk";
+import { getOneBooking } from "../features/bookings/bookingsSlice";
+import Loading from "../components/Loading";
 
 const sortRoomNumbers = () => {
     return dataRooms.map((room) => room.number).sort((a, b) => {
@@ -107,21 +108,30 @@ const object__fields = [
 
 const BookingPage = () => {
     const dispatch = useDispatch();
+    const [showSpinner, setShowSpinner] = useState(true);
     const { id } = useParams();
     const booking = useSelector(getOneBooking);
 
     const onCreateBooking = (event) => {
         event.preventDefault();
-        const results = formControl.map((control) => event.target[control.name].value);
+        const results = formControl.map((control) => ({[control.name]: event.target[control.name].value}));
+        dispatch(addBooking(results));
     }
 
+    const result = useCallback(async () => {
+        await dispatch(getBooking(parseInt(id))).unwrap();
+        setShowSpinner(false);
+    }, [id, dispatch]);
+
     useEffect(() => {
-        dispatch(getBooking(parseInt(id)));
-    }, [dispatch, id])
+        result();
+    }, [result]);
 
     return (
+        
             <section className="content">
-                <FormComponent path={''} formControl={formControl} data={booking} object__fields={object__fields} onHandleSubmit={onCreateBooking}></FormComponent>
+                {showSpinner ? <Loading></Loading> :
+                <FormComponent path={''} formControl={formControl} data={booking} object__fields={object__fields} onHandleSubmit={onCreateBooking}></FormComponent>}
             </section>
     );
 

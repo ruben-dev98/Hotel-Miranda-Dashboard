@@ -7,9 +7,10 @@ import { ButtonStyledNew, ButtonStyledViewNotes } from "../styled/ButtonsStyled"
 import OrderComponent from './../components/OrderComponent';
 import { LinkStyled } from "../styled/LinkStyled";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { employeesStatus, getAllEmployees } from "../features/employees/employeesSlice";
 import { getEmployees } from "../features/employees/employeesAsyncThunk";
+import Loading from "../components/Loading";
 
 const action = (id) => {
     return <ButtonStyledViewNotes as={LinkStyled} to={`edit/${id}`} onClick={(event) => event.stopPropagation()}>Edit</ButtonStyledViewNotes>
@@ -51,7 +52,7 @@ const dataTable = [
             <SpanStyledCheckOut>Inactive</SpanStyledCheckOut>
     },
     {
-        'label' : 'Actions',
+        'label': 'Actions',
         display: row => action(row.id)
     }
 ];
@@ -60,29 +61,30 @@ const UsersPage = () => {
     const dispatch = useDispatch();
     const [showSpinner, setShowSpinner] = useState(true);
     const data = useSelector(getAllEmployees);
-    const status = useSelector(employeesStatus);
+
+    const result = useCallback(async () => {
+        await dispatch(getEmployees()).unwrap();
+        setShowSpinner(false);
+    }, [dispatch]);
 
     useEffect(() => {
-        if(status === 'idle') {
-            dispatch(getEmployees());
-        } else if (status === 'pending') {
-            setShowSpinner(true);
-        } else if (status === 'fulfilled') {
-            setShowSpinner(false);
-        }
-    }, [status, dispatch])
+        result();
+    }, [result]);
 
 
     return (
-        showSpinner ? <span>Loading</span> :
-            <section className='content'>
-                <div className="top__menu-table">
-                    <ButtonStyledNew as={LinkStyled} to={'user'}>+ New Employee</ButtonStyledNew>
-                    <OrderComponent data={usersOrder}></OrderComponent>
-                </div>
-                <TabsComponent data={users}></TabsComponent>
-                <TableComponent rows={data} columns={dataTable} path={'users'}></TableComponent>
-            </section>
+        <section className='content'>
+            {showSpinner ? <Loading></Loading> :
+                <>
+                    <div className="top__menu-table">
+                        <ButtonStyledNew as={LinkStyled} to={'user'}>+ New Employee</ButtonStyledNew>
+                        <OrderComponent data={usersOrder}></OrderComponent>
+                    </div>
+                    <TabsComponent data={users}></TabsComponent>
+                    <TableComponent rows={data} columns={dataTable} path={'users'}></TableComponent>
+                </>
+            }
+        </section>
     );
 }
 

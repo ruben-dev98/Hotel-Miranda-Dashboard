@@ -2,9 +2,10 @@ import FormComponent from '../components/Form/FormComponent';
 import dataUser from '../assets/data/users.json';
 import { useLocation, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { employeeStatus, getOneEmployee } from '../features/employees/employeesSlice';
 import { getEmployee } from '../features/employees/employeesAsyncThunk';
+import Loading from '../components/Loading';
 
 const formControl = [
     {
@@ -57,37 +58,37 @@ const formControl = [
 ]
 
 const object__fields = [
-    { 
-        'field' : 'id',
-        'type' : 'text'
-    },
-    { 
-        'field' : 'start_date',
-        'type' : 'date'
-    },
-    { 
-        'field' : 'full_name',
-        'type' : 'text'
-    },
-    { 
-        'field' : 'contact',
-        'type' : 'text'
-    },
-    { 
-        'field' : 'foto',
-        'type' : 'img'
-    },
-    { 
-        'field' : 'description',
-        'type' : 'text'
+    {
+        'field': 'id',
+        'type': 'text'
     },
     {
-        'field' : 'email',
-        'type' : 'text'
+        'field': 'start_date',
+        'type': 'date'
     },
-    { 
-        display : data => data.status ? 'Activo' : 'Inactivo',
-        'type' : 'text'
+    {
+        'field': 'full_name',
+        'type': 'text'
+    },
+    {
+        'field': 'contact',
+        'type': 'text'
+    },
+    {
+        'field': 'foto',
+        'type': 'img'
+    },
+    {
+        'field': 'description',
+        'type': 'text'
+    },
+    {
+        'field': 'email',
+        'type': 'text'
+    },
+    {
+        display: data => data.status ? 'Activo' : 'Inactivo',
+        'type': 'text'
     }
 ];
 
@@ -95,7 +96,6 @@ const UserPage = () => {
     const dispatch = useDispatch();
     const [showSpinner, setShowSpinner] = useState(true);
     const user = useSelector(getOneEmployee);
-    const status = useSelector(employeeStatus);
     const loc = useLocation().pathname;
     const { id } = useParams();
 
@@ -104,22 +104,22 @@ const UserPage = () => {
         const results = formControl.map((control) => {
             return event.target[control.name].value
         });
-        
+
     }
+
+    const result = useCallback(async () => {
+        await dispatch(getEmployee(parseInt(id))).unwrap();
+        setShowSpinner(false);
+    }, [id, dispatch]);
+
     useEffect(() => {
-        if(status === 'idle') {
-            dispatch(getEmployee(parseInt(id)));
-        } else if (status === 'pending') {
-            setShowSpinner(true);
-        } else if (status === 'fulfilled') {
-            setShowSpinner(false);
-        }
-    }, [status, dispatch, id])
+        result();
+    }, [result])
 
     return (
-        showSpinner ? <span>Loading</span> :
         <section className="content">
-            <FormComponent path={loc} data={user} formControl={formControl} object__fields={object__fields} onHandleSubmit={onCreateUser}></FormComponent>
+            {showSpinner ? <Loading></Loading> :
+                <FormComponent path={loc} data={user} formControl={formControl} object__fields={object__fields} onHandleSubmit={onCreateUser}></FormComponent>}
         </section>
     )
 }
