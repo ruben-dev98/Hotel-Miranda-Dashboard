@@ -1,11 +1,13 @@
 import { message } from "../assets/data/tabs";
-import messages from "../assets/data/messages.json";
 import TableComponent from "../components/TableComponent";
 import TabsComponent from "../components/TabsComponent";
 import MessageListComponent from './../components/MessageListComponent';
 import { ButtonStyledArchived, ButtonStyledPublish } from "../styled/ButtonsStyled";
-import { messageOrder } from "../assets/data/order";
-import OrderComponent from "../components/OrderComponent";
+import { useDispatch, useSelector } from "react-redux";
+import { useCallback, useEffect, useState } from "react";
+import { getMessages } from "../features/messages/messagesAsyncThunk";
+import { getAllMessages, messagesStatus } from "../features/messages/messagesSlice";
+import Loading from "../components/Loading";
 
 const dataTable = [
     {
@@ -23,20 +25,37 @@ const dataTable = [
     {
         'label': 'Action',
         display: row => row.archived ?
-        <ButtonStyledPublish>Publish</ButtonStyledPublish>
-        :
-        <ButtonStyledArchived>Archive</ButtonStyledArchived>
+            <ButtonStyledPublish>Publish</ButtonStyledPublish>
+            :
+            <ButtonStyledArchived>Archive</ButtonStyledArchived>
     }
 ];
 
 const ContactPage = () => {
+    const dispatch = useDispatch();
+    const [showSpinner, setShowSpinner] = useState(true);
+    const data = useSelector(getAllMessages);
+
+    const result = useCallback(async () => {
+        await dispatch(getMessages()).unwrap();
+        setShowSpinner(false);
+    }, [dispatch]);
+
+    useEffect(() => {
+        result();
+    }, [result]);
+
 
     return (
-        <section className='content'>
-            <MessageListComponent/>
-            <TabsComponent data={message}></TabsComponent>
-            <TableComponent  rows={messages.toSpliced(10, 30)} columns={dataTable} path={''}></TableComponent>
-        </section>
+            <section className='content'>
+                {showSpinner ? <Loading></Loading> :
+                    <>
+                        <MessageListComponent />
+                        <TabsComponent data={message}></TabsComponent>
+                        <TableComponent rows={data} columns={dataTable} path={''}></TableComponent>
+                    </>
+                }
+            </section>
     );
 }
 

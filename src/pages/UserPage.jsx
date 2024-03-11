@@ -1,12 +1,16 @@
 import FormComponent from '../components/Form/FormComponent';
 import dataUser from '../assets/data/users.json';
-import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useCallback, useEffect, useState } from 'react';
+import { employeeStatus, getOneEmployee } from '../features/employees/employeesSlice';
+import { getEmployee } from '../features/employees/employeesAsyncThunk';
+import Loading from '../components/Loading';
 
 const formControl = [
     {
         'label': 'Foto',
-        'input': 'file',
+        'input': 'text',
         'name': 'foto'
     },
     {
@@ -54,64 +58,68 @@ const formControl = [
 ]
 
 const object__fields = [
-    { 
-        'field' : 'id',
-        'type' : 'text'
-    },
-    { 
-        'field' : 'start_date',
-        'type' : 'date'
-    },
-    { 
-        'field' : 'full_name',
-        'type' : 'text'
-    },
-    { 
-        'field' : 'contact',
-        'type' : 'text'
-    },
-    { 
-        'field' : 'foto',
-        'type' : 'img'
-    },
-    { 
-        'field' : 'description',
-        'type' : 'text'
+    {
+        'field': 'id',
+        'type': 'text'
     },
     {
-        'field' : 'email',
-        'type' : 'text'
+        'field': 'start_date',
+        'type': 'date'
     },
-    { 
-        display : data => data.status ? 'Activo' : 'Inactivo',
-        'type' : 'text'
+    {
+        'field': 'full_name',
+        'type': 'text'
+    },
+    {
+        'field': 'contact',
+        'type': 'text'
+    },
+    {
+        'field': 'foto',
+        'type': 'img'
+    },
+    {
+        'field': 'description',
+        'type': 'text'
+    },
+    {
+        'field': 'email',
+        'type': 'text'
+    },
+    {
+        display: data => data.status ? 'Activo' : 'Inactivo',
+        'type': 'text'
     }
 ];
 
 const UserPage = () => {
+    const dispatch = useDispatch();
+    const [showSpinner, setShowSpinner] = useState(true);
+    const user = useSelector(getOneEmployee);
     const loc = useLocation().pathname;
     const { id } = useParams();
-    const [user, setUser] = useState(null);
 
     const onCreateUser = (event) => {
         event.preventDefault();
         const results = formControl.map((control) => {
-            if(control.input === 'file') {
-                return event.target[control.name].value;
-            }
             return event.target[control.name].value
         });
-        
+
     }
 
-    useEffect(() => {
-        setUser(dataUser.find((user) => user.id === parseInt(id)));
-    }, [id]);
+    const result = useCallback(async () => {
+        await dispatch(getEmployee(parseInt(id))).unwrap();
+        setShowSpinner(false);
+    }, [id, dispatch]);
 
+    useEffect(() => {
+        result();
+    }, [result])
 
     return (
         <section className="content">
-            <FormComponent path={loc} data={user} formControl={formControl} object__fields={object__fields} onHandleSubmit={onCreateUser}></FormComponent>
+            {showSpinner ? <Loading></Loading> :
+                <FormComponent path={loc} data={user} formControl={formControl} object__fields={object__fields} onHandleSubmit={onCreateUser}></FormComponent>}
         </section>
     )
 }

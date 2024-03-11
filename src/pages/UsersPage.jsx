@@ -2,22 +2,21 @@ import { users } from "../assets/data/tabs";
 import { usersOrder } from "../assets/data/order";
 import TableComponent from "../components/TableComponent";
 import TabsComponent from "../components/TabsComponent";
-import data from "../assets/data/users.json"; 
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { SpanStyled, SpanStyledCheckOut } from "../styled/SpanStyled";
 import { ButtonStyledNew, ButtonStyledViewNotes } from "../styled/ButtonsStyled";
 import OrderComponent from './../components/OrderComponent';
+import { LinkStyled } from "../styled/LinkStyled";
+import { useDispatch, useSelector } from "react-redux";
+import { useCallback, useEffect, useState } from "react";
+import { employeesStatus, getAllEmployees } from "../features/employees/employeesSlice";
+import { getEmployees } from "../features/employees/employeesAsyncThunk";
+import Loading from "../components/Loading";
 
-const handleClickEdit = (id, event, nav) => {
-    event.stopPropagation();
-    nav(`edit/${id}`);
+const action = (id) => {
+    return <ButtonStyledViewNotes as={LinkStyled} to={`edit/${id}`} onClick={(event) => event.stopPropagation()}>Edit</ButtonStyledViewNotes>
 }
 
-const action = (id, nav) => {
-    return <ButtonStyledViewNotes onClick={(event) => handleClickEdit(id, event, nav)}>Edit</ButtonStyledViewNotes>
-}
-
-const dataTable = (nav) => [
+const dataTable = [
     {
         'label': 'Image',
         display: row => <img src={row.foto} />
@@ -53,26 +52,39 @@ const dataTable = (nav) => [
             <SpanStyledCheckOut>Inactive</SpanStyledCheckOut>
     },
     {
-        'label' : 'Actions',
-        display: row => action(row.id, nav)
+        'label': 'Actions',
+        display: row => action(row.id)
     }
 ];
 
 const UsersPage = () => {
-    const loc = useLocation();
-    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [showSpinner, setShowSpinner] = useState(true);
+    const data = useSelector(getAllEmployees);
+
+    const result = useCallback(async () => {
+        await dispatch(getEmployees()).unwrap();
+        setShowSpinner(false);
+    }, [dispatch]);
+
+    useEffect(() => {
+        result();
+    }, [result]);
+
+
     return (
-        loc.pathname !== '/users' ?
-            <Outlet></Outlet>
-            :
-            <section className='content'>
-                <div className="top__menu-table">
-                    <ButtonStyledNew onClick={() => navigate('user')}>+ New Employee</ButtonStyledNew>
-                    <OrderComponent data={usersOrder}></OrderComponent>
-                </div>
-                <TabsComponent data={users}></TabsComponent>
-                <TableComponent rows={data.toSpliced(10, 40)} columns={dataTable(navigate)} path={'user'}></TableComponent>
-            </section>
+        <section className='content'>
+            {showSpinner ? <Loading></Loading> :
+                <>
+                    <div className="top__menu-table">
+                        <ButtonStyledNew as={LinkStyled} to={'user'}>+ New Employee</ButtonStyledNew>
+                        <OrderComponent data={usersOrder}></OrderComponent>
+                    </div>
+                    <TabsComponent data={users}></TabsComponent>
+                    <TableComponent rows={data} columns={dataTable} path={'users'}></TableComponent>
+                </>
+            }
+        </section>
     );
 }
 

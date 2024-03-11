@@ -1,13 +1,17 @@
 import { bookings } from "../assets/data/tabs";
 import TableComponent from "../components/TableComponent";
 import TabsComponent from "../components/TabsComponent";
-import dataBookings from '../assets/data/bookings.json';
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { ButtonStyledNew, ButtonStyledViewNotes } from "../styled/ButtonsStyled";
 import { SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress } from "../styled/SpanStyled";
 import OrderComponent from "../components/OrderComponent";
 import { bookingsOrder } from "../assets/data/order";
 import Swal from 'sweetalert2'
+import { LinkStyled } from "../styled/LinkStyled";
+import { useDispatch, useSelector } from "react-redux";
+import { bookingsStatus, getAllBookings } from "../features/bookings/bookingsSlice";
+import { useCallback, useEffect, useState } from "react";
+import { getBookings } from "../features/bookings/bookingsAsyncThunk";
+import Loading from "../components/Loading";
 
 const handleClickEdit = (event) => {
     event.stopPropagation();
@@ -16,9 +20,9 @@ const handleClickEdit = (event) => {
 
 const action = () => {
     return <ButtonStyledViewNotes onClick={(event) => handleClickEdit(event)}>Cancelada</ButtonStyledViewNotes>
-} 
+}
 
-const dataTable = () =>  [
+const dataTable = [
     {
         'label': 'Guest',
         display: row => `${row.full_name} ${row.id}`
@@ -37,13 +41,13 @@ const dataTable = () =>  [
     },
     {
         'label': 'Special Request',
-        display: row => row.special_request ? 
-        <ButtonStyledViewNotes onClick={(event) => {
-            event.stopPropagation()
-            return Swal.fire(row.special_request)
-        }}>View Notes</ButtonStyledViewNotes> 
-        : 
-        <ButtonStyledViewNotes disabled>View Notes</ButtonStyledViewNotes>
+        display: row => row.special_request ?
+            <ButtonStyledViewNotes onClick={(event) => {
+                event.stopPropagation()
+                return Swal.fire(row.special_request)
+            }}>View Notes</ButtonStyledViewNotes>
+            :
+            <ButtonStyledViewNotes disabled>View Notes</ButtonStyledViewNotes>
     },
     {
         'label': 'Room Type',
@@ -52,7 +56,7 @@ const dataTable = () =>  [
     {
         'label': 'Status',
         display: row => {
-            if(row.status === 'Check In') {
+            if (row.status === 'Check In') {
                 return <SpanStyledCheckIn>{row.status}</SpanStyledCheckIn>
             } else if (row.status === 'Check Out') {
                 return <SpanStyledCheckOut>{row.status}</SpanStyledCheckOut>
@@ -62,30 +66,42 @@ const dataTable = () =>  [
         }
     },
     {
-        'label' : 'Actions',
+        'label': 'Actions',
         display: row => action()
     }
 ];
 
 const BookingsPage = () => {
-    const loc = useLocation();
-    const navigate = useNavigate();
-    
+    const dispatch = useDispatch();
+    const [showSpinner, setShowSpinner] = useState(true);
+    const data = useSelector(getAllBookings);
+    const status = useSelector(bookingsStatus);
+
+    const result = useCallback(async () => {
+        await dispatch(getBookings()).unwrap();
+        setShowSpinner(false);
+    }, [dispatch]);
+
+    useEffect(() => {
+        result();
+    }, [result]);
+
 
     return (
-            loc.pathname !== "/bookings" ? 
-                <Outlet/>
-            :
-                <section className='content'>
-                    <div className="top__menu-table">
-                        <ButtonStyledNew onClick={() => navigate('booking')}>+ New Booking</ButtonStyledNew>
-                        <OrderComponent data={bookingsOrder}/>
-                    </div>
-                    <TabsComponent data={bookings}></TabsComponent>
-                    <TableComponent rows={dataBookings.toSpliced(10, 30)} columns={dataTable()} path={'booking'}></TableComponent>
-                </section>
-        
-        
+            <section className='content'>
+                {showSpinner ? <Loading></Loading> :
+                    <>
+                        <div className="top__menu-table">
+                            <ButtonStyledNew as={LinkStyled} to={'booking'}>+ New Booking</ButtonStyledNew>
+                            <OrderComponent data={bookingsOrder} />
+                        </div>
+                        <TabsComponent data={bookings}></TabsComponent>
+                        <TableComponent rows={data} columns={dataTable} path={'bookings'}></TableComponent>
+                    </>
+                }
+            </section>
+
+
     );
 }
 

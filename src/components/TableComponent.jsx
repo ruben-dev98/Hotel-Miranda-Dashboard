@@ -24,7 +24,7 @@ const TableStyled = styled.table`
     }
 
     tbody > tr:hover {
-        box-shadow: 5px 5px 5px 5px #393939;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     }
 
     
@@ -45,7 +45,7 @@ const TableComponent = ({ rows, columns, path }) => {
                     return (
                         <tr onClick={(event) => {
                             if (path !== '') {
-                                return navigate(`${row.id}`)
+                                navigate(`${row.id}`)
                             }
                             return '';
                         }} key={index}>

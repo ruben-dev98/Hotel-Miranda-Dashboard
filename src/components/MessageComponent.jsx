@@ -12,7 +12,7 @@ const MessageComponentStyled = styled.div`
     padding: 0.5rem 2.5rem;
 
     &:hover {
-        box-shadow: 5px 5px 5px 5px #393939;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     }
 
     div {

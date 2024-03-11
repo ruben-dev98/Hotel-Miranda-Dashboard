@@ -1,13 +1,14 @@
 import { Navigate, useNavigate } from "react-router-dom";
-import PropTypes from 'prop-types';
 import styled from "styled-components";
 import { ButtonStyled } from "../styled/ButtonsStyled";
+import { useContext } from "react";
+import { UserContext } from "../app/UserContext";
 
 const FormStyled = styled.form`
     padding: 4rem;
     width: 50%;
     margin: 200px auto 0 auto;
-    box-shadow: 10px 10px 10px 10px #135846;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 
     div {
         width: 60%;
@@ -36,29 +37,30 @@ const FormStyled = styled.form`
 
 `;
 
-const LoginPage = ({auth, setAuth}) => {
+const LoginPage = () => {
     const navigate = useNavigate();
-
+    const {state, dispatch} = useContext(UserContext);
     const onSubmitHandle = (event) => {
         event.preventDefault();
         if(event.target.user.value === 'user' && event.target.password.value === 'admin') {
-            setAuth(true);
+            dispatch({type: 'login', payload: {user: 'user', password: 'admin'}});
+            navigate('/');
         }
-        navigate('/');
+        
     }
 
     return (
-        auth ? 
+        state.auth ? 
         <Navigate to='/' replace/> 
         :
         <FormStyled onSubmit={onSubmitHandle}>
             <div>
                 <label>Username</label>
-                <input type="text" name="user" placeholder="user"/>
+                <input type="text" defaultValue={'user'} name="user" placeholder="user"/>
             </div>
             <div>
                 <label>Password</label>
-                <input type="password" name="password" placeholder="admin"/>
+                <input type="password" defaultValue={'admin'} name="password" placeholder="admin"/>
             </div>
             <div>
                 <ButtonStyled type="submit">Login</ButtonStyled>
@@ -66,11 +68,6 @@ const LoginPage = ({auth, setAuth}) => {
         </FormStyled>
     );
 
-}
-
-LoginPage.propTypes = {
-    auth: PropTypes.bool,
-    setAuth: PropTypes.func
 }
 
 export default LoginPage;

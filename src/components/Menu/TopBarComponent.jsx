@@ -1,10 +1,13 @@
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
+import { AiOutlineMenuFold } from "react-icons/ai";
+import { FaArrowRight } from "react-icons/fa6";
 import { IoMdLogOut } from "react-icons/io";
 import { BiEnvelope } from "react-icons/bi";
 import { CiBellOn } from "react-icons/ci";
 import styled from 'styled-components';
+import { useContext } from 'react';
+import { UserContext } from '../../app/UserContext';
 
 const HeaderStyled = styled.header`
     grid-area: header;
@@ -38,13 +41,18 @@ const IconStyled = styled.li`
         width: 28px;
         height: 28px;
         fill: #135846;
+
+        path {
+            fill: #135846;
+        }
     }
 `;
 
-const TopBarComponent = ({ setAuth, setVisibleLateral, visibleLateral, title}) => {
+const TopBarComponent = ({ setVisibleLateral, visibleLateral, title}) => {
     const navigate = useNavigate();
+    const context = useContext(UserContext);
     const logOutHandle = () => {
-        setAuth(false);
+        context.dispatch({type: 'logout'});
         navigate("/login");
     }
 
@@ -56,7 +64,7 @@ const TopBarComponent = ({ setAuth, setVisibleLateral, visibleLateral, title}) =
         <HeaderStyled>
             <div>
                 <IconStyled onClick={isMenuVisibleHandle}>
-                    {visibleLateral ? <FaArrowLeft /> : <FaArrowRight />}
+                    {visibleLateral ? <AiOutlineMenuFold/> : <FaArrowRight />}
                     <span style={{marginLeft: 30}}>{title}</span>
                 </IconStyled>
             </div>
@@ -76,7 +84,6 @@ const TopBarComponent = ({ setAuth, setVisibleLateral, visibleLateral, title}) =
 }
 
 TopBarComponent.propTypes = {
-    setAuth: PropTypes.func,
     setVisibleLateral: PropTypes.func,
     visibleLateral: PropTypes.bool,
     title: PropTypes.string

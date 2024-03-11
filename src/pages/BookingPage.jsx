@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import dataBookings from "../assets/data/bookings.json";
+import { useParams } from "react-router-dom";
 import dataRooms from "../assets/data/rooms.json";
 import FormComponent from './../components/Form/FormComponent';
-import { ButtonStyled } from './../styled/ButtonsStyled';
+import { useDispatch, useSelector } from "react-redux";
+import { useCallback, useEffect, useState } from "react";
+import { addBooking, getBooking } from "../features/bookings/bookingsAsyncThunk";
+import { getOneBooking } from "../features/bookings/bookingsSlice";
+import Loading from "../components/Loading";
 
 const sortRoomNumbers = () => {
     return dataRooms.map((room) => room.number).sort((a, b) => {
@@ -105,22 +107,32 @@ const object__fields = [
 
 
 const BookingPage = () => {
+    const dispatch = useDispatch();
+    const [showSpinner, setShowSpinner] = useState(true);
     const { id } = useParams();
-    const [booking, setBooking] = useState(null);
+    const booking = useSelector(getOneBooking);
 
     const onCreateBooking = (event) => {
         event.preventDefault();
-        const results = formControl.map((control) => event.target[control.name].value);
+        const results = formControl.map((control) => ({[control.name]: event.target[control.name].value}));
+        dispatch(addBooking(results));
     }
 
+    const result = useCallback(async () => {
+        await dispatch(getBooking(parseInt(id))).unwrap();
+        setShowSpinner(false);
+    }, [id, dispatch]);
+
     useEffect(() => {
-        setBooking(dataBookings.find((booking) => booking.id === parseInt(id)));
-    }, [id]);
+        result();
+    }, [result]);
 
     return (
-        <section className="content">
-            <FormComponent path={''} formControl={formControl} data={booking} object__fields={object__fields} onHandleSubmit={onCreateBooking}></FormComponent>
-        </section>
+        
+            <section className="content">
+                {showSpinner ? <Loading></Loading> :
+                <FormComponent path={''} formControl={formControl} data={booking} object__fields={object__fields} onHandleSubmit={onCreateBooking}></FormComponent>}
+            </section>
     );
 
 }

@@ -5,16 +5,18 @@ import RoomsPage from './pages/RoomsPage';
 import BookingsPage from './pages/BookingsPage';
 import UsersPage from './pages/UsersPage';
 import ContactPage from './pages/ContactPage';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import MainPage from './pages/MainPage';
 import PropTypes from 'prop-types';
 import UserPage from './pages/UserPage';
 import BookingPage from './pages/BookingPage';
 import RoomPage from './pages/RoomPage';
+import { UserAuthProvider, UserContext } from './app/UserContext';
 
 
-const PrivateRoute = ({ auth, redirect = "/login", children }) => {
-  return !auth ?
+const PrivateRoute = ({redirect = "/login", children }) => {
+  const context = useContext(UserContext);
+  return !context.state.auth ?
     <Navigate to={redirect} replace />
     :
     children ? children : <Outlet />;
@@ -26,44 +28,36 @@ PrivateRoute.propTypes = {
   children: PropTypes.node
 }
 
-const router = (auth, setAuth) => createBrowserRouter(createRoutesFromElements(
+const router = createBrowserRouter(createRoutesFromElements(
   <>
-    <Route path="/login" element={<LoginPage auth={auth} setAuth={setAuth} />} />
-    <Route element={<PrivateRoute auth={auth} />}>
-      <Route path="/" element={<MainPage setAuth={setAuth} />}>
+    <Route path="/login" element={<LoginPage />} />
+    <Route element={<PrivateRoute />}>
+      <Route path="/" element={<MainPage />}>
         <Route index element={<DashboardPage />} />
-        <Route path='rooms' element={<RoomsPage />} >
-          <Route path='room' element={<RoomPage />} ></Route>
-          <Route path=':id' element={<RoomPage />} ></Route>
-          <Route path='edit/:id' element={<RoomPage />} ></Route>
-        </Route>
-        <Route path='bookings' element={<BookingsPage />}>
-          <Route path='booking' element={<BookingPage />} />
-          <Route path=':id' element={<BookingPage />} />
-        </Route>
-        <Route path='users' element={<UsersPage />}>
-          <Route path="user" element={<UserPage />} />
-          <Route path=":id" element={<UserPage />} />
-          <Route path="edit/:id" element={<UserPage />} />
-        </Route>
+        <Route path='rooms' element={<RoomsPage />} />
+        <Route path='rooms/room' element={<RoomPage />} />
+        <Route path='rooms/:id' element={<RoomPage />} />
+        <Route path='rooms/edit/:id' element={<RoomPage /> }/>
+        <Route path='bookings' element={<BookingsPage />} />
+        <Route path='bookings/booking' element={<BookingPage />} />
+        <Route path='bookings/:id' element={<BookingPage />} />
+        <Route path='users' element={<UsersPage />} />
+        <Route path="users/user" element={<UserPage />} />
+        <Route path="users/:id" element={<UserPage />} />
+        <Route path="users/edit/:id" element={<UserPage />} />
         <Route path='contact' element={<ContactPage />} />
       </Route>
     </Route>
-    <Route path='/*' element={<Navigate to='/login' replace />}></Route>
   </>
 ));
 
 function App() {
-  const isAuth = localStorage.getItem('auth') ? (localStorage.getItem('auth') === "1" ? true : false) : false;
-  const [auth, setAuth] = useState(isAuth);
-
-  useEffect(() => {
-    localStorage.setItem('auth', auth ? '1' : '0');
-  }, [auth]);
 
   return (
     <>
-      <RouterProvider router={router(auth, setAuth)} />
+    <UserAuthProvider>
+      <RouterProvider router={router} />
+    </UserAuthProvider>
     </>
   );
 }
