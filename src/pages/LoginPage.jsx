@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { ButtonStyled } from "../styled/ButtonsStyled";
 import { useContext } from "react";
 import { UserAuthProvider, UserContext } from "../app/UserContext";
+import { useLocalStorage } from "../hook/useLocalStorage";
 
 const FormStyled = styled.form`
     padding: 4rem;

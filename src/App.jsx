@@ -12,6 +12,7 @@ import UserPage from './pages/UserPage';
 import BookingPage from './pages/BookingPage';
 import RoomPage from './pages/RoomPage';
 import { UserAuthProvider, UserContext } from './app/UserContext';
+import { useLocalStorage } from './hook/useLocalStorage';
 
 
 const PrivateRoute = ({redirect = "/login", children }) => {
@@ -53,14 +54,6 @@ const router = createBrowserRouter(createRoutesFromElements(
 
 function App() {
   const context = useContext(UserContext);
-  const isAuth = localStorage.getItem('auth') ? (localStorage.getItem('auth') === "1" ? true : false) : false;
-  const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {user: '', password: ''};
-
-
-  useEffect(() => {
-    localStorage.setItem('auth', context.state.auth ? '1' : '0');
-    localStorage.setItem('user', JSON.stringify({user: context.state.user, password: context.state.password}));
-  }, [context]);
 
   return (
     <>

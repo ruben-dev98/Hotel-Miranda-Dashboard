@@ -1,14 +1,17 @@
 import { bookings } from "../assets/data/tabs";
 import TableComponent from "../components/TableComponent";
 import TabsComponent from "../components/TabsComponent";
-import dataBookings from '../assets/data/bookings.json';
-import { Outlet, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { ButtonStyledNew, ButtonStyledViewNotes } from "../styled/ButtonsStyled";
 import { SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress } from "../styled/SpanStyled";
 import OrderComponent from "../components/OrderComponent";
 import { bookingsOrder } from "../assets/data/order";
 import Swal from 'sweetalert2'
 import { LinkStyled } from "../styled/LinkStyled";
+import { useDispatch, useSelector } from "react-redux";
+import { bookingsStatus, getAllBookings } from "../features/bookings/bookingsSlice";
+import { useEffect, useState } from "react";
+import { getBookings } from "../features/bookings/bookingsAsyncThunk";
 
 const handleClickEdit = (event) => {
     event.stopPropagation();
@@ -69,17 +72,32 @@ const dataTable = [
 ];
 
 const BookingsPage = () => {
+    const dispatch = useDispatch();
+    const [showSpinner, setShowSpinner] = useState(true);
     const loc = useLocation();
+    const data = useSelector(getAllBookings);
+    const status = useSelector(bookingsStatus);
+
+    useEffect(() => {
+        if(status === 'idle') {
+            dispatch(getBookings());
+        } else if (status === 'pending') {
+            setShowSpinner(true);
+        } else if (status === 'fulfilled') {
+            setShowSpinner(false);
+        }
+    }, [status, dispatch])
 
 
     return (
+        showSpinner ? <span>Loading</span> :
         <section className='content'>
             <div className="top__menu-table">
                 <ButtonStyledNew as={LinkStyled} to={'booking'}>+ New Booking</ButtonStyledNew>
                 <OrderComponent data={bookingsOrder} />
             </div>
             <TabsComponent data={bookings}></TabsComponent>
-            <TableComponent rows={dataBookings.toSpliced(10, 30)} columns={dataTable} path={'bookings'}></TableComponent>
+            <TableComponent rows={data} columns={dataTable} path={'bookings'}></TableComponent>
         </section>
 
 
