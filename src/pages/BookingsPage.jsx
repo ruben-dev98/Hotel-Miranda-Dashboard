@@ -1,7 +1,6 @@
 import { bookings } from "../assets/data/tabs";
 import TableComponent from "../components/TableComponent";
 import TabsComponent from "../components/TabsComponent";
-import { useLocation } from "react-router-dom";
 import { ButtonStyledNew, ButtonStyledViewNotes } from "../styled/ButtonsStyled";
 import { SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress } from "../styled/SpanStyled";
 import OrderComponent from "../components/OrderComponent";
@@ -74,7 +73,6 @@ const dataTable = [
 const BookingsPage = () => {
     const dispatch = useDispatch();
     const [showSpinner, setShowSpinner] = useState(true);
-    const loc = useLocation();
     const data = useSelector(getAllBookings);
     const status = useSelector(bookingsStatus);
 

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Outlet, useLocation } from 'react-router-dom';
 import styled from "styled-components";
-import PropTypes from 'prop-types';
 import SideBarComponent from "../components/Menu/SideBarComponent";
 import TopBarComponent from "../components/Menu/TopBarComponent";
 

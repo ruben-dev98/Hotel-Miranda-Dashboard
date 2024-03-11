@@ -1,12 +1,15 @@
 import { rooms } from "../assets/data/tabs";
 import TabsComponent from "../components/TabsComponent";
 import TableComponent from '../components/TableComponent';
-import dataRooms from '../assets/data/rooms.json'
 import { SpanStyled, SpanStyledCheckOut } from "../styled/SpanStyled";
 import { ButtonStyledNew, ButtonStyledViewNotes } from "../styled/ButtonsStyled";
 import OrderComponent from "../components/OrderComponent";
 import { roomsOrder } from "../assets/data/order";
 import { LinkStyled } from "../styled/LinkStyled";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { getAllRooms, roomsStatus } from "../features/rooms/roomsSlice";
+import { getRooms } from "../features/rooms/roomsAsyncThunk";
 
 const action = (id) => {
     return <ButtonStyledViewNotes as={LinkStyled} to={`edit/${id}`} onClick={(event) => event.stopPropagation()}>Edit</ButtonStyledViewNotes>
@@ -55,15 +58,31 @@ const dataTable = [
 ];
 
 const RoomsPage = () => {
+    const dispatch = useDispatch();
+    const [showSpinner, setShowSpinner] = useState(true);
+    const data = useSelector(getAllRooms);
+    const status = useSelector(roomsStatus);
+
+    useEffect(() => {
+        if(status === 'idle') {
+            dispatch(getRooms());
+        } else if (status === 'pending') {
+            setShowSpinner(true);
+        } else if (status === 'fulfilled') {
+            setShowSpinner(false);
+        }
+    }, [status, dispatch])
+
 
     return (
+        showSpinner ? <span>Loading</span> :
             <section className='content'>
             <div className="top__menu-table">
                 <ButtonStyledNew as={LinkStyled} to={'room'}>+ New Room</ButtonStyledNew>
                 <OrderComponent data={roomsOrder}/>
             </div>
                 <TabsComponent data={rooms}></TabsComponent>
-                <TableComponent rows={dataRooms.toSpliced(10, 30)} columns={dataTable} path={'rooms'}></TableComponent>
+                <TableComponent rows={data} columns={dataTable} path={'rooms'}></TableComponent>
             </section>
     );
 }

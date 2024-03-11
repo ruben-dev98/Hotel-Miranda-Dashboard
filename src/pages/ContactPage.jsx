@@ -1,9 +1,12 @@
 import { message } from "../assets/data/tabs";
-import messages from "../assets/data/messages.json";
 import TableComponent from "../components/TableComponent";
 import TabsComponent from "../components/TabsComponent";
 import MessageListComponent from './../components/MessageListComponent';
 import { ButtonStyledArchived, ButtonStyledPublish } from "../styled/ButtonsStyled";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { getMessages } from "../features/messages/messagesAsyncThunk";
+import { getAllMessages, messagesStatus } from "../features/messages/messagesSlice";
 
 const dataTable = [
     {
@@ -28,12 +31,28 @@ const dataTable = [
 ];
 
 const ContactPage = () => {
+    const dispatch = useDispatch();
+    const [showSpinner, setShowSpinner] = useState(true);
+    const data = useSelector(getAllMessages);
+    const status = useSelector(messagesStatus);
+
+    useEffect(() => {
+        if(status === 'idle') {
+            dispatch(getMessages());
+        } else if (status === 'pending') {
+            setShowSpinner(true);
+        } else if (status === 'fulfilled') {
+            setShowSpinner(false);
+        }
+    }, [status, dispatch])
+
 
     return (
+        showSpinner ? <span>Loading</span> :
         <section className='content'>
             <MessageListComponent/>
             <TabsComponent data={message}></TabsComponent>
-            <TableComponent  rows={messages.toSpliced(10, 30)} columns={dataTable} path={''}></TableComponent>
+            <TableComponent  rows={data} columns={dataTable} path={''}></TableComponent>
         </section>
     );
 }

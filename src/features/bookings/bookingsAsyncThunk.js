@@ -36,22 +36,22 @@ function delay(path, id = 0, data = {}, time = 200) {
     })
 }
 
-export const getBookings = createAsyncThunk('bookings/GetBookings', async () => {
+export const getBookings = createAsyncThunk('bookings/getBookings', async () => {
     return await delay(uri.getAll);
 });
 
-export const getBooking = createAsyncThunk('bookings/GetBooking', async (id) => {
+export const getBooking = createAsyncThunk('bookings/getBooking', async (id) => {
     return await delay(uri.getOne, id);
 });
 
-export const addBooking = createAsyncThunk('bookings/AddBooking', async (data) => {
+export const addBooking = createAsyncThunk('bookings/addBooking', async (data) => {
     return await delay(uri.add, 0, data);
 });
 
-export const editBooking = createAsyncThunk('bookings/EditBooking', async ({id, data }) => {
+export const editBooking = createAsyncThunk('bookings/editBooking', async ({id, data }) => {
     return await delay(uri.edit, id, data);
 });
 
-export const deleteBooking = createAsyncThunk('bookings/DeleteBooking', async ({id, data}) => {
+export const deleteBooking = createAsyncThunk('bookings/deleteBooking', async ({id, data}) => {
     return await delay(uri.delete, id, data);
 });

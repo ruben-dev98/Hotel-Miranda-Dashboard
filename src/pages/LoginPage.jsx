@@ -1,10 +1,8 @@
 import { Navigate, useNavigate } from "react-router-dom";
-import PropTypes from 'prop-types';
 import styled from "styled-components";
 import { ButtonStyled } from "../styled/ButtonsStyled";
 import { useContext } from "react";
-import { UserAuthProvider, UserContext } from "../app/UserContext";
-import { useLocalStorage } from "../hook/useLocalStorage";
+import { UserContext } from "../app/UserContext";
 
 const FormStyled = styled.form`
     padding: 4rem;
