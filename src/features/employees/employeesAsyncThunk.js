@@ -9,7 +9,7 @@ const uri = {
     delete: 'delete/employee'
 };
 
-function delay(path, id = 0, data = {}, time = 200) {
+function delay(path, id = 0, data = null, time = 200) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             switch(path) {
@@ -17,7 +17,7 @@ function delay(path, id = 0, data = {}, time = 200) {
                     resolve(dataEmployee);
                     break;
                 case uri.getOne:
-                    resolve(dataEmployee.find((employee) => employee.id === id));
+                    resolve(dataEmployee.find((employee) => employee.id === id) || null);
                     break;
                 case uri.add:
                     resolve(data);

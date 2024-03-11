@@ -20,5 +20,5 @@ const reducer = (state, action) => {
 export const UserAuth = (isAuth, user, password) => {
     const [state, dispatch] = useReducer(reducer, {auth: isAuth, user: user, password: password});
 
-    return {state, dispatch} ;
+    return {state, dispatch};
 }

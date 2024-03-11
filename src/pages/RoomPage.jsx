@@ -1,7 +1,10 @@
 import dataRoom from '../assets/data/rooms.json';
-import { useMemo } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import FormComponent from '../components/Form/FormComponent';
+import { getOneRoom, roomStatus } from '../features/rooms/roomsSlice';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getRoom } from '../features/rooms/roomsAsyncThunk';
 
 const formControl = [
     {
@@ -87,9 +90,12 @@ const object__fields = [
 
 
 const RoomPage = () => {
+    const dispatch = useDispatch();
+    const [showSpinner, setShowSpinner] = useState(true);
+    const room = useSelector(getOneRoom);
+    const status = useSelector(roomStatus);
     const loc = useLocation().pathname;
     const { id } = useParams();
-    const room = dataRoom.find((room) => room.id === parseInt(id));
 
     const onCreateRoom = (event) => {
         event.preventDefault();
@@ -107,8 +113,19 @@ const RoomPage = () => {
             return event.target[control.name].value
         });
     }
+    
+    useEffect(() => {
+        if(status === 'idle') {
+            dispatch(getRoom(parseInt(id)));
+        } else if (status === 'pending') {
+            setShowSpinner(true);
+        } else if (status === 'fulfilled') {
+            setShowSpinner(false);
+        }
+    }, [status, dispatch, id])
 
     return (
+        showSpinner ? <span>Loading</span> :
         <section className="content">
             <FormComponent path={loc} data={room} formControl={formControl} object__fields={object__fields} onHandleSubmit={onCreateRoom}></FormComponent>
         </section>

@@ -12,7 +12,6 @@ import UserPage from './pages/UserPage';
 import BookingPage from './pages/BookingPage';
 import RoomPage from './pages/RoomPage';
 import { UserAuthProvider, UserContext } from './app/UserContext';
-import { useLocalStorage } from './hook/useLocalStorage';
 
 
 const PrivateRoute = ({redirect = "/login", children }) => {
@@ -53,11 +52,10 @@ const router = createBrowserRouter(createRoutesFromElements(
 ));
 
 function App() {
-  const context = useContext(UserContext);
 
   return (
     <>
-    <UserAuthProvider value={{state: context.state, dispatch: context.dispatch}}>
+    <UserAuthProvider>
       <RouterProvider router={router} />
     </UserAuthProvider>
     </>

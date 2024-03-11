@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { getMessages } from "./messagesAsyncThunk";
+import { deleteMessage, editMessage, getMessage, getMessages } from "./messagesAsyncThunk";
 
 
 
@@ -7,7 +7,11 @@ export const messagesSlice = createSlice({
     name: 'messages',
     initialState: {
         data: [],
-        message: {},
+        message: {
+            data: null,
+            status: 'idle',
+            error: null
+        },
         status: 'idle',
         error: null
     },
@@ -24,6 +28,45 @@ export const messagesSlice = createSlice({
         .addCase(getMessages.rejected, (state, action) => {
             state.status = 'rejected';
             state.error = action.error.message;
+        })
+        .addCase(getMessage.pending, (state, action) => {
+            state.message.status = 'pending';
+            state.message.error = null;
+        })
+        .addCase(getMessage.fulfilled, (state, action) => {
+            state.message.data = action.payload;
+            state.message.status = 'fulfilled';
+            state.message.error = null;
+        })
+        .addCase(getMessage.rejected, (state, action) => {
+            state.message.status = 'rejected';
+            state.message.error = action.error.message;
+        })
+        .addCase(editMessage.pending, (state, action) => {
+            state.message.status = 'pending';
+            state.message.error = null;
+        })
+        .addCase(editMessage.fulfilled, (state, action) => {
+            state.data.slice(state.data.findIndex(element => element.id === action.payload.id), 1, action.payload);
+            state.message.status = 'fulfilled';
+            state.message.error = null;
+        })
+        .addCase(editMessage.rejected, (state, action) => {
+            state.message.status = 'rejected';
+            state.message.error = action.error.message;
+        })
+        .addCase(deleteMessage.pending, (state, action) => {
+            state.message.status = 'pending';
+            state.message.error = null;
+        })
+        .addCase(deleteMessage.fulfilled, (state, action) => {
+            state.data.slice(state.data.findIndex(element => element.id === action.payload.id), 1);
+            state.message.status = 'fulfilled';
+            state.message.error = null;
+        })
+        .addCase(deleteMessage.rejected, (state, action) => {
+            state.message.status = 'rejected';
+            state.message.error = action.error.message;
         })
     }
 });

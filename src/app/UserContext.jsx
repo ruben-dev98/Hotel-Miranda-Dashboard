@@ -6,9 +6,9 @@ import { useLocalStorage } from "../hook/useLocalStorage";
 export const UserContext = createContext({ state: {auth: false, user: '', password: ''}, dispatch: () => {}});
 
 export const UserAuthProvider = ({children}) => {
-    const auth = useLocalStorage('auth', 'get');
-    const user = JSON.parse(useLocalStorage('user', 'get'));
-    const {state, dispatch} = UserAuth(auth ? auth === '1' ? true : false : false, user ? user.user : '', user ? user.password : '');
+    const initAuth = useLocalStorage('auth', 'get');
+    const initUser = JSON.parse(useLocalStorage('user', 'get'));
+    const {state, dispatch} = UserAuth(initAuth ? initAuth === '1' ? true : false : false, initUser ? initUser.user : '', initUser ? initUser.password : '');
     useLocalStorage('auth', 'set', state.auth ? '1' : '0');
     useLocalStorage('user', 'set', JSON.stringify({user: state.user, password: state.password}));
 

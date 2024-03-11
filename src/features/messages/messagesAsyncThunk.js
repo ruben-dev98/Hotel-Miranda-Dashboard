@@ -8,7 +8,7 @@ const uri = {
     delete: 'delete/message'
 };
 
-function delay(path, id = 0, data = {}, time = 200) {
+function delay(path, id = 0, data = null, time = 200) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             switch(path) {
@@ -16,7 +16,7 @@ function delay(path, id = 0, data = {}, time = 200) {
                     resolve(dataMessage);
                     break;
                 case uri.getOne:
-                    resolve(dataMessage.find((message) => message.id === id));
+                    resolve(dataMessage.find((message) => message.id === id) || null);
                     break;
                 case uri.add:
                     resolve(data);

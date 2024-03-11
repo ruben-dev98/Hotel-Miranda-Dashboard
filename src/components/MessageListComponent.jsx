@@ -39,7 +39,6 @@ const MessageListComponent = () => {
             //modules={[Navigation, Pagination, Scrollbar, A11y]}
             spaceBetween={50}
             slidesPerView={3}
-            loop
             //navigation
             //pagination={{ clickable: true }}
             //scrollbar={{ draggable: true }}

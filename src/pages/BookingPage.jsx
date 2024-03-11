@@ -1,7 +1,10 @@
 import { useParams } from "react-router-dom";
-import dataBookings from "../assets/data/bookings.json";
 import dataRooms from "../assets/data/rooms.json";
 import FormComponent from './../components/Form/FormComponent';
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { getBooking } from "../features/bookings/bookingsAsyncThunk";
+import { bookingStatus, getOneBooking } from "../features/bookings/bookingsSlice";
 
 const sortRoomNumbers = () => {
     return dataRooms.map((room) => room.number).sort((a, b) => {
@@ -103,18 +106,23 @@ const object__fields = [
 
 
 const BookingPage = () => {
+    const dispatch = useDispatch();
     const { id } = useParams();
-    const booking = dataBookings.find((booking) => booking.id === parseInt(id));
+    const booking = useSelector(getOneBooking);
 
     const onCreateBooking = (event) => {
         event.preventDefault();
         const results = formControl.map((control) => event.target[control.name].value);
     }
 
+    useEffect(() => {
+        dispatch(getBooking(parseInt(id)));
+    }, [dispatch, id])
+
     return (
-        <section className="content">
-            <FormComponent path={''} formControl={formControl} data={booking} object__fields={object__fields} onHandleSubmit={onCreateBooking}></FormComponent>
-        </section>
+            <section className="content">
+                <FormComponent path={''} formControl={formControl} data={booking} object__fields={object__fields} onHandleSubmit={onCreateBooking}></FormComponent>
+            </section>
     );
 
 }

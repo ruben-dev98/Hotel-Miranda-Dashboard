@@ -1,6 +1,10 @@
 import FormComponent from '../components/Form/FormComponent';
 import dataUser from '../assets/data/users.json';
 import { useLocation, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { employeeStatus, getOneEmployee } from '../features/employees/employeesSlice';
+import { getEmployee } from '../features/employees/employeesAsyncThunk';
 
 const formControl = [
     {
@@ -88,22 +92,32 @@ const object__fields = [
 ];
 
 const UserPage = () => {
+    const dispatch = useDispatch();
+    const [showSpinner, setShowSpinner] = useState(true);
+    const user = useSelector(getOneEmployee);
+    const status = useSelector(employeeStatus);
     const loc = useLocation().pathname;
     const { id } = useParams();
-    const user = dataUser.find((user) => user.id === parseInt(id));
 
     const onCreateUser = (event) => {
         event.preventDefault();
         const results = formControl.map((control) => {
-            if(control.input === 'file') {
-                return event.target[control.name].value;
-            }
             return event.target[control.name].value
         });
         
     }
+    useEffect(() => {
+        if(status === 'idle') {
+            dispatch(getEmployee(parseInt(id)));
+        } else if (status === 'pending') {
+            setShowSpinner(true);
+        } else if (status === 'fulfilled') {
+            setShowSpinner(false);
+        }
+    }, [status, dispatch, id])
 
     return (
+        showSpinner ? <span>Loading</span> :
         <section className="content">
             <FormComponent path={loc} data={user} formControl={formControl} object__fields={object__fields} onHandleSubmit={onCreateUser}></FormComponent>
         </section>
