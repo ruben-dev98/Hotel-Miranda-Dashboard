@@ -6,6 +6,8 @@ import { IoMdLogOut } from "react-icons/io";
 import { BiEnvelope } from "react-icons/bi";
 import { CiBellOn } from "react-icons/ci";
 import styled from 'styled-components';
+import { useContext } from 'react';
+import { UserContext } from '../../app/UserContext';
 
 const HeaderStyled = styled.header`
     grid-area: header;
@@ -46,10 +48,11 @@ const IconStyled = styled.li`
     }
 `;
 
-const TopBarComponent = ({ setAuth, setVisibleLateral, visibleLateral, title}) => {
+const TopBarComponent = ({ setVisibleLateral, visibleLateral, title}) => {
     const navigate = useNavigate();
+    const context = useContext(UserContext);
     const logOutHandle = () => {
-        setAuth(false);
+        context.dispatch({type: 'logout'});
         navigate("/login");
     }
 
@@ -81,7 +84,6 @@ const TopBarComponent = ({ setAuth, setVisibleLateral, visibleLateral, title}) =
 }
 
 TopBarComponent.propTypes = {
-    setAuth: PropTypes.func,
     setVisibleLateral: PropTypes.func,
     visibleLateral: PropTypes.bool,
     title: PropTypes.string

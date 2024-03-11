@@ -22,11 +22,11 @@ const WindowStyledCollapse = styled(WindowStyled)`
     'content content';
 `;
 
-const content = (setAuth, visibleLateral, setVisibleLateral, title) => {
+const content = (visibleLateral, setVisibleLateral, title) => {
     return (
     <>
         <SideBarComponent visibleLateral={visibleLateral} />
-        <TopBarComponent setAuth={setAuth} visibleLateral={visibleLateral} setVisibleLateral={setVisibleLateral} title={title}/>
+        <TopBarComponent visibleLateral={visibleLateral} setVisibleLateral={setVisibleLateral} title={title}/>
         <Outlet />
     </>
     );
@@ -62,18 +62,18 @@ const title = (path) => {
 };
 
 
-const MainPage = ({ setAuth }) => {
+const MainPage = () => {
     const [visibleLateral, setVisibleLateral] = useState(true);
     const path = useLocation().pathname;
     
 
     const initLabel = visibleLateral ? 
     <WindowStyled>
-        {content(setAuth, visibleLateral, setVisibleLateral, title(path))}
+        {content(visibleLateral, setVisibleLateral, title(path))}
     </WindowStyled> 
     : 
     <WindowStyledCollapse>
-        {content(setAuth, visibleLateral, setVisibleLateral, title(path))}
+        {content(visibleLateral, setVisibleLateral, title(path))}
     </WindowStyledCollapse>;
 
 
@@ -82,10 +82,6 @@ const MainPage = ({ setAuth }) => {
             {initLabel}
         </>
     )
-}
-
-MainPage.propTypes = {
-    setAuth: PropTypes.func
 }
 
 export default MainPage;

@@ -5,16 +5,18 @@ import RoomsPage from './pages/RoomsPage';
 import BookingsPage from './pages/BookingsPage';
 import UsersPage from './pages/UsersPage';
 import ContactPage from './pages/ContactPage';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import MainPage from './pages/MainPage';
 import PropTypes from 'prop-types';
 import UserPage from './pages/UserPage';
 import BookingPage from './pages/BookingPage';
 import RoomPage from './pages/RoomPage';
+import { UserAuthProvider, UserContext } from './app/UserContext';
 
 
-const PrivateRoute = ({ auth, redirect = "/login", children }) => {
-  return !auth ?
+const PrivateRoute = ({redirect = "/login", children }) => {
+  const context = useContext(UserContext);
+  return !context.state.auth ?
     <Navigate to={redirect} replace />
     :
     children ? children : <Outlet />;
@@ -26,11 +28,11 @@ PrivateRoute.propTypes = {
   children: PropTypes.node
 }
 
-const router = (auth, setAuth) => createBrowserRouter(createRoutesFromElements(
+const router = createBrowserRouter(createRoutesFromElements(
   <>
-    <Route path="/login" element={<LoginPage auth={auth} setAuth={setAuth} />} />
-    <Route element={<PrivateRoute auth={auth} />}>
-      <Route path="/" element={<MainPage setAuth={setAuth} />}>
+    <Route path="/login" element={<LoginPage />} />
+    <Route element={<PrivateRoute />}>
+      <Route path="/" element={<MainPage />}>
         <Route index element={<DashboardPage />} />
         <Route path='rooms' element={<RoomsPage />} />
         <Route path='rooms/room' element={<RoomPage />} />
@@ -46,21 +48,25 @@ const router = (auth, setAuth) => createBrowserRouter(createRoutesFromElements(
         <Route path='contact' element={<ContactPage />} />
       </Route>
     </Route>
-    <Route path='/*' element={<Navigate to='/login' replace />}></Route>
   </>
 ));
 
 function App() {
+  const context = useContext(UserContext);
   const isAuth = localStorage.getItem('auth') ? (localStorage.getItem('auth') === "1" ? true : false) : false;
-  const [auth, setAuth] = useState(isAuth);
+  const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {user: '', password: ''};
+
 
   useEffect(() => {
-    localStorage.setItem('auth', auth ? '1' : '0');
-  }, [auth]);
+    localStorage.setItem('auth', context.state.auth ? '1' : '0');
+    localStorage.setItem('user', JSON.stringify({user: context.state.user, password: context.state.password}));
+  }, [context]);
 
   return (
     <>
-      <RouterProvider router={router(auth, setAuth)} />
+    <UserAuthProvider value={{state: context.state, dispatch: context.dispatch}}>
+      <RouterProvider router={router} />
+    </UserAuthProvider>
     </>
   );
 }

@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 
 
-const rooms = createSlice({
+export const roomsSlice = createSlice({
     name: 'rooms',
     initialState: {
         data: [],
@@ -12,9 +12,6 @@ const rooms = createSlice({
     reducers: {
 
     },
-    extraReducers: {
-
-    }
 });
 
-export const { roomsReducer } = rooms.reducer;
+export default roomsSlice.reducer;

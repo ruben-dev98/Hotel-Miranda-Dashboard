@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 
 
-const messages = createSlice({
+export const messagesSlice = createSlice({
     name: 'messages',
     initialState: {
         data: [],
@@ -12,9 +12,6 @@ const messages = createSlice({
     reducers: {
 
     },
-    extraReducers: {
-
-    }
 });
 
-export const { messageReducer } = messages.reducer;
+export default messagesSlice.reducer;

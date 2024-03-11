@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 
 
-const employees = createSlice({
+export const employeesSlice = createSlice({
     name: 'employees',
     initialState: {
         data: [],
@@ -12,9 +12,6 @@ const employees = createSlice({
     reducers: {
 
     },
-    extraReducers: {
-
-    }
 });
 
-export const { employeesReducer } = employees.reducer;
+export default employeesSlice.reducer;
