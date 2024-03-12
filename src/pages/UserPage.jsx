@@ -1,11 +1,12 @@
 import FormComponent from '../components/Form/FormComponent';
-import dataUser from '../assets/data/users.json';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCallback, useEffect, useState } from 'react';
-import { employeeStatus, getOneEmployee } from '../features/employees/employeesSlice';
-import { getEmployee } from '../features/employees/employeesAsyncThunk';
+import { getAllEmployees, getOneEmployee } from '../features/employees/employeesSlice';
+import { addEmployee, editEmployee, getEmployee } from '../features/employees/employeesAsyncThunk';
 import Loading from '../components/Loading';
+import { lastId } from '../app/getItemsId';
+import Swal from 'sweetalert2';
 
 const formControl = [
     {
@@ -93,18 +94,69 @@ const object__fields = [
 ];
 
 const UserPage = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [showSpinner, setShowSpinner] = useState(true);
     const user = useSelector(getOneEmployee);
+    const users = useSelector(getAllEmployees);
     const loc = useLocation().pathname;
     const { id } = useParams();
 
-    const onCreateUser = (event) => {
+    const onCreateUser = async (event) => {
         event.preventDefault();
-        const results = formControl.map((control) => {
-            return event.target[control.name].value
+        const newId = lastId(users);
+        const user = {
+            id: id || newId,
+            foto: '',
+            full_name: '',
+            email: '',
+            start_date: '',
+            description: '',
+            contact: '',
+            status: false,
+            password: ''
+        };
+
+        formControl.map((control) => {
+            user[control.name] = event.target[control.name].value;
         });
 
+        if(loc.includes('edit')) {
+            try {
+                navigate('/users');
+                await dispatch(editEmployee({id: id, data: user})).unwrap();
+                Swal.fire({
+                    'title': 'Update de Employee Realizada',
+                    'html': `
+                        <p>ID : ${user.id}</p>
+                        <p>Full Name : ${user.full_name}</p>
+                        <p>Email : ${user.email}</p>
+                        <p>Phone : ${user.contact}</p>
+                    `,
+                    'timer': 2000
+                });
+            } catch (error) {
+                console.log(error);
+            }
+            dispatch(editEmployee({id: id, data: user}));
+        } else {
+            try {
+                navigate('/users');
+                await dispatch(addEmployee(user)).unwrap();
+                Swal.fire({
+                    'title': 'Create de Employee Realizada',
+                    'html': `
+                        <p>ID : ${user.id}</p>
+                        <p>Full Name : ${user.full_name}</p>
+                        <p>Email : ${user.email}</p>
+                        <p>Phone : ${user.contact}</p>
+                    `,
+                    'timer': 2000
+                });
+            } catch (error) {
+                console.log(error);
+            }
+        }
     }
 
     const result = useCallback(async () => {

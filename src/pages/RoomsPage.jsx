@@ -8,15 +8,33 @@ import { roomsOrder } from "../assets/data/order";
 import { LinkStyled } from "../styled/LinkStyled";
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useState } from "react";
-import { getAllRooms, roomsStatus } from "../features/rooms/roomsSlice";
-import { getRooms } from "../features/rooms/roomsAsyncThunk";
+import { getAllRooms } from "../features/rooms/roomsSlice";
+import { deleteRoom, getRooms } from "../features/rooms/roomsAsyncThunk";
 import Loading from "../components/Loading";
+import Swal from "sweetalert2";
 
-const action = (id) => {
-    return <ButtonStyledViewNotes as={LinkStyled} to={`edit/${id}`} onClick={(event) => event.stopPropagation()}>Edit</ButtonStyledViewNotes>
+const handleClickDelete = async (event, dispatch, id) => {
+    event.stopPropagation();
+    try {
+        await dispatch(deleteRoom(id)).unwrap()
+        Swal.fire({'title': 'Eliminación de Room',
+        'timer': 2000
+        });
+    } catch(error) {
+        console.log(error)
+    }
 }
 
-const dataTable = [
+const action = (id, dispatch) => {
+    return (<>
+        <ButtonStyledViewNotes as={LinkStyled} to={`edit/${id}`} onClick={(event) => event.stopPropagation()}>Edit</ButtonStyledViewNotes>
+        <ButtonStyledViewNotes onClick={(event) => handleClickDelete(event, dispatch, id)}>Delete</ButtonStyledViewNotes>
+    </>)
+    
+    
+}
+
+const dataTable = (dispatch) => [
     {
         'label': 'Image',
         display: row => <img src={row.foto} style={{ width: 200, height: 100 }} />
@@ -54,7 +72,7 @@ const dataTable = [
     },
     {
         'label': 'Actions',
-        display: row => action(row.id)
+        display: row => action(row.id, dispatch)
     }
 ];
 
@@ -86,7 +104,7 @@ const RoomsPage = () => {
                         <OrderComponent data={roomsOrder} />
                     </div>
                     <TabsComponent data={rooms}></TabsComponent>
-                    <TableComponent rows={data} columns={dataTable} path={'rooms'}></TableComponent>
+                    <TableComponent rows={data} columns={dataTable(dispatch)} path={'rooms'}></TableComponent>
                 </>
             }
         </section>

@@ -22,10 +22,10 @@ function delay(path, id = 0, data = null, time = 800) {
                     resolve(data);
                     break;
                 case uri.edit:
-                    resolve(data);
+                    resolve({id: id, data: data});
                     break;
                 case uri.delete:
-                    resolve(data.id);
+                    resolve(id);
                     break;
                 default:
                     reject('Error');

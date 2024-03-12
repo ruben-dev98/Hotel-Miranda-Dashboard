@@ -1,10 +1,10 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { bookingsId } from "../app/getItemsId";
+import { lastId } from "../app/getItemsId";
 import FormComponent from './../components/Form/FormComponent';
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useState } from "react";
 import { addBooking, getBooking } from "../features/bookings/bookingsAsyncThunk";
-import { getOneBooking } from "../features/bookings/bookingsSlice";
+import { getAllBookings, getOneBooking } from "../features/bookings/bookingsSlice";
 import Loading from "../components/Loading";
 import Swal from "sweetalert2";
 import { getAllRooms } from "../features/rooms/roomsSlice";
@@ -116,12 +116,20 @@ const BookingPage = () => {
     const [showSpinner, setShowSpinner] = useState(true);
     const { id } = useParams();
     const booking = useSelector(getOneBooking);
+    const bookings = useSelector(getAllBookings);
     const rooms = useSelector(getAllRooms);
+
+    const filteredBookings = useMem(() => {
+        const all = current === 'All Bookings' ? bookings.filter((item) => item.id === item.id)
+        
+        all.sort()
+    })
 
     const onCreateBooking = async (event) => {
         event.preventDefault();
+        const newId = lastId(bookings);
         const booking = {
-            id: bookingsId,
+            id: newId,
             full_name: '',
             check_in: '',
             check_out: '',
@@ -134,13 +142,14 @@ const BookingPage = () => {
             type: '',
             description: ''
         }
-        formControl.map((control) => {
+        formControl(rooms).map((control) => {
             booking[control.name] = event.target[control.name].value;
         });
         try {
-            dispatch(addBooking(booking));
+            navigate('/bookings');
+            await dispatch(addBooking(booking));
             Swal.fire({
-                'title': 'Creacion de Booking Realizada',
+                'title': 'Create de Booking Realizada',
                 'html': `
                     <p>ID : ${booking.id}</p>
                     <p>Check In : ${booking.check_in}</p>
@@ -151,7 +160,6 @@ const BookingPage = () => {
                 `,
                 'timer': 2000
             });
-            navigate('/bookings')
         } catch (error) {
             console.log(error);
         }
@@ -159,7 +167,7 @@ const BookingPage = () => {
 
     const result = useCallback(async () => {
         await dispatch(getBooking(parseInt(id))).unwrap();
-        await dispatch(getRooms());
+        dispatch(getRooms());
         setShowSpinner(false);
     }, [id, dispatch]);
 

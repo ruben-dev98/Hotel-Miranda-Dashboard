@@ -8,7 +8,7 @@ import OrderComponent from './../components/OrderComponent';
 import { LinkStyled } from "../styled/LinkStyled";
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useState } from "react";
-import { employeesStatus, getAllEmployees } from "../features/employees/employeesSlice";
+import { getAllEmployees } from "../features/employees/employeesSlice";
 import { deleteEmployee, getEmployees } from "../features/employees/employeesAsyncThunk";
 import Loading from "../components/Loading";
 import Swal from "sweetalert2";

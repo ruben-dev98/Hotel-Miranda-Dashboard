@@ -1,10 +1,12 @@
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import FormComponent from '../components/Form/FormComponent';
-import { getOneRoom } from '../features/rooms/roomsSlice';
+import { getAllRooms, getOneRoom } from '../features/rooms/roomsSlice';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getRoom } from '../features/rooms/roomsAsyncThunk';
+import { addRoom, editRoom, getRoom } from '../features/rooms/roomsAsyncThunk';
 import Loading from "../components/Loading";
+import { lastId } from "../app/getItemsId";
+import Swal from "sweetalert2";
 
 const formControl = [
     {
@@ -16,7 +18,7 @@ const formControl = [
         'label': 'Room Type',
         'input': 'select',
         'data': ['Single Bed', 'Double Bed', 'Double Superior', 'Suite'],
-        'name': 'full_name'
+        'name': 'type'
     },
     {
         'label': 'Room Number',
@@ -90,27 +92,85 @@ const object__fields = [
 
 
 const RoomPage = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [showSpinner, setShowSpinner] = useState(true);
     const room = useSelector(getOneRoom);
+    const rooms = useSelector(getAllRooms);
     const loc = useLocation().pathname;
     const { id } = useParams();
 
-    const onCreateRoom = (event) => {
+    const onCreateRoom = async (event) => {
         event.preventDefault();
-        const results = formControl.map((control) => {
-            if (control.input === 'file') {
-                return event.target[control.name].value;
-            } else if (control.input === 'select multiple') {
+        const newId = lastId(rooms);
+        const room = {
+            id: id || newId,
+            foto: '',
+            type: '',
+            number: '',
+            description: '',
+            offer: false,
+            price: 0,
+            cancellation: true,
+            amenities: [],
+            discount: 0,
+            status: ''
+        };
+        
+        formControl.map((control) => {
+            room[control.name] = event.target[control.name].value;
+            if (control.input === 'select multiple') {
                 const selectedOptions = event.target[control.name].selectedOptions;
                 const values = [];
                 for (let i = 0; i < selectedOptions.length; i++) {
-                    values.push(selectedOptions[i].value);
+                    values.push(selectedOptions[i].value)
                 }
-                return values;
+                room[control.name] = values;
+            } else {
+                room[control.name] = event.target[control.name].value;
             }
-            return event.target[control.name].value
         });
+        
+        if(room.discount > 0) {
+            room.offer = true;
+        }
+        
+        if(loc.includes('edit')) {
+            try {
+                navigate('/rooms');
+                await dispatch(editRoom({id: id, data: room})).unwrap();
+                Swal.fire({
+                    'title': 'Update de Room Realizada',
+                    'html': `
+                        <p>ID : ${room.id}</p>
+                        <p>Room Number : ${room.number}</p>
+                        <p>Room Type : ${room.type}</p>
+                        <p>Price : ${room.price}</p>
+                    `,
+                    'timer': 2000
+                });
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            try {
+                navigate('/rooms');
+                dispatch(addRoom(room)).unwrap();
+                Swal.fire({
+                    'title': 'Create de Room Realizada',
+                    'html': `
+                        <p>ID : ${room.id}</p>
+                        <p>Room Number : ${room.number}</p>
+                        <p>Room Type : ${room.type}</p>
+                        <p>Price : ${room.price}</p>
+                    `,
+                    'timer': 2000
+                });
+            } catch (error) {
+                console.log(error);
+            }
+            
+        }
     }
 
     const result = useCallback(async () => {
