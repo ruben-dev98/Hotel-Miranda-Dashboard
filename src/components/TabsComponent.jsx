@@ -10,17 +10,18 @@ const ListStyled = styled.ul`
     }
 `;
 
-const TabsComponent = ({data}) => {
+const TabsComponent = ({data, setCurrentTab}) => {
 
     return (
         <ListStyled>
-            {data.map((str, index) => <li key={index}>{str}</li>)}
+            {data.map((str, index) => <li key={index} onChange={() => setCurrentTab()}>{str}</li>)}
         </ListStyled>
     )
 };
 
 TabsComponent.propTypes = {
-    data: PropTypes.array
+    data: PropTypes.array,
+    setCurren
 }
 
 export default TabsComponent;

@@ -119,12 +119,6 @@ const BookingPage = () => {
     const bookings = useSelector(getAllBookings);
     const rooms = useSelector(getAllRooms);
 
-    const filteredBookings = useMem(() => {
-        const all = current === 'All Bookings' ? bookings.filter((item) => item.id === item.id)
-        
-        all.sort()
-    })
-
     const onCreateBooking = async (event) => {
         event.preventDefault();
         const newId = lastId(bookings);

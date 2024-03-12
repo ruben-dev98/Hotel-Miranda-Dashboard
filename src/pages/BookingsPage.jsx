@@ -9,7 +9,7 @@ import Swal from 'sweetalert2'
 import { LinkStyled } from "../styled/LinkStyled";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllBookings } from "../features/bookings/bookingsSlice";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { deleteBooking, editBooking, getBookings } from "../features/bookings/bookingsAsyncThunk";
 import Loading from "../components/Loading";
 
@@ -101,7 +101,25 @@ const dataTable = (dispatch) => [
 const BookingsPage = () => {
     const dispatch = useDispatch();
     const [showSpinner, setShowSpinner] = useState(true);
+    const [currentTab, setCurrentTab] = useState('All Bookings');
+    const [currentOrder, setCurrentOrder] = useState('order_date');
     const data = useSelector(getAllBookings);
+
+    const filteredBookings = useMemo(() => {
+        const all = currentTab === 'All Bookings' 
+        ? data
+        : data.filter((item) => item.status === currentTab);
+
+        return [...all].sort((a, b) => {
+            if(a[currentOrder] > b[currentOrder]) {
+                return 1;
+            } else if(a[currentOrder] < b[currentOrder]) {
+                return -1;
+            } else {
+                return 0;
+            }
+        })
+    }, [data, currentOrder, currentTab]);
 
     const result = useCallback(async () => {
         try {
@@ -123,10 +141,10 @@ const BookingsPage = () => {
                 <>
                     <div className="top__menu-table">
                         <ButtonStyledNew as={LinkStyled} to={'booking'}>+ New Booking</ButtonStyledNew>
-                        <OrderComponent data={bookingsOrder} />
+                        <OrderComponent setCurrentOrder={setCurrentOrder} data={bookingsOrder} />
                     </div>
-                    <TabsComponent data={bookings}></TabsComponent>
-                    <TableComponent rows={data} columns={dataTable(dispatch)} path={'bookings'}></TableComponent>
+                    <TabsComponent data={bookings} setCurrentTab={setCurrentTab}></TabsComponent>
+                    <TableComponent rows={filteredBookings} columns={dataTable(dispatch)} path={'bookings'}></TableComponent>
                 </>
             }
         </section>
