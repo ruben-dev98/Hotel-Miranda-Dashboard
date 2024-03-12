@@ -15,11 +15,6 @@ export const bookingsSlice = createSlice({
         status: 'idle',
         error: null
     },
-    reducers: {
-        initState: (state, action) => {
-            state.booking.status = 'idle';
-        }
-    },
     extraReducers: (builder) => {
         builder.addCase(getBookings.pending, (state, action) => {
             state.status = 'pending';

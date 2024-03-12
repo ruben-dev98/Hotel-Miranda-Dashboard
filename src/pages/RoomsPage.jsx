@@ -64,8 +64,12 @@ const RoomsPage = () => {
     const data = useSelector(getAllRooms);
 
     const result = useCallback(async () => {
-        await dispatch(getRooms()).unwrap();
-        setShowSpinner(false);
+        try {
+            await dispatch(getRooms()).unwrap();
+            setShowSpinner(false);
+        } catch (error) {
+            console.log(error);
+        }
     }, [dispatch]);
 
     useEffect(() => {
@@ -74,18 +78,18 @@ const RoomsPage = () => {
 
 
     return (
-            <section className='content'>
-                {showSpinner ? <Loading></Loading> :
-                    <>
-                        <div className="top__menu-table">
-                            <ButtonStyledNew as={LinkStyled} to={'room'}>+ New Room</ButtonStyledNew>
-                            <OrderComponent data={roomsOrder} />
-                        </div>
-                        <TabsComponent data={rooms}></TabsComponent>
-                        <TableComponent rows={data} columns={dataTable} path={'rooms'}></TableComponent>
-                    </>
-                }
-            </section>
+        <section className='content'>
+            {showSpinner ? <Loading></Loading> :
+                <>
+                    <div className="top__menu-table">
+                        <ButtonStyledNew as={LinkStyled} to={'room'}>+ New Room</ButtonStyledNew>
+                        <OrderComponent data={roomsOrder} />
+                    </div>
+                    <TabsComponent data={rooms}></TabsComponent>
+                    <TableComponent rows={data} columns={dataTable} path={'rooms'}></TableComponent>
+                </>
+            }
+        </section>
     );
 }
 

@@ -37,8 +37,12 @@ const ContactPage = () => {
     const data = useSelector(getAllMessages);
 
     const result = useCallback(async () => {
+        try {
         await dispatch(getMessages()).unwrap();
         setShowSpinner(false);
+        } catch (error) {
+            console.log(error);
+        }
     }, [dispatch]);
 
     useEffect(() => {

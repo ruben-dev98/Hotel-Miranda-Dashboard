@@ -108,8 +108,12 @@ const UserPage = () => {
     }
 
     const result = useCallback(async () => {
-        await dispatch(getEmployee(parseInt(id))).unwrap();
-        setShowSpinner(false);
+        try {
+            await dispatch(getEmployee(parseInt(id))).unwrap();
+            setShowSpinner(false);
+        } catch (error) {
+            console.log(error);
+        }
     }, [id, dispatch]);
 
     useEffect(() => {

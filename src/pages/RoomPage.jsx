@@ -114,8 +114,12 @@ const RoomPage = () => {
     }
 
     const result = useCallback(async () => {
-        await dispatch(getRoom(parseInt(id))).unwrap();
-        setShowSpinner(false);
+        try {
+            await dispatch(getRoom(parseInt(id))).unwrap();
+            setShowSpinner(false);
+        } catch (error) {
+            console.log(error);
+        }
     }, [id, dispatch]);
 
     useEffect(() => {

@@ -63,8 +63,12 @@ const UsersPage = () => {
     const data = useSelector(getAllEmployees);
 
     const result = useCallback(async () => {
-        await dispatch(getEmployees()).unwrap();
-        setShowSpinner(false);
+        try {
+            await dispatch(getEmployees()).unwrap();
+            setShowSpinner(false);
+        } catch (error) {
+            console.log(error);
+        }
     }, [dispatch]);
 
     useEffect(() => {

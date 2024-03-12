@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import { addBooking, getBooking } from "../features/bookings/bookingsAsyncThunk";
 import { getOneBooking } from "../features/bookings/bookingsSlice";
 import Loading from "../components/Loading";
+import Swal from "sweetalert2";
 
 const sortRoomNumbers = () => {
     return dataRooms.map((room) => room.number).sort((a, b) => {
@@ -35,7 +36,7 @@ const formControl = [
         'label': 'Room Number',
         'input': 'select',
         'data': sortRoomNumbers(),
-        'name': 'room_number'
+        'name': 'number'
     },
     {
         'label': 'Email',
@@ -112,10 +113,42 @@ const BookingPage = () => {
     const { id } = useParams();
     const booking = useSelector(getOneBooking);
 
-    const onCreateBooking = (event) => {
+    const onCreateBooking = async (event) => {
         event.preventDefault();
-        const results = formControl.map((control) => ({[control.name]: event.target[control.name].value}));
-        dispatch(addBooking(results));
+        const booking = {
+            id: '',
+            full_name: '',
+            check_in: '',
+            check_out: '',
+            special_request: '',
+            number: '',
+            phone: '',
+            email: '',
+            status: 'In Progress',
+            amenities: [],
+            type: '',
+            description: ''
+        }
+        formControl.map((control) => {
+            booking[control.name] = event.target[control.name].value;
+        });
+        try {
+            await dispatch(addBooking(booking)).unwrap();
+            Swal.fire({
+                'title': 'Creacion de Booking Realizada',
+                'html': `
+            <p>ID : ${booking.id}</p>
+            <p>Check In : ${booking.check_in}</p>
+            <p>Check Out : ${booking.check_out}</p>
+            <p>Phone : ${booking.phone}</p>
+            <p>Email : ${booking.email}</p>
+            <p>Room Number : ${booking.number}</p>
+            `,
+                'timer': 2000
+            });
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const result = useCallback(async () => {
@@ -128,11 +161,11 @@ const BookingPage = () => {
     }, [result]);
 
     return (
-        
-            <section className="content">
-                {showSpinner ? <Loading></Loading> :
+
+        <section className="content">
+            {showSpinner ? <Loading></Loading> :
                 <FormComponent path={''} formControl={formControl} data={booking} object__fields={object__fields} onHandleSubmit={onCreateBooking}></FormComponent>}
-            </section>
+        </section>
     );
 
 }

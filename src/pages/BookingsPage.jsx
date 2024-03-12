@@ -8,13 +8,14 @@ import { bookingsOrder } from "../assets/data/order";
 import Swal from 'sweetalert2'
 import { LinkStyled } from "../styled/LinkStyled";
 import { useDispatch, useSelector } from "react-redux";
-import { bookingsStatus, getAllBookings } from "../features/bookings/bookingsSlice";
+import { getAllBookings } from "../features/bookings/bookingsSlice";
 import { useCallback, useEffect, useState } from "react";
-import { getBookings } from "../features/bookings/bookingsAsyncThunk";
+import { editBooking, getBookings } from "../features/bookings/bookingsAsyncThunk";
 import Loading from "../components/Loading";
 
 const handleClickEdit = (event) => {
     event.stopPropagation();
+    dispatch(editBooking())
     Swal.fire('Cancelada');
 }
 
@@ -75,11 +76,14 @@ const BookingsPage = () => {
     const dispatch = useDispatch();
     const [showSpinner, setShowSpinner] = useState(true);
     const data = useSelector(getAllBookings);
-    const status = useSelector(bookingsStatus);
 
     const result = useCallback(async () => {
-        await dispatch(getBookings()).unwrap();
-        setShowSpinner(false);
+        try {
+            await dispatch(getBookings()).unwrap();
+            setShowSpinner(false);
+        } catch (error) {
+            console.log(error);
+        }
     }, [dispatch]);
 
     useEffect(() => {
@@ -88,18 +92,18 @@ const BookingsPage = () => {
 
 
     return (
-            <section className='content'>
-                {showSpinner ? <Loading></Loading> :
-                    <>
-                        <div className="top__menu-table">
-                            <ButtonStyledNew as={LinkStyled} to={'booking'}>+ New Booking</ButtonStyledNew>
-                            <OrderComponent data={bookingsOrder} />
-                        </div>
-                        <TabsComponent data={bookings}></TabsComponent>
-                        <TableComponent rows={data} columns={dataTable} path={'bookings'}></TableComponent>
-                    </>
-                }
-            </section>
+        <section className='content'>
+            {showSpinner ? <Loading></Loading> :
+                <>
+                    <div className="top__menu-table">
+                        <ButtonStyledNew as={LinkStyled} to={'booking'}>+ New Booking</ButtonStyledNew>
+                        <OrderComponent data={bookingsOrder} />
+                    </div>
+                    <TabsComponent data={bookings}></TabsComponent>
+                    <TableComponent rows={data} columns={dataTable} path={'bookings'}></TableComponent>
+                </>
+            }
+        </section>
 
 
     );
