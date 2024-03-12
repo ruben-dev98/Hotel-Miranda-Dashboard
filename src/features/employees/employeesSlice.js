@@ -73,7 +73,8 @@ export const employeesSlice = createSlice({
             state.employee.error = null;
         })
         .addCase(deleteEmployee.fulfilled, (state, action) => {
-            state.data.slice(state.data.findIndex(element => element.id === action.payload.id), 1);
+            const index = state.data.findIndex((employee) => employee.id === action.payload);
+            state.data.splice(index, 1);
             state.employee.status = 'fulfilled';
             state.employee.error = null;
         })

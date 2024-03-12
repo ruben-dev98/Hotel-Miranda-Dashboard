@@ -6,7 +6,7 @@ import { ButtonStyledArchived, ButtonStyledPublish } from "../styled/ButtonsStyl
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useState } from "react";
 import { getMessages } from "../features/messages/messagesAsyncThunk";
-import { getAllMessages, messagesStatus } from "../features/messages/messagesSlice";
+import { getAllMessages } from "../features/messages/messagesSlice";
 import Loading from "../components/Loading";
 
 const dataTable = [

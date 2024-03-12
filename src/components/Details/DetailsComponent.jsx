@@ -9,6 +9,14 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import styled from 'styled-components';
 
+const SwiperStyled = styled(Swiper)`
+    grid-area: photo;
+`;
+
+const DetailsStyled = styled.section`
+    grid-template-columns: none;
+`;
+
 const transformData = (field, data) => {
     switch (field.type) {
         case 'text':
@@ -40,14 +48,6 @@ const transformData = (field, data) => {
                 return <img src={data[field.field]}/>
     }
 }
-
-const SwiperStyled = styled(Swiper)`
-    grid-area: photo;
-`;
-
-const DetailsStyled = styled.section`
-    grid-template-columns: ;
-`;
 
 const DetailsComponent = ({ data, object__fields }) => {
 

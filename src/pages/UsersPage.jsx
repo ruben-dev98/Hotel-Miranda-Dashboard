@@ -9,14 +9,32 @@ import { LinkStyled } from "../styled/LinkStyled";
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useState } from "react";
 import { employeesStatus, getAllEmployees } from "../features/employees/employeesSlice";
-import { getEmployees } from "../features/employees/employeesAsyncThunk";
+import { deleteEmployee, getEmployees } from "../features/employees/employeesAsyncThunk";
 import Loading from "../components/Loading";
+import Swal from "sweetalert2";
 
-const action = (id) => {
-    return <ButtonStyledViewNotes as={LinkStyled} to={`edit/${id}`} onClick={(event) => event.stopPropagation()}>Edit</ButtonStyledViewNotes>
+const handleClickDelete = async (event, dispatch, id) => {
+    event.stopPropagation();
+    try {
+        await dispatch(deleteEmployee(id)).unwrap()
+        Swal.fire({'title': 'Eliminación de Employee',
+        'timer': 2000
+        });
+    } catch(error) {
+        console.log(error)
+    }
 }
 
-const dataTable = [
+const action = (id, dispatch) => {
+    return (
+        <>
+            <ButtonStyledViewNotes onClick={(event) => handleClickDelete(event, dispatch, id)}>Delete</ButtonStyledViewNotes>
+            <ButtonStyledViewNotes as={LinkStyled} to={`edit/${id}`} onClick={(event) => event.stopPropagation()}>Edit</ButtonStyledViewNotes>
+        </>
+    )
+}
+
+const dataTable = (dispatch) =>  [
     {
         'label': 'Image',
         display: row => <img src={row.foto} />
@@ -53,7 +71,7 @@ const dataTable = [
     },
     {
         'label': 'Actions',
-        display: row => action(row.id)
+        display: row => action(row.id, dispatch)
     }
 ];
 
@@ -85,7 +103,7 @@ const UsersPage = () => {
                         <OrderComponent data={usersOrder}></OrderComponent>
                     </div>
                     <TabsComponent data={users}></TabsComponent>
-                    <TableComponent rows={data} columns={dataTable} path={'users'}></TableComponent>
+                    <TableComponent rows={data} columns={dataTable(dispatch)} path={'users'}></TableComponent>
                 </>
             }
         </section>

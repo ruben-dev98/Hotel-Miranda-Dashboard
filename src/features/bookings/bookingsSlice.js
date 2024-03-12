@@ -60,7 +60,8 @@ export const bookingsSlice = createSlice({
             state.booking.error = null;
         })
         .addCase(editBooking.fulfilled, (state, action) => {
-            state.data.slice(state.data.findIndex(element => element.id === action.payload.id), 1, action.payload);
+            const index = state.data.findIndex((el) => el.id === action.payload);
+            state.data[index].status = 'Cancelled';
             state.booking.status = 'fulfilled';
             state.booking.error = null;
         })
@@ -73,7 +74,8 @@ export const bookingsSlice = createSlice({
             state.booking.error = null;
         })
         .addCase(deleteBooking.fulfilled, (state, action) => {
-            state.data.slice(state.data.findIndex(element => element.id === action.payload.id), 1);
+            const index = state.data.findIndex((booking) => booking.id === action.payload);
+            state.data.splice(index, 1);
             state.booking.status = 'fulfilled';
             state.booking.error = null;
         })
