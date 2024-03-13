@@ -9,7 +9,7 @@ import Swal from 'sweetalert2'
 import { LinkStyled } from "../styled/LinkStyled";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllBookings } from "../features/bookings/bookingsSlice";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { deleteBooking, editBooking, getBookings } from "../features/bookings/bookingsAsyncThunk";
 import Loading from "../components/Loading";
 
@@ -17,33 +17,35 @@ const handleClickEdit = async (event, dispatch, row) => {
     event.stopPropagation();
     try {
         await dispatch(editBooking(row.id)).unwrap()
-        Swal.fire({'title': 'Cancelación de Booking',
-        'timer': 2000
+        Swal.fire({
+            'title': 'Cancelación de Booking',
+            'timer': 2000
         });
-    } catch(error) {
+    } catch (error) {
         console.log(error)
     }
-    
+
 }
 
 const handleClickDelete = async (event, dispatch, row) => {
     event.stopPropagation();
     try {
         await dispatch(deleteBooking(row.id)).unwrap();
-        Swal.fire({'title': 'Eliminación de Booking',
-        'timer': 2000
+        Swal.fire({
+            'title': 'Eliminación de Booking',
+            'timer': 2000
         });
-    } catch(error) {
+    } catch (error) {
         console.log(error)
     }
 }
 
 const action = (row, dispatch) => {
     return (
-    <>
-        <ButtonStyledViewNotes onClick={(event) => handleClickDelete(event, dispatch, row)}>Delete</ButtonStyledViewNotes>
-        <ButtonStyledViewNotes onClick={(event) => handleClickEdit(event, dispatch, row)}>Cancelada</ButtonStyledViewNotes>
-    </>
+        <>
+            <ButtonStyledViewNotes onClick={(event) => handleClickDelete(event, dispatch, row)}>Delete</ButtonStyledViewNotes>
+            <ButtonStyledViewNotes onClick={(event) => handleClickEdit(event, dispatch, row)}>Cancelada</ButtonStyledViewNotes>
+        </>
     )
 }
 
@@ -85,7 +87,7 @@ const dataTable = (dispatch) => [
                 return <SpanStyledCheckIn>{row.status}</SpanStyledCheckIn>
             } else if (row.status === 'Check Out') {
                 return <SpanStyledCheckOut>{row.status}</SpanStyledCheckOut>
-            } else if(row.status === 'In Progress') {
+            } else if (row.status === 'In Progress') {
                 return <SpanStyledInProgress>{row.status}</SpanStyledInProgress>
             } else {
                 return <SpanStyledCancelled>{row.status}</SpanStyledCancelled>
@@ -99,6 +101,7 @@ const dataTable = (dispatch) => [
 ];
 
 const BookingsPage = () => {
+    const hasDone = useRef(false);
     const dispatch = useDispatch();
     const [showSpinner, setShowSpinner] = useState(true);
     const [currentTab, setCurrentTab] = useState('All Bookings');
@@ -106,14 +109,14 @@ const BookingsPage = () => {
     const data = useSelector(getAllBookings);
 
     const filteredBookings = useMemo(() => {
-        const all = currentTab === 'All Bookings' 
-        ? data
-        : data.filter((item) => item.status === currentTab);
+        const all = currentTab === 'All Bookings'
+            ? data
+            : data.filter((item) => item.status === currentTab);
 
         return [...all].sort((a, b) => {
-            if(a[currentOrder] > b[currentOrder]) {
+            if (a[currentOrder] > b[currentOrder]) {
                 return 1;
-            } else if(a[currentOrder] < b[currentOrder]) {
+            } else if (a[currentOrder] < b[currentOrder]) {
                 return -1;
             } else {
                 return 0;
@@ -122,11 +125,14 @@ const BookingsPage = () => {
     }, [data, currentOrder, currentTab]);
 
     const result = useCallback(async () => {
-        try {
-            await dispatch(getBookings()).unwrap();
-            setShowSpinner(false);
-        } catch (error) {
-            console.log(error);
+        if (!hasDone.current) {
+            try {
+                hasDone.current = true;
+                await dispatch(getBookings());
+                setShowSpinner(false);
+            } catch (error) {
+                console.log(error);
+            }
         }
     }, [dispatch]);
 
