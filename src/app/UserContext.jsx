@@ -11,6 +11,7 @@ export const UserAuthProvider = ({children}) => {
     const {state, dispatch} = UserAuth(initAuth ? initAuth === '1' ? true : false : false, initUser ? initUser.user : '', initUser ? initUser.password : '');
     useLocalStorage('auth', 'set', state.auth ? '1' : '0');
     useLocalStorage('user', 'set', JSON.stringify({user: state.user, password: state.password}));
+    //
 
     return (
         <UserContext.Provider value={{state: state, dispatch: dispatch}}>
