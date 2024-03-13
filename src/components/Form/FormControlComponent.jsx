@@ -8,6 +8,9 @@ const renderSwitch = (inputType, data, name, values) => {
         case 'select':
             return (<select defaultValue={values ? values[name] : ''} name={name}>
                 {data.map((element, index) => {
+                    if(name === 'number') {
+                        return <option key={index}>{element.number}</option>
+                    }
                     return <option key={index}>{element}</option>
                 })}
             </select>)

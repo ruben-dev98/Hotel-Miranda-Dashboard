@@ -12,9 +12,9 @@ import { getRooms } from "../features/rooms/roomsAsyncThunk";
 
 const sortRoomNumbers = (rooms) => {
     const roomsNumber = rooms.filter((room) => room.status === 'Available');
-    return roomsNumber.map((room) => room.number).sort((a, b) => {
-        if (a > b) return 1;
-        else if (a < b) return -1;
+    return roomsNumber.sort((a, b) => {
+        if (a.number > b.number) return 1;
+        else if (a.number < b.number) return -1;
         else return 0
     });
 }
@@ -125,6 +125,7 @@ const BookingPage = () => {
         const booking = {
             id: newId,
             full_name: '',
+            order_date: Date.now(),
             check_in: '',
             check_out: '',
             special_request: '',
@@ -136,9 +137,15 @@ const BookingPage = () => {
             type: '',
             description: ''
         }
+        
         formControl(rooms).map((control) => {
-            booking[control.name] = event.target[control.name].value;
+            if(control.input === 'date') {
+                booking[control.name] = new Date(event.target[control.name].value).getTime();
+            } else {
+                booking[control.name] = event.target[control.name].value;
+            }
         });
+        
         try {
             navigate('/bookings');
             await dispatch(addBooking(booking));
@@ -146,8 +153,8 @@ const BookingPage = () => {
                 'title': 'Create de Booking Realizada',
                 'html': `
                     <p>ID : ${booking.id}</p>
-                    <p>Check In : ${booking.check_in}</p>
-                    <p>Check Out : ${booking.check_out}</p>
+                    <p>Check In : ${new Date(booking.check_in).toLocaleString('es-ES')}</p>
+                    <p>Check Out : ${new Date(booking.check_out).toLocaleString('es-ES')}</p>
                     <p>Phone : ${booking.phone}</p>
                     <p>Email : ${booking.email}</p>
                     <p>Room Number : ${booking.number}</p>
@@ -160,8 +167,10 @@ const BookingPage = () => {
     }
 
     const result = useCallback(async () => {
-        await dispatch(getBooking(parseInt(id))).unwrap();
-        dispatch(getRooms());
+        await dispatch(getRooms()).unwrap();
+        if(id) {
+            await dispatch(getBooking(parseInt(id))).unwrap();
+        }
         setShowSpinner(false);
     }, [id, dispatch]);
 

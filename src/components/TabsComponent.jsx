@@ -14,14 +14,17 @@ const TabsComponent = ({data, setCurrentTab}) => {
 
     return (
         <ListStyled>
-            {data.map((str, index) => <li key={index} onChange={() => setCurrentTab()}>{str}</li>)}
+            {data.map((str, index) => <li key={index} onChange={(event) => {
+                event.target.toggle('active_tab')
+                setCurrentTab(str)
+            }}>{str}</li>)}
         </ListStyled>
     )
 };
 
 TabsComponent.propTypes = {
     data: PropTypes.array,
-    setCurren
+    setCurrentTab: PropTypes.func
 }
 
 export default TabsComponent;

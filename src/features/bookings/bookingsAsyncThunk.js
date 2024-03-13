@@ -23,7 +23,7 @@ function delay(path, id = 0, data = null, time = 800) {
                     resolve(data);
                     break;
                 case uri.edit:
-                    resolve(id);
+                    resolve({id, data});
                     break;
                 case uri.delete:
                     resolve(id);
@@ -48,8 +48,8 @@ export const addBooking = createAsyncThunk('bookings/addBooking', async (data) =
     return await delay(uri.add, 0, data);
 });
 
-export const editBooking = createAsyncThunk('bookings/editBooking', async (id) => {
-    return await delay(uri.edit, id);
+export const editBooking = createAsyncThunk('bookings/editBooking', async ({id, data}) => {
+    return await delay(uri.edit, id, data);
 });
 
 export const deleteBooking = createAsyncThunk('bookings/deleteBooking', async (id) => {
