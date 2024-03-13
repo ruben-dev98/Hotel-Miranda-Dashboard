@@ -7,7 +7,7 @@ import OrderComponent from "../components/OrderComponent";
 import { roomsOrder } from "../assets/data/order";
 import { LinkStyled } from "../styled/LinkStyled";
 import { useDispatch, useSelector } from "react-redux";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { getAllRooms } from "../features/rooms/roomsSlice";
 import { deleteRoom, getRooms } from "../features/rooms/roomsAsyncThunk";
 import Loading from "../components/Loading";
@@ -79,7 +79,25 @@ const dataTable = (dispatch) => [
 const RoomsPage = () => {
     const dispatch = useDispatch();
     const [showSpinner, setShowSpinner] = useState(true);
+    const [currentTab, setCurrentTab] = useState('All Rooms');
+    const [currentOrder, setCurrentOrder] = useState('status');
     const data = useSelector(getAllRooms);
+
+    const filteredRooms = useMemo(() => {
+        const all = currentTab === 'All Rooms' 
+        ? data
+        : data.filter((item) => item.status === currentTab);
+
+        return [...all].sort((a, b) => {
+            if(a[currentOrder] > b[currentOrder]) {
+                return 1;
+            } else if(a[currentOrder] < b[currentOrder]) {
+                return -1;
+            } else {
+                return 0;
+            }
+        })
+    }, [data, currentOrder, currentTab]);
 
     const result = useCallback(async () => {
         try {
@@ -101,10 +119,10 @@ const RoomsPage = () => {
                 <>
                     <div className="top__menu-table">
                         <ButtonStyledNew as={LinkStyled} to={'room'}>+ New Room</ButtonStyledNew>
-                        <OrderComponent data={roomsOrder} />
+                        <OrderComponent setCurrentOrder={setCurrentOrder} data={roomsOrder} />
                     </div>
-                    <TabsComponent data={rooms}></TabsComponent>
-                    <TableComponent rows={data} columns={dataTable(dispatch)} path={'rooms'}></TableComponent>
+                    <TabsComponent setCurrentTab={setCurrentTab} data={rooms}></TabsComponent>
+                    <TableComponent rows={filteredRooms} columns={dataTable(dispatch)} path={'rooms'}></TableComponent>
                 </>
             }
         </section>

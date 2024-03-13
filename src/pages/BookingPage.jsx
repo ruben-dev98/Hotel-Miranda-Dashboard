@@ -145,7 +145,7 @@ const BookingPage = () => {
                 booking[control.name] = event.target[control.name].value;
             }
         });
-        
+
         try {
             navigate('/bookings');
             await dispatch(addBooking(booking));
@@ -168,9 +168,7 @@ const BookingPage = () => {
 
     const result = useCallback(async () => {
         await dispatch(getRooms()).unwrap();
-        if(id) {
-            await dispatch(getBooking(parseInt(id))).unwrap();
-        }
+        await dispatch(getBooking(parseInt(id))).unwrap();
         setShowSpinner(false);
     }, [id, dispatch]);
 

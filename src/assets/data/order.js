@@ -19,8 +19,35 @@ export const bookingsOrder = [
     }
 ];
 
-export const roomsOrder = ["Disponible", "Ocupada", "Precio Mayor a Menor", "Precio Menor a Mayor"];
+export const roomsOrder = [
+    {
+        label: 'Disponible',
+        value: 'status'
+    },
+    {
+
+        label: 'Ocupada',
+        value: 'status'
+    },
+
+    {
+        label: 'Precio Mayor a Menor',
+        value: 'price'
+    },
+    {
+        label: 'Precio Menor a Mayor',
+        value: 'price'
+    }
+];
 
 export const messageOrder = [];
 
-export const usersOrder = ["Nombre"]; 
+export const usersOrder = [
+    {
+        label: 'Fecha De Alta',
+        value: 'start_date'
+    },
+    {
+    label: 'Nombre',
+    value: 'full_name'
+    }]; 

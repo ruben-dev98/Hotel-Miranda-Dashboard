@@ -14,10 +14,10 @@ const TabsComponent = ({data, setCurrentTab}) => {
 
     return (
         <ListStyled>
-            {data.map((str, index) => <li key={index} onChange={(event) => {
-                event.target.toggle('active_tab')
-                setCurrentTab(str)
-            }}>{str}</li>)}
+            {data.map((str, index) => <li key={index} onClick={(event) => {
+                //event.target.classList.toggle('active_tab');
+                setCurrentTab(str.value)
+            }}>{str.label}</li>)}
         </ListStyled>
     )
 };

@@ -7,7 +7,7 @@ import { ButtonStyledNew, ButtonStyledViewNotes } from "../styled/ButtonsStyled"
 import OrderComponent from './../components/OrderComponent';
 import { LinkStyled } from "../styled/LinkStyled";
 import { useDispatch, useSelector } from "react-redux";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { getAllEmployees } from "../features/employees/employeesSlice";
 import { deleteEmployee, getEmployees } from "../features/employees/employeesAsyncThunk";
 import Loading from "../components/Loading";
@@ -78,7 +78,25 @@ const dataTable = (dispatch) =>  [
 const UsersPage = () => {
     const dispatch = useDispatch();
     const [showSpinner, setShowSpinner] = useState(true);
+    const [currentTab, setCurrentTab] = useState('All Employees');
+    const [currentOrder, setCurrentOrder] = useState('start_date');
     const data = useSelector(getAllEmployees);
+
+    const filteredUsers = useMemo(() => {
+        const all = currentTab === 'All Employees' 
+        ? data
+        : data.filter((item) => item.status === currentTab);
+
+        return [...all].sort((a, b) => {
+            if(a[currentOrder] > b[currentOrder]) {
+                return 1;
+            } else if(a[currentOrder] < b[currentOrder]) {
+                return -1;
+            } else {
+                return 0;
+            }
+        })
+    }, [data, currentOrder, currentTab]);
 
     const result = useCallback(async () => {
         try {
@@ -99,11 +117,12 @@ const UsersPage = () => {
             {showSpinner ? <Loading></Loading> :
                 <>
                     <div className="top__menu-table">
+                        {/*Search Employee Name*/}
                         <ButtonStyledNew as={LinkStyled} to={'user'}>+ New Employee</ButtonStyledNew>
-                        <OrderComponent data={usersOrder}></OrderComponent>
+                        <OrderComponent setCurrentOrder={setCurrentOrder} data={usersOrder}></OrderComponent>
                     </div>
-                    <TabsComponent data={users}></TabsComponent>
-                    <TableComponent rows={data} columns={dataTable(dispatch)} path={'users'}></TableComponent>
+                    <TabsComponent setCurrentTab={setCurrentTab} data={users}></TabsComponent>
+                    <TableComponent rows={filteredUsers} columns={dataTable(dispatch)} path={'users'}></TableComponent>
                 </>
             }
         </section>

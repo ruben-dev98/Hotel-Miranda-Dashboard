@@ -1,8 +1,52 @@
 const tabs = {
-    bookings: ["All Bookings", "Checking In", "Checking Out", "In Progress"],
-    rooms: ["All Rooms"],
-    message: ["All Contact", "Archived"],
-    users: ["All Employee", "Active Employee", "Inactive Employee"]
+    bookings: [
+        {
+            label: "All Bookings",
+            value: 'All Bookings'
+        },
+        {
+            label: "Checking In",
+            value: 'Check In'
+        },
+        {
+            label: "Checking Out",
+            value: 'Check Out'
+        },
+        {
+            label: "In Progress",
+            value: 'In Progress'
+        }
+    ],
+    rooms: [
+        {
+            label: "All Rooms",
+            value: 'All Rooms'
+        },
+    ],
+    message: [
+        {
+            label: "All Contact",
+            value: 'All Contact'
+        },
+        {
+            label: "Archived",
+            value: 'archived'
+        },
+    ],
+    users: [
+        {
+            label: "All Employees",
+            value: 'All Employees'
+        },
+        {
+            label: "Active Employee",
+            value: true
+        },
+        {
+            label: "Inactive Employee",
+            value: false
+        },
+    ]
 }
 
 export const { bookings, rooms, message, users } = tabs; 

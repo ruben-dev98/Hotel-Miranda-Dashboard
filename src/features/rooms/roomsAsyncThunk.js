@@ -8,7 +8,7 @@ const uri = {
     delete: 'delete/message'
 };
 
-function delay(path, id = 0, data = null, time = 800) {
+function delay(path, id = 0, data = null, time = 200) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             switch(path) {
