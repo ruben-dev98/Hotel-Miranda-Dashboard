@@ -10,15 +10,12 @@ const WindowStyled = styled.div`
     display: grid;
     grid-template-columns: 20% 80%;
     grid-template-rows: 10% 90%;
-    grid-template-areas: 
-    'sidebar header'
-    'sidebar content';
-`;
-
-const WindowStyledCollapse = styled(WindowStyled)`
-    grid-template-areas: 
-    'header header'
-    'content content';
+    grid-template-areas: ${props => props.$visibleLateral ? 
+    `'sidebar header'
+    'sidebar content'`
+    :
+    `'header header'
+    'content content'`};
 `;
 
 const content = (visibleLateral, setVisibleLateral, title) => {
@@ -65,20 +62,11 @@ const MainPage = () => {
     const [visibleLateral, setVisibleLateral] = useState(true);
     const path = useLocation().pathname;
     
-
-    const initLabel = visibleLateral ? 
-    <WindowStyled>
-        {content(visibleLateral, setVisibleLateral, title(path))}
-    </WindowStyled> 
-    : 
-    <WindowStyledCollapse>
-        {content(visibleLateral, setVisibleLateral, title(path))}
-    </WindowStyledCollapse>;
-
-
     return (
         <>
-            {initLabel}
+            <WindowStyled $visibleLateral={visibleLateral}>
+                {content(visibleLateral, setVisibleLateral, title(path))}
+            </WindowStyled>
         </>
     )
 }

@@ -8,6 +8,17 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import styled from 'styled-components';
+import { ButtonStyled } from '../../styled/ButtonsStyled';
+import { FaArrowLeftStyled } from '../../styled/IconStyled';
+import { useNavigate } from 'react-router-dom';
+
+const SwiperStyled = styled(Swiper)`
+    grid-area: photo;
+`;
+
+const DetailsStyled = styled.section`
+    grid-template-columns: none;
+`;
 
 const transformData = (field, data) => {
     switch (field.type) {
@@ -41,19 +52,15 @@ const transformData = (field, data) => {
     }
 }
 
-const SwiperStyled = styled(Swiper)`
-    grid-area: photo;
-`;
-
-const DetailsStyled = styled.section`
-    grid-template-columns: ;
-`;
-
 const DetailsComponent = ({ data, object__fields }) => {
+    const navigate = useNavigate();
 
 
     return (
         <section className="details">
+            <ButtonStyled onClick={() => navigate(-1)}>
+                <FaArrowLeftStyled />
+            </ButtonStyled>
             {
                 object__fields.map((field, index) => 
                     <div key={index}>

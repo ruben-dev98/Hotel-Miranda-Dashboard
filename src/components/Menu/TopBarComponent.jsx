@@ -48,6 +48,12 @@ const IconStyled = styled.li`
     }
 `;
 
+const DivStyled = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`;
+
 const TopBarComponent = ({ setVisibleLateral, visibleLateral, title}) => {
     const navigate = useNavigate();
     const context = useContext(UserContext);
@@ -62,12 +68,12 @@ const TopBarComponent = ({ setVisibleLateral, visibleLateral, title}) => {
 
     return (
         <HeaderStyled>
-            <div>
+            <DivStyled>
                 <IconStyled onClick={isMenuVisibleHandle}>
                     {visibleLateral ? <AiOutlineMenuFold/> : <FaArrowRight />}
-                    <span style={{marginLeft: 30}}>{title}</span>
                 </IconStyled>
-            </div>
+                <span>{title}</span>
+            </DivStyled>
             <IconsListStyled>
                 <IconStyled>
                     <BiEnvelope />

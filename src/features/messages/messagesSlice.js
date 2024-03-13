@@ -47,7 +47,8 @@ export const messagesSlice = createSlice({
             state.message.error = null;
         })
         .addCase(editMessage.fulfilled, (state, action) => {
-            state.data.slice(state.data.findIndex(element => element.id === action.payload.id), 1, action.payload);
+            const index = state.data.findIndex((message) => message.id === action.payload);
+            state.data[index].archived = true;
             state.message.status = 'fulfilled';
             state.message.error = null;
         })
@@ -60,7 +61,8 @@ export const messagesSlice = createSlice({
             state.message.error = null;
         })
         .addCase(deleteMessage.fulfilled, (state, action) => {
-            state.data.slice(state.data.findIndex(element => element.id === action.payload.id), 1);
+            const index = state.data.findIndex((message) => message.id === action.payload);
+            state.data.splice(index, 1);
             state.message.status = 'fulfilled';
             state.message.error = null;
         })
@@ -73,5 +75,6 @@ export const messagesSlice = createSlice({
 
 export const getAllMessages = state => state.messages.data;
 export const messagesStatus = state => state.messages.status;
+export const getOneMessage = state => state.messages.message.data;
 
 export default messagesSlice.reducer;

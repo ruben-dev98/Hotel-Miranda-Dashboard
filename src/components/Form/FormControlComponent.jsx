@@ -18,11 +18,15 @@ const renderSwitch = (inputType, data, name, values) => {
                 })}
             </select>)
         case 'date': {
-            const date = new Date(values ? values[name] : '');
+            const date = new Date(values ? parseInt(values[name]) : '');
             const month = date.getMonth() + 1;
             const day = date.getDate();
             return <input defaultValue={values ? `${date.getFullYear()}-${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}` : ''} name={name} type={inputType} />
         }
+        /*case 'datetime-local': {
+            const date = new Date(values ? parseInt(values[name]) : '').toISOString().slice(0, 19);
+            return <input defaultValue={values ? date : ''} name={name} type={inputType} />
+        }*/
         case 'number':
             return <input defaultValue={values ? values[name] : 0} min={0} max={500} name={name} type={inputType} />
         default:

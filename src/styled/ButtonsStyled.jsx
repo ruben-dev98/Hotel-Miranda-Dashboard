@@ -8,6 +8,12 @@ export const ButtonStyled = styled.button`
     width: 100px;
     height: 50px;
     border: 0rem;
+
+    &:disabled {
+        background-color: #FFF;
+        color: #393939;
+        outline: 1px solid #135846;
+    }
 `;
 
 export const ButtonStyledPublish = styled(ButtonStyled)`

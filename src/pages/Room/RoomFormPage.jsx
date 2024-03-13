@@ -1,0 +1,160 @@
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { getAllRooms, getOneRoom } from '../../features/rooms/roomsSlice';
+import { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addRoom, editRoom, getRoom } from '../../features/rooms/roomsAsyncThunk';
+import Loading from "../../components/Loading";
+import { lastId } from "../../app/getItemsId";
+import Swal from "sweetalert2";
+import FormComponent from "../../components/Form/FormComponent";
+
+const formControl = [
+    {
+        'label': 'Foto',
+        'input': 'text',
+        'name': 'foto'
+    },
+    {
+        'label': 'Room Type',
+        'input': 'select',
+        'data': ['Single Bed', 'Double Bed', 'Double Superior', 'Suite'],
+        'name': 'type'
+    },
+    {
+        'label': 'Room Number',
+        'input': 'number',
+        'name': 'number'
+    },
+    {
+        'label': 'Description',
+        'input': 'textarea',
+        'name': 'description'
+    },
+    {
+        'label': 'Price',
+        'input': 'number',
+        'name': 'price'
+    },
+    {
+        'label': 'Discount',
+        'input': 'number',
+        'name': 'discount'
+    },
+    {
+        'label': 'Cancellation',
+        'input': 'textarea',
+        'name': 'cancellation'
+    },
+    {
+        'label': 'Amenities',
+        'input': 'select multiple',
+        'data': ["Breakfast", "Smart Security", "Strong Locker", "Shower",
+            "24/7 Online Support", "Kitchen", "Cleaning", "Expert Team", "High speed WiFi",
+            "Air conditioner", "Towels", "Grocery", "Single bed", "Shop near"],
+        'name': 'amenities'
+    },
+]
+
+const RoomFormPage = () => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [showSpinner, setShowSpinner] = useState(true);
+    const room = useSelector(getOneRoom);
+    const rooms = useSelector(getAllRooms);
+    const loc = useLocation().pathname;
+    const { id } = useParams();
+
+    const onCreateRoom = async (event) => {
+        event.preventDefault();
+        const newId = lastId(rooms);
+        const room = {
+            id: id || newId,
+            foto: '',
+            type: '',
+            number: '',
+            description: '',
+            offer: false,
+            price: 0,
+            cancellation: true,
+            amenities: [],
+            discount: 0,
+            status: ''
+        };
+        
+        formControl.forEach((control) => {
+            if (control.input === 'select multiple') {
+                const selectedOptions = event.target[control.name].selectedOptions;
+                const values = [];
+                for (let i = 0; i < selectedOptions.length; i++) {
+                    values.push(selectedOptions[i].value)
+                }
+                room[control.name] = values;
+            } else {
+                room[control.name] = event.target[control.name].value;
+            }
+        });
+        
+        if(room.discount > 0) {
+            room.offer = true;
+        }
+        
+        if(loc.includes('edit')) {
+            try {
+                navigate('/rooms');
+                await dispatch(editRoom({id: id, data: room})).unwrap();
+                Swal.fire({
+                    'title': 'Update de Room Realizada',
+                    'html': `
+                        <p>ID : ${room.id}</p>
+                        <p>Room Number : ${room.number}</p>
+                        <p>Room Type : ${room.type}</p>
+                        <p>Price : ${room.price}</p>
+                    `,
+                    'timer': 2000
+                });
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            try {
+                navigate('/rooms');
+                dispatch(addRoom(room)).unwrap();
+                Swal.fire({
+                    'title': 'Create de Room Realizada',
+                    'html': `
+                        <p>ID : ${room.id}</p>
+                        <p>Room Number : ${room.number}</p>
+                        <p>Room Type : ${room.type}</p>
+                        <p>Price : ${room.price}</p>
+                    `,
+                    'timer': 2000
+                });
+            } catch (error) {
+                console.log(error);
+            }
+            
+        }
+    }
+
+    const result = useCallback(async () => {
+        try {
+            await dispatch(getRoom(parseInt(id))).unwrap();
+            setShowSpinner(false);
+        } catch (error) {
+            console.log(error);
+        }
+    }, [id, dispatch]);
+
+    useEffect(() => {
+        result();
+    }, [result])
+
+    return (
+        <section className="content">
+            {showSpinner ? <Loading></Loading> :
+                <FormComponent path={loc} data={room} formControl={formControl} onHandleSubmit={onCreateRoom}></FormComponent>}
+        </section>
+    )
+}
+
+export default RoomFormPage;

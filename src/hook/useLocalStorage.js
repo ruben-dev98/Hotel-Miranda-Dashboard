@@ -1,3 +1,5 @@
+import { useReducer } from "react";
+
 const reducer = (key, item, action) => {
     switch(action) {
         case 'set':
@@ -9,5 +11,6 @@ const reducer = (key, item, action) => {
 }
 
 export const useLocalStorage = (key, action, item = null) => {
+    //const [state, dispatch] = useReducer({item: null})
     return reducer(key, item, action);
 }

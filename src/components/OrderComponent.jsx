@@ -13,17 +13,18 @@ const SelectStyled = styled.select`
     height: 50px;
 `;
 
-const OrderComponent = ({data}) => {
+const OrderComponent = ({data, setCurrentOrder}) => {
 
     return (
-        <SelectStyled>
-            {data.map((str, index) => <option key={index}>{str}</option>)}
+        <SelectStyled onChange={(event) => setCurrentOrder(event.target.value)}>
+            {data.map((str, index) => <option key={index} value={str.value}>{str.label}</option>)}
         </SelectStyled>
     )
 };
 
 OrderComponent.propTypes = {
-    data: PropTypes.array
+    data: PropTypes.array,
+    setCurrentOrder: PropTypes.func
 }
 
 export default OrderComponent;

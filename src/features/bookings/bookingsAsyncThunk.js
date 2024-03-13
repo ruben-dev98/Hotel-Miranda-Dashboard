@@ -9,10 +9,10 @@ const uri = {
     delete: 'delete/booking'
 };
 
-function delay(path, id = 0, data = null, time = 800) {
+function delay(path, id = 0, data = null, time = 200) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
-            switch(path) {
+            switch (path) {
                 case uri.getAll:
                     resolve(dataBookings);
                     break;
@@ -23,10 +23,10 @@ function delay(path, id = 0, data = null, time = 800) {
                     resolve(data);
                     break;
                 case uri.edit:
-                    resolve(data);
+                    resolve({id, data});
                     break;
                 case uri.delete:
-                    resolve(data.id);
+                    resolve(id);
                     break;
                 default:
                     reject('Error');
@@ -48,10 +48,10 @@ export const addBooking = createAsyncThunk('bookings/addBooking', async (data) =
     return await delay(uri.add, 0, data);
 });
 
-export const editBooking = createAsyncThunk('bookings/editBooking', async ({id, data }) => {
+export const editBooking = createAsyncThunk('bookings/editBooking', async ({id, data}) => {
     return await delay(uri.edit, id, data);
 });
 
-export const deleteBooking = createAsyncThunk('bookings/deleteBooking', async ({id, data}) => {
-    return await delay(uri.delete, id, data);
+export const deleteBooking = createAsyncThunk('bookings/deleteBooking', async (id) => {
+    return await delay(uri.delete, id);
 });

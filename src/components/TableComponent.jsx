@@ -1,6 +1,12 @@
+
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import Swal from 'sweetalert2';
+import { getMessage } from '../features/messages/messagesAsyncThunk';
+import usePaginate from './../hook/usePaginate';
+import { ButtonStyled } from './../styled/ButtonsStyled';
 
 const TableStyled = styled.table`
     padding: 2rem;
@@ -9,13 +15,14 @@ const TableStyled = styled.table`
 
     thead > tr {
         height: 50px;
+
         th {
             padding: 0.5rem;
         }
     }
 
     tbody > tr {
-        cursor: ${(props) => props.$path === '' ? 'default' : 'pointer'};
+        cursor: pointer;
         height: 100px;
         
         td:not(button), td:not(span) {
@@ -32,31 +39,53 @@ const TableStyled = styled.table`
 
 const TableComponent = ({ rows, columns, path }) => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const {data_per_page, currentPage, setCurrentPage, max_page} = usePaginate(rows);
 
     return (
-        <TableStyled $path={path}>
-            <thead>
-                <tr>
-                    {columns.map((element, index) => <th key={index}>{element.label}</th>)}
-                </tr>
-            </thead>
-            <tbody>
-                {rows.map((row, index) => {
-                    return (
-                        <tr onClick={(event) => {
-                            if (path !== '') {
-                                navigate(`${row.id}`)
-                            }
-                            return '';
-                        }} key={index}>
-                            {columns.map((column, indx) => {
-                                return <td key={indx}>{row[column.property] ? row[column.property] : column.display(row)}</td>;
-                            })}
-                        </tr>
-                    );
-                })}
-            </tbody>
-        </TableStyled>
+        <>
+            <TableStyled $path={path}>
+                <thead>
+                    <tr>
+                        {columns.map((element, index) => <th key={index}>{element.label}</th>)}
+                    </tr>
+                </thead>
+                <tbody>
+                    {data_per_page.map((row, index) => {
+                        return (
+                            <tr onClick={() => {
+                                if (path !== '') {
+                                    navigate(`${row.id}`)
+                                } else {
+                                    const showMessage = () => {
+                                        dispatch(getMessage(row.id)).then((result) => {
+                                            Swal.fire({
+                                                title: 'Details Message',
+                                                html: `
+                                                <p><strong>Full Name: </strong> ${result.payload.full_name}</p>
+                                                <p><strong>Subject: </strong>  ${result.payload.subject}</p>
+                                                <p><strong>Message: </strong> ${result.payload.messages}</p>
+                                            `
+                                            });
+                                        }).catch(error => {
+                                            console.log(error)
+                                        });
+                                    }
+                                    showMessage();
+                                }
+                            }} key={index}>
+                                {columns.map((column, indx) => {
+                                    return <td key={indx}>{!column.display ? row[column.property] : column.display(row)}</td>;
+                                })}
+                            </tr>
+                        );
+                    })}
+                </tbody>
+            </TableStyled>
+            <ButtonStyled style={{marginRight: 20}} disabled={currentPage === 1 ? true : false} onClick={() => setCurrentPage((prev) => prev - 1)}>Prev</ButtonStyled>
+            <ButtonStyled disabled={currentPage === max_page ? true : false} onClick={() => setCurrentPage((prev) => prev + 1)}>Next</ButtonStyled>
+
+        </>
     );
 }
 

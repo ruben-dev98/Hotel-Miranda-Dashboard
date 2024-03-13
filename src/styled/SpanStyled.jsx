@@ -24,3 +24,8 @@ export const SpanStyledInProgress = styled(SpanStyled)`
     color: #393939;
     background-color: #FF9C3A;
 `;
+
+export const SpanStyledCancelled = styled(SpanStyled)`
+    color: #FFF;
+    background-color: #575757;
+`;

@@ -60,7 +60,8 @@ export const employeesSlice = createSlice({
             state.employee.error = null;
         })
         .addCase(editEmployee.fulfilled, (state, action) => {
-            state.data.slice(state.data.findIndex(element => element.id === action.payload.id), 1, action.payload);
+            const index = state.data.findIndex((employee) => employee.id === action.payload.id);
+            state.data[index] = action.payload.data;
             state.employee.status = 'fulfilled';
             state.employee.error = null;
         })
@@ -73,7 +74,8 @@ export const employeesSlice = createSlice({
             state.employee.error = null;
         })
         .addCase(deleteEmployee.fulfilled, (state, action) => {
-            state.data.slice(state.data.findIndex(element => element.id === action.payload.id), 1);
+            const index = state.data.findIndex((employee) => employee.id === action.payload);
+            state.data.splice(index, 1);
             state.employee.status = 'fulfilled';
             state.employee.error = null;
         })
