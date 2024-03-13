@@ -25,12 +25,12 @@ const tabs = {
     ],
     message: [
         {
-            label: "All Contact",
-            value: 'All Contact'
+            label: "All Contacts",
+            value: 'All Contacts'
         },
         {
             label: "Archived",
-            value: 'archived'
+            value: true
         },
     ],
     users: [

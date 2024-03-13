@@ -4,12 +4,16 @@ import TabsComponent from "../components/TabsComponent";
 import MessageListComponent from './../components/MessageListComponent';
 import { ButtonStyledArchived, ButtonStyledPublish } from "../styled/ButtonsStyled";
 import { useDispatch, useSelector } from "react-redux";
-import { useCallback, useEffect, useState } from "react";
-import { getMessages } from "../features/messages/messagesAsyncThunk";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { editMessage, getMessages } from "../features/messages/messagesAsyncThunk";
 import { getAllMessages } from "../features/messages/messagesSlice";
 import Loading from "../components/Loading";
 
-const dataTable = [
+const handleClickArchive = (dispatch, id) => {
+    dispatch(editMessage(id));
+}
+
+const dataTable = (dispatch) => [
     {
         'label': 'Date',
         display: row => `${new Date(parseInt(row.date)).toLocaleString('es-Es')} ${row.id}`
@@ -27,14 +31,24 @@ const dataTable = [
         display: row => row.archived ?
             <ButtonStyledPublish>Publish</ButtonStyledPublish>
             :
-            <ButtonStyledArchived>Archive</ButtonStyledArchived>
+            <ButtonStyledArchived onClick={() => handleClickArchive(dispatch, row.id)}>Archive</ButtonStyledArchived>
     }
 ];
 
 const ContactPage = () => {
     const dispatch = useDispatch();
     const [showSpinner, setShowSpinner] = useState(true);
+    const [currentTab, setCurrentTab] = useState('All Contacts');
     const data = useSelector(getAllMessages);
+
+    const filteredMessages = useMemo(() => {
+        
+        const all = currentTab === 'All Contacts'
+            ? data
+            : data.filter((item) => item.archived === currentTab);
+
+        return all;
+    }, [data, currentTab]);
 
     const result = useCallback(async () => {
         try {
@@ -55,8 +69,8 @@ const ContactPage = () => {
                 {showSpinner ? <Loading></Loading> :
                     <>
                         <MessageListComponent />
-                        <TabsComponent data={message}></TabsComponent>
-                        <TableComponent rows={data} columns={dataTable} path={''}></TableComponent>
+                        <TabsComponent setCurrentTab={setCurrentTab} data={message}></TabsComponent>
+                        <TableComponent rows={filteredMessages} columns={dataTable(dispatch)} path={''}></TableComponent>
                     </>
                 }
             </section>

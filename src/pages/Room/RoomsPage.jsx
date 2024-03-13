@@ -1,16 +1,16 @@
-import { rooms } from "../assets/data/tabs";
-import TabsComponent from "../components/TabsComponent";
-import TableComponent from '../components/TableComponent';
-import { SpanStyled, SpanStyledCheckOut } from "../styled/SpanStyled";
-import { ButtonStyledNew, ButtonStyledViewNotes } from "../styled/ButtonsStyled";
-import OrderComponent from "../components/OrderComponent";
-import { roomsOrder } from "../assets/data/order";
-import { LinkStyled } from "../styled/LinkStyled";
+import { rooms } from "../../assets/data/tabs";
+import TabsComponent from "../../components/TabsComponent";
+import TableComponent from '../../components/TableComponent';
+import { SpanStyled, SpanStyledCheckOut } from "../../styled/SpanStyled";
+import { ButtonStyledNew, ButtonStyledViewNotes } from "../../styled/ButtonsStyled";
+import OrderComponent from "../../components/OrderComponent";
+import { roomsOrder } from "../../assets/data/order";
+import { LinkStyled } from "../../styled/LinkStyled";
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { getAllRooms } from "../features/rooms/roomsSlice";
-import { deleteRoom, getRooms } from "../features/rooms/roomsAsyncThunk";
-import Loading from "../components/Loading";
+import { getAllRooms } from "../../features/rooms/roomsSlice";
+import { deleteRoom, getRooms } from "../../features/rooms/roomsAsyncThunk";
+import Loading from "../../components/Loading";
 import Swal from "sweetalert2";
 
 const handleClickDelete = async (event, dispatch, id) => {

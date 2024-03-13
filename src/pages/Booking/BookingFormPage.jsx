@@ -1,14 +1,14 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { lastId } from "../app/getItemsId";
-import FormComponent from './../components/Form/FormComponent';
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { lastId } from "../../app/getItemsId";
+import FormComponent from '../../components/Form/FormComponent';
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useState } from "react";
-import { addBooking, getBooking } from "../features/bookings/bookingsAsyncThunk";
-import { getAllBookings, getOneBooking } from "../features/bookings/bookingsSlice";
-import Loading from "../components/Loading";
+import { addBooking, getBooking } from "../../features/bookings/bookingsAsyncThunk";
+import { getAllBookings, getOneBooking } from "../../features/bookings/bookingsSlice";
+import Loading from "../../components/Loading";
 import Swal from "sweetalert2";
-import { getAllRooms } from "../features/rooms/roomsSlice";
-import { getRooms } from "../features/rooms/roomsAsyncThunk";
+import { getAllRooms } from "../../features/rooms/roomsSlice";
+import { getRooms } from "../../features/rooms/roomsAsyncThunk";
 
 const sortRoomNumbers = (rooms) => {
     const roomsNumber = rooms.filter((room) => room.status === 'Available');
@@ -58,60 +58,9 @@ const formControl = (rooms) => [
     }
 ]
 
-const object__fields = [
-    {
-        'field': 'id',
-        'type': 'text'
-    },
-    {
-        'field': 'check_in',
-        'type': 'date'
-    },
-    {
-        'field': 'check_out',
-        'type': 'date'
-    },
-    {
-        'field': 'full_name',
-        'type': 'text'
-    },
-    {
-        'field': 'number',
-        'type': 'text'
-    },
-    {
-        'field': 'special_request',
-        'type': 'text'
-    },
-    {
-        'field': 'price',
-        'type': 'text'
-    },
-    {
-        'field': 'foto',
-        'type': 'swiper'
-    },
-    {
-        'field': 'description',
-        'type': 'text'
-    },
-    {
-        'field': 'type',
-        'type': 'text'
-    },
-    {
-        'field': 'amenities',
-        'type': 'array'
-    },
-    {
-        'field': 'status',
-        'type': 'text'
-    }
-];
-
-
-const BookingPage = () => {
+const BookingFormPage = () => {
     const navigate = useNavigate();
+    const loc = useLocation().pathname;
     const dispatch = useDispatch();
     const [showSpinner, setShowSpinner] = useState(true);
     const { id } = useParams();
@@ -138,7 +87,7 @@ const BookingPage = () => {
             description: ''
         }
         
-        formControl(rooms).map((control) => {
+        formControl(rooms).forEach((control) => {
             if(control.input === 'date') {
                 booking[control.name] = new Date(event.target[control.name].value).getTime();
             } else {
@@ -177,13 +126,12 @@ const BookingPage = () => {
     }, [result]);
 
     return (
-
         <section className="content">
             {showSpinner ? <Loading></Loading> :
-                <FormComponent path={''} formControl={formControl(rooms)} data={booking} object__fields={object__fields} onHandleSubmit={onCreateBooking}></FormComponent>}
+                <FormComponent path={loc} formControl={formControl(rooms)} data={booking} onHandleSubmit={onCreateBooking}></FormComponent>}
         </section>
     );
 
 }
 
-export default BookingPage;
+export default BookingFormPage;

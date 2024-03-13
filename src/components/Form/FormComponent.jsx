@@ -1,10 +1,9 @@
 import styled from "styled-components";
 import FormControlComponent from "./FormControlComponent";
 import PropTypes from 'prop-types';
-import DetailsComponent from "../Details/DetailsComponent";
 import { ButtonStyled } from "../../styled/ButtonsStyled";
 import { useNavigate } from "react-router-dom";
-import { FaArrowLeft } from 'react-icons/fa6';
+import { FaArrowLeftStyled } from "../../styled/IconStyled";
 
 const FormStyled = styled.form`
     
@@ -71,41 +70,29 @@ const FormStyled = styled.form`
     }
 `;
 
-const FaArrowLeftStyled = styled(FaArrowLeft)`
-    width: 30px;
-    height: 30px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-`;
 
 
-
-const FormComponent = ({ formControl, data, object__fields, onHandleSubmit, path }) => {
+const FormComponent = ({ formControl, data, onHandleSubmit}) => {
     const nav = useNavigate();
 
     return (
         <>
             <ButtonStyled onClick={() => nav(-1)}>
-                <FaArrowLeftStyled/>
+                <FaArrowLeftStyled />
             </ButtonStyled>
-            {data && !path.includes('edit') ?
-                <DetailsComponent data={data} object__fields={object__fields}></DetailsComponent>
-                :  
-                <FormStyled onSubmit={onHandleSubmit}>
-                    {
-                        formControl.map((control, index) =>
-                            <FormControlComponent key={index}
-                                label={control.label}
-                                inputType={control.input}
-                                name={control.name}
-                                data={control.data} values={data}></FormControlComponent>)
-                    }
-                    <div>
-                        <ButtonStyled type="submit">Create</ButtonStyled>
-                    </div>
-                </FormStyled>}
+            <FormStyled onSubmit={onHandleSubmit}>
+                {
+                    formControl.map((control, index) =>
+                        <FormControlComponent key={index}
+                            label={control.label}
+                            inputType={control.input}
+                            name={control.name}
+                            data={control.data} values={data}></FormControlComponent>)
+                }
+                <div>
+                    <ButtonStyled type="submit">Create</ButtonStyled>
+                </div>
+            </FormStyled>
         </>
     );
 }
@@ -113,9 +100,7 @@ const FormComponent = ({ formControl, data, object__fields, onHandleSubmit, path
 FormComponent.propTypes = {
     formControl: PropTypes.array,
     data: PropTypes.object,
-    object__fields: PropTypes.array,
-    onHandleSubmit: PropTypes.func,
-    path: PropTypes.string
+    onHandleSubmit: PropTypes.func
 }
 
 export default FormComponent;

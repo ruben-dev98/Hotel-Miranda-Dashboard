@@ -1,11 +1,11 @@
-import FormComponent from '../components/Form/FormComponent';
+import FormComponent from '../../components/Form/FormComponent';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCallback, useEffect, useState } from 'react';
-import { getAllEmployees, getOneEmployee } from '../features/employees/employeesSlice';
-import { addEmployee, editEmployee, getEmployee } from '../features/employees/employeesAsyncThunk';
-import Loading from '../components/Loading';
-import { lastId } from '../app/getItemsId';
+import { getAllEmployees, getOneEmployee } from '../../features/employees/employeesSlice';
+import { addEmployee, editEmployee, getEmployee } from '../../features/employees/employeesAsyncThunk';
+import Loading from '../../components/Loading';
+import { lastId } from '../../app/getItemsId';
 import Swal from 'sweetalert2';
 
 const formControl = [
@@ -58,42 +58,7 @@ const formControl = [
     },
 ]
 
-const object__fields = [
-    {
-        'field': 'id',
-        'type': 'text'
-    },
-    {
-        'field': 'start_date',
-        'type': 'date'
-    },
-    {
-        'field': 'full_name',
-        'type': 'text'
-    },
-    {
-        'field': 'contact',
-        'type': 'text'
-    },
-    {
-        'field': 'foto',
-        'type': 'img'
-    },
-    {
-        'field': 'description',
-        'type': 'text'
-    },
-    {
-        'field': 'email',
-        'type': 'text'
-    },
-    {
-        display: data => data.status ? 'Activo' : 'Inactivo',
-        'type': 'text'
-    }
-];
-
-const UserPage = () => {
+const UserFormPage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [showSpinner, setShowSpinner] = useState(true);
@@ -117,7 +82,7 @@ const UserPage = () => {
             password: ''
         };
 
-        formControl.map((control) => {
+        formControl.forEach((control) => {
             user[control.name] = event.target[control.name].value;
         });
 
@@ -175,9 +140,9 @@ const UserPage = () => {
     return (
         <section className="content">
             {showSpinner ? <Loading></Loading> :
-                <FormComponent path={loc} data={user} formControl={formControl} object__fields={object__fields} onHandleSubmit={onCreateUser}></FormComponent>}
+                <FormComponent path={loc} data={user} formControl={formControl} onHandleSubmit={onCreateUser}></FormComponent>}
         </section>
     )
 }
 
-export default UserPage;
+export default UserFormPage;

@@ -1,12 +1,12 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import FormComponent from '../components/Form/FormComponent';
-import { getAllRooms, getOneRoom } from '../features/rooms/roomsSlice';
+import { getAllRooms, getOneRoom } from '../../features/rooms/roomsSlice';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addRoom, editRoom, getRoom } from '../features/rooms/roomsAsyncThunk';
-import Loading from "../components/Loading";
-import { lastId } from "../app/getItemsId";
+import { addRoom, editRoom, getRoom } from '../../features/rooms/roomsAsyncThunk';
+import Loading from "../../components/Loading";
+import { lastId } from "../../app/getItemsId";
 import Swal from "sweetalert2";
+import FormComponent from "../../components/Form/FormComponent";
 
 const formControl = [
     {
@@ -55,43 +55,7 @@ const formControl = [
     },
 ]
 
-const object__fields = [
-    {
-        'field': 'id',
-        'type': 'text'
-    },
-    {
-        'field': 'number',
-        'type': 'text'
-    },
-    {
-        display: field => field.offer === true ? field.price - (field.price * field.discount / 100) : field.price,
-        'type': 'text'
-    },
-    {
-        'field': 'foto',
-        'type': 'swiper'
-    },
-    {
-        'field': 'description',
-        'type': 'text'
-    },
-    {
-        'field': 'type',
-        'type': 'text'
-    },
-    {
-        'field': 'amenities',
-        'type': 'array'
-    },
-    {
-        'field': 'status',
-        'type': 'text'
-    }
-];
-
-
-const RoomPage = () => {
+const RoomFormPage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [showSpinner, setShowSpinner] = useState(true);
@@ -117,7 +81,7 @@ const RoomPage = () => {
             status: ''
         };
         
-        formControl.map((control) => {
+        formControl.forEach((control) => {
             room[control.name] = event.target[control.name].value;
             if (control.input === 'select multiple') {
                 const selectedOptions = event.target[control.name].selectedOptions;
@@ -189,9 +153,9 @@ const RoomPage = () => {
     return (
         <section className="content">
             {showSpinner ? <Loading></Loading> :
-                <FormComponent path={loc} data={room} formControl={formControl} object__fields={object__fields} onHandleSubmit={onCreateRoom}></FormComponent>}
+                <FormComponent path={loc} data={room} formControl={formControl} onHandleSubmit={onCreateRoom}></FormComponent>}
         </section>
     )
 }
 
-export default RoomPage;
+export default RoomFormPage;

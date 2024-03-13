@@ -22,7 +22,7 @@ function delay(path, id = 0, data = null, time = 200) {
                     resolve(data);
                     break;
                 case uri.edit:
-                    resolve(data);
+                    resolve(id);
                     break;
                 case uri.delete:
                     resolve(data.id);
@@ -43,8 +43,8 @@ export const getMessage = createAsyncThunk('messages/getMessage', async (id) => 
     return await delay(uri.getOne, id);
 });
 
-export const editMessage = createAsyncThunk('messages/editMessage', async ({id, data}) => {
-    return await delay(uri.edit, id, data);
+export const editMessage = createAsyncThunk('messages/editMessage', async (id) => {
+    return await delay(uri.edit, id);
 });
 
 export const deleteMessage = createAsyncThunk('messages/deleteMessage', async (id) => {

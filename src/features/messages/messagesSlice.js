@@ -47,7 +47,8 @@ export const messagesSlice = createSlice({
             state.message.error = null;
         })
         .addCase(editMessage.fulfilled, (state, action) => {
-            state.data.slice(state.data.findIndex(element => element.id === action.payload.id), 1, action.payload);
+            const index = state.data.findIndex((message) => message.id === action.payload);
+            state.data[index].archived = true;
             state.message.status = 'fulfilled';
             state.message.error = null;
         })
