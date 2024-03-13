@@ -12,6 +12,7 @@ import { getAllEmployees } from "../../features/employees/employeesSlice";
 import { deleteEmployee, getEmployees } from "../../features/employees/employeesAsyncThunk";
 import Loading from "../../components/Loading";
 import Swal from "sweetalert2";
+import { useDebounce } from "@uidotdev/usehooks";
 
 const handleClickDelete = async (event, dispatch, id) => {
     event.stopPropagation();
@@ -76,18 +77,21 @@ const dataTable = (dispatch) =>  [
 ];
 
 const UsersPage = () => {
+    const [searchTerm, setSearchTerm] = useState('');
     const dispatch = useDispatch();
     const [showSpinner, setShowSpinner] = useState(true);
     const [currentTab, setCurrentTab] = useState('All Employees');
     const [currentOrder, setCurrentOrder] = useState('start_date');
+    const debouncedSearchTerm = useDebounce(searchTerm, 300);
     const data = useSelector(getAllEmployees);
 
     const filteredUsers = useMemo(() => {
-        const all = currentTab === 'All Employees' 
-        ? data
-        : data.filter((item) => item.status === currentTab);
+        const all = data.filter((item) => item.full_name.toLowerCase().includes(debouncedSearchTerm.toLowerCase()));
+        const all_search = currentTab === 'All Employees' 
+        ? all
+        : all.filter((item) => item.status === currentTab);
 
-        return [...all].sort((a, b) => {
+        return [...all_search].sort((a, b) => {
             if(a[currentOrder] > b[currentOrder]) {
                 return 1;
             } else if(a[currentOrder] < b[currentOrder]) {
@@ -96,7 +100,7 @@ const UsersPage = () => {
                 return 0;
             }
         })
-    }, [data, currentOrder, currentTab]);
+    }, [data, currentOrder, currentTab, debouncedSearchTerm]);
 
     const result = useCallback(async () => {
         try {
@@ -116,8 +120,8 @@ const UsersPage = () => {
         <section className='content'>
             {showSpinner ? <Loading></Loading> :
                 <>
+                <input value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Busqueda por nombre usuario"/>
                     <div className="top__menu-table">
-                        {/*Search Employee Name*/}
                         <ButtonStyledNew as={LinkStyled} to={'user'}>+ New Employee</ButtonStyledNew>
                         <OrderComponent setCurrentOrder={setCurrentOrder} data={usersOrder}></OrderComponent>
                     </div>

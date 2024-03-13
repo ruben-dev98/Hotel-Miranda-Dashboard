@@ -25,7 +25,7 @@ function delay(path, id = 0, data = null, time = 200) {
                     resolve(id);
                     break;
                 case uri.delete:
-                    resolve(data.id);
+                    resolve(id);
                     break;
                 default:
                     reject('Error');

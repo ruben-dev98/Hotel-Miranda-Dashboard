@@ -2,16 +2,41 @@ import { message } from "../assets/data/tabs";
 import TableComponent from "../components/TableComponent";
 import TabsComponent from "../components/TabsComponent";
 import MessageListComponent from './../components/MessageListComponent';
-import { ButtonStyledArchived, ButtonStyledPublish } from "../styled/ButtonsStyled";
+import { ButtonStyledArchived, ButtonStyledPublish, ButtonStyledViewNotes } from "../styled/ButtonsStyled";
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { editMessage, getMessages } from "../features/messages/messagesAsyncThunk";
+import { deleteMessage, editMessage, getMessages } from "../features/messages/messagesAsyncThunk";
 import { getAllMessages } from "../features/messages/messagesSlice";
 import Loading from "../components/Loading";
+import Swal from "sweetalert2";
+
+const handleClickDelete = async (event, dispatch, id) => {
+    event.stopPropagation();
+    try {
+        await dispatch(deleteMessage(id)).unwrap()
+        Swal.fire({'title': 'Eliminación de Message',
+        'timer': 2000
+        });
+    } catch(error) {
+        console.log(error)
+    }
+}
 
 const handleClickArchive = (event, dispatch, id) => {
     event.stopPropagation();
     dispatch(editMessage(id));
+}
+
+const action = (row, dispatch) => {
+    return (<>
+            <ButtonStyledViewNotes onClick={(event) => handleClickDelete(event, dispatch, row.id)}>Delete</ButtonStyledViewNotes>
+            {row.archived ?
+            <ButtonStyledPublish onClick={(event) => event.stopPropagation()}>Publish</ButtonStyledPublish>
+            :
+            <ButtonStyledArchived onClick={(event) => handleClickArchive(event, dispatch, row.id)}>Archive</ButtonStyledArchived>
+            }
+        </>
+        )
 }
 
 const dataTable = (dispatch) => [
@@ -29,10 +54,7 @@ const dataTable = (dispatch) => [
     },
     {
         'label': 'Action',
-        display: row => row.archived ?
-            <ButtonStyledPublish onClick={(event) => event.stopPropagation()}>Publish</ButtonStyledPublish>
-            :
-            <ButtonStyledArchived onClick={(event) => handleClickArchive(event, dispatch, row.id)}>Archive</ButtonStyledArchived>
+        display: row => action(row, dispatch)
     }
 ];
 

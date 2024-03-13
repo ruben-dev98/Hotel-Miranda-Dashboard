@@ -50,7 +50,7 @@ const MessageComponent = ({message}) => {
 
     return (
         <MessageComponentStyled>
-            <p style={{cursor: 'pointer'}} onClick={() => Swal.fire(message.messages)}>{message.messages.slice(0, 50).concat('...')}</p>
+            <p style={{cursor: 'pointer'}} onClick={() => Swal.fire({'title': 'Info Message', 'html': `<p>${message.messages}</p>`})}>{message.messages.slice(0, 50).concat('...')}</p>
             <div>
                 <img src={message.foto} />
                 <p>
