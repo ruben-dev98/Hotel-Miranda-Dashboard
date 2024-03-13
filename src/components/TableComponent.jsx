@@ -1,11 +1,9 @@
 
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Swal from 'sweetalert2';
-import { getOneMessage } from '../features/messages/messagesSlice';
-import { useEffect } from 'react';
 import { getMessage } from '../features/messages/messagesAsyncThunk';
 
 const TableStyled = styled.table`
@@ -15,13 +13,14 @@ const TableStyled = styled.table`
 
     thead > tr {
         height: 50px;
+
         th {
             padding: 0.5rem;
         }
     }
 
     tbody > tr {
-        cursor: ${(props) => props.$path === '' ? 'default' : 'pointer'};
+        cursor: pointer;
         height: 100px;
         
         td:not(button), td:not(span) {
@@ -50,31 +49,29 @@ const TableComponent = ({ rows, columns, path }) => {
             <tbody>
                 {rows.map((row, index) => {
                     return (
-                        <tr onClick={(event) => {
+                        <tr onClick={() => {
                             if (path !== '') {
                                 navigate(`${row.id}`)
                             } else {
-                                    const showMessage = () => {
-                                        dispatch(getMessage(row.id)).then((result) => {
-                                            console.log(result);
-                                            Swal.fire({
-                                                'title': 'Details Message',
-                                                'html': `
-                                        <p>${result.payload.subject}</p>
-                                        <p>${result.payload.messages}</p>
-                                        <p>${result.payload.full_name}</p>
-                                        `
-                                            });
-
-                                        }).catch(error => {
-                                            console.log(error)
+                                const showMessage = () => {
+                                    dispatch(getMessage(row.id)).then((result) => {
+                                        Swal.fire({
+                                            title: 'Details Message',
+                                            html: `
+                                                <p><strong>Full Name: </strong> ${result.payload.full_name}</p>
+                                                <p><strong>Subject: </strong>  ${result.payload.subject}</p>
+                                                <p><strong>Message: </strong> ${result.payload.messages}</p>
+                                            `
                                         });
-                                    }
-                                    showMessage();
+                                    }).catch(error => {
+                                        console.log(error)
+                                    });
+                                }
+                                showMessage();
                             }
                         }} key={index}>
                             {columns.map((column, indx) => {
-                                return <td key={indx}>{row[column.property] ? row[column.property] : column.display(row)}</td>;
+                                return <td key={indx}>{!column.display ? row[column.property] : column.display(row)}</td>;
                             })}
                         </tr>
                     );

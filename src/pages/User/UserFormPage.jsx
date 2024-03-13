@@ -33,7 +33,7 @@ const formControl = [
     {
         'label': 'Phone',
         'input': 'text',
-        'name': 'phone'
+        'name': 'contact'
     },
     {
         'label': 'Start Date',
@@ -83,7 +83,6 @@ const UserFormPage = () => {
         };
 
         formControl.forEach((control) => {
-            console.log(control.name);
             user[control.name] = event.target[control.name].value;
         });
 

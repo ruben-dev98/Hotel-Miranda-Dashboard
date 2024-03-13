@@ -9,7 +9,8 @@ import { editMessage, getMessages } from "../features/messages/messagesAsyncThun
 import { getAllMessages } from "../features/messages/messagesSlice";
 import Loading from "../components/Loading";
 
-const handleClickArchive = (dispatch, id) => {
+const handleClickArchive = (event, dispatch, id) => {
+    event.stopPropagation();
     dispatch(editMessage(id));
 }
 
@@ -29,9 +30,9 @@ const dataTable = (dispatch) => [
     {
         'label': 'Action',
         display: row => row.archived ?
-            <ButtonStyledPublish>Publish</ButtonStyledPublish>
+            <ButtonStyledPublish onClick={(event) => event.stopPropagation()}>Publish</ButtonStyledPublish>
             :
-            <ButtonStyledArchived onClick={() => handleClickArchive(dispatch, row.id)}>Archive</ButtonStyledArchived>
+            <ButtonStyledArchived onClick={(event) => handleClickArchive(event, dispatch, row.id)}>Archive</ButtonStyledArchived>
     }
 ];
 

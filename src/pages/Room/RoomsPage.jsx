@@ -80,7 +80,7 @@ const RoomsPage = () => {
     const dispatch = useDispatch();
     const [showSpinner, setShowSpinner] = useState(true);
     const [currentTab, setCurrentTab] = useState('All Rooms');
-    const [currentOrder, setCurrentOrder] = useState('status asc');
+    const [currentOrder, setCurrentOrder] = useState('number asc');
     const data = useSelector(getAllRooms);
 
     const filteredRooms = useMemo(() => {

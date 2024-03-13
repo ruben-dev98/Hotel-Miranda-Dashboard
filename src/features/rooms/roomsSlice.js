@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { addRoom, deleteRoom, editRoom, getRoom, getRooms } from "./roomsAsyncThunk";
+import { addRoom, availableRoomsNumber, deleteRoom, editRoom, getRoom, getRooms } from "./roomsAsyncThunk";
 
 
 
@@ -12,6 +12,7 @@ export const roomsSlice = createSlice({
             status: 'idle',
             error: null
         },
+        roomsAvailable: [],
         status: 'idle',
         error: null
     },
@@ -84,6 +85,19 @@ export const roomsSlice = createSlice({
             state.room.status = 'rejected';
             state.room.error = action.error.message;
         })
+        .addCase(availableRoomsNumber.pending, (state, action) => {
+            state.room.status = 'pending';
+            state.room.error = null;
+        })
+        .addCase(availableRoomsNumber.fulfilled, (state, action) => {
+            state.roomsAvailable = action.payload;
+            state.room.status = 'fulfilled';
+            state.room.error = null;
+        })
+        .addCase(availableRoomsNumber.rejected, (state, action) => {
+            state.room.status = 'rejected';
+            state.room.error = action.error.message;
+        })
     }
 });
 
@@ -91,5 +105,6 @@ export const getAllRooms = state => state.rooms.data;
 export const roomsStatus = state => state.rooms.status;
 export const getOneRoom = state => state.rooms.room.data;
 export const roomStatus = state => state.rooms.room.status;
+export const availableRooms = state => state.rooms.roomsAvailable;
 
 export default roomsSlice.reducer;

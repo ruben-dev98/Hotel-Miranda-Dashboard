@@ -61,7 +61,7 @@ export const bookingsSlice = createSlice({
         })
         .addCase(editBooking.fulfilled, (state, action) => {
             const index = state.data.findIndex((el) => el.id === action.payload);
-            state.data[index].status = 'Cancelled';
+            //state.data[index].status = 'Cancelled';
             state.booking.status = 'fulfilled';
             state.booking.error = null;
         })

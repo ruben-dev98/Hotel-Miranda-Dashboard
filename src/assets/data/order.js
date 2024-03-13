@@ -21,6 +21,10 @@ export const bookingsOrder = [
 
 export const roomsOrder = [
     {
+        label: 'Numero Habitacion',
+        value: 'number asc'
+    },
+    {
         label: 'Disponible',
         value: 'status asc'
     },
