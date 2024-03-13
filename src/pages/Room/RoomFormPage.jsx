@@ -82,7 +82,6 @@ const RoomFormPage = () => {
         };
         
         formControl.forEach((control) => {
-            room[control.name] = event.target[control.name].value;
             if (control.input === 'select multiple') {
                 const selectedOptions = event.target[control.name].selectedOptions;
                 const values = [];
