@@ -61,7 +61,7 @@ const dataTable = (dispatch) => [
     },
     {
         'label': 'Offer Price',
-        display: row => row.price - (row.price * row.discount / 100)
+        display: row => (row.price - (row.price * row.discount / 100)).toFixed(2)
     },
     {
         'label': 'Status',
@@ -80,7 +80,7 @@ const RoomsPage = () => {
     const dispatch = useDispatch();
     const [showSpinner, setShowSpinner] = useState(true);
     const [currentTab, setCurrentTab] = useState('All Rooms');
-    const [currentOrder, setCurrentOrder] = useState('status');
+    const [currentOrder, setCurrentOrder] = useState('status asc');
     const data = useSelector(getAllRooms);
 
     const filteredRooms = useMemo(() => {
@@ -89,10 +89,17 @@ const RoomsPage = () => {
         : data.filter((item) => item.status === currentTab);
 
         return [...all].sort((a, b) => {
-            if(a[currentOrder] > b[currentOrder]) {
-                return 1;
-            } else if(a[currentOrder] < b[currentOrder]) {
+            const order = currentOrder.split(' ');
+            if(a[order[0]] > b[order[0]]) {
+                if(order[1] === 'asc') {
+                    return 1;
+                }
                 return -1;
+            } else if(a[order[0]] < b[order[0]]) {
+                if(order[1] === 'asc') {
+                    return -1;
+                }
+                return 1;
             } else {
                 return 0;
             }

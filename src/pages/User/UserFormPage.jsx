@@ -23,7 +23,7 @@ const formControl = [
         'label': 'Puesto',
         'input': 'select',
         'data': ['Manager', 'Recepción', 'Servicio de Habitaciones'],
-        'name': ''
+        'name': 'job'
     },
     {
         'label': 'Email',
@@ -83,6 +83,7 @@ const UserFormPage = () => {
         };
 
         formControl.forEach((control) => {
+            console.log(control.name);
             user[control.name] = event.target[control.name].value;
         });
 
@@ -103,7 +104,6 @@ const UserFormPage = () => {
             } catch (error) {
                 console.log(error);
             }
-            dispatch(editEmployee({id: id, data: user}));
         } else {
             try {
                 navigate('/users');

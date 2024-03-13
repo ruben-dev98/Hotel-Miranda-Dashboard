@@ -1,6 +1,12 @@
+
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import Swal from 'sweetalert2';
+import { getOneMessage } from '../features/messages/messagesSlice';
+import { useEffect } from 'react';
+import { getMessage } from '../features/messages/messagesAsyncThunk';
 
 const TableStyled = styled.table`
     padding: 2rem;
@@ -32,6 +38,7 @@ const TableStyled = styled.table`
 
 const TableComponent = ({ rows, columns, path }) => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     return (
         <TableStyled $path={path}>
@@ -46,8 +53,25 @@ const TableComponent = ({ rows, columns, path }) => {
                         <tr onClick={(event) => {
                             if (path !== '') {
                                 navigate(`${row.id}`)
+                            } else {
+                                    const showMessage = () => {
+                                        dispatch(getMessage(row.id)).then((result) => {
+                                            console.log(result);
+                                            Swal.fire({
+                                                'title': 'Details Message',
+                                                'html': `
+                                        <p>${result.payload.subject}</p>
+                                        <p>${result.payload.messages}</p>
+                                        <p>${result.payload.full_name}</p>
+                                        `
+                                            });
+
+                                        }).catch(error => {
+                                            console.log(error)
+                                        });
+                                    }
+                                    showMessage();
                             }
-                            return '';
                         }} key={index}>
                             {columns.map((column, indx) => {
                                 return <td key={indx}>{row[column.property] ? row[column.property] : column.display(row)}</td>;

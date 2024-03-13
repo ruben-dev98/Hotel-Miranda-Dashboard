@@ -22,21 +22,21 @@ export const bookingsOrder = [
 export const roomsOrder = [
     {
         label: 'Disponible',
-        value: 'status'
+        value: 'status asc'
     },
     {
 
         label: 'Ocupada',
-        value: 'status'
+        value: 'status desc'
     },
 
     {
         label: 'Precio Mayor a Menor',
-        value: 'price'
+        value: 'price desc'
     },
     {
         label: 'Precio Menor a Mayor',
-        value: 'price'
+        value: 'price asc'
     }
 ];
 
@@ -48,6 +48,6 @@ export const usersOrder = [
         value: 'start_date'
     },
     {
-    label: 'Nombre',
-    value: 'full_name'
+        label: 'Nombre',
+        value: 'full_name'
     }]; 

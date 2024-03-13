@@ -24,7 +24,7 @@ const dataTable = (dispatch) => [
     },
     {
         'label': 'Comment',
-        display: row => `${row.subject} ${row.message}`
+        display: row => `${row.subject} ${row.messages}`
     },
     {
         'label': 'Action',

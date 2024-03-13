@@ -75,5 +75,6 @@ export const messagesSlice = createSlice({
 
 export const getAllMessages = state => state.messages.data;
 export const messagesStatus = state => state.messages.status;
+export const getOneMessage = state => state.messages.message.data;
 
 export default messagesSlice.reducer;
