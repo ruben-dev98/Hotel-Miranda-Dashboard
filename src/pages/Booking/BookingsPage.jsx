@@ -16,6 +16,7 @@ import { DivStyledActions } from "../../styled/DivsStyled";
 import { DeleteStyled, EditStyled } from "../../styled/IconStyled";
 import MySwal from "../../app/MySwal";
 import { useDebounce } from "@uidotdev/usehooks";
+import { InputSearch } from "../../styled/InputStyled";
 
 /*const handleClickEdit = async (event, dispatch, row) => {
     event.stopPropagation();
@@ -154,7 +155,7 @@ const BookingsPage = () => {
             {showSpinner ? <Loading></Loading> :
                 <>
                     <div className="top__menu-table">
-                        <input value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Busqueda por nombre usuario"/>
+                        <InputSearch value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Busqueda por nombre usuario"/>
                         <ButtonStyledNew as={LinkStyled} to={'booking'}>+ New Booking</ButtonStyledNew>
                         <OrderComponent setCurrentOrder={setCurrentOrder} data={bookingsOrder} />
                     </div>
