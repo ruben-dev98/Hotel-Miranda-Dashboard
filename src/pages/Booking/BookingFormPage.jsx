@@ -9,6 +9,7 @@ import Loading from "../../components/Loading";
 import Swal from "sweetalert2";
 import { availableRooms } from "../../features/rooms/roomsSlice";
 import { availableRoomsNumber } from "../../features/rooms/roomsAsyncThunk";
+import MySwal from "../../app/MySwal";
 
 const formControl = (rooms) => [
     {
@@ -86,22 +87,13 @@ const BookingFormPage = () => {
             }
         });
 
+        const html = id ? <p>Update #{booking.id} Booking Successfully</p> : <p>Create #{booking.id} Booking Successfully</p>;
+
         if(loc.includes('edit')) {
             try {
                 navigate('/bookings');
                 await dispatch(editBooking({id: id, data: booking}));
-                Swal.fire({
-                    'title': 'Update de Booking Realizada',
-                    'html': `
-                        <p>ID : ${booking.id}</p>
-                        <p>Check In : ${new Date(booking.check_in).toLocaleString('es-ES')}</p>
-                        <p>Check Out : ${new Date(booking.check_out).toLocaleString('es-ES')}</p>
-                        <p>Phone : ${booking.phone}</p>
-                        <p>Email : ${booking.email}</p>
-                        <p>Room Number : ${booking.number}</p>
-                    `,
-                    'timer': 2000
-                });
+                MySwal('', html, false, 2000, 'success', true);
             } catch (error) {
                 console.log(error);
             }
@@ -109,18 +101,7 @@ const BookingFormPage = () => {
             try {
                 navigate('/bookings');
                 await dispatch(addBooking(booking));
-                Swal.fire({
-                    'title': 'Create de Booking Realizada',
-                    'html': `
-                        <p>ID : ${booking.id}</p>
-                        <p>Check In : ${new Date(booking.check_in).toLocaleString('es-ES')}</p>
-                        <p>Check Out : ${new Date(booking.check_out).toLocaleString('es-ES')}</p>
-                        <p>Phone : ${booking.phone}</p>
-                        <p>Email : ${booking.email}</p>
-                        <p>Room Number : ${booking.number}</p>
-                    `,
-                    'timer': 2000
-                });
+                MySwal('', html, false, 2000, 'success', true);
             } catch (error) {
                 console.log(error);
             }

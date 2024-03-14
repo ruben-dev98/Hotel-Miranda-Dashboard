@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Swal from 'sweetalert2';
+import MySwal from '../app/MySwal';
 
 const MessageComponentStyled = styled.div`
     display: flex;
@@ -50,7 +51,11 @@ const MessageComponent = ({message}) => {
 
     return (
         <MessageComponentStyled>
-            <p style={{cursor: 'pointer'}} onClick={() => Swal.fire({'title': 'Info Message', 'html': `<p>${message.messages}</p>`})}>{message.messages.slice(0, 50).concat('...')}</p>
+            <p style={{cursor: 'pointer'}} onClick={() => {
+                const title = 'Info Message';
+                const html = `<p><strong>Message:</strong> ${message.messages}</p>`;
+                return MySwal(title, html, false);
+            }}>{message.messages.slice(0, 50).concat('...')}</p>
             <div>
                 <img src={message.foto} />
                 <p>

@@ -1,7 +1,7 @@
 import { rooms } from "../../assets/data/tabs";
 import TabsComponent from "../../components/TabsComponent";
 import TableComponent from '../../components/TableComponent';
-import { SpanStyled, SpanStyledCheckOut } from "../../styled/SpanStyled";
+import { SpanStyled, SpanStyledCheckOut, SpanStyledTableFirst, SpanStyledTableSecond } from "../../styled/SpanStyled";
 import { ButtonStyledIcon, ButtonStyledNew, ButtonStyledViewNotes } from "../../styled/ButtonsStyled";
 import OrderComponent from "../../components/OrderComponent";
 import { roomsOrder } from "../../assets/data/order";
@@ -14,12 +14,10 @@ import Loading from "../../components/Loading";
 import { EditStyled } from "../../styled/IconStyled";
 import { DeleteStyled } from './../../styled/IconStyled';
 import { DivStyledActions } from "../../styled/DivsStyled";
-import Swal from "sweetalert2";
-import withReactContent from 'sweetalert2-react-content'
 import styled from "styled-components";
+import MySwal from "../../app/MySwal";
 
 
-const MySwal = withReactContent(Swal);
 const ImgStyled = styled.img`
     width: 200px;
     height: 100px;
@@ -29,9 +27,8 @@ const handleClickDelete = async (event, dispatch, id) => {
     event.stopPropagation();
     try {
         await dispatch(deleteRoom(id)).unwrap()
-        Seal.fire({'title': 'Eliminación de Room',
-        'timer': 2000
-        });
+        const html = <p>Delete #{id} Room Successfully</p>
+        MySwal('', html, false, 2000, 'success', true);
     } catch(error) {
         console.log(error)
     }
@@ -70,31 +67,26 @@ const dataTable = (dispatch) => [
         display: row => row.amenities.length > 0 ?
         <ButtonStyledViewNotes onClick={(event) => {
             event.stopPropagation()
-            return MySwal.fire(
-                {
-                    title: 'Info Amenities', 
-                    html: (
-                    <ul>
-                        {row.amenities.map((amen, index) => {
-                            return <li key={index}>
-                                {amen}
-                            </li>;
-                        })}
-                    </ul>
-                    ),
-                    showConfirmButton: false
-                });
+            const title = 'Info Amenities';
+            const html = (<ul>
+                {row.amenities.map((amen, index) => {
+                    return <li key={index}>
+                        {amen}
+                    </li>;
+                })}
+            </ul>);
+            MySwal(title, html, false)
         }}>View Amenities</ButtonStyledViewNotes>
         :
         <ButtonStyledViewNotes disabled>View Amenities</ButtonStyledViewNotes>
     },
     {
         'label': 'Price',
-        display: row => `${row.price}/Night`
+        display: row => (<><SpanStyledTableFirst>{(row.price)}</SpanStyledTableFirst><br/><SpanStyledTableSecond>/Night</SpanStyledTableSecond></>)
     },
     {
         'label': 'Offer Price',
-        display: row => `${(row.price - (row.price * row.discount / 100)).toFixed(2)}/Night`
+        display: row => (<><SpanStyledTableFirst>{(row.price - (row.price * row.discount / 100)).toFixed(2)}</SpanStyledTableFirst><br/><SpanStyledTableSecond>/Night</SpanStyledTableSecond></>)
     },
     {
         'label': 'Status',

@@ -14,6 +14,11 @@ const reducer = (state, action) => {
             user: '',
             password: ''
         }
+        case 'editUser': {
+            return {
+                
+            }
+        }
     }
 }
 

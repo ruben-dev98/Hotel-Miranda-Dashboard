@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Swal from 'sweetalert2';
 import { getMessage } from '../features/messages/messagesAsyncThunk';
 import usePaginate from './../hook/usePaginate';
 import { ButtonStyled } from './../styled/ButtonsStyled';
+import { SpanStyledTableFirst } from '../styled/SpanStyled';
+import MySwal from '../app/MySwal';
 
 const TableStyled = styled.table`
+    width: 100%;
     padding: 2rem;
     border-radius: 20px;
     background-color: #FFF;
@@ -59,14 +61,13 @@ const TableComponent = ({ rows, columns, path }) => {
                                 } else {
                                     const showMessage = () => {
                                         dispatch(getMessage(row.id)).then((result) => {
-                                            Swal.fire({
-                                                title: 'Details Message',
-                                                html: `
-                                                <p><strong>Full Name: </strong> ${result.payload.full_name}</p>
-                                                <p><strong>Subject: </strong>  ${result.payload.subject}</p>
-                                                <p><strong>Message: </strong> ${result.payload.messages}</p>
-                                            `
-                                            });
+                                        const title = 'Details Message';
+                                        const htmlCode = `
+                                            <p><strong>Full Name: </strong> ${result.payload.full_name}</p>
+                                            <p><strong>Subject: </strong>  ${result.payload.subject}</p>
+                                            <p><strong>Message: </strong> ${result.payload.messages}</p>
+                                        `;
+                                        return MySwal(title, htmlCode, false);
                                         }).catch(error => {
                                             console.log(error)
                                         });
@@ -75,7 +76,7 @@ const TableComponent = ({ rows, columns, path }) => {
                                 }
                             }} key={index}>
                                 {columns.map((column, indx) => {
-                                    return <td key={indx}>{!column.display ? row[column.property] : column.display(row)}</td>;
+                                    return <td key={indx}>{!column.display ? <SpanStyledTableFirst>{row[column.property]}</SpanStyledTableFirst> : column.display(row)}</td>;
                                 })}
                             </tr>
                         );

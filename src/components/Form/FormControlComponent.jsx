@@ -28,7 +28,7 @@ const renderSwitch = (inputType, data, name, values) => {
             return <input defaultValue={values ? date : ''} name={name} type={inputType} />
         }*/
         case 'number':
-            return <input defaultValue={values ? values[name] : 0} min={0} max={500} name={name} type={inputType} />
+            return <input defaultValue={values ? values[name] : 0} min={0} step='any' name={name} type={inputType} />
         default:
             return <input defaultValue={values ? values[name] : ''} name={name} type={inputType} />
     }

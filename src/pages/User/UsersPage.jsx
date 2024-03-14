@@ -2,7 +2,7 @@ import { users } from "../../assets/data/tabs";
 import { usersOrder } from "../../assets/data/order";
 import TableComponent from "../../components/TableComponent";
 import TabsComponent from "../../components/TabsComponent";
-import { SpanStyled, SpanStyledCheckOut } from "../../styled/SpanStyled";
+import { SpanStyled, SpanStyledCheckOut, SpanStyledTableFirst } from "../../styled/SpanStyled";
 import { ButtonStyledIcon, ButtonStyledNew } from "../../styled/ButtonsStyled";
 import OrderComponent from '../../components/OrderComponent';
 import { LinkStyled } from "../../styled/LinkStyled";
@@ -62,7 +62,7 @@ const dataTable = (dispatch) =>  [
     },
     {
         'label': 'Description',
-        'property': 'description'
+        display: row => <SpanStyledTableFirst>{row.description.slice(0, 20).concat('...')}</SpanStyledTableFirst>
     },
     {
         'label': 'Contact',

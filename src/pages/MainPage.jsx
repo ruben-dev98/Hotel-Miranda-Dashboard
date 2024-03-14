@@ -16,6 +16,8 @@ const WindowStyled = styled.div`
     :
     `'header header'
     'content content'`};
+
+    
 `;
 
 const content = (visibleLateral, setVisibleLateral, title) => {

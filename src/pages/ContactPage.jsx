@@ -8,16 +8,17 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { deleteMessage, editMessage, getMessages } from "../features/messages/messagesAsyncThunk";
 import { getAllMessages } from "../features/messages/messagesSlice";
 import Loading from "../components/Loading";
-import Swal from "sweetalert2";
 import { DeleteStyled } from './../styled/IconStyled';
+import MySwal from "../app/MySwal";
+import { DivStyledActions } from "../styled/DivsStyled";
+import { SpanStyledTableFirst, SpanStyledTableSecond } from "../styled/SpanStyled";
 
 const handleClickDelete = async (event, dispatch, id) => {
     event.stopPropagation();
     try {
         await dispatch(deleteMessage(id)).unwrap()
-        Swal.fire({'title': 'Eliminación de Message',
-        'timer': 2000
-        });
+        const html = <p>Delete #{id} Message Successfully</p>
+        MySwal('', html, false, 2000, 'success', true);
     } catch(error) {
         console.log(error)
     }
@@ -29,14 +30,14 @@ const handleClickArchive = (event, dispatch, id) => {
 }
 
 const action = (row, dispatch) => {
-    return (<>
-            <ButtonStyledIcon onClick={(event) => handleClickDelete(event, dispatch, row.id)}><DeleteStyled></DeleteStyled></ButtonStyledIcon>
+    return (<DivStyledActions>
             {row.archived ?
             <ButtonStyledPublish onClick={(event) => event.stopPropagation()}>Publish</ButtonStyledPublish>
             :
             <ButtonStyledArchived onClick={(event) => handleClickArchive(event, dispatch, row.id)}>Archive</ButtonStyledArchived>
             }
-        </>
+            <ButtonStyledIcon onClick={(event) => handleClickDelete(event, dispatch, row.id)}><DeleteStyled></DeleteStyled></ButtonStyledIcon>
+        </DivStyledActions>
         )
 }
 
@@ -47,7 +48,7 @@ const dataTable = (dispatch) => [
     },
     {
         'label': 'Customer',
-        display: row => `${row.full_name} ${row.email} ${row.phone}`
+        display: row => (<><SpanStyledTableFirst>{row.full_name}</SpanStyledTableFirst><br/><SpanStyledTableSecond>{row.email}/</SpanStyledTableSecond><SpanStyledTableSecond>{row.phone}</SpanStyledTableSecond></>)
     },
     {
         'label': 'Comment',
