@@ -39,3 +39,37 @@ export const SpanStyledTableFirst = styled.span`
     color: #393939;
     font-size: 1.2rem;
 `;
+
+export const SpanStyledDetailsLabel = styled(SpanStyledTableSecond)`
+    color: #6E6E6E;
+`;
+
+export const SpanStyledDetailsValue = styled(SpanStyledTableFirst)`
+    color: #212121;
+`;
+
+export const SpanStyledDetailsTitle = styled(SpanStyledDetailsValue)`
+    font-size: 2.5rem;
+`;
+
+export const SpanSwiperTitle = styled.span`
+        color: #FFF;
+        font-size: 1.3rem;
+`
+
+export const SpanSwiper = styled.span`
+        color: #FFFFFF70;
+        font-size: 0.8rem;
+`
+
+export const SpanStyledInProgressLegend = styled(SpanStyledInProgress)`
+    width: 200px;
+`;
+
+export const SpanStyledCheckInLegend = styled(SpanStyledCheckIn)`
+    width: 200px;
+`;
+
+export const SpanStyledCheckOutLegend = styled(SpanStyledCheckOut)`
+    width: 200px;
+`;

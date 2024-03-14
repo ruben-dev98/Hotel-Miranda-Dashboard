@@ -15,6 +15,7 @@ import { useDebounce } from "@uidotdev/usehooks";
 import { DeleteStyled, EditStyled } from "../../styled/IconStyled";
 import { DivStyledActions } from "../../styled/DivsStyled";
 import MySwal from "../../app/MySwal";
+import { InputSearch } from "../../styled/InputStyled";
 
 
 
@@ -123,8 +124,8 @@ const UsersPage = () => {
         <section className='content'>
             {showSpinner ? <Loading></Loading> :
                 <>
-                <input value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Busqueda por nombre usuario"/>
                     <div className="top__menu-table">
+                        <InputSearch value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Busqueda por nombre usuario"/>
                         <ButtonStyledNew as={LinkStyled} to={'user'}>+ New Employee</ButtonStyledNew>
                         <OrderComponent setCurrentOrder={setCurrentOrder} data={usersOrder}></OrderComponent>
                     </div>

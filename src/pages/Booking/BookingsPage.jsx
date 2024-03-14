@@ -15,6 +15,8 @@ import Loading from "../../components/Loading";
 import { DivStyledActions } from "../../styled/DivsStyled";
 import { DeleteStyled, EditStyled } from "../../styled/IconStyled";
 import MySwal from "../../app/MySwal";
+import { useDebounce } from "@uidotdev/usehooks";
+import { InputSearch } from "../../styled/InputStyled";
 
 /*const handleClickEdit = async (event, dispatch, row) => {
     event.stopPropagation();
@@ -110,17 +112,20 @@ const dataTable = (dispatch) => [
 
 const BookingsPage = () => {
     const dispatch = useDispatch();
+    const [searchTerm, setSearchTerm] = useState('');
     const [showSpinner, setShowSpinner] = useState(true);
     const [currentTab, setCurrentTab] = useState('All Bookings');
     const [currentOrder, setCurrentOrder] = useState('order_date');
     const data = useSelector(getAllBookings);
+    const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
     const filteredBookings = useMemo(() => {
-        const all = currentTab === 'All Bookings'
-            ? data
-            : data.filter((item) => item.status === currentTab);
+        const all = data.filter((item) => item.full_name.toLowerCase().includes(debouncedSearchTerm.toLowerCase()));
+        const all_search = currentTab === 'All Bookings'
+            ? all
+            : all.filter((item) => item.status === currentTab);
 
-        return [...all].sort((a, b) => {
+        return [...all_search].sort((a, b) => {
             if (a[currentOrder] > b[currentOrder]) {
                 return 1;
             } else if (a[currentOrder] < b[currentOrder]) {
@@ -129,7 +134,7 @@ const BookingsPage = () => {
                 return 0;
             }
         })
-    }, [data, currentOrder, currentTab]);
+    }, [data, currentOrder, currentTab, debouncedSearchTerm]);
 
     const result = useCallback(async () => {
         try {
@@ -150,6 +155,7 @@ const BookingsPage = () => {
             {showSpinner ? <Loading></Loading> :
                 <>
                     <div className="top__menu-table">
+                        <InputSearch value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Busqueda por nombre usuario"/>
                         <ButtonStyledNew as={LinkStyled} to={'booking'}>+ New Booking</ButtonStyledNew>
                         <OrderComponent setCurrentOrder={setCurrentOrder} data={bookingsOrder} />
                     </div>
