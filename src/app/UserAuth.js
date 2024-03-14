@@ -4,26 +4,30 @@ const reducer = (state, action) => {
     switch(action.type) {
         case 'login':
         return {
+            ...state,
             auth: true,
             user: action.payload.user,
-            password: action.payload.password
+            email: action.payload.email
         }
         case 'logout':
             return {
+            ...state,
             auth: false,
             user: '',
             password: ''
         }
-        case 'editUser': {
+        case 'edit': {
             return {
-                
+                ...state,
+                user: action.payload.user,
+                email: action.payload.email
             }
         }
     }
 }
 
-export const UserAuth = (isAuth, user, password) => {
-    const [state, dispatch] = useReducer(reducer, {auth: isAuth, user: user, password: password});
+export const UserAuth = (isAuth, user, email) => {
+    const [state, dispatch] = useReducer(reducer, {auth: isAuth, user: user, email: email});
 
     return {state, dispatch};
 }
