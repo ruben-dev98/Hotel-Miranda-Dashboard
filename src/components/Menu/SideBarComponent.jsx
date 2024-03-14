@@ -9,6 +9,7 @@ import { ButtonStyled, ButtonStyledViewNotes } from '../../styled/ButtonsStyled'
 import { useContext } from 'react';
 import { UserContext } from '../../app/UserContext';
 import MySwal from '../../app/MySwal';
+import Swal from 'sweetalert2';
 
 const SideBarStyled = styled.menu`
     grid-area: sidebar;
@@ -101,7 +102,8 @@ const SideBarComponent = ({ visibleLateral }) => {
                     (<form className='edit__user-pop-up' onSubmit={(event) => 
                     {
                         event.preventDefault();
-                        context.dispatch({type: 'edit', payload: {user: event.target.user.value, email: event.target.email.value}})
+                        context.dispatch({type: 'edit', payload: {user: event.target.user.value, email: event.target.email.value}});
+                        Swal.close();
                     }}>
                         
                         <div>

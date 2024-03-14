@@ -44,7 +44,10 @@ const action = (row, dispatch) => {
 const dataTable = (dispatch) => [
     {
         'label': 'Date',
-        display: row => `${new Date(parseInt(row.date)).toLocaleString('es-Es')} ${row.id}`
+        display: row =>  {
+            const date = new Date(parseInt(row.date, 10));
+            return (<><SpanStyledTableFirst>{date.toDateString().slice(3)}</SpanStyledTableFirst><br/><SpanStyledTableSecond>{date.toTimeString().slice(0, 8)} </SpanStyledTableSecond><SpanStyledTableSecond>#{row.id}</SpanStyledTableSecond></>);
+        }
     },
     {
         'label': 'Customer',
@@ -52,7 +55,7 @@ const dataTable = (dispatch) => [
     },
     {
         'label': 'Comment',
-        display: row => `${row.subject} ${row.messages.slice(0, 50).concat('...')}`
+        display: row => (<><SpanStyledTableFirst>Subject: </SpanStyledTableFirst><SpanStyledTableSecond>{row.subject.slice(0, 30).concat('...')}</SpanStyledTableSecond><br></br><SpanStyledTableFirst>Message: </SpanStyledTableFirst><SpanStyledTableSecond>{row.messages.slice(0, 50).concat('...')}</SpanStyledTableSecond></>)
     },
     {
         'label': 'Action',
