@@ -1,6 +1,6 @@
 import { FaArrowLeft } from "react-icons/fa6";
 import { AiFillEdit } from "react-icons/ai";
-import { FaTrash } from "react-icons/fa";
+import { IoTrashBinSharp } from "react-icons/io5";
 import styled from "styled-components";
 
 
@@ -18,7 +18,7 @@ export const EditStyled = styled(AiFillEdit)`
     height: 15px;
 `;
 
-export const DeleteStyled = styled(FaTrash)`
+export const DeleteStyled = styled(IoTrashBinSharp)`
     width: 15px;
     height: 15px;
 `;

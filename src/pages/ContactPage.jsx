@@ -2,13 +2,14 @@ import { message } from "../assets/data/tabs";
 import TableComponent from "../components/TableComponent";
 import TabsComponent from "../components/TabsComponent";
 import MessageListComponent from './../components/MessageListComponent';
-import { ButtonStyledArchived, ButtonStyledPublish, ButtonStyledViewNotes } from "../styled/ButtonsStyled";
+import { ButtonStyledArchived, ButtonStyledIcon, ButtonStyledPublish } from "../styled/ButtonsStyled";
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { deleteMessage, editMessage, getMessages } from "../features/messages/messagesAsyncThunk";
 import { getAllMessages } from "../features/messages/messagesSlice";
 import Loading from "../components/Loading";
 import Swal from "sweetalert2";
+import { DeleteStyled } from './../styled/IconStyled';
 
 const handleClickDelete = async (event, dispatch, id) => {
     event.stopPropagation();
@@ -29,7 +30,7 @@ const handleClickArchive = (event, dispatch, id) => {
 
 const action = (row, dispatch) => {
     return (<>
-            <ButtonStyledViewNotes onClick={(event) => handleClickDelete(event, dispatch, row.id)}>Delete</ButtonStyledViewNotes>
+            <ButtonStyledIcon onClick={(event) => handleClickDelete(event, dispatch, row.id)}><DeleteStyled></DeleteStyled></ButtonStyledIcon>
             {row.archived ?
             <ButtonStyledPublish onClick={(event) => event.stopPropagation()}>Publish</ButtonStyledPublish>
             :
@@ -50,7 +51,7 @@ const dataTable = (dispatch) => [
     },
     {
         'label': 'Comment',
-        display: row => `${row.subject} ${row.messages}`
+        display: row => `${row.subject} ${row.messages.slice(0, 50).concat('...')}`
     },
     {
         'label': 'Action',

@@ -17,7 +17,7 @@ const TableStyled = styled.table`
         height: 50px;
 
         th {
-            padding: 0.5rem;
+            padding: 0rem 0.5rem 0.5rem 0.5rem;
         }
     }
 

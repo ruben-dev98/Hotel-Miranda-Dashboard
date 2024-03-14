@@ -34,6 +34,9 @@ export const ButtonStyledNew = styled(ButtonStyled)`
 `;
 
 export const ButtonStyledIcon = styled(ButtonStyled)`
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 35px;
     height: 35px;
     background-color: #EEF9F2;

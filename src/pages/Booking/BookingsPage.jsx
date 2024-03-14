@@ -2,7 +2,7 @@ import { bookings } from "../../assets/data/tabs";
 import TableComponent from "../../components/TableComponent";
 import TabsComponent from "../../components/TabsComponent";
 import { ButtonStyledIcon, ButtonStyledNew, ButtonStyledViewNotes } from "../../styled/ButtonsStyled";
-import { SpanStyledCancelled, SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress } from "../../styled/SpanStyled";
+import { SpanStyledCancelled, SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress, SpanStyledTableFirst, SpanStyledTableSecond } from "../../styled/SpanStyled";
 import OrderComponent from "../../components/OrderComponent";
 import { bookingsOrder } from "../../assets/data/order";
 import Swal from 'sweetalert2'
@@ -55,19 +55,28 @@ const action = (row, dispatch) => {
 const dataTable = (dispatch) => [
     {
         'label': 'Guest',
-        display: row => `${row.full_name} ${row.id}`
+        display: row => (<><SpanStyledTableFirst>{row.full_name}</SpanStyledTableFirst><br/><SpanStyledTableSecond>#{row.id}</SpanStyledTableSecond></>)
     },
     {
         'label': 'Order Date',
-        display: row => new Date(parseInt(row.order_date, 10)).toLocaleString('es-Es')
+        display: row => {
+            const order_date = new Date(parseInt(row.order_date, 10));
+            return (<><SpanStyledTableFirst>{order_date.toDateString().slice(3)}</SpanStyledTableFirst><br/><SpanStyledTableSecond>{order_date.toTimeString().slice(0, 8)}</SpanStyledTableSecond></>);
+        },
     },
     {
         'label': 'Check In',
-        display: row => new Date(parseInt(row.check_in, 10)).toLocaleString('es-Es')
+        display: row => {
+            const check_in = new Date(parseInt(row.check_in, 10));
+            return (<><SpanStyledTableFirst>{check_in.toDateString().slice(3)}</SpanStyledTableFirst><br/><SpanStyledTableSecond>{check_in.toTimeString().slice(0, 8)}</SpanStyledTableSecond></>);
+        },
     },
     {
         'label': 'Check Out',
-        display: row => new Date(parseInt(row.check_out, 10)).toLocaleString('es-Es')
+        display: row => {
+            const check_out = new Date(parseInt(row.check_out, 10));
+            return (<><SpanStyledTableFirst>{check_out.toDateString().slice(3)}</SpanStyledTableFirst><br/><SpanStyledTableSecond>{check_out.toTimeString().slice(0, 8)}</SpanStyledTableSecond></>);
+        },
     },
     {
         'label': 'Special Request',
@@ -81,7 +90,8 @@ const dataTable = (dispatch) => [
     },
     {
         'label': 'Room Type',
-        display: row => `${row.type} ${row.number}`
+        display: row => (<><SpanStyledTableFirst>{row.type}</SpanStyledTableFirst><br/><SpanStyledTableSecond>{row.number}</SpanStyledTableSecond></>)
+
     },
     {
         'label': 'Status',
