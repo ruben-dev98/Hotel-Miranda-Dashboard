@@ -123,8 +123,8 @@ const UsersPage = () => {
         <section className='content'>
             {showSpinner ? <Loading></Loading> :
                 <>
-                <input value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Busqueda por nombre usuario"/>
                     <div className="top__menu-table">
+                        <input value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Busqueda por nombre usuario"/>
                         <ButtonStyledNew as={LinkStyled} to={'user'}>+ New Employee</ButtonStyledNew>
                         <OrderComponent setCurrentOrder={setCurrentOrder} data={usersOrder}></OrderComponent>
                     </div>
