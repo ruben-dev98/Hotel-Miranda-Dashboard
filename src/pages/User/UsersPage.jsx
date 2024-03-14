@@ -3,7 +3,7 @@ import { usersOrder } from "../../assets/data/order";
 import TableComponent from "../../components/TableComponent";
 import TabsComponent from "../../components/TabsComponent";
 import { SpanStyled, SpanStyledCheckOut } from "../../styled/SpanStyled";
-import { ButtonStyledNew, ButtonStyledViewNotes } from "../../styled/ButtonsStyled";
+import { ButtonStyledIcon, ButtonStyledNew } from "../../styled/ButtonsStyled";
 import OrderComponent from '../../components/OrderComponent';
 import { LinkStyled } from "../../styled/LinkStyled";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,6 +13,10 @@ import { deleteEmployee, getEmployees } from "../../features/employees/employees
 import Loading from "../../components/Loading";
 import Swal from "sweetalert2";
 import { useDebounce } from "@uidotdev/usehooks";
+import { DeleteStyled, EditStyled } from "../../styled/IconStyled";
+import { DivStyledActions } from "../../styled/DivsStyled";
+
+
 
 const handleClickDelete = async (event, dispatch, id) => {
     event.stopPropagation();
@@ -28,10 +32,10 @@ const handleClickDelete = async (event, dispatch, id) => {
 
 const action = (id, dispatch) => {
     return (
-        <>
-            <ButtonStyledViewNotes onClick={(event) => handleClickDelete(event, dispatch, id)}>Delete</ButtonStyledViewNotes>
-            <ButtonStyledViewNotes as={LinkStyled} to={`edit/${id}`} onClick={(event) => event.stopPropagation()}>Edit</ButtonStyledViewNotes>
-        </>
+        <DivStyledActions>
+            <ButtonStyledIcon as={LinkStyled} to={`edit/${id}`} onClick={(event) => event.stopPropagation()}><EditStyled/></ButtonStyledIcon>
+            <ButtonStyledIcon onClick={(event) => handleClickDelete(event, dispatch, id)}><DeleteStyled/></ButtonStyledIcon>
+        </DivStyledActions>
     )
 }
 

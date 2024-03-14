@@ -32,3 +32,11 @@ export const ButtonStyledViewNotes = styled(ButtonStyled)`
 export const ButtonStyledNew = styled(ButtonStyled)`
     width: 200px;
 `;
+
+export const ButtonStyledIcon = styled(ButtonStyled)`
+    width: 35px;
+    height: 35px;
+    background-color: #EEF9F2;
+    color: #393939;
+    border-radius: 10px;
+`;

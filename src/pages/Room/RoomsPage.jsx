@@ -2,7 +2,7 @@ import { rooms } from "../../assets/data/tabs";
 import TabsComponent from "../../components/TabsComponent";
 import TableComponent from '../../components/TableComponent';
 import { SpanStyled, SpanStyledCheckOut } from "../../styled/SpanStyled";
-import { ButtonStyledNew, ButtonStyledViewNotes } from "../../styled/ButtonsStyled";
+import { ButtonStyledIcon, ButtonStyledNew } from "../../styled/ButtonsStyled";
 import OrderComponent from "../../components/OrderComponent";
 import { roomsOrder } from "../../assets/data/order";
 import { LinkStyled } from "../../styled/LinkStyled";
@@ -12,6 +12,9 @@ import { getAllRooms } from "../../features/rooms/roomsSlice";
 import { deleteRoom, getRooms } from "../../features/rooms/roomsAsyncThunk";
 import Loading from "../../components/Loading";
 import Swal from "sweetalert2";
+import { EditStyled } from "../../styled/IconStyled";
+import { DeleteStyled } from './../../styled/IconStyled';
+import { DivStyledActions } from "../../styled/DivsStyled";
 
 const handleClickDelete = async (event, dispatch, id) => {
     event.stopPropagation();
@@ -26,10 +29,12 @@ const handleClickDelete = async (event, dispatch, id) => {
 }
 
 const action = (id, dispatch) => {
-    return (<>
-        <ButtonStyledViewNotes as={LinkStyled} to={`edit/${id}`} onClick={(event) => event.stopPropagation()}>Edit</ButtonStyledViewNotes>
-        <ButtonStyledViewNotes onClick={(event) => handleClickDelete(event, dispatch, id)}>Delete</ButtonStyledViewNotes>
-    </>)
+    return (
+    <DivStyledActions>
+        <ButtonStyledIcon as={LinkStyled} to={`edit/${id}`} onClick={(event) => event.stopPropagation()}><EditStyled></EditStyled></ButtonStyledIcon>
+        <ButtonStyledIcon onClick={(event) => handleClickDelete(event, dispatch, id)}><DeleteStyled></DeleteStyled></ButtonStyledIcon>
+    </DivStyledActions>
+    )
     
     
 }

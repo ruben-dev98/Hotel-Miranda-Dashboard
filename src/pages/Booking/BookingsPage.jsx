@@ -1,7 +1,7 @@
 import { bookings } from "../../assets/data/tabs";
 import TableComponent from "../../components/TableComponent";
 import TabsComponent from "../../components/TabsComponent";
-import { ButtonStyledNew, ButtonStyledViewNotes } from "../../styled/ButtonsStyled";
+import { ButtonStyledIcon, ButtonStyledNew, ButtonStyledViewNotes } from "../../styled/ButtonsStyled";
 import { SpanStyledCancelled, SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress } from "../../styled/SpanStyled";
 import OrderComponent from "../../components/OrderComponent";
 import { bookingsOrder } from "../../assets/data/order";
@@ -12,6 +12,8 @@ import { getAllBookings } from "../../features/bookings/bookingsSlice";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { deleteBooking, getBookings } from "../../features/bookings/bookingsAsyncThunk";
 import Loading from "../../components/Loading";
+import { DivStyledActions } from "../../styled/DivsStyled";
+import { DeleteStyled, EditStyled } from "../../styled/IconStyled";
 
 /*const handleClickEdit = async (event, dispatch, row) => {
     event.stopPropagation();
@@ -42,11 +44,11 @@ const handleClickDelete = async (event, dispatch, row) => {
 
 const action = (row, dispatch) => {
     return (
-        <>
-            <ButtonStyledViewNotes onClick={(event) => handleClickDelete(event, dispatch, row)}>Delete</ButtonStyledViewNotes>
-            <ButtonStyledViewNotes as={LinkStyled} to={`edit/${row.id}`} onClick={(event) => event.stopPropagation()}>Edit</ButtonStyledViewNotes>
+        <DivStyledActions>
+            <ButtonStyledIcon as={LinkStyled} to={`edit/${row.id}`} onClick={(event) => event.stopPropagation()}><EditStyled/></ButtonStyledIcon>
+            <ButtonStyledIcon onClick={(event) => handleClickDelete(event, dispatch, row)}><DeleteStyled/></ButtonStyledIcon>
             {/*<ButtonStyledViewNotes onClick={(event) => handleClickEdit(event, dispatch, row)}>Cancelada</ButtonStyledViewNotes>*/}
-        </>
+        </DivStyledActions>
     )
 }
 
@@ -72,7 +74,7 @@ const dataTable = (dispatch) => [
         display: row => row.special_request ?
             <ButtonStyledViewNotes onClick={(event) => {
                 event.stopPropagation()
-                return Swal.fire(row.special_request)
+                return Swal.fire({title: 'Info Special Request', html: `<p>${row.special_request}</p>`})
             }}>View Notes</ButtonStyledViewNotes>
             :
             <ButtonStyledViewNotes disabled>View Notes</ButtonStyledViewNotes>
