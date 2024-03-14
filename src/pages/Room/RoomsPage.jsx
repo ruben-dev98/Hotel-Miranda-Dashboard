@@ -1,8 +1,8 @@
 import { rooms } from "../../assets/data/tabs";
 import TabsComponent from "../../components/TabsComponent";
 import TableComponent from '../../components/TableComponent';
-import { SpanStyled, SpanStyledCheckOut } from "../../styled/SpanStyled";
-import { ButtonStyledNew, ButtonStyledViewNotes } from "../../styled/ButtonsStyled";
+import { SpanStyled, SpanStyledCheckOut, SpanStyledTableFirst, SpanStyledTableSecond } from "../../styled/SpanStyled";
+import { ButtonStyledIcon, ButtonStyledNew, ButtonStyledViewNotes } from "../../styled/ButtonsStyled";
 import OrderComponent from "../../components/OrderComponent";
 import { roomsOrder } from "../../assets/data/order";
 import { LinkStyled } from "../../styled/LinkStyled";
@@ -11,25 +11,36 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { getAllRooms } from "../../features/rooms/roomsSlice";
 import { deleteRoom, getRooms } from "../../features/rooms/roomsAsyncThunk";
 import Loading from "../../components/Loading";
-import Swal from "sweetalert2";
+import { EditStyled } from "../../styled/IconStyled";
+import { DeleteStyled } from './../../styled/IconStyled';
+import { DivStyledActions } from "../../styled/DivsStyled";
+import styled from "styled-components";
+import MySwal from "../../app/MySwal";
+
+
+const ImgStyled = styled.img`
+    width: 200px;
+    height: 100px;
+`;
 
 const handleClickDelete = async (event, dispatch, id) => {
     event.stopPropagation();
     try {
         await dispatch(deleteRoom(id)).unwrap()
-        Swal.fire({'title': 'Eliminación de Room',
-        'timer': 2000
-        });
+        const html = <p>Delete #{id} Room Successfully</p>
+        MySwal('', html, false, 2000, 'success', true);
     } catch(error) {
         console.log(error)
     }
 }
 
 const action = (id, dispatch) => {
-    return (<>
-        <ButtonStyledViewNotes as={LinkStyled} to={`edit/${id}`} onClick={(event) => event.stopPropagation()}>Edit</ButtonStyledViewNotes>
-        <ButtonStyledViewNotes onClick={(event) => handleClickDelete(event, dispatch, id)}>Delete</ButtonStyledViewNotes>
-    </>)
+    return (
+    <DivStyledActions>
+        <ButtonStyledIcon as={LinkStyled} to={`edit/${id}`} onClick={(event) => event.stopPropagation()}><EditStyled></EditStyled></ButtonStyledIcon>
+        <ButtonStyledIcon onClick={(event) => handleClickDelete(event, dispatch, id)}><DeleteStyled></DeleteStyled></ButtonStyledIcon>
+    </DivStyledActions>
+    )
     
     
 }
@@ -37,7 +48,7 @@ const action = (id, dispatch) => {
 const dataTable = (dispatch) => [
     {
         'label': 'Image',
-        display: row => <img src={row.foto} style={{ width: 200, height: 100 }} />
+        display: row => <ImgStyled src={row.foto} />
     },
     {
         'label': 'Number',
@@ -53,15 +64,29 @@ const dataTable = (dispatch) => [
     },
     {
         'label': 'Amenities',
-        'property': 'amenities'
+        display: row => row.amenities.length > 0 ?
+        <ButtonStyledViewNotes onClick={(event) => {
+            event.stopPropagation()
+            const title = 'Info Amenities';
+            const html = (<ul>
+                {row.amenities.map((amen, index) => {
+                    return <li key={index}>
+                        {amen}
+                    </li>;
+                })}
+            </ul>);
+            MySwal(title, html, false)
+        }}>View Amenities</ButtonStyledViewNotes>
+        :
+        <ButtonStyledViewNotes disabled>View Amenities</ButtonStyledViewNotes>
     },
     {
         'label': 'Price',
-        'property': 'price'
+        display: row => (<><SpanStyledTableFirst>{(row.price)}</SpanStyledTableFirst><br/><SpanStyledTableSecond>/Night</SpanStyledTableSecond></>)
     },
     {
         'label': 'Offer Price',
-        display: row => (row.price - (row.price * row.discount / 100)).toFixed(2)
+        display: row => (<><SpanStyledTableFirst>{(row.price - (row.price * row.discount / 100)).toFixed(2)}</SpanStyledTableFirst><br/><SpanStyledTableSecond>/Night</SpanStyledTableSecond></>)
     },
     {
         'label': 'Status',

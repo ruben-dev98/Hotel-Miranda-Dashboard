@@ -2,6 +2,34 @@ body {
     font-family: "Poppins", sans-serif;
 }
 
+.edit__user-pop-up {
+    padding: 1rem;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+    div {
+        margin: 0 auto 2rem auto;
+    }
+
+    label {
+        display: block;
+        font-size: 1.5rem;
+        margin-bottom: 1.25rem;
+    }
+
+    input {
+        font-family: "Poppins", sans-serif;
+        height: 1rem;
+        padding: 2rem;
+        display: block;
+        font-size: 1.5rem;
+    }
+
+    button {
+        display: block;
+        margin: 0 0 0 auto;
+    }
+}
+
 button {
     cursor: pointer;
 }

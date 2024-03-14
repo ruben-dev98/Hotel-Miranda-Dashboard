@@ -1,8 +1,8 @@
 import { bookings } from "../../assets/data/tabs";
 import TableComponent from "../../components/TableComponent";
 import TabsComponent from "../../components/TabsComponent";
-import { ButtonStyledNew, ButtonStyledViewNotes } from "../../styled/ButtonsStyled";
-import { SpanStyledCancelled, SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress } from "../../styled/SpanStyled";
+import { ButtonStyledIcon, ButtonStyledNew, ButtonStyledViewNotes } from "../../styled/ButtonsStyled";
+import { SpanStyledCancelled, SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress, SpanStyledTableFirst, SpanStyledTableSecond } from "../../styled/SpanStyled";
 import OrderComponent from "../../components/OrderComponent";
 import { bookingsOrder } from "../../assets/data/order";
 import Swal from 'sweetalert2'
@@ -12,15 +12,14 @@ import { getAllBookings } from "../../features/bookings/bookingsSlice";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { deleteBooking, getBookings } from "../../features/bookings/bookingsAsyncThunk";
 import Loading from "../../components/Loading";
+import { DivStyledActions } from "../../styled/DivsStyled";
+import { DeleteStyled, EditStyled } from "../../styled/IconStyled";
+import MySwal from "../../app/MySwal";
 
 /*const handleClickEdit = async (event, dispatch, row) => {
     event.stopPropagation();
     try {
         await dispatch(editBooking(row.id)).unwrap()
-        Swal.fire({
-            'title': 'Cancelación de Booking',
-            'timer': 2000
-        });
     } catch (error) {
         console.log(error)
     }
@@ -31,10 +30,8 @@ const handleClickDelete = async (event, dispatch, row) => {
     event.stopPropagation();
     try {
         await dispatch(deleteBooking(row.id)).unwrap();
-        Swal.fire({
-            'title': 'Eliminación de Booking',
-            'timer': 2000
-        });
+        const html = <p>Delete #{row.id} Booking Successfully</p>;
+        MySwal('', html, false, 2000, 'success', true);
     } catch (error) {
         console.log(error)
     }
@@ -42,44 +39,54 @@ const handleClickDelete = async (event, dispatch, row) => {
 
 const action = (row, dispatch) => {
     return (
-        <>
-            <ButtonStyledViewNotes onClick={(event) => handleClickDelete(event, dispatch, row)}>Delete</ButtonStyledViewNotes>
-            <ButtonStyledViewNotes as={LinkStyled} to={`edit/${row.id}`} onClick={(event) => event.stopPropagation()}>Edit</ButtonStyledViewNotes>
+        <DivStyledActions>
+            <ButtonStyledIcon as={LinkStyled} to={`edit/${row.id}`} onClick={(event) => event.stopPropagation()}><EditStyled/></ButtonStyledIcon>
+            <ButtonStyledIcon onClick={(event) => handleClickDelete(event, dispatch, row)}><DeleteStyled/></ButtonStyledIcon>
             {/*<ButtonStyledViewNotes onClick={(event) => handleClickEdit(event, dispatch, row)}>Cancelada</ButtonStyledViewNotes>*/}
-        </>
+        </DivStyledActions>
     )
 }
 
 const dataTable = (dispatch) => [
     {
         'label': 'Guest',
-        display: row => `${row.full_name} ${row.id}`
+        display: row => (<><SpanStyledTableFirst>{row.full_name}</SpanStyledTableFirst><br/><SpanStyledTableSecond>#{row.id}</SpanStyledTableSecond></>)
     },
     {
         'label': 'Order Date',
-        display: row => new Date(parseInt(row.order_date, 10)).toLocaleString('es-Es')
+        display: row => {
+            const order_date = new Date(parseInt(row.order_date, 10));
+            return (<><SpanStyledTableFirst>{order_date.toDateString().slice(3)}</SpanStyledTableFirst><br/><SpanStyledTableSecond>{order_date.toTimeString().slice(0, 8)}</SpanStyledTableSecond></>);
+        },
     },
     {
         'label': 'Check In',
-        display: row => new Date(parseInt(row.check_in, 10)).toLocaleString('es-Es')
+        display: row => {
+            const check_in = new Date(parseInt(row.check_in, 10));
+            return (<><SpanStyledTableFirst>{check_in.toDateString().slice(3)}</SpanStyledTableFirst><br/><SpanStyledTableSecond>{check_in.toTimeString().slice(0, 8)}</SpanStyledTableSecond></>);
+        },
     },
     {
         'label': 'Check Out',
-        display: row => new Date(parseInt(row.check_out, 10)).toLocaleString('es-Es')
+        display: row => {
+            const check_out = new Date(parseInt(row.check_out, 10));
+            return (<><SpanStyledTableFirst>{check_out.toDateString().slice(3)}</SpanStyledTableFirst><br/><SpanStyledTableSecond>{check_out.toTimeString().slice(0, 8)}</SpanStyledTableSecond></>);
+        },
     },
     {
         'label': 'Special Request',
         display: row => row.special_request ?
             <ButtonStyledViewNotes onClick={(event) => {
                 event.stopPropagation()
-                return Swal.fire(row.special_request)
+                return Swal.fire({title: 'Info Special Request', html: `<p>${row.special_request}</p>`})
             }}>View Notes</ButtonStyledViewNotes>
             :
             <ButtonStyledViewNotes disabled>View Notes</ButtonStyledViewNotes>
     },
     {
         'label': 'Room Type',
-        display: row => `${row.type} ${row.number}`
+        display: row => (<><SpanStyledTableFirst>{row.type}</SpanStyledTableFirst><br/><SpanStyledTableSecond>{row.number}</SpanStyledTableSecond></>)
+
     },
     {
         'label': 'Status',

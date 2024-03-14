@@ -3,14 +3,14 @@ import { UserAuth } from "./UserAuth"
 import PropTypes from 'prop-types';
 import { useLocalStorage } from "../hook/useLocalStorage";
 
-export const UserContext = createContext({ state: {auth: false, user: '', password: ''}, dispatch: () => {}});
+export const UserContext = createContext({ state: {auth: false, user: '', email: ''}, dispatch: () => {}});
 
 export const UserAuthProvider = ({children}) => {
     const initAuth = useLocalStorage('auth', 'get');
     const initUser = JSON.parse(useLocalStorage('user', 'get'));
-    const {state, dispatch} = UserAuth(initAuth ? initAuth === '1' ? true : false : false, initUser ? initUser.user : '', initUser ? initUser.password : '');
+    const {state, dispatch} = UserAuth(initAuth ? initAuth === '1' ? true : false : false, initUser ? initUser.user : '', initUser ? initUser.email : '');
     useLocalStorage('auth', 'set', state.auth ? '1' : '0');
-    useLocalStorage('user', 'set', JSON.stringify({user: state.user, password: state.password}));
+    useLocalStorage('user', 'set', JSON.stringify({user: state.user, email: state.email}));
     //
 
     return (

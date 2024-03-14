@@ -61,9 +61,8 @@ export const roomsSlice = createSlice({
             state.room.error = null;
         })
         .addCase(editRoom.fulfilled, (state, action) => {
-            console.log(action.payload);
             const index = state.data.findIndex((room) => room.id === action.payload.id);
-            state.data[index] = action.payload.data;
+            state.data[index] = {...state.data.index, ...action.payload.data};
             state.room.status = 'fulfilled';
             state.room.error = null;
         })

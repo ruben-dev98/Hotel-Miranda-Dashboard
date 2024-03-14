@@ -12,14 +12,6 @@ import { ButtonStyled } from '../../styled/ButtonsStyled';
 import { FaArrowLeftStyled } from '../../styled/IconStyled';
 import { useNavigate } from 'react-router-dom';
 
-const SwiperStyled = styled(Swiper)`
-    grid-area: photo;
-`;
-
-const DetailsStyled = styled.section`
-    grid-template-columns: none;
-`;
-
 const transformData = (field, data) => {
     switch (field.type) {
         case 'text':
@@ -52,6 +44,8 @@ const transformData = (field, data) => {
     }
 }
 
+
+
 const DetailsComponent = ({ data, object__fields }) => {
     const navigate = useNavigate();
 
@@ -62,7 +56,7 @@ const DetailsComponent = ({ data, object__fields }) => {
                 <FaArrowLeftStyled />
             </ButtonStyled>
             {
-                object__fields.map((field, index) => 
+                object__fields.map((field, index) =>
                     <div key={index}>
                         {transformData(field, data)}
                     </div>

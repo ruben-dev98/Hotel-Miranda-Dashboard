@@ -5,6 +5,7 @@ import { getBooking } from "../../features/bookings/bookingsAsyncThunk";
 import { getOneBooking } from "../../features/bookings/bookingsSlice";
 import Loading from "../../components/Loading";
 import DetailsComponent from "../../components/Details/DetailsComponent";
+import { AmenitiesStyled } from "../../styled/ListStyled";
 
 const object__fields = [
     {
@@ -13,11 +14,11 @@ const object__fields = [
     },
     {
         'field': 'check_in',
-        'type': 'date'
+        'type': 'text'
     },
     {
         'field': 'check_out',
-        'type': 'date'
+        'type': 'text'
     },
     {
         'field': 'full_name',
@@ -48,8 +49,8 @@ const object__fields = [
         'type': 'text'
     },
     {
-        'field': 'amenities',
-        'type': 'array'
+        display: field => <AmenitiesStyled>{field.amenities.map((amen, index) => <li key={index}>{amen}</li>)}</AmenitiesStyled>,
+        'type': 'text'
     },
     {
         'field': 'status',
@@ -63,10 +64,8 @@ const BookingPage = () => {
     const [showSpinner, setShowSpinner] = useState(true);
     const { id } = useParams();
     const booking = useSelector(getOneBooking);
-    //const rooms = useSelector(getAllRooms);
 
     const result = useCallback(async () => {
-        //await dispatch(getRooms()).unwrap();
         await dispatch(getBooking(parseInt(id))).unwrap();
         setShowSpinner(false);
     }, [id, dispatch]);
@@ -78,7 +77,7 @@ const BookingPage = () => {
     return (
 
         <section className="content">
-            {showSpinner ? <Loading></Loading> :<>
+            {showSpinner ? <Loading></Loading> : <>
                 <DetailsComponent data={booking} object__fields={object__fields}></DetailsComponent>
             </>
             }

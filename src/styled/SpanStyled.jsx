@@ -29,3 +29,13 @@ export const SpanStyledCancelled = styled(SpanStyled)`
     color: #FFF;
     background-color: #575757;
 `;
+
+export const SpanStyledTableSecond = styled.span`
+    color: #799283;
+    font-size: 1rem;
+`;
+
+export const SpanStyledTableFirst = styled.span`
+    color: #393939;
+    font-size: 1.2rem;
+`;

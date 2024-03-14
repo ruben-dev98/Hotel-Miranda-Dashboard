@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addRoom, editRoom, getRoom } from '../../features/rooms/roomsAsyncThunk';
 import Loading from "../../components/Loading";
 import { lastId } from "../../app/getItemsId";
-import Swal from "sweetalert2";
 import FormComponent from "../../components/Form/FormComponent";
+import MySwal from "../../app/MySwal";
 
 const formControl = [
     {
@@ -98,20 +98,13 @@ const RoomFormPage = () => {
             room.offer = true;
         }
         
+        const html = id ? <p>Update #{room.id} Room Successfully</p> : <p>Create #{room.id} Room Successfully</p>;
+
         if(loc.includes('edit')) {
             try {
                 navigate('/rooms');
                 await dispatch(editRoom({id: id, data: room})).unwrap();
-                Swal.fire({
-                    'title': 'Update de Room Realizada',
-                    'html': `
-                        <p>ID : ${room.id}</p>
-                        <p>Room Number : ${room.number}</p>
-                        <p>Room Type : ${room.type}</p>
-                        <p>Price : ${room.price}</p>
-                    `,
-                    'timer': 2000
-                });
+                MySwal('', html, false, 2000, 'success', true);
             } catch (error) {
                 console.log(error);
             }
@@ -119,16 +112,7 @@ const RoomFormPage = () => {
             try {
                 navigate('/rooms');
                 dispatch(addRoom(room)).unwrap();
-                Swal.fire({
-                    'title': 'Create de Room Realizada',
-                    'html': `
-                        <p>ID : ${room.id}</p>
-                        <p>Room Number : ${room.number}</p>
-                        <p>Room Type : ${room.type}</p>
-                        <p>Price : ${room.price}</p>
-                    `,
-                    'timer': 2000
-                });
+                MySwal('', html, false, 2000, 'success', true);
             } catch (error) {
                 console.log(error);
             }

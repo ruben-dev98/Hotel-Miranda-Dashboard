@@ -1,12 +1,15 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import logo from '../../assets/img/travl.png'
 import logo_claro from '../../assets/img/travl_claro.png';
 import me from '../../assets/img/CV.png';
 import { links } from '../../assets/data/navlink';
 import React from 'react';
-import { ButtonStyledViewNotes } from '../../styled/ButtonsStyled';
+import { ButtonStyled, ButtonStyledViewNotes } from '../../styled/ButtonsStyled';
+import { useContext } from 'react';
+import { UserContext } from '../../app/UserContext';
+import MySwal from '../../app/MySwal';
+import Swal from 'sweetalert2';
 
 const SideBarStyled = styled.menu`
     grid-area: sidebar;
@@ -76,6 +79,7 @@ const NavLinkStyled = styled(NavLink)`
 
 const SideBarComponent = ({ visibleLateral }) => {
     const loc = useLocation().pathname;
+    const context = useContext(UserContext);
 
     return (
         visibleLateral &&
@@ -91,9 +95,31 @@ const SideBarComponent = ({ visibleLateral }) => {
             </nav>
             <div>
                 <img src={me} alt='' />
-                <h2>Rubén Dopico Novo</h2>
-                <p>ruben.dopico.dev@gmail.com</p>
-                <ButtonStyledViewNotes>Editar</ButtonStyledViewNotes>
+                <h2>{context.state.user}</h2>
+                <p>{context.state.email}</p>
+                <ButtonStyledViewNotes onClick={() => {
+                    const html = 
+                    (<form className='edit__user-pop-up' onSubmit={(event) => 
+                    {
+                        event.preventDefault();
+                        context.dispatch({type: 'edit', payload: {user: event.target.user.value, email: event.target.email.value}});
+                        Swal.close();
+                    }}>
+                        
+                        <div>
+                            <label>Full Name</label>
+                            <input type="text" defaultValue={context.state.user} name="user" placeholder="Full Name"/>
+                        </div>
+                        <div>
+                            <label>Email</label>
+                            <input type="email" defaultValue={context.state.email} name="email" placeholder="Email"/>
+                        </div>
+                        <div>
+                            <ButtonStyled type="submit">Edit User</ButtonStyled>
+                        </div>
+                    </form>);
+                    return MySwal('Update User', html, false);
+                }}>Editar</ButtonStyledViewNotes>
             </div>
         </SideBarStyled>
     );

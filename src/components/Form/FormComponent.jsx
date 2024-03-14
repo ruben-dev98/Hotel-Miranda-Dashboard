@@ -1,74 +1,9 @@
-import styled from "styled-components";
 import FormControlComponent from "./FormControlComponent";
 import PropTypes from 'prop-types';
 import { ButtonStyled } from "../../styled/ButtonsStyled";
 import { useNavigate } from "react-router-dom";
 import { FaArrowLeftStyled } from "../../styled/IconStyled";
-
-const FormStyled = styled.form`
-    
-    div {
-        margin: 0 auto;
-        width: 60%;
-
-        div {
-            margin-bottom: 20px;
-            
-            .rooms{
-                width: 200px;
-                height: 100px;
-            }
-
-            .users {
-                width: 80px;
-                height: 80px;
-            }
-        }
-    }
-    
-    label {
-        color: #393939;
-        display: block;
-        margin-bottom: 0.75rem;
-    }
-    
-    input {
-        font-family: "Poppins", sans-serif;
-        padding: 0rem 1.75rem;
-        border: 0em;
-        display: block;
-        width: 90%;
-        background-color: #FFF;
-        height: 3.75rem;
-        margin-bottom: 0.75rem;
-    }
-
-    textarea {
-        font-family: "Poppins", sans-serif;
-        border: 0rem;
-        padding: 1.75rem 1.75rem;
-        width: 90%;
-        display: block;
-        margin-bottom: 0.75rem;
-    }
-
-    select {
-        font-family: "Poppins", sans-serif;
-        border: 0rem;
-        padding: 1rem 1.75rem;
-        width: 96.3%;
-        display: block;
-        margin-bottom: 0.75rem;
-        background-color: #FFF;
-    }
-
-    button {
-        display: block;
-        width: 200px;
-        height: 100px;
-        margin: 40px 35px 0 auto;
-    }
-`;
+import { FormStyledComponent } from "../../styled/FormStyled";
 
 
 
@@ -80,7 +15,7 @@ const FormComponent = ({ formControl, data, onHandleSubmit}) => {
             <ButtonStyled onClick={() => nav(-1)}>
                 <FaArrowLeftStyled />
             </ButtonStyled>
-            <FormStyled onSubmit={onHandleSubmit}>
+            <FormStyledComponent onSubmit={onHandleSubmit}>
                 {
                     formControl.map((control, index) =>
                         <FormControlComponent key={index}
@@ -92,7 +27,7 @@ const FormComponent = ({ formControl, data, onHandleSubmit}) => {
                 <div>
                     <ButtonStyled type="submit">Create</ButtonStyled>
                 </div>
-            </FormStyled>
+            </FormStyledComponent>
         </>
     );
 }
