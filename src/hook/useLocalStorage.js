@@ -1,5 +1,3 @@
-import { useReducer } from "react";
-
 const reducer = (key, item, action) => {
     switch(action) {
         case 'set':

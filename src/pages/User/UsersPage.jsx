@@ -11,10 +11,10 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { getAllEmployees } from "../../features/employees/employeesSlice";
 import { deleteEmployee, getEmployees } from "../../features/employees/employeesAsyncThunk";
 import Loading from "../../components/Loading";
-import Swal from "sweetalert2";
 import { useDebounce } from "@uidotdev/usehooks";
 import { DeleteStyled, EditStyled } from "../../styled/IconStyled";
 import { DivStyledActions } from "../../styled/DivsStyled";
+import MySwal from "../../app/MySwal";
 
 
 
@@ -22,9 +22,8 @@ const handleClickDelete = async (event, dispatch, id) => {
     event.stopPropagation();
     try {
         await dispatch(deleteEmployee(id)).unwrap()
-        Swal.fire({'title': 'Eliminación de Employee',
-        'timer': 2000
-        });
+        const html = <p>Delete #{id} Employee Successfully</p>;
+        MySwal('', html, false, 2000, 'succes', true);
     } catch(error) {
         console.log(error)
     }

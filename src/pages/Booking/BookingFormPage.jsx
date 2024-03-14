@@ -6,7 +6,6 @@ import { useCallback, useEffect, useState } from "react";
 import { addBooking, editBooking, getBooking } from "../../features/bookings/bookingsAsyncThunk";
 import { getAllBookings, getOneBooking } from "../../features/bookings/bookingsSlice";
 import Loading from "../../components/Loading";
-import Swal from "sweetalert2";
 import { availableRooms } from "../../features/rooms/roomsSlice";
 import { availableRoomsNumber } from "../../features/rooms/roomsAsyncThunk";
 import MySwal from "../../app/MySwal";

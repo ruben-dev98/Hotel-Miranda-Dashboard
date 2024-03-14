@@ -6,7 +6,7 @@ import { getAllEmployees, getOneEmployee } from '../../features/employees/employ
 import { addEmployee, editEmployee, getEmployee } from '../../features/employees/employeesAsyncThunk';
 import Loading from '../../components/Loading';
 import { lastId } from '../../app/getItemsId';
-import Swal from 'sweetalert2';
+import MySwal from '../../app/MySwal';
 
 const formControl = [
     {
@@ -86,20 +86,13 @@ const UserFormPage = () => {
             user[control.name] = event.target[control.name].value;
         });
 
+        const html = id ? <p>Update #{user.id} Employee Successfully</p> : <p>Create #{user.id} Employee Successfully</p>;
+
         if(loc.includes('edit')) {
             try {
                 navigate('/users');
                 await dispatch(editEmployee({id: id, data: user})).unwrap();
-                Swal.fire({
-                    'title': 'Update de Employee Realizada',
-                    'html': `
-                        <p>ID : ${user.id}</p>
-                        <p>Full Name : ${user.full_name}</p>
-                        <p>Email : ${user.email}</p>
-                        <p>Phone : ${user.contact}</p>
-                    `,
-                    'timer': 2000
-                });
+                MySwal('', html, false, 2000, 'succes', true);
             } catch (error) {
                 console.log(error);
             }
@@ -107,16 +100,7 @@ const UserFormPage = () => {
             try {
                 navigate('/users');
                 await dispatch(addEmployee(user)).unwrap();
-                Swal.fire({
-                    'title': 'Create de Employee Realizada',
-                    'html': `
-                        <p>ID : ${user.id}</p>
-                        <p>Full Name : ${user.full_name}</p>
-                        <p>Email : ${user.email}</p>
-                        <p>Phone : ${user.contact}</p>
-                    `,
-                    'timer': 2000
-                });
+                MySwal('', html, false, 2000, 'succes', true);
             } catch (error) {
                 console.log(error);
             }

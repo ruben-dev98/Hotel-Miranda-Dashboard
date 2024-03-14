@@ -14,7 +14,7 @@ const reducer = (state, action) => {
             ...state,
             auth: false,
             user: '',
-            password: ''
+            email: ''
         }
         case 'edit': {
             return {

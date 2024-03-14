@@ -14,15 +14,12 @@ import { deleteBooking, getBookings } from "../../features/bookings/bookingsAsyn
 import Loading from "../../components/Loading";
 import { DivStyledActions } from "../../styled/DivsStyled";
 import { DeleteStyled, EditStyled } from "../../styled/IconStyled";
+import MySwal from "../../app/MySwal";
 
 /*const handleClickEdit = async (event, dispatch, row) => {
     event.stopPropagation();
     try {
         await dispatch(editBooking(row.id)).unwrap()
-        Swal.fire({
-            'title': 'Cancelación de Booking',
-            'timer': 2000
-        });
     } catch (error) {
         console.log(error)
     }
@@ -33,10 +30,8 @@ const handleClickDelete = async (event, dispatch, row) => {
     event.stopPropagation();
     try {
         await dispatch(deleteBooking(row.id)).unwrap();
-        Swal.fire({
-            'title': 'Eliminación de Booking',
-            'timer': 2000
-        });
+        const html = <p>Delete #{row.id} Booking Successfully</p>;
+        MySwal('', html, false, 2000, 'success', true);
     } catch (error) {
         console.log(error)
     }
