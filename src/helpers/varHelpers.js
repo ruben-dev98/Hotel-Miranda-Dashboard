@@ -1,7 +1,7 @@
 export const TAB_BOOKING_INITIAL_STATE = 'All Bookings';
 export const TAB_ROOMS_INITIAL_STATE = 'All Rooms';
 export const TAB_MESSAGE_INITIAL_STATE = 'All Contacts';
-export const TAB_EMPLOYEE_INITIAL_STATE = 'All Employee';
+export const TAB_EMPLOYEE_INITIAL_STATE = 'All Employees';
 
 export const ORDER_BOOKING_INITIAL_STATE = 'order_date';
 export const ORDER_ROOMS_INITIAL_STATE = 'number asc';
@@ -33,7 +33,6 @@ export const URI_EMPLOYEE = {
     edit: 'edit/employee',
     delete: 'delete/employee'
 };
-
 export const URI_BOOKINGS = {
     getAll: 'get/bookings',
     getOne: 'get/booking',
