@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import { styled } from "styled-components";
 import { Swiper } from 'swiper/react';
 
 export const SwiperStyled = styled(Swiper)`
