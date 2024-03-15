@@ -1,12 +1,5 @@
 import { useMemo, useState } from "react"
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
 import { HALF_WAY_ITEMS_PER_PAGE, INITIAL_PAGE, ITEMS_PER_PAGE, NUMBER_ONE } from "../helpers/varHelpers";
->>>>>>> Stashed changes
-=======
-import { HALF_WAY_ITEMS_PER_PAGE, INITIAL_PAGE, ITEMS_PER_PAGE, NUMBER_ONE } from "../helpers/var_helpers";
->>>>>>> 3f7fe66a24d1fc1542bc0893d1d84afaa8ce123c
 
 const usePaginate = (data) => {
     const [currentPage, setCurrentPage] = useState(INITIAL_PAGE);
