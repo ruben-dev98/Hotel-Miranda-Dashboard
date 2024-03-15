@@ -4,7 +4,7 @@ import TabsComponent from "../components/TabsComponent";
 import MessageListComponent from './../components/MessageListComponent';
 import { ButtonStyledArchived, ButtonStyledIcon, ButtonStyledPublish } from "../styled/ButtonsStyled";
 import { useDispatch, useSelector } from "react-redux";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { deleteMessage, editMessage, getMessages } from "../features/messages/messagesAsyncThunk";
 import { getAllMessages } from "../features/messages/messagesSlice";
 import Loading from "../components/Loading";
@@ -12,6 +12,7 @@ import { DeleteStyled } from './../styled/IconStyled';
 import MySwal from "../app/MySwal";
 import { DivStyledActions } from "../styled/DivsStyled";
 import { SpanStyledTableFirst, SpanStyledTableSecond } from "../styled/SpanStyled";
+import { TAB_MESSAGE_INITIAL_STATE } from "../helpers/varHelpers";
 
 const handleClickDelete = async (event, dispatch, id) => {
     event.stopPropagation();
@@ -19,7 +20,7 @@ const handleClickDelete = async (event, dispatch, id) => {
         await dispatch(deleteMessage(id)).unwrap()
         const html = <p>Delete #{id} Message Successfully</p>
         MySwal('', html, false, 2000, 'success', true);
-    } catch(error) {
+    } catch (error) {
         console.log(error)
     }
 }
@@ -31,27 +32,27 @@ const handleClickArchive = (event, dispatch, id) => {
 
 const action = (row, dispatch) => {
     return (<DivStyledActions>
-            {row.archived ?
+        {row.archived ?
             <ButtonStyledPublish onClick={(event) => event.stopPropagation()}>Publish</ButtonStyledPublish>
             :
             <ButtonStyledArchived onClick={(event) => handleClickArchive(event, dispatch, row.id)}>Archive</ButtonStyledArchived>
-            }
-            <ButtonStyledIcon onClick={(event) => handleClickDelete(event, dispatch, row.id)}><DeleteStyled></DeleteStyled></ButtonStyledIcon>
-        </DivStyledActions>
-        )
+        }
+        <ButtonStyledIcon onClick={(event) => handleClickDelete(event, dispatch, row.id)}><DeleteStyled></DeleteStyled></ButtonStyledIcon>
+    </DivStyledActions>
+    )
 }
 
 const dataTable = (dispatch) => [
     {
         'label': 'Date',
-        display: row =>  {
+        display: row => {
             const date = new Date(parseInt(row.date, 10));
-            return (<><SpanStyledTableFirst>{date.toDateString().slice(3)}</SpanStyledTableFirst><br/><SpanStyledTableSecond>{date.toTimeString().slice(0, 8)} </SpanStyledTableSecond><SpanStyledTableSecond>#{row.id}</SpanStyledTableSecond></>);
+            return (<><SpanStyledTableFirst>{date.toDateString().slice(3)}</SpanStyledTableFirst><br /><SpanStyledTableSecond>{date.toTimeString().slice(0, 8)} </SpanStyledTableSecond><SpanStyledTableSecond>#{row.id}</SpanStyledTableSecond></>);
         }
     },
     {
         'label': 'Customer',
-        display: row => (<><SpanStyledTableFirst>{row.full_name}</SpanStyledTableFirst><br/><SpanStyledTableSecond>{row.email}/</SpanStyledTableSecond><SpanStyledTableSecond>{row.phone}</SpanStyledTableSecond></>)
+        display: row => (<><SpanStyledTableFirst>{row.full_name}</SpanStyledTableFirst><br /><SpanStyledTableSecond>{row.email}/</SpanStyledTableSecond><SpanStyledTableSecond>{row.phone}</SpanStyledTableSecond></>)
     },
     {
         'label': 'Comment',
@@ -65,43 +66,42 @@ const dataTable = (dispatch) => [
 
 const ContactPage = () => {
     const dispatch = useDispatch();
-    const [showSpinner, setShowSpinner] = useState(true);
-    const [currentTab, setCurrentTab] = useState('All Contacts');
+    const [isLoading, setIsLoading] = useState(true);
+    const [currentTab, setCurrentTab] = useState(TAB_MESSAGE_INITIAL_STATE);
     const data = useSelector(getAllMessages);
 
     const filteredMessages = useMemo(() => {
-        
-        const all = currentTab === 'All Contacts'
-            ? data
-            : data.filter((item) => item.archived === currentTab);
-
+        const all = data.filter((item) => currentTab === TAB_MESSAGE_INITIAL_STATE ? true : item.archived === currentTab);
         return all;
     }, [data, currentTab]);
 
-    const result = useCallback(async () => {
+    const inititalFecth = async () => {
         try {
-        await dispatch(getMessages()).unwrap();
-        setShowSpinner(false);
+            await dispatch(getMessages()).unwrap();
+            setIsLoading(false);
         } catch (error) {
             console.log(error);
         }
-    }, [dispatch]);
+    };
 
     useEffect(() => {
-        result();
-    }, [result]);
+        inititalFecth();
+    }, []);
 
+    if (isLoading) {
+        return (<section className='content'>
+            <Loading></Loading>
+        </section>)
+    }
 
     return (
-            <section className='content'>
-                {showSpinner ? <Loading></Loading> :
-                    <>
-                        <MessageListComponent />
-                        <TabsComponent setCurrentTab={setCurrentTab} data={message}></TabsComponent>
-                        <TableComponent rows={filteredMessages} columns={dataTable(dispatch)} path={''}></TableComponent>
-                    </>
-                }
-            </section>
+        <section className='content'>
+            <>
+                <MessageListComponent />
+                <TabsComponent setCurrentTab={setCurrentTab} data={message}></TabsComponent>
+                <TableComponent rows={filteredMessages} columns={dataTable(dispatch)} path={''}></TableComponent>
+            </>
+        </section>
     );
 }
 
