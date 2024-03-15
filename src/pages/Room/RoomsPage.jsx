@@ -16,11 +16,7 @@ import { DeleteStyled } from './../../styled/IconStyled';
 import { DivStyledActions } from "../../styled/DivsStyled";
 import styled from "styled-components";
 import MySwal from "../../app/MySwal";
-<<<<<<< HEAD
 import { ORDER_ROOMS_INITIAL_STATE, TAB_ROOMS_INITIAL_STATE } from "../../helpers/varHelpers";
-=======
-import { ORDER_ROOMS_INITIAL_STATE, TAB_ROOMS_INITIAL_STATE } from "../../helpers/var_helpers";
->>>>>>> 3f7fe66a24d1fc1542bc0893d1d84afaa8ce123c
 
 
 const ImgStyled = styled.img`
