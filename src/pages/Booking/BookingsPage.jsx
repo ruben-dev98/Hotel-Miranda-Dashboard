@@ -16,11 +16,8 @@ import { DeleteStyled, EditStyled } from "../../styled/IconStyled";
 import MySwal from "../../app/MySwal";
 import { useDebounce } from "@uidotdev/usehooks";
 import { InputSearch } from "../../styled/InputStyled";
-<<<<<<< HEAD
 import { ORDER_BOOKING_INITIAL_STATE, TAB_BOOKING_INITIAL_STATE } from "../../helpers/varHelpers";
-=======
-import { ORDER_BOOKING_INITIAL_STATE, TAB_BOOKING_INITIAL_STATE } from "../../helpers/var_helpers";
->>>>>>> 3f7fe66a24d1fc1542bc0893d1d84afaa8ce123c
+
 
 /*const handleClickEdit = async (event, dispatch, row) => {
     event.stopPropagation();
