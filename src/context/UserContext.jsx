@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { UserAuth } from "./UserAuth"
+import { UserAuth } from "../app/UserAuth"
 import PropTypes from 'prop-types';
 import { useLocalStorage } from "../hook/useLocalStorage";
 

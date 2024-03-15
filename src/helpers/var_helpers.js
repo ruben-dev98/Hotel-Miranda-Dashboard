@@ -11,16 +11,3 @@ export const ITEMS_PER_PAGE = 10;
 export const HALF_WAY_ITEMS_PER_PAGE = ITEMS_PER_PAGE/2;
 export const INITIAL_PAGE = 1;
 export const NUMBER_ONE = 1;
-
-/*export const store = configureStore({
-    reducer: {
-        bookings: bookingsReducer,
-        rooms: roomsReducer,
-        users: usersReducer,
-        contacts: contactReducer
-    },
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware({
-            serializableCheck: false,
-        }),
-})*/

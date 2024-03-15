@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import UserPage from './pages/User/UserPage';
 import BookingPage from './pages/Booking/BookingPage';
 import RoomPage from './pages/Room/RoomPage';
-import { UserAuthProvider, UserContext } from './app/UserContext';
+import { UserAuthProvider, UserContext } from './context/UserContext';
 import BookingFormPage from './pages/Booking/BookingFormPage';
 import UserFormPage from './pages/User/UserFormPage';
 import RoomFormPage from './pages/Room/RoomFormPage';

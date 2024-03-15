@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, isAnyOf } from "@reduxjs/toolkit"
 import { addRoom, availableRoomsNumber, deleteRoom, editRoom, getRoom, getRooms } from "./roomsAsyncThunk";
 
 
@@ -17,34 +17,14 @@ export const roomsSlice = createSlice({
         error: null
     },
     extraReducers: (builder) => {
-        builder.addCase(getRooms.pending, (state, action) => {
-            state.status = 'pending';
-            state.erro = null;
-        })
-        .addCase(getRooms.fulfilled, (state, action) => {
+        builder.addCase(getRooms.fulfilled, (state, action) => {
             state.data = action.payload;
             state.status = 'fulfilled';
             state.error = null;
         })
-        .addCase(getRooms.rejected, (state, action) => {
-            state.status = 'rejected';
-            state.error = action.error.message;
-        })
-        .addCase(getRoom.pending, (state, action) => {
-            state.room.status = 'pending';
-            state.room.error = null;
-        })
         .addCase(getRoom.fulfilled, (state, action) => {
             state.room.data = action.payload;
             state.room.status = 'fulfilled';
-            state.room.error = null;
-        })
-        .addCase(getRoom.rejected, (state, action) => {
-            state.room.status = 'rejected';
-            state.room.error = action.error.message;
-        })
-        .addCase(addRoom.pending, (state, action) => {
-            state.room.status = 'pending';
             state.room.error = null;
         })
         .addCase(addRoom.fulfilled, (state, action) => {
@@ -52,40 +32,14 @@ export const roomsSlice = createSlice({
             state.room.status = 'fulfilled';
             state.room.error = null;
         })
-        .addCase(addRoom.rejected, (state, action) => {
-            state.room.status = 'rejected';
-            state.room.error = action.error.message;
-        })
-        .addCase(editRoom.pending, (state, action) => {
-            state.room.status = 'pending';
-            state.room.error = null;
-        })
         .addCase(editRoom.fulfilled, (state, action) => {
-            const index = state.data.findIndex((room) => room.id === action.payload.id);
-            state.data[index] = {...state.data.index, ...action.payload.data};
+            state.data = state.data.map((room) => room.id === action.payload.id ? action.payload.data : room);
             state.room.status = 'fulfilled';
-            state.room.error = null;
-        })
-        .addCase(editRoom.rejected, (state, action) => {
-            state.room.status = 'rejected';
-            state.room.error = action.error.message;
-        })
-        .addCase(deleteRoom.pending, (state, action) => {
-            state.room.status = 'pending';
             state.room.error = null;
         })
         .addCase(deleteRoom.fulfilled, (state, action) => {
-            const index = state.data.findIndex((room) => room.id === action.payload);
-            state.data.splice(index, 1);
+            state.data = state.data.filter((room) => room.id === action.payload);
             state.room.status = 'fulfilled';
-            state.room.error = null;
-        })
-        .addCase(deleteRoom.rejected, (state, action) => {
-            state.room.status = 'rejected';
-            state.room.error = action.error.message;
-        })
-        .addCase(availableRoomsNumber.pending, (state, action) => {
-            state.room.status = 'pending';
             state.room.error = null;
         })
         .addCase(availableRoomsNumber.fulfilled, (state, action) => {
@@ -93,10 +47,29 @@ export const roomsSlice = createSlice({
             state.room.status = 'fulfilled';
             state.room.error = null;
         })
-        .addCase(availableRoomsNumber.rejected, (state, action) => {
-            state.room.status = 'rejected';
-            state.room.error = action.error.message;
+        .addMatcher(isAnyOf (
+            getRooms.pending,
+            getRoom.pending,
+            addRoom.pending,
+            editRoom.pending,
+            deleteRoom.pending,
+            availableRoomsNumber.pending
+            ), (state, action) => {
+            state.status = 'pending';
+            state.error = null;
         })
+        .addMatcher(isAnyOf (
+            getRooms.rejected,
+            getRoom.rejected,
+            addRoom.rejected,
+            editRoom.rejected,
+            deleteRoom.rejected,
+            availableRoomsNumber.rejected
+            ), (state, action) => {
+            state.status = 'rejected';
+            state.error = action.error.message;
+        })
+        
     }
 });
 
