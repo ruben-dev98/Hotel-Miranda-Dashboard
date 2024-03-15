@@ -7,7 +7,7 @@ import Loading from "../../components/Loading";
 import DetailsComponent from "../../components/Details/DetailsComponent";
 import { AmenitiesStyled } from "../../styled/ListStyled";
 import { SpanStyledDetailsLabel, SpanStyledDetailsValue, SpanStyledDetailsTitle, SpanSwiperTitle, SpanSwiper, SpanStyledInProgressLegend, SpanStyledCheckOutLegend, SpanStyledCheckInLegend } from "../../styled/SpanStyled";
-import { DivDetailsComponents, DivDetails, DivDetailsPart, DivDetailsSwiper, DivDetailsSwiperLegend, DivDetailsPartFirst} from "../../styled/DivsStyled";
+import { DivDetailsComponents, DivDetails, DivDetailsPart, DivDetailsSwiper, DivDetailsSwiperLegend, DivDetailsPartFirst, DivDetailsContent} from "../../styled/DivsStyled";
 import { Navigation } from 'swiper/modules';
 import { SwiperSlide } from 'swiper/react';
 
@@ -92,10 +92,10 @@ const object__fields = [
                             </SwiperSlide>
                         </SwiperStyled>
                         <DivDetailsSwiper>
-                            <div style={{width: '80%', margin: '0px auto'}}>
+                            <DivDetailsContent>
                                 <SpanSwiperTitle>{field.type}</SpanSwiperTitle><br></br>
                                 <SpanSwiper>{field.description}</SpanSwiper>
-                            </div>
+                            </DivDetailsContent>
                         </DivDetailsSwiper>
                     </DivDetailsPart>
                 </DivDetails>

@@ -1,7 +1,7 @@
 import { FaArrowLeft } from "react-icons/fa6";
 import { AiFillEdit } from "react-icons/ai";
 import { IoTrashBinSharp } from "react-icons/io5";
-import styled from "styled-components";
+import { styled } from "styled-components";
 
 
 export const FaArrowLeftStyled = styled(FaArrowLeft)`

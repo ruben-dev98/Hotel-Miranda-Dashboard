@@ -56,7 +56,6 @@ const object__fields = [
                     <DivDetailsPart>
                         <img src={field.foto} />
                     </DivDetailsPart>
-
                 </DivDetails>
             )
         },

@@ -1,5 +1,4 @@
-import styled from "styled-components";
-
+import { styled } from "styled-components";
 
 export const DivStyledActions = styled.div`
     display: flex;
@@ -42,8 +41,10 @@ export const DivDetailsPartFirst = styled(DivDetailsPart)`
 export const DivDetailsSwiper = styled.div`
     position: absolute;
     width: 100%;
-    bottom: 50px;
     z-index: 2;
+    bottom: 0px;
+    background-color: rgb(0, 0, 0, 0.4);
+    height: 130px;
 `;
 
 export const DivDetailsSwiperLegend = styled.div`
@@ -54,4 +55,10 @@ export const DivDetailsSwiperLegend = styled.div`
     left: auto;
     right: -20px;
     z-index: 2;
+`;
+
+export const DivDetailsContent = styled.div`
+    width: 80%; 
+    margin: 0px auto; 
+    padding-top: 20px;
 `;

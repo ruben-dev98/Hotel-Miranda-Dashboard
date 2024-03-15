@@ -7,7 +7,7 @@ import { links } from '../../assets/data/navlink';
 import React from 'react';
 import { ButtonStyled, ButtonStyledViewNotes } from '../../styled/ButtonsStyled';
 import { useContext } from 'react';
-import { UserContext } from '../../app/UserContext';
+import { UserContext } from '../../context/UserContext';
 import MySwal from '../../app/MySwal';
 import Swal from 'sweetalert2';
 

@@ -1,7 +1,7 @@
 import { Navigate, useNavigate } from "react-router-dom";
 import { ButtonStyled } from "../styled/ButtonsStyled";
 import { useContext } from "react";
-import { UserContext } from "../app/UserContext";
+import { UserContext } from "../context/UserContext";
 import { FormStyledLogin } from "../styled/FormStyled";
 
 const LoginPage = () => {

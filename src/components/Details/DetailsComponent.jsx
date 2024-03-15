@@ -5,14 +5,7 @@ import { FaArrowLeftStyled } from '../../styled/IconStyled';
 import { useNavigate } from 'react-router-dom';
 
 const transformData = (field, data) => {
-    switch (field.type) {
-        case 'text':
-            return <p>{data[field.field] ? data[field.field] : field.display(data)}</p>
-        case 'date':
-            return <p>{new Date(parseInt(data[field.field])).toDateString()}</p>
-        case 'img':
-            return <img src={data[field.field]} />
-    }
+    return data[field.field] ? data[field.field] : field.display(data)
 }
 
 
