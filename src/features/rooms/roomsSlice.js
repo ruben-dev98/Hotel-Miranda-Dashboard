@@ -38,16 +38,7 @@ export const roomsSlice = createSlice({
             state.room.error = null;
         })
         .addCase(deleteRoom.fulfilled, (state, action) => {
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-            const index = state.data.findIndex((room) => room.id === action.payload);
-            state.data.splice(index, 1);
-=======
             state.data = state.data.filter((room) => room.id !== action.payload);
->>>>>>> Stashed changes
-=======
-            state.data = state.data.filter((room) => room.id === action.payload);
->>>>>>> 3f7fe66a24d1fc1542bc0893d1d84afaa8ce123c
             state.room.status = 'fulfilled';
             state.room.error = null;
         })

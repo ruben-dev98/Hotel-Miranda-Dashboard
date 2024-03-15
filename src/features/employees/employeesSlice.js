@@ -36,11 +36,6 @@ export const employeesSlice = createSlice({
                 state.data = state.data.filter((employee) => employee.id !== action.payload);
                 state.status = 'fulfilled';
             })
-            .addCase(deleteEmployee.fulfilled, (state, action) => {
-                state.data = state.data.filter((employee) => employee.id === action.payload);
-                state.status = 'fulfilled';
-                state.error = null;
-            })
             .addMatcher(isAnyOf(
                 getEmployees.pending,
                 getEmployee.pending,
