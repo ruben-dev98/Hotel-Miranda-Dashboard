@@ -15,36 +15,18 @@ import { useDebounce } from "@uidotdev/usehooks";
 import { DeleteStyled, EditStyled } from "../../styled/IconStyled";
 import { DivStyledActions } from "../../styled/DivsStyled";
 import MySwal from "../../app/MySwal";
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
-import { InputSearch } from "../../styled/InputStyled";
-import { ORDER_EMPLOYEE_INITIAL_STATE, TAB_EMPLOYEE_INITIAL_STATE } from "../../helpers/var_helpers";
->>>>>>> 3f7fe66a24d1fc1542bc0893d1d84afaa8ce123c
-
-
-=======
 import { InputSearch } from "../../styled/InputStyled";
 import { ORDER_EMPLOYEE_INITIAL_STATE, TAB_EMPLOYEE_INITIAL_STATE } from "../../helpers/varHelpers";
->>>>>>> Stashed changes
 
 const handleClickDelete = async (event, dispatch, id) => {
     event.stopPropagation();
     try {
         await dispatch(deleteEmployee(id)).unwrap()
         const html = <p>Delete #{id} Employee Successfully</p>;
-<<<<<<< Updated upstream
-        MySwal('', html, false, 2000, 'succes', true);
-<<<<<<< HEAD
-    } catch(error) {
-=======
         MySwal('', html, false, 2000, 'success', true);
-    } catch (error) {
->>>>>>> Stashed changes
-=======
-    } catch (error) {
->>>>>>> 3f7fe66a24d1fc1542bc0893d1d84afaa8ce123c
-        console.log(error)
+        
+    } catch(error) {
+        console.log(error);
     }
 }
 
