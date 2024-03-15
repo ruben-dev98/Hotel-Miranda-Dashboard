@@ -8,6 +8,7 @@ import usePaginate from './../hook/usePaginate';
 import { ButtonStyled } from './../styled/ButtonsStyled';
 import { SpanStyledTableFirst } from '../styled/SpanStyled';
 import MySwal from '../app/MySwal';
+import { INITIAL_PAGE } from '../helpers/varHelpers';
 
 const TableStyled = styled.table`
     width: 100%;

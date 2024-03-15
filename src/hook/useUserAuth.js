@@ -26,7 +26,8 @@ const reducer = (state, action) => {
     }
 }
 
-export const UserAuth = (isAuth, user, email) => {
+
+export const useUserAuth = (isAuth, user, email) => {
     const [state, dispatch] = useReducer(reducer, {auth: isAuth, user: user, email: email});
 
     return {state, dispatch};

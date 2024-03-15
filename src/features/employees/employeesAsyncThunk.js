@@ -1,57 +1,29 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import dataEmployee from '../../assets/data/users.json';
-
-const uri = {
-    getAll: 'get/employees',
-    getOne: 'get/employee',
-    add: 'add/employee',
-    edit: 'edit/employee',
-    delete: 'delete/employee'
-};
-
-function delay(path, id = 0, data = null, time = 200) {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            switch(path) {
-                case uri.getAll:
-                    resolve(dataEmployee);
-                    break;
-                case uri.getOne:
-                    resolve(dataEmployee.find((employee) => employee.id === id) || null);
-                    break;
-                case uri.add:
-                    resolve(data);
-                    break;
-                case uri.edit:
-                    resolve({id: id, data: data});
-                    break;
-                case uri.delete:
-                    resolve(id);
-                    break;
-                default:
-                    reject('Error');
-                    break;
-            }
-        }, time);
-    })
-}
+import { URI_EMPLOYEE } from "../../helpers/varHelpers";
+import { FakeApi, delay } from "../../helpers/funcHelpersThunk";
 
 export const getEmployees = createAsyncThunk('employees/getEmployees', async () => {
-    return await delay(uri.getAll);
+    await delay();
+    return await FakeApi(URI_EMPLOYEE.getAll, URI_EMPLOYEE, 0, null, dataEmployee);
 });
 
 export const getEmployee = createAsyncThunk('employees/getEmployee', async (id) => {
-    return await delay(uri.getOne, id);
+    await delay();
+    return await FakeApi(URI_EMPLOYEE.getOne, URI_EMPLOYEE, id, null, dataEmployee);
 });
 
 export const addEmployee = createAsyncThunk('employees/addEmployee', async (data) => {
-    return await delay(uri.add, 0, data);
+    await delay();
+    return await FakeApi(URI_EMPLOYEE.add, URI_EMPLOYEE, 0, data);
 });
 
 export const editEmployee = createAsyncThunk('employees/editEmployee', async ({id, data}) => {
-    return await delay(uri.edit, id, data);
+    await delay();
+    return await FakeApi(URI_EMPLOYEE.edit, URI_EMPLOYEE, id, data);
 });
 
 export const deleteEmployee = createAsyncThunk('employees/deleteEmployee', async (id) => {
-    return await delay(uri.delete, id);
+    await delay();
+    return await FakeApi(URI_EMPLOYEE.delete,URI_EMPLOYEE, id);
 });

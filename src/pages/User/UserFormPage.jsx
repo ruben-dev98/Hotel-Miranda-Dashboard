@@ -92,7 +92,7 @@ const UserFormPage = () => {
             try {
                 navigate('/users');
                 await dispatch(editEmployee({id: id, data: user})).unwrap();
-                MySwal('', html, false, 2000, 'succes', true);
+                MySwal('', html, false, 2000, 'success', true);
             } catch (error) {
                 console.log(error);
             }
@@ -100,7 +100,7 @@ const UserFormPage = () => {
             try {
                 navigate('/users');
                 await dispatch(addEmployee(user)).unwrap();
-                MySwal('', html, false, 2000, 'succes', true);
+                MySwal('', html, false, 2000, 'success', true);
             } catch (error) {
                 console.log(error);
             }

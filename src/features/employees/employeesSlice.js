@@ -65,9 +65,16 @@ export const employeesSlice = createSlice({
             state.employee.status = 'fulfilled';
             state.employee.error = null;
         })
+<<<<<<< Updated upstream
         .addCase(editEmployee.rejected, (state, action) => {
             state.employee.status = 'rejected';
             state.employee.error = action.error.message;
+=======
+        .addCase(deleteEmployee.fulfilled, (state, action) => {
+            state.data = state.data.filter((employee) => employee.id !== action.payload);
+            state.status = 'fulfilled';
+            state.error = null;
+>>>>>>> Stashed changes
         })
         .addCase(deleteEmployee.pending, (state, action) => {
             state.employee.status = 'pending';

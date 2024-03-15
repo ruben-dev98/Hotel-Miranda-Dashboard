@@ -65,9 +65,16 @@ export const bookingsSlice = createSlice({
             state.booking.status = 'fulfilled';
             state.booking.error = null;
         })
+<<<<<<< Updated upstream
         .addCase(editBooking.rejected, (state, action) => {
             state.booking.status = 'rejected';
             state.booking.error = action.error.message;
+=======
+        .addCase(deleteBooking.fulfilled, (state, action) => {
+            state.data = state.data.filter((booking) => booking.id !== action.payload);
+            state.status = 'fulfilled';
+            state.error = null;
+>>>>>>> Stashed changes
         })
         .addCase(deleteBooking.pending, (state, action) => {
             state.booking.status = 'pending';

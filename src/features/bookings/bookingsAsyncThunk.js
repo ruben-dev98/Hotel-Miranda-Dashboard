@@ -1,57 +1,29 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import dataBookings from '../../assets/data/bookings.json';
-
-const uri = {
-    getAll: 'get/bookings',
-    getOne: 'get/booking',
-    add: 'add/booking',
-    edit: 'edit/booking',
-    delete: 'delete/booking'
-};
-
-function delay(path, id = 0, data = null, time = 200) {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            switch (path) {
-                case uri.getAll:
-                    resolve(dataBookings);
-                    break;
-                case uri.getOne:
-                    resolve(dataBookings.find((booking) => booking.id === id) || null);
-                    break;
-                case uri.add:
-                    resolve(data);
-                    break;
-                case uri.edit:
-                    resolve({id, data});
-                    break;
-                case uri.delete:
-                    resolve(id);
-                    break;
-                default:
-                    reject('Error');
-                    break;
-            }
-        }, time);
-    })
-}
+import { URI_BOOKINGS } from "../../helpers/varHelpers";
+import { FakeApi, delay } from "../../helpers/funcHelpersThunk";
 
 export const getBookings = createAsyncThunk('bookings/getBookings', async () => {
-    return await delay(uri.getAll);
+    await delay();
+    return await FakeApi(URI_BOOKINGS.getAll, URI_BOOKINGS, 0, null, dataBookings);
 });
 
 export const getBooking = createAsyncThunk('bookings/getBooking', async (id) => {
-    return await delay(uri.getOne, id);
+    await delay();
+    return await FakeApi(URI_BOOKINGS.getOne, URI_BOOKINGS, id, null, dataBookings);
 });
 
 export const addBooking = createAsyncThunk('bookings/addBooking', async (data) => {
-    return await delay(uri.add, 0, data);
+    await delay();
+    return await FakeApi(URI_BOOKINGS.add, URI_BOOKINGS, 0, data);
 });
 
 export const editBooking = createAsyncThunk('bookings/editBooking', async ({id, data}) => {
-    return await delay(uri.edit, id, data);
+    await delay();
+    return await FakeApi(URI_BOOKINGS.edit, URI_BOOKINGS, id, data);
 });
 
 export const deleteBooking = createAsyncThunk('bookings/deleteBooking', async (id) => {
-    return await delay(uri.delete, id);
+    await delay();
+    return await FakeApi(URI_BOOKINGS.delete, URI_BOOKINGS, id);
 });

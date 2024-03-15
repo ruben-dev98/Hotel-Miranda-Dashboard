@@ -9,8 +9,6 @@ import { IoBedOutline } from "react-icons/io5";
 import { ImEnter } from "react-icons/im";
 import { ImExit } from "react-icons/im";
 
-
-
 const DashboardPage = () => {
 
     return (
