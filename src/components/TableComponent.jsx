@@ -84,8 +84,8 @@ const TableComponent = ({ rows, columns, path }) => {
                     })}
                 </tbody>
             </TableStyled>
-            <ButtonStyled style={{marginRight: 20}} disabled={currentPage === 1 ? true : false} onClick={() => setCurrentPage((prev) => prev - 1)}>Prev</ButtonStyled>
-            <ButtonStyled disabled={currentPage === max_page ? true : false} onClick={() => setCurrentPage((prev) => prev + 1)}>Next</ButtonStyled>
+            <ButtonStyled style={{marginRight: 20}} disabled={currentPage === INITIAL_PAGE ? true : false} onClick={() => setCurrentPage((prev) => --prev)}>Prev</ButtonStyled>
+            <ButtonStyled disabled={currentPage === max_page ? true : false} onClick={() => setCurrentPage((prev) => ++prev)}>Next</ButtonStyled>
 
         </>
     );

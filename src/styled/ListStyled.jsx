@@ -1,7 +1,8 @@
-import styled from "styled-components";
+import { styled } from "styled-components";
 
 export const AmenitiesStyled = styled.ul`
     display: flex;
+    padding: 0px;
     gap: 25px;
     flex-wrap: wrap;
     align-items: center;

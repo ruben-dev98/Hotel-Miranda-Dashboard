@@ -7,7 +7,7 @@ import OrderComponent from "../../components/OrderComponent";
 import { roomsOrder } from "../../assets/data/order";
 import { LinkStyled } from "../../styled/LinkStyled";
 import { useDispatch, useSelector } from "react-redux";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { getAllRooms } from "../../features/rooms/roomsSlice";
 import { deleteRoom, getRooms } from "../../features/rooms/roomsAsyncThunk";
 import Loading from "../../components/Loading";
@@ -16,7 +16,11 @@ import { DeleteStyled } from './../../styled/IconStyled';
 import { DivStyledActions } from "../../styled/DivsStyled";
 import styled from "styled-components";
 import MySwal from "../../app/MySwal";
+<<<<<<< HEAD
 import { ORDER_ROOMS_INITIAL_STATE, TAB_ROOMS_INITIAL_STATE } from "../../helpers/varHelpers";
+=======
+import { ORDER_ROOMS_INITIAL_STATE, TAB_ROOMS_INITIAL_STATE } from "../../helpers/var_helpers";
+>>>>>>> 3f7fe66a24d1fc1542bc0893d1d84afaa8ce123c
 
 
 const ImgStyled = styled.img`
@@ -30,20 +34,20 @@ const handleClickDelete = async (event, dispatch, id) => {
         await dispatch(deleteRoom(id)).unwrap()
         const html = <p>Delete #{id} Room Successfully</p>
         MySwal('', html, false, 2000, 'success', true);
-    } catch(error) {
+    } catch (error) {
         console.log(error)
     }
 }
 
 const action = (id, dispatch) => {
     return (
-    <DivStyledActions>
-        <ButtonStyledIcon as={LinkStyled} to={`edit/${id}`} onClick={(event) => event.stopPropagation()}><EditStyled></EditStyled></ButtonStyledIcon>
-        <ButtonStyledIcon onClick={(event) => handleClickDelete(event, dispatch, id)}><DeleteStyled></DeleteStyled></ButtonStyledIcon>
-    </DivStyledActions>
+        <DivStyledActions>
+            <ButtonStyledIcon as={LinkStyled} to={`edit/${id}`} onClick={(event) => event.stopPropagation()}><EditStyled></EditStyled></ButtonStyledIcon>
+            <ButtonStyledIcon onClick={(event) => handleClickDelete(event, dispatch, id)}><DeleteStyled></DeleteStyled></ButtonStyledIcon>
+        </DivStyledActions>
     )
-    
-    
+
+
 }
 
 const dataTable = (dispatch) => [
@@ -66,28 +70,28 @@ const dataTable = (dispatch) => [
     {
         'label': 'Amenities',
         display: row => row.amenities.length > 0 ?
-        <ButtonStyledViewNotes onClick={(event) => {
-            event.stopPropagation()
-            const title = 'Info Amenities';
-            const html = (<ul>
-                {row.amenities.map((amen, index) => {
-                    return <li key={index}>
-                        {amen}
-                    </li>;
-                })}
-            </ul>);
-            MySwal(title, html, false)
-        }}>View Amenities</ButtonStyledViewNotes>
-        :
-        <ButtonStyledViewNotes disabled>View Amenities</ButtonStyledViewNotes>
+            <ButtonStyledViewNotes onClick={(event) => {
+                event.stopPropagation()
+                const title = 'Info Amenities';
+                const html = (<ul>
+                    {row.amenities.map((amen, index) => {
+                        return <li key={index}>
+                            {amen}
+                        </li>;
+                    })}
+                </ul>);
+                MySwal(title, html, false)
+            }}>View Amenities</ButtonStyledViewNotes>
+            :
+            <ButtonStyledViewNotes disabled>View Amenities</ButtonStyledViewNotes>
     },
     {
         'label': 'Price',
-        display: row => (<><SpanStyledTableFirst>{(row.price)}</SpanStyledTableFirst><br/><SpanStyledTableSecond>/Night</SpanStyledTableSecond></>)
+        display: row => (<><SpanStyledTableFirst>{(row.price)}</SpanStyledTableFirst><br /><SpanStyledTableSecond>/Night</SpanStyledTableSecond></>)
     },
     {
         'label': 'Offer Price',
-        display: row => (<><SpanStyledTableFirst>{(row.price - (row.price * row.discount / 100)).toFixed(2)}</SpanStyledTableFirst><br/><SpanStyledTableSecond>/Night</SpanStyledTableSecond></>)
+        display: row => (<><SpanStyledTableFirst>{(row.price - (row.price * row.discount / 100)).toFixed(2)}</SpanStyledTableFirst><br /><SpanStyledTableSecond>/Night</SpanStyledTableSecond></>)
     },
     {
         'label': 'Status',
@@ -104,25 +108,23 @@ const dataTable = (dispatch) => [
 
 const RoomsPage = () => {
     const dispatch = useDispatch();
-    const [showSpinner, setShowSpinner] = useState(true);
-    const [currentTab, setCurrentTab] = useState('All Rooms');
-    const [currentOrder, setCurrentOrder] = useState('number asc');
+    const [isLoading, setIsLoading] = useState(true);
+    const [currentTab, setCurrentTab] = useState(TAB_ROOMS_INITIAL_STATE);
+    const [currentOrder, setCurrentOrder] = useState(ORDER_ROOMS_INITIAL_STATE);
     const data = useSelector(getAllRooms);
 
     const filteredRooms = useMemo(() => {
-        const all = currentTab === 'All Rooms' 
-        ? data
-        : data.filter((item) => item.status === currentTab);
+        const all = data.filter((item) => currentTab === TAB_ROOMS_INITIAL_STATE ? true : item.status === currentTab);
 
-        return [...all].sort((a, b) => {
+        return all.sort((a, b) => {
             const order = currentOrder.split(' ');
-            if(a[order[0]] > b[order[0]]) {
-                if(order[1] === 'asc') {
+            if (a[order[0]] > b[order[0]]) {
+                if (order[1] === 'asc') {
                     return 1;
                 }
                 return -1;
-            } else if(a[order[0]] < b[order[0]]) {
-                if(order[1] === 'asc') {
+            } else if (a[order[0]] < b[order[0]]) {
+                if (order[1] === 'asc') {
                     return -1;
                 }
                 return 1;
@@ -132,32 +134,36 @@ const RoomsPage = () => {
         })
     }, [data, currentOrder, currentTab]);
 
-    const result = useCallback(async () => {
+    const inititalFecth = async () => {
         try {
             await dispatch(getRooms()).unwrap();
-            setShowSpinner(false);
+            setIsLoading(false);
         } catch (error) {
             console.log(error);
         }
-    }, [dispatch]);
+    };
 
     useEffect(() => {
-        result();
-    }, [result]);
+        inititalFecth();
+    }, []);
+
+    if (isLoading) {
+        return (<section className='content'>
+            <Loading></Loading>
+        </section>)
+    }
 
 
     return (
         <section className='content'>
-            {showSpinner ? <Loading></Loading> :
-                <>
-                    <div className="top__menu-table">
-                        <ButtonStyledNew as={LinkStyled} to={'room'}>+ New Room</ButtonStyledNew>
-                        <OrderComponent setCurrentOrder={setCurrentOrder} data={roomsOrder} />
-                    </div>
-                    <TabsComponent setCurrentTab={setCurrentTab} data={rooms}></TabsComponent>
-                    <TableComponent rows={filteredRooms} columns={dataTable(dispatch)} path={'rooms'}></TableComponent>
-                </>
-            }
+            <>
+                <div className="top__menu-table">
+                    <ButtonStyledNew as={LinkStyled} to={'room'}>+ New Room</ButtonStyledNew>
+                    <OrderComponent setCurrentOrder={setCurrentOrder} data={roomsOrder} />
+                </div>
+                <TabsComponent setCurrentTab={setCurrentTab} data={rooms}></TabsComponent>
+                <TableComponent rows={filteredRooms} columns={dataTable(dispatch)} path={'rooms'}></TableComponent>
+            </>
         </section>
     );
 }

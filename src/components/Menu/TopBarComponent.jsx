@@ -7,7 +7,7 @@ import { BiEnvelope } from "react-icons/bi";
 import { CiBellOn } from "react-icons/ci";
 import styled from 'styled-components';
 import { useContext } from 'react';
-import { UserContext } from '../../app/UserContext';
+import { UserContext } from '../../context/UserContext';
 
 const HeaderStyled = styled.header`
     grid-area: header;

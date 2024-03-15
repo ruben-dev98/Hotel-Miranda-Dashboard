@@ -5,11 +5,10 @@ import { ButtonStyledIcon, ButtonStyledNew, ButtonStyledViewNotes } from "../../
 import { SpanStyledCancelled, SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress, SpanStyledTableFirst, SpanStyledTableSecond } from "../../styled/SpanStyled";
 import OrderComponent from "../../components/OrderComponent";
 import { bookingsOrder } from "../../assets/data/order";
-import Swal from 'sweetalert2'
 import { LinkStyled } from "../../styled/LinkStyled";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllBookings } from "../../features/bookings/bookingsSlice";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { deleteBooking, getBookings } from "../../features/bookings/bookingsAsyncThunk";
 import Loading from "../../components/Loading";
 import { DivStyledActions } from "../../styled/DivsStyled";
@@ -17,7 +16,11 @@ import { DeleteStyled, EditStyled } from "../../styled/IconStyled";
 import MySwal from "../../app/MySwal";
 import { useDebounce } from "@uidotdev/usehooks";
 import { InputSearch } from "../../styled/InputStyled";
+<<<<<<< HEAD
 import { ORDER_BOOKING_INITIAL_STATE, TAB_BOOKING_INITIAL_STATE } from "../../helpers/varHelpers";
+=======
+import { ORDER_BOOKING_INITIAL_STATE, TAB_BOOKING_INITIAL_STATE } from "../../helpers/var_helpers";
+>>>>>>> 3f7fe66a24d1fc1542bc0893d1d84afaa8ce123c
 
 /*const handleClickEdit = async (event, dispatch, row) => {
     event.stopPropagation();
@@ -26,7 +29,6 @@ import { ORDER_BOOKING_INITIAL_STATE, TAB_BOOKING_INITIAL_STATE } from "../../he
     } catch (error) {
         console.log(error)
     }
-
 }*/
 
 const handleClickDelete = async (event, dispatch, row) => {
@@ -81,7 +83,9 @@ const dataTable = (dispatch) => [
         display: row => row.special_request ?
             <ButtonStyledViewNotes onClick={(event) => {
                 event.stopPropagation()
-                return Swal.fire({title: 'Info Special Request', html: `<p>${row.special_request}</p>`})
+                const title = 'Info Special Request';
+                const html = `<p>${row.special_request}</p>`;
+                MySwal(title, html, false);
             }}>View Notes</ButtonStyledViewNotes>
             :
             <ButtonStyledViewNotes disabled>View Notes</ButtonStyledViewNotes>
@@ -113,17 +117,18 @@ const dataTable = (dispatch) => [
 
 const BookingsPage = () => {
     const dispatch = useDispatch();
-    const [showSpinner, setShowSpinner] = useState(true);
-    const [currentTab, setCurrentTab] = useState('All Bookings');
-    const [currentOrder, setCurrentOrder] = useState('order_date');
+    const [searchTerm, setSearchTerm] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
+    const [currentTab, setCurrentTab] = useState(TAB_BOOKING_INITIAL_STATE);
+    const [currentOrder, setCurrentOrder] = useState(ORDER_BOOKING_INITIAL_STATE);
     const data = useSelector(getAllBookings);
+    const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
     const filteredBookings = useMemo(() => {
-        const all = currentTab === 'All Bookings'
-            ? data
-            : data.filter((item) => item.status === currentTab);
+        const all = data.filter((item) => item.full_name.toLowerCase().includes(debouncedSearchTerm.toLowerCase()));
+        const all_search = all.filter((item) => currentTab === TAB_BOOKING_INITIAL_STATE ? true : item.status === currentTab);
 
-        return [...all].sort((a, b) => {
+        return all_search.sort((a, b) => {
             if (a[currentOrder] > b[currentOrder]) {
                 return 1;
             } else if (a[currentOrder] < b[currentOrder]) {
@@ -132,37 +137,39 @@ const BookingsPage = () => {
                 return 0;
             }
         })
-    }, [data, currentOrder, currentTab]);
+    }, [data, currentOrder, currentTab, debouncedSearchTerm]);
 
-    const result = useCallback(async () => {
+    const inititalFecth = async () => {
         try {
-            await dispatch(getBookings());
-            setShowSpinner(false);
+            await dispatch(getBookings()).unwrap();
+            setIsLoading(false);
         } catch (error) {
             console.log(error);
         }
-    }, [dispatch]);
+    };
 
     useEffect(() => {
-        result();
-    }, [result]);
+        inititalFecth();
+    }, []);
 
+    if(isLoading) {
+        return (<section className='content'>
+            <Loading></Loading>
+        </section>)
+    }
 
     return (
         <section className='content'>
-            {showSpinner ? <Loading></Loading> :
                 <>
                     <div className="top__menu-table">
+                        <InputSearch value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Busqueda por nombre usuario"/>
                         <ButtonStyledNew as={LinkStyled} to={'booking'}>+ New Booking</ButtonStyledNew>
                         <OrderComponent setCurrentOrder={setCurrentOrder} data={bookingsOrder} />
                     </div>
                     <TabsComponent data={bookings} setCurrentTab={setCurrentTab}></TabsComponent>
                     <TableComponent rows={filteredBookings} columns={dataTable(dispatch)} path={'bookings'}></TableComponent>
                 </>
-            }
         </section>
-
-
     );
 }
 

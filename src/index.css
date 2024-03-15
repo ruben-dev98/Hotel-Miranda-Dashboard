@@ -34,13 +34,8 @@ button {
     cursor: pointer;
 }
 
-.active_tab {
-    color: #135846;
-    border-bottom: 1px solid #135846;
-    padding-bottom: 2px;
-}
-
-ul, li {
+ul,
+li {
     list-style-type: none;
 }
 

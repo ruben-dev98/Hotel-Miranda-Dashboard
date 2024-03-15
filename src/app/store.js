@@ -11,7 +11,11 @@ const store = configureStore({
         employees: employeesReducer,
         messages: messageReducer,
         rooms: roomsReducer,
-    }
+    },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: false,
+        }),
 });
 
 

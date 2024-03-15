@@ -7,7 +7,7 @@ import { ButtonStyledIcon, ButtonStyledNew } from "../../styled/ButtonsStyled";
 import OrderComponent from '../../components/OrderComponent';
 import { LinkStyled } from "../../styled/LinkStyled";
 import { useDispatch, useSelector } from "react-redux";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { getAllEmployees } from "../../features/employees/employeesSlice";
 import { deleteEmployee, getEmployees } from "../../features/employees/employeesAsyncThunk";
 import Loading from "../../components/Loading";
@@ -15,7 +15,12 @@ import { useDebounce } from "@uidotdev/usehooks";
 import { DeleteStyled, EditStyled } from "../../styled/IconStyled";
 import { DivStyledActions } from "../../styled/DivsStyled";
 import MySwal from "../../app/MySwal";
+<<<<<<< HEAD
 <<<<<<< Updated upstream
+=======
+import { InputSearch } from "../../styled/InputStyled";
+import { ORDER_EMPLOYEE_INITIAL_STATE, TAB_EMPLOYEE_INITIAL_STATE } from "../../helpers/var_helpers";
+>>>>>>> 3f7fe66a24d1fc1542bc0893d1d84afaa8ce123c
 
 
 =======
@@ -30,11 +35,15 @@ const handleClickDelete = async (event, dispatch, id) => {
         const html = <p>Delete #{id} Employee Successfully</p>;
 <<<<<<< Updated upstream
         MySwal('', html, false, 2000, 'succes', true);
+<<<<<<< HEAD
     } catch(error) {
 =======
         MySwal('', html, false, 2000, 'success', true);
     } catch (error) {
 >>>>>>> Stashed changes
+=======
+    } catch (error) {
+>>>>>>> 3f7fe66a24d1fc1542bc0893d1d84afaa8ce123c
         console.log(error)
     }
 }
@@ -42,13 +51,13 @@ const handleClickDelete = async (event, dispatch, id) => {
 const action = (id, dispatch) => {
     return (
         <DivStyledActions>
-            <ButtonStyledIcon as={LinkStyled} to={`edit/${id}`} onClick={(event) => event.stopPropagation()}><EditStyled/></ButtonStyledIcon>
-            <ButtonStyledIcon onClick={(event) => handleClickDelete(event, dispatch, id)}><DeleteStyled/></ButtonStyledIcon>
+            <ButtonStyledIcon as={LinkStyled} to={`edit/${id}`} onClick={(event) => event.stopPropagation()}><EditStyled /></ButtonStyledIcon>
+            <ButtonStyledIcon onClick={(event) => handleClickDelete(event, dispatch, id)}><DeleteStyled /></ButtonStyledIcon>
         </DivStyledActions>
     )
 }
 
-const dataTable = (dispatch) =>  [
+const dataTable = (dispatch) => [
     {
         'label': 'Image',
         display: row => <img src={row.foto} />
@@ -92,22 +101,20 @@ const dataTable = (dispatch) =>  [
 const UsersPage = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const dispatch = useDispatch();
-    const [showSpinner, setShowSpinner] = useState(true);
-    const [currentTab, setCurrentTab] = useState('All Employees');
-    const [currentOrder, setCurrentOrder] = useState('start_date');
+    const [isLoading, setIsLoading] = useState(true);
+    const [currentTab, setCurrentTab] = useState(TAB_EMPLOYEE_INITIAL_STATE);
+    const [currentOrder, setCurrentOrder] = useState(ORDER_EMPLOYEE_INITIAL_STATE);
     const debouncedSearchTerm = useDebounce(searchTerm, 300);
     const data = useSelector(getAllEmployees);
 
     const filteredUsers = useMemo(() => {
         const all = data.filter((item) => item.full_name.toLowerCase().includes(debouncedSearchTerm.toLowerCase()));
-        const all_search = currentTab === 'All Employees' 
-        ? all
-        : all.filter((item) => item.status === currentTab);
+        const all_search = all.filter((item) => currentTab === TAB_EMPLOYEE_INITIAL_STATE ? true : item.status === currentTab);
 
-        return [...all_search].sort((a, b) => {
-            if(a[currentOrder] > b[currentOrder]) {
+        return all_search.sort((a, b) => {
+            if (a[currentOrder] > b[currentOrder]) {
                 return 1;
-            } else if(a[currentOrder] < b[currentOrder]) {
+            } else if (a[currentOrder] < b[currentOrder]) {
                 return -1;
             } else {
                 return 0;
@@ -115,33 +122,36 @@ const UsersPage = () => {
         })
     }, [data, currentOrder, currentTab, debouncedSearchTerm]);
 
-    const result = useCallback(async () => {
+    const inititalFecth = async () => {
         try {
             await dispatch(getEmployees()).unwrap();
-            setShowSpinner(false);
+            setIsLoading(false);
         } catch (error) {
             console.log(error);
         }
-    }, [dispatch]);
+    };
 
     useEffect(() => {
-        result();
-    }, [result]);
+        inititalFecth();
+    }, []);
 
+    if (isLoading) {
+        return (<section className='content'>
+            <Loading></Loading>
+        </section>)
+    }
 
     return (
         <section className='content'>
-            {showSpinner ? <Loading></Loading> :
-                <>
-                <input value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Busqueda por nombre usuario"/>
-                    <div className="top__menu-table">
-                        <ButtonStyledNew as={LinkStyled} to={'user'}>+ New Employee</ButtonStyledNew>
-                        <OrderComponent setCurrentOrder={setCurrentOrder} data={usersOrder}></OrderComponent>
-                    </div>
-                    <TabsComponent setCurrentTab={setCurrentTab} data={users}></TabsComponent>
-                    <TableComponent rows={filteredUsers} columns={dataTable(dispatch)} path={'users'}></TableComponent>
-                </>
-            }
+            <>
+                <div className="top__menu-table">
+                    <InputSearch value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Busqueda por nombre usuario" />
+                    <ButtonStyledNew as={LinkStyled} to={'user'}>+ New Employee</ButtonStyledNew>
+                    <OrderComponent setCurrentOrder={setCurrentOrder} data={usersOrder}></OrderComponent>
+                </div>
+                <TabsComponent setCurrentTab={setCurrentTab} data={users}></TabsComponent>
+                <TableComponent rows={filteredUsers} columns={dataTable(dispatch)} path={'users'}></TableComponent>
+            </>
         </section>
     );
 }

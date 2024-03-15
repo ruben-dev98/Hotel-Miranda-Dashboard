@@ -6,41 +6,78 @@ import { getRoom } from '../../features/rooms/roomsAsyncThunk';
 import Loading from "../../components/Loading";
 import DetailsComponent from "../../components/Details/DetailsComponent";
 import { AmenitiesStyled } from "../../styled/ListStyled";
+import { SpanStyledDetailsLabel, SpanStyledDetailsValue, SpanSwiperTitle, SpanSwiper, SpanStyledCheckOutLegend, SpanStyledCheckInLegend} from "../../styled/SpanStyled";
+import { DivDetailsComponents, DivDetails, DivDetailsPart, DivDetailsSwiper, DivDetailsSwiperLegend, DivDetailsPartFirst} from "../../styled/DivsStyled";
+import { Navigation } from 'swiper/modules';
+import { SwiperSlide } from 'swiper/react';
 
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+import { SwiperStyled } from "../../styled/SwiperStyled";
 
 
 
 const object__fields = [
     {
-        'field': 'id',
-        'type': 'text'
-    },
-    {
-        'field': 'number',
-        'type': 'text'
-    },
-    {
-        display: field => field.offer === true ? field.price - (field.price * field.discount / 100) : field.price,
-        'type': 'text'
-    },
-    {
-        'field': 'foto',
-        'type': 'swiper'
-    },
-    {
-        'field': 'description',
-        'type': 'text'
-    },
-    {
-        'field': 'type',
-        'type': 'text'
-    },
-    {
-        display: field => <AmenitiesStyled>{field.amenities.map((amen, index) => <li key={index}>{amen}</li>)}</AmenitiesStyled>,
-        'type': 'text'
-    },
-    {
-        'field': 'status',
+        display: field => {
+            return(<DivDetails>
+                    <DivDetailsPartFirst>
+                        <DivDetailsComponents>
+                            <div>
+                                <SpanStyledDetailsLabel>Room Info</SpanStyledDetailsLabel><br></br>
+                                <SpanStyledDetailsValue>{field.type} - {field.number}</SpanStyledDetailsValue>
+                            </div>
+                            <div>
+                                <SpanStyledDetailsLabel>Price</SpanStyledDetailsLabel><br></br>
+                                <SpanStyledDetailsValue>${field.offer === true ? (field.price - (field.price * field.discount / 100)).toFixed(2) : field.price}<SpanStyledDetailsLabel> /Night</SpanStyledDetailsLabel></SpanStyledDetailsValue>
+                            </div>
+                        </DivDetailsComponents>
+                        <DivDetailsComponents>
+                        </DivDetailsComponents>
+                        <DivDetailsComponents>
+                            <div>
+                                <SpanStyledDetailsLabel>Amenities</SpanStyledDetailsLabel><br></br>
+                                <AmenitiesStyled>{field.amenities.map((amen, index) => <li key={index}>{amen}</li>)}</AmenitiesStyled>
+                            </div>
+                        </DivDetailsComponents>
+                    </DivDetailsPartFirst>
+                    <DivDetailsPart>
+                        <DivDetailsSwiperLegend>
+                        {
+                            field.status === 'Available' ?
+                                <SpanStyledCheckInLegend>{field.status}</SpanStyledCheckInLegend> :
+                                <SpanStyledCheckOutLegend>{field.status}</SpanStyledCheckOutLegend>
+                        }
+                        </DivDetailsSwiperLegend>
+                        <SwiperStyled
+                            // install Swiper modules
+                            modules={[Navigation]}
+                            slidesPerView={1}
+                            navigation={true}
+                            onSwiper={() => { }}
+                            onSlideChange={() => { }}
+                        >
+                            <SwiperSlide style={{ userSelect: 'none' }}>
+                                <img src={field.foto} />
+                            </SwiperSlide>
+                            <SwiperSlide style={{ userSelect: 'none' }}>
+                                <img src={field.foto} />
+                            </SwiperSlide>
+                            <SwiperSlide style={{ userSelect: 'none' }}>
+                                <img src={field.foto} />
+                            </SwiperSlide>
+                        </SwiperStyled>
+                        <DivDetailsSwiper>
+                            <div style={{width: '80%', margin: '0px auto'}}>
+                                <SpanSwiperTitle>{field.type}</SpanSwiperTitle><br></br>
+                                <SpanSwiper>{field.description}</SpanSwiper>
+                            </div>
+                        </DivDetailsSwiper>
+                    </DivDetailsPart>
+                </DivDetails>);
+        },
         'type': 'text'
     }
 ];
