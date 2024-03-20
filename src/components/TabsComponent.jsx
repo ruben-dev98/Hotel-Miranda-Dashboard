@@ -11,7 +11,8 @@ const ListItemStyled = styled.li`
     cursor: pointer;
     width: 10%;
     padding: 10px;
-    border-bottom: ${props => props.$isActive ? '2px solid #135486' : '1px solid #D4D4D4'};
+    border-bottom: ${props => props.$isActive ? '2px solid #135846' : '1px solid #B2B2B2'};
+    color: ${props => props.$isActive ? '#135846' : '#B2B2B2'};
 `;
 
 const TabsComponent = ({data, setCurrentTab, currentTab}) => {
