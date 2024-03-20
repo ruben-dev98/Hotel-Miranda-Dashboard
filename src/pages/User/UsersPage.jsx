@@ -131,7 +131,7 @@ const UsersPage = () => {
                     <ButtonStyledNew as={LinkStyled} to={'user'}>+ New Employee</ButtonStyledNew>
                     <OrderComponent setCurrentOrder={setCurrentOrder} data={usersOrder}></OrderComponent>
                 </div>
-                <TabsComponent setCurrentTab={setCurrentTab} data={users}></TabsComponent>
+                <TabsComponent setCurrentTab={setCurrentTab} data={users} currentTab={currentTab}></TabsComponent>
                 <TableComponent rows={filteredUsers} columns={dataTable(dispatch)} path={'users'}></TableComponent>
             </>
         </section>

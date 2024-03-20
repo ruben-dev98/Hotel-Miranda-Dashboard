@@ -157,7 +157,7 @@ const RoomsPage = () => {
                     <ButtonStyledNew as={LinkStyled} to={'room'}>+ New Room</ButtonStyledNew>
                     <OrderComponent setCurrentOrder={setCurrentOrder} data={roomsOrder} />
                 </div>
-                <TabsComponent setCurrentTab={setCurrentTab} data={rooms}></TabsComponent>
+                <TabsComponent setCurrentTab={setCurrentTab} data={rooms} currentTab={currentTab}></TabsComponent>
                 <TableComponent rows={filteredRooms} columns={dataTable(dispatch)} path={'rooms'}></TableComponent>
             </>
         </section>

@@ -98,7 +98,7 @@ const ContactPage = () => {
         <section className='content'>
             <>
                 <MessageListComponent />
-                <TabsComponent setCurrentTab={setCurrentTab} data={message}></TabsComponent>
+                <TabsComponent setCurrentTab={setCurrentTab} data={message} currentTab={currentTab}></TabsComponent>
                 <TableComponent rows={filteredMessages} columns={dataTable(dispatch)} path={''}></TableComponent>
             </>
         </section>
