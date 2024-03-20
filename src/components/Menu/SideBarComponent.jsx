@@ -1,7 +1,7 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import logo_claro from '../../assets/img/travl_claro.png';
+import logo from '../../assets/img/travl_claro.png';
 import me from '../../assets/img/CV.png';
 import { links } from '../../assets/data/navlink';
 import React from 'react';
@@ -84,7 +84,7 @@ const SideBarComponent = ({ visibleLateral }) => {
     return (
         visibleLateral &&
         <SideBarStyled>
-            <img src={logo_claro}/>
+            <img src={logo}/>
             <nav>
                 {links.map(({icon, text, path}, index) => 
                     <NavLinkStyled to={path} key={index} className={loc.includes(path.split('/')) ? 'active' : ''}>
