@@ -3,7 +3,6 @@ import { PropTypes } from 'prop-types';
 
 const WindowStyledComponent = ({children, visibleLateral}) => {
 
-
     return (
         <WindowStyled $visibleLateral = {visibleLateral}>
             {children}

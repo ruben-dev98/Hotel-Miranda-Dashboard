@@ -163,7 +163,7 @@ const BookingsPage = () => {
                         <ButtonStyledNew as={LinkStyled} to={'booking'}>+ New Booking</ButtonStyledNew>
                         <OrderComponent setCurrentOrder={setCurrentOrder} data={bookingsOrder} />
                     </div>
-                    <TabsComponent data={bookings} setCurrentTab={setCurrentTab}></TabsComponent>
+                    <TabsComponent data={bookings} setCurrentTab={setCurrentTab} currentTab={currentTab}></TabsComponent>
                     <TableComponent rows={filteredBookings} columns={dataTable(dispatch)} path={'bookings'}></TableComponent>
                 </>
         </section>
