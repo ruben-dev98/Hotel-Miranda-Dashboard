@@ -9,6 +9,7 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "jest",
+    "test-open": "jest --detectOpenHandles",
     "cypress:open": "cypress open"
   },
   "dependencies": {
@@ -50,6 +51,7 @@
     "vite": "^5.1.4"
   },
   "jest": {
+    "verbose": true,
     "testEnvironment": "jsdom",
     "moduleNameMapper": {
       "^.+\\.svg$": "jest-svg-transformer",

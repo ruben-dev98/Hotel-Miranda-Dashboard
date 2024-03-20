@@ -1,5 +1,6 @@
 import { render } from "@testing-library/react";
 import WindowStyledComponent from "./WindowComponent";
+import { getStyledTest } from "../../helpers/getStyledTest";
 
 describe('WindowStyled', () => {
 
@@ -8,9 +9,7 @@ describe('WindowStyled', () => {
                 <WindowStyledComponent visibleLateral={true} />
         );
 
-        const windowClass = WindowStyledComponent({}).type.styledComponentId
-        const WindowRoots = document.getElementsByClassName(windowClass)
-        const style = window.getComputedStyle(WindowRoots[0]);
+        const style = getStyledTest(WindowStyledComponent);
         expect(style.gridTemplateAreas).toEqual("'sidebar header' 'sidebar content'");
     });
 
@@ -19,9 +18,7 @@ describe('WindowStyled', () => {
                 <WindowStyledComponent />
         );
 
-        const windowClass = WindowStyledComponent({}).type.styledComponentId
-        const WindowRoots = document.getElementsByClassName(windowClass)
-        const style = window.getComputedStyle(WindowRoots[0]);
+        const style = getStyledTest(WindowStyledComponent);
         expect(style.gridTemplateAreas).toEqual("'header header' 'content content'");
     });
     
