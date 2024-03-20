@@ -1,6 +1,32 @@
 describe('template spec', () => {
-  it('Visit ', () => {
+  it('Visit dashboard and redirect to login', () => {
     cy.visit('/');
-    cy.url('/login');
-  })
+    cy.url().should('include', '/login');
+  });
+
+  it('Fill inputs on login and not passed auth', () => {
+    cy.visit('/');
+    cy.get('input[name = user]').type('user');
+    cy.get('input[name = password]').type('admin');
+    cy.get('button[type = submit]').click();
+    cy.url().should('include', '/login');
+  });
+
+  it('Fill inputs on login and passed auth', () => {
+    cy.visit('/');
+    cy.get('input[name = user]');
+    cy.get('input[name = password]')
+    cy.get('button[type = submit]').click();
+    cy.url().should('not.include', '/login');
+  });
+
+  it('Click button logout and redirect to login', () => {
+    cy.visit('/');
+    cy.get('input[name = user]');
+    cy.get('input[name = password]')
+    cy.get('button[type = submit]').click();
+
+    cy.get().click();
+    cy.url().should('include', '/login');
+  });
 })
