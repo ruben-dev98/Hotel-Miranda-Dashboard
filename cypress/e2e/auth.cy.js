@@ -1,4 +1,7 @@
+import { loginInTest } from "../../src/helpers/loginTest";
+
 describe('template spec', () => {
+  
   it('Visit dashboard and redirect to login', () => {
     cy.visit('/');
     cy.url().should('include', '/login');
@@ -14,19 +17,15 @@ describe('template spec', () => {
 
   it('Fill inputs on login and passed auth', () => {
     cy.visit('/');
-    cy.get('input[name = user]');
-    cy.get('input[name = password]')
-    cy.get('button[type = submit]').click();
+    loginInTest();
     cy.url().should('not.include', '/login');
   });
 
   it('Click button logout and redirect to login', () => {
     cy.visit('/');
-    cy.get('input[name = user]');
-    cy.get('input[name = password]')
-    cy.get('button[type = submit]').click();
-
-    cy.get().click();
+    loginInTest();
+    cy.get('#test__log-out').click();
     cy.url().should('include', '/login');
   });
+
 })
