@@ -1,5 +1,5 @@
 import { Dispatch, ReactElement, createContext } from "react";
-import { useLocalStorage } from "../hook/useLocalStorage";
+import { useLocalStorage } from "../helpers/useLocalStorage";
 import { UserAuthActions, UserAuthState, useUserAuth } from "../hook/useUserAuth";
 
 interface UserAuthProviderProps {
