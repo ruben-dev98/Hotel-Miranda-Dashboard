@@ -1,4 +1,4 @@
-import { loginInTest } from "../../src/helpers/loginTest";
+import { loginInTest } from "../helpers/loginTest";
 
 describe('template spec', () => {
   
