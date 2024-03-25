@@ -1,16 +1,4 @@
-import { FakesUri, iBooking, iEmployee, iMessage, iRoom } from "../entitys/Data";
-
-interface ArrayIData {
-    data: Array<iBooking | iRoom | iMessage | iEmployee> | null
-}
-
-interface ArrayIRooms extends ArrayIData {
-    rooms: Array<iRoom> | null;
-}
-
-interface iData {
-    data: iBooking | iRoom | iMessage | iEmployee | null
-}
+import { ArrayIData, ArrayIRooms, FakesUri, iBooking, iData, iEmployee, iMessage, iRoom } from "../entitys/Data";
 
 const getAllData = (aData: ArrayIData) => aData.data;
 const getOneData = (aData: ArrayIData, id: number) => aData.data?.find((items) => items.id === id);

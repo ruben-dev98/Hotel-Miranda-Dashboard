@@ -1,9 +1,9 @@
-import { Dispatch, ReactElement, createContext } from "react";
+import { Dispatch, ReactNode, createContext } from "react";
 import { useLocalStorage } from "../helpers/useLocalStorage";
 import { UserAuthActions, UserAuthState, useUserAuth } from "../hook/useUserAuth";
 
 interface UserAuthProviderProps {
-    children: ReactElement
+    children?: ReactNode
 }
 
 interface UserContextInit {
@@ -24,7 +24,6 @@ export const UserAuthProvider = ({ children } : UserAuthProviderProps) => {
     const { state, dispatch } = useUserAuth({isAuth: initAuth === '1' ? true : false, user: initUser ? initUser.user : '', email: initUser ? initUser.email : ''});
     useLocalStorage({key: 'auth', action: 'set', item: state.auth ? '1' : '0'});
     useLocalStorage({key: 'user', action: 'set', item: JSON.stringify({ user: state.user, email: state.email })});
-    //
 
     return (
         <UserContext.Provider value={{ state: state, dispatch: dispatch }}>

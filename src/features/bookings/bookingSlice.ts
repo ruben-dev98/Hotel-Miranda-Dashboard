@@ -1,7 +1,15 @@
-import { createSlice, isAnyOf } from "@reduxjs/toolkit"
+import { PayloadAction, createSlice, isAnyOf } from "@reduxjs/toolkit"
 import { addBooking, deleteBooking, editBooking, getBooking, getBookings } from "./bookingsAsyncThunk";
+import { iBooking } from "../../entitys/Data";
 
 
+
+interface BookingSliceState {
+    data: iBooking[] | [],
+    booking: iBooking | {},
+    status: string,
+    error: Error | null
+}
 
 export const bookingsSlice = createSlice({
     name: 'bookings',
@@ -10,10 +18,11 @@ export const bookingsSlice = createSlice({
         booking: {},
         status: 'idle',
         error: null
-    },
+    } as BookingSliceState,
+    reducers: {},
     extraReducers: (builder) => {
         builder
-        .addCase(getBookings.fulfilled, (state, action) => {
+        .addCase(getBookings.fulfilled, (state: BookingSliceState, action) => {
             state.data = action.payload;
             state.status = 'fulfilled';
             state.error = null;

@@ -1,19 +1,19 @@
 export interface iBooking {
     id: number,
     full_name: string,
-    order_date: number,
-    check_in: number,
-    check_out: number,
+    order_date: string,
+    check_in: string,
+    check_out: string,
     special_request: string,
     number: number,
     price: number,
     type: string,
-    status: 'Check In' | 'Check Out' | 'In Progress',
+    status: string,
     amenities: Array<string>,
-    room_status: 'Booked' | 'Available',
+    room_status: string,
     foto: string,
     description: string,
-    phone: number,
+    phone: string,
     email: string
 }
 
@@ -25,10 +25,12 @@ export interface iEmployee {
     start_date: string,
     description: string,
     job: string,
-    contact: number,
+    contact: string,
     status: boolean,
     password: string
 }
+
+
 
 export interface iMessage {
     id: number,
@@ -37,7 +39,7 @@ export interface iMessage {
     phone: string,
     subject: string,
     messages: string,
-    date: number,
+    date: string,
     read: boolean,
     archived: boolean,
     foto: string,
@@ -65,4 +67,21 @@ export interface FakesUri {
     add?: string,
     getRoomsNumber?: string,
     delete: string
+}
+
+export interface ArrayIData {
+    data: Array<iBooking | iRoom | iMessage | iEmployee> | null
+}
+
+export interface ArrayIRooms extends ArrayIData {
+    rooms: Array<iRoom> | null;
+}
+
+export interface iData {
+    data: iBooking | iRoom | iMessage | iEmployee | null
+}
+
+export interface EditDataThunk {
+    id: number,
+    data: iData
 }

@@ -1,7 +1,5 @@
-import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineMenuFold } from "react-icons/ai";
-import { FaArrowRight } from "react-icons/fa6";
 import { IoMdLogOut } from "react-icons/io";
 import { BiEnvelope } from "react-icons/bi";
 import { CiBellOn } from "react-icons/ci";
@@ -35,8 +33,9 @@ const IconsListStyled = styled.ul`
     list-style: none;
 `;
 
-const IconStyled = styled.li`
+const IconStyled = styled.li<{ $visibleLateral?: boolean; }>`
     cursor: pointer;
+    transform: ${props => !props.$visibleLateral ? 'scaleX(-1)' : ''};
     svg {
         width: 28px;
         height: 28px;
@@ -49,7 +48,7 @@ const IconStyled = styled.li`
 `;
 
 interface TopBarComponentProps {
-    setVisibleLateral: Dispatch<boolean>,
+    setVisibleLateral: (prev: Dispatch<boolean>) => boolean,
     visibleLateral: boolean,
     title: string
 }
@@ -69,14 +68,14 @@ const TopBarComponent = ({ setVisibleLateral, visibleLateral, title}: TopBarComp
     }
 
     const isMenuVisibleHandle = (): void => {
-        //setVisibleLateral((prev: boolean) => !prev);
+        setVisibleLateral((prev) => !prev);
     }
 
     return (
         <HeaderStyled>
             <DivStyled>
-                <IconStyled onClick={isMenuVisibleHandle}>
-                    {visibleLateral ? <AiOutlineMenuFold/> : <FaArrowRight />}
+                <IconStyled $visibleLateral = {visibleLateral} onClick={isMenuVisibleHandle}>
+                    <AiOutlineMenuFold/>
                 </IconStyled>
                 <h1 id='title'>{title}</h1>
             </DivStyled>
@@ -94,11 +93,5 @@ const TopBarComponent = ({ setVisibleLateral, visibleLateral, title}: TopBarComp
         </HeaderStyled>
     )
 }
-
-TopBarComponent.propTypes = {
-    setVisibleLateral: PropTypes.func,
-    visibleLateral: PropTypes.bool,
-    title: PropTypes.string
-};
 
 export default TopBarComponent;
