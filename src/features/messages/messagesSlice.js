@@ -1,8 +1,6 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit"
 import { deleteMessage, editMessage, getMessage, getMessages } from "./messagesAsyncThunk";
 
-
-
 export const messagesSlice = createSlice({
     name: 'messages',
     initialState: {
@@ -23,24 +21,16 @@ export const messagesSlice = createSlice({
             state.error = null;
         })
         .addCase(editMessage.fulfilled, (state, action) => {
-            const index = state.data.findIndex((message) => message.id === action.payload);
+            const index = state.data.findIndex((message) => message.id === action.payload.id);
             state.data[index].archived = true;
             state.status = 'fulfilled';
             state.error = null;
         })
         .addCase(deleteMessage.fulfilled, (state, action) => {
-            state.data = state.data.filter((message) => message.id === action.payload);
-            state.status = 'fulfilled';
-            state.error = null;
-        })
-        .addMatcher(isAnyOf (
-            getMessages.pending,
-            getMessage.pending,
-            editMessage.pending,
-            deleteMessage.pending 
-            ), (state, action) => {
-            state.status = 'pending';
-            state.error = null;
+            const index = state.data.findIndex((message) => message.id === action.payload);
+            state.data.splice(index, 1);
+            state.message.status = 'fulfilled';
+            state.message.error = null;
         })
         .addMatcher(isAnyOf (
             getMessages.rejected,

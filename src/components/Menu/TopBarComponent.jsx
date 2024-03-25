@@ -72,7 +72,7 @@ const TopBarComponent = ({ setVisibleLateral, visibleLateral, title}) => {
                 <IconStyled onClick={isMenuVisibleHandle}>
                     {visibleLateral ? <AiOutlineMenuFold/> : <FaArrowRight />}
                 </IconStyled>
-                <span>{title}</span>
+                <h1 id='title'>{title}</h1>
             </DivStyled>
             <IconsListStyled>
                 <IconStyled>
@@ -81,7 +81,7 @@ const TopBarComponent = ({ setVisibleLateral, visibleLateral, title}) => {
                 <IconStyled>
                     <CiBellOn />
                 </IconStyled>
-                <IconStyled onClick={logOutHandle}>
+                <IconStyled id="test__log-out" onClick={logOutHandle}>
                     <IoMdLogOut />
                 </IconStyled>
             </IconsListStyled>

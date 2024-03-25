@@ -16,7 +16,8 @@ import { DeleteStyled, EditStyled } from "../../styled/IconStyled";
 import MySwal from "../../app/MySwal";
 import { useDebounce } from "@uidotdev/usehooks";
 import { InputSearch } from "../../styled/InputStyled";
-import { ORDER_BOOKING_INITIAL_STATE, TAB_BOOKING_INITIAL_STATE } from "../../helpers/var_helpers";
+import { ORDER_BOOKING_INITIAL_STATE, TAB_BOOKING_INITIAL_STATE } from "../../helpers/varHelpers";
+
 
 /*const handleClickEdit = async (event, dispatch, row) => {
     event.stopPropagation();
@@ -162,7 +163,7 @@ const BookingsPage = () => {
                         <ButtonStyledNew as={LinkStyled} to={'booking'}>+ New Booking</ButtonStyledNew>
                         <OrderComponent setCurrentOrder={setCurrentOrder} data={bookingsOrder} />
                     </div>
-                    <TabsComponent data={bookings} setCurrentTab={setCurrentTab}></TabsComponent>
+                    <TabsComponent data={bookings} setCurrentTab={setCurrentTab} currentTab={currentTab}></TabsComponent>
                     <TableComponent rows={filteredBookings} columns={dataTable(dispatch)} path={'bookings'}></TableComponent>
                 </>
         </section>

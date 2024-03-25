@@ -16,7 +16,7 @@ import { DeleteStyled } from './../../styled/IconStyled';
 import { DivStyledActions } from "../../styled/DivsStyled";
 import styled from "styled-components";
 import MySwal from "../../app/MySwal";
-import { ORDER_ROOMS_INITIAL_STATE, TAB_ROOMS_INITIAL_STATE } from "../../helpers/var_helpers";
+import { ORDER_ROOMS_INITIAL_STATE, TAB_ROOMS_INITIAL_STATE } from "../../helpers/varHelpers";
 
 
 const ImgStyled = styled.img`
@@ -157,7 +157,7 @@ const RoomsPage = () => {
                     <ButtonStyledNew as={LinkStyled} to={'room'}>+ New Room</ButtonStyledNew>
                     <OrderComponent setCurrentOrder={setCurrentOrder} data={roomsOrder} />
                 </div>
-                <TabsComponent setCurrentTab={setCurrentTab} data={rooms}></TabsComponent>
+                <TabsComponent setCurrentTab={setCurrentTab} data={rooms} currentTab={currentTab}></TabsComponent>
                 <TableComponent rows={filteredRooms} columns={dataTable(dispatch)} path={'rooms'}></TableComponent>
             </>
         </section>

@@ -62,3 +62,19 @@ export const DivDetailsContent = styled.div`
     margin: 0px auto; 
     padding-top: 20px;
 `;
+
+export const WindowStyled = styled.div`
+    width: 100%;
+    height: 80vh;
+    display: grid;
+    grid-template-columns: 20% 80%;
+    grid-template-rows: 10% 90%;
+    grid-template-areas: ${props => props.$visibleLateral ? 
+    `'sidebar header'
+    'sidebar content'`
+    :
+    `'header header'
+    'content content'`};
+
+    
+`;

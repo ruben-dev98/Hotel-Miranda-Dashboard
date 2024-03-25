@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react"
-import { HALF_WAY_ITEMS_PER_PAGE, INITIAL_PAGE, ITEMS_PER_PAGE, NUMBER_ONE } from "../helpers/var_helpers";
+import { HALF_WAY_ITEMS_PER_PAGE, INITIAL_PAGE, ITEMS_PER_PAGE, NUMBER_ONE } from "../helpers/varHelpers";
 
 const usePaginate = (data) => {
     const [currentPage, setCurrentPage] = useState(INITIAL_PAGE);

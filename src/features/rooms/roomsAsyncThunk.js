@@ -1,74 +1,36 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import dataRoom from '../../assets/data/rooms.json';
+import { FakeApi, delay } from "../../helpers/funcHelpersThunk";
+import { URI_ROOM } from "../../helpers/varHelpers";
 
-const uri = {
-    getAll: 'get/rooms',
-    getOne: 'get/room',
-    edit: 'edit/room',
-    add: 'add/room',
-    getRoomsNumber: 'get/allNumberRoom',
-    delete: 'delete/room'
-    
-};
 
-function delay(path, id = 0, data = null, time = 200) {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            switch (path) {
-                case uri.getAll:
-                    resolve(dataRoom);
-                    break;
-                case uri.getOne:
-                    resolve(dataRoom.find((room) => room.id === id));
-                    break;
-                case uri.add:
-                    resolve(data);
-                    break;
-                case uri.edit:
-                    resolve({ id: id, data: data });
-                    break;
-                case uri.delete:
-                    resolve(id);
-                    break;
-                case uri.getRoomsNumber:
-                    resolve(dataRoom.filter(room => room.status === 'Available').map(room => room.number).sort((a, b) => {
-                        if (a > b) {
-                            return 1;
-                        } else if (a < b) {
-                            return -1;
-                        } else {
-                            return 0;
-                        }
-                    }));
-                    break;
-                default:
-                    reject('Error');
-                    break;
-            }
-        }, time);
-    })
-}
 
 export const getRooms = createAsyncThunk('rooms/getRooms', async () => {
-    return await delay(uri.getAll);
+    await delay();
+    return await FakeApi(URI_ROOM.getAll, URI_ROOM, 0, null, dataRoom);
 });
 
 export const getRoom = createAsyncThunk('rooms/getRoom', async (id) => {
-    return await delay(uri.getOne, id);
+    await delay();
+    return await FakeApi(URI_ROOM.getOne, URI_ROOM, id, null, dataRoom);
 });
 
 export const addRoom = createAsyncThunk('rooms/addRoom', async (data) => {
-    return await delay(uri.add, 0, data);
+    await delay();
+    return await FakeApi(URI_ROOM.add, URI_ROOM, 0, data);
 });
 
 export const editRoom = createAsyncThunk('rooms/editRoom', async ({ id, data }) => {
-    return await delay(uri.edit, id, data);
+    await delay();
+    return await FakeApi(URI_ROOM.edit, URI_ROOM, id, data);
 });
 
 export const deleteRoom = createAsyncThunk('rooms/deleteRoom', async (id) => {
-    return await delay(uri.delete, id);
+    await delay();
+    return await FakeApi(URI_ROOM.delete, URI_ROOM, id);
 });
 
 export const availableRoomsNumber = createAsyncThunk('rooms/getRoomsNumber', async () => {
-    return await delay(uri.getRoomsNumber)
+    await delay();
+    return await FakeApi(URI_ROOM.getRoomsNumber, URI_ROOM, 0, null, dataRoom);
 });

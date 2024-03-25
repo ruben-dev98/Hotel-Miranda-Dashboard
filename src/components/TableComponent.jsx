@@ -8,7 +8,7 @@ import usePaginate from './../hook/usePaginate';
 import { ButtonStyled } from './../styled/ButtonsStyled';
 import { SpanStyledTableFirst } from '../styled/SpanStyled';
 import MySwal from '../app/MySwal';
-import { INITIAL_PAGE } from '../helpers/var_helpers';
+import { INITIAL_PAGE } from '../helpers/varHelpers';
 
 const TableStyled = styled.table`
     width: 100%;
@@ -47,7 +47,7 @@ const TableComponent = ({ rows, columns, path }) => {
 
     return (
         <>
-            <TableStyled $path={path}>
+            <TableStyled>
                 <thead>
                     <tr>
                         {columns.map((element, index) => <th key={index}>{element.label}</th>)}

@@ -38,7 +38,7 @@ export const roomsSlice = createSlice({
             state.room.error = null;
         })
         .addCase(deleteRoom.fulfilled, (state, action) => {
-            state.data = state.data.filter((room) => room.id === action.payload);
+            state.data = state.data.filter((room) => room.id !== action.payload);
             state.room.status = 'fulfilled';
             state.room.error = null;
         })

@@ -16,18 +16,17 @@ import { DeleteStyled, EditStyled } from "../../styled/IconStyled";
 import { DivStyledActions } from "../../styled/DivsStyled";
 import MySwal from "../../app/MySwal";
 import { InputSearch } from "../../styled/InputStyled";
-import { ORDER_EMPLOYEE_INITIAL_STATE, TAB_EMPLOYEE_INITIAL_STATE } from "../../helpers/var_helpers";
-
-
+import { ORDER_EMPLOYEE_INITIAL_STATE, TAB_EMPLOYEE_INITIAL_STATE } from "../../helpers/varHelpers";
 
 const handleClickDelete = async (event, dispatch, id) => {
     event.stopPropagation();
     try {
         await dispatch(deleteEmployee(id)).unwrap()
         const html = <p>Delete #{id} Employee Successfully</p>;
-        MySwal('', html, false, 2000, 'succes', true);
-    } catch (error) {
-        console.log(error)
+        MySwal('', html, false, 2000, 'success', true);
+        
+    } catch(error) {
+        console.log(error);
     }
 }
 
@@ -132,7 +131,7 @@ const UsersPage = () => {
                     <ButtonStyledNew as={LinkStyled} to={'user'}>+ New Employee</ButtonStyledNew>
                     <OrderComponent setCurrentOrder={setCurrentOrder} data={usersOrder}></OrderComponent>
                 </div>
-                <TabsComponent setCurrentTab={setCurrentTab} data={users}></TabsComponent>
+                <TabsComponent setCurrentTab={setCurrentTab} data={users} currentTab={currentTab}></TabsComponent>
                 <TableComponent rows={filteredUsers} columns={dataTable(dispatch)} path={'users'}></TableComponent>
             </>
         </section>
