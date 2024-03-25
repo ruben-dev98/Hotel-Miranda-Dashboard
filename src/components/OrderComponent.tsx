@@ -1,6 +1,7 @@
 
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { IOrder } from '../assets/data/order';
+import { Dispatch, SetStateAction } from 'react';
 
 const SelectStyled = styled.select`
     border: 1px solid #135846;
@@ -13,7 +14,12 @@ const SelectStyled = styled.select`
     height: 50px;
 `;
 
-const OrderComponent = ({data, setCurrentOrder}) => {
+interface OrderProps {
+    data: IOrder[],
+    setCurrentOrder: Dispatch<SetStateAction<string>>
+}
+
+const OrderComponent = ({data, setCurrentOrder}: OrderProps) => {
 
     return (
         <SelectStyled onChange={(event) => setCurrentOrder(event.target.value)}>
@@ -21,10 +27,5 @@ const OrderComponent = ({data, setCurrentOrder}) => {
         </SelectStyled>
     )
 };
-
-OrderComponent.propTypes = {
-    data: PropTypes.array,
-    setCurrentOrder: PropTypes.func
-}
 
 export default OrderComponent;

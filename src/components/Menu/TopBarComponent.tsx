@@ -4,7 +4,7 @@ import { IoMdLogOut } from "react-icons/io";
 import { BiEnvelope } from "react-icons/bi";
 import { CiBellOn } from "react-icons/ci";
 import styled from 'styled-components';
-import { Dispatch, useContext } from 'react';
+import { Dispatch, SetStateAction, useContext } from 'react';
 import { UserContext } from '../../context/UserContext';
 
 const HeaderStyled = styled.header`
@@ -48,7 +48,7 @@ const IconStyled = styled.li<{ $visibleLateral?: boolean; }>`
 `;
 
 interface TopBarComponentProps {
-    setVisibleLateral: (prev: Dispatch<boolean>) => boolean,
+    setVisibleLateral: Dispatch<SetStateAction<boolean>>,
     visibleLateral: boolean,
     title: string
 }

@@ -63,7 +63,7 @@ export const DivDetailsContent = styled.div`
     padding-top: 20px;
 `;
 
-export const WindowStyled = styled.div`
+export const WindowStyled = styled.div<{$visibleLateral?: boolean}>`
     width: 100%;
     height: 80vh;
     display: grid;

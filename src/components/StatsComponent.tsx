@@ -1,6 +1,4 @@
 const StatsComponent = () => {
-
-
     return (
         <>
             GRAFICO CON LOS CHECK IN Y CHECK OUT

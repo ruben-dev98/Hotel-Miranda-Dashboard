@@ -1,7 +1,7 @@
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import Swal from 'sweetalert2';
 import MySwal from '../app/MySwal';
+import { iMessage } from '../entitys/Data';
+import { ReactNode } from 'react';
 
 const MessageComponentStyled = styled.div`
     display: flex;
@@ -47,14 +47,22 @@ const SpanStyledHour= styled(SpanStyled)`
     color: #799283;
 `;
 
-const MessageComponent = ({message}) => {
+interface MessageProps {
+    message: iMessage,
+    childrem?: ReactNode
+}
+
+const MessageComponent = ({message}: MessageProps) => {
 
     return (
         <MessageComponentStyled>
             <p style={{cursor: 'pointer'}} onClick={() => {
                 const title = 'Info Message';
-                const html = `<p><strong>Message:</strong> ${message.messages}</p>`;
-                return MySwal(title, html, false);
+                const html = (<p>
+                        <strong>Message:</strong> {message.messages}
+                    </p>
+                    );
+                return MySwal({title: title, html: html, showConfirmButton: false});
             }}>{message.messages.slice(0, 50).concat('...')}</p>
             <div>
                 <img src={message.foto} />
@@ -66,9 +74,5 @@ const MessageComponent = ({message}) => {
         </MessageComponentStyled>
     );
 };
-
-MessageComponent.propTypes = {
-    message: PropTypes.object
-}
 
 export default MessageComponent;

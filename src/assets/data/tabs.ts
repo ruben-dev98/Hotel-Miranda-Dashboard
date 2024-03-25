@@ -1,4 +1,4 @@
-interface ITabsObject {
+export interface ITabsObject {
     label: string,
     value: string | boolean
 }

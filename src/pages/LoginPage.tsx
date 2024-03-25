@@ -1,16 +1,22 @@
 import { Navigate, useNavigate } from "react-router-dom";
-import { ButtonStyled } from "../styled/ButtonsStyled";
-import { useContext } from "react";
+import { FormEvent, useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import { FormStyledLogin } from "../styled/FormStyled";
+import { ButtonStyled } from "../styled/ButtonStyled";
+
+interface FormData extends EventTarget {
+    user: HTMLFormElement,
+    password: HTMLFormElement
+}
 
 const LoginPage = () => {
     const navigate = useNavigate();
     const {state, dispatch} = useContext(UserContext);
-    const onSubmitHandle = (event) => {
+    const onSubmitHandle = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        if(event.target.user.value === 'user' && event.target.password.value === 'admin') {
-            dispatch({type: 'login', payload: {user: 'Ruben Dopico Novo', email: 'rdn998@gmail.com'}});
+        const element = event.target as FormData;
+        if(element.user.value === 'user' && element.password.value === 'admin') {
+            dispatch({type: 'login', payload: {auth: true, user: 'Ruben Dopico Novo', email: 'rdn998@gmail.com'}});
             navigate('/');
         }
         

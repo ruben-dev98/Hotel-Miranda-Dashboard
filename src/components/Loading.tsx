@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import loading from "../assets/img/loading.gif";
 
 const PacmanStyled = styled.div`
     width: 90px;

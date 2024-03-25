@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import PropTypes from 'prop-types';
+import { ReactNode } from "react";
 
 const KPIsStyled = styled.div`
     width: 100%;
@@ -61,11 +62,19 @@ const IconStyled = styled.div`
     
 `;
 
-const KPIsComponent = ({ icon, number, text }) => {
+interface KPIsProps {
+    icon: ReactNode,
+    number: number,
+    text: string
+}
+
+const KPIsComponent = ({ icon, number, text }: KPIsProps) => {
 
     return (
         <KPIsStyled>
-            <IconStyled>{icon}</IconStyled>
+            <IconStyled>
+                {icon}
+            </IconStyled>
             <p>
                 <TextStyled>{number}</TextStyled><br />
                 <TextStyledVar>{text}</TextStyledVar>

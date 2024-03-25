@@ -30,8 +30,6 @@ export interface iEmployee {
     password: string
 }
 
-
-
 export interface iMessage {
     id: number,
     full_name: string,
@@ -84,4 +82,20 @@ export interface iData {
 export interface EditDataThunk {
     id: number,
     data: iData
+}
+
+export interface ObjectFields {
+    type: string;
+}
+
+export interface ObjectFieldsBooking extends ObjectFields {
+    display: (field: iBooking) => JSX.Element;
+}
+
+export interface ObjectFieldsEmployee extends ObjectFields {
+    display: (field: iEmployee) => JSX.Element;
+}
+
+export interface ObjectFieldsRoom extends ObjectFields {
+    display: (field: iRoom) => JSX.Element;
 }

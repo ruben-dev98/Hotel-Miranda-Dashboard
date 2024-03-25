@@ -1,4 +1,4 @@
-interface IOrder {
+export interface IOrder {
     label: string,
     value: string
 }

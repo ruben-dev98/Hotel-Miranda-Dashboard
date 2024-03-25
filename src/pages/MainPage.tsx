@@ -1,10 +1,17 @@
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import { Outlet, useLocation } from 'react-router-dom';
 import SideBarComponent from "../components/Menu/SideBarComponent";
 import TopBarComponent from "../components/Menu/TopBarComponent";
 import WindowStyledComponent from "../components/WindowComponent/WindowComponent";
+import { Dispatch } from "react";
 
-const content = (visibleLateral, setVisibleLateral, title) => {
+interface ContentProps {
+    visibleLateral: boolean,
+    setVisibleLateral: Dispatch<SetStateAction<boolean>>,
+    title: string
+}
+
+const content = ({visibleLateral, setVisibleLateral, title}: ContentProps) => {
     return (
     <>
         <SideBarComponent visibleLateral={visibleLateral} />
@@ -14,7 +21,7 @@ const content = (visibleLateral, setVisibleLateral, title) => {
     );
 };
 
-const title = (path) => {
+const title = (path: string) => {
     switch(true) {
         case path.startsWith('/rooms/room'):
             return 'New Room';
@@ -51,7 +58,7 @@ const MainPage = () => {
     return (
         <>
             <WindowStyledComponent visibleLateral={visibleLateral}>
-                {content(visibleLateral, setVisibleLateral, title(path))}
+                {content({visibleLateral, setVisibleLateral, title: title(path)})}
             </WindowStyledComponent>
         </>
     )
