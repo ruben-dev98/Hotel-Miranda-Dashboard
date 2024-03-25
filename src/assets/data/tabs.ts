@@ -1,4 +1,18 @@
-const tabs = {
+interface ITabsObject {
+    label: string,
+    value: string | boolean
+}
+
+interface ITabs {
+    bookings: ITabsObject[],
+    rooms: ITabsObject[],
+    message: ITabsObject[],
+    users: ITabsObject[]
+}
+
+
+
+const tabs: ITabs = {
     bookings: [
         {
             label: "All Bookings",

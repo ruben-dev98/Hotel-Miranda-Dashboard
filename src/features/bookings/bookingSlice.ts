@@ -8,7 +8,7 @@ interface BookingSliceState {
     data: iBooking[] | [],
     booking: iBooking | {},
     status: string,
-    error: Error | null
+    error: string | null
 }
 
 export const bookingsSlice = createSlice({
@@ -22,7 +22,7 @@ export const bookingsSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-        .addCase(getBookings.fulfilled, (state: BookingSliceState, action) => {
+        .addCase(getBookings.fulfilled, (state, action) => {
             state.data = action.payload;
             state.status = 'fulfilled';
             state.error = null;
@@ -65,7 +65,7 @@ export const bookingsSlice = createSlice({
             deleteBooking.rejected 
             ), (state, action) => {
             state.status = 'rejected';
-            state.error = action.error.message;
+            state.error = action.error?.message || null;
         })
     }
 });

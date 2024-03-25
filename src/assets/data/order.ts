@@ -1,4 +1,9 @@
-export const bookingsOrder = [
+interface IOrder {
+    label: string,
+    value: string
+}
+
+export const bookingsOrder: IOrder[] = [
     {
         label: 'Order Date',
         value: 'order_date'
@@ -19,7 +24,7 @@ export const bookingsOrder = [
     }
 ];
 
-export const roomsOrder = [
+export const roomsOrder: IOrder[] = [
     {
         label: 'Numero Habitacion',
         value: 'number asc'
@@ -44,9 +49,7 @@ export const roomsOrder = [
     }
 ];
 
-export const messageOrder = [];
-
-export const usersOrder = [
+export const usersOrder: IOrder[] = [
     {
         label: 'Fecha De Alta',
         value: 'start_date'
