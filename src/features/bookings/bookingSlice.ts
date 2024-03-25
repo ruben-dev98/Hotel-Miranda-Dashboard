@@ -1,12 +1,13 @@
 import { PayloadAction, createSlice, isAnyOf } from "@reduxjs/toolkit"
 import { addBooking, deleteBooking, editBooking, getBooking, getBookings } from "./bookingsAsyncThunk";
 import { iBooking } from "../../entitys/Data";
+import { RootState } from '../../app/store';
 
 
 
 interface BookingSliceState {
-    data: iBooking[] | [],
-    booking: iBooking | {},
+    data: iBooking[],
+    booking: iBooking,
     status: string,
     error: string | null
 }
@@ -15,7 +16,7 @@ export const bookingsSlice = createSlice({
     name: 'bookings',
     initialState: {
         data: [],
-        booking: {},
+        booking: {} as iBooking,
         status: 'idle',
         error: null
     } as BookingSliceState,
@@ -70,10 +71,8 @@ export const bookingsSlice = createSlice({
     }
 });
 
-export const getAllBookings = state => state.bookings.data;
-export const bookingsStatus = state => state.bookings.status;
-export const getOneBooking = state => state.bookings.booking;
-
-export const { initState } = bookingsSlice.actions;
+export const getAllBookings = (state: RootState) => state.bookings.data;
+export const bookingsStatus = (state: RootState) => state.bookings.status;
+export const getOneBooking = (state: RootState) => state.bookings.booking;
 
 export default bookingsSlice.reducer;

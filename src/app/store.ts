@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import bookingsReducer from "../features/bookings/bookingsSlice";
+import bookingsReducer from '../features/bookings/bookingSlice';
 import employeesReducer from "../features/employees/employeesSlice";
 import messageReducer from "../features/messages/messagesSlice";
 import roomsReducer from "../features/rooms/roomsSlice";
