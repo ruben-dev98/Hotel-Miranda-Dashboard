@@ -1,12 +1,24 @@
 import { FakesUri, iBooking, iEmployee, iMessage, iRoom } from "../entitys/Data";
 
-const getAllData = (data: Array<iRoom | iBooking | iMessage | iEmployee> | null) => data;
-const getOneData = (data: Array<iRoom | iBooking | iMessage | iEmployee> | null, id: number) => data?.find((items) => items.id === id);
-const addData = (data: iRoom | iBooking | iMessage | iEmployee | null) => data;
-const editData = (id: number, data: iRoom | iBooking | iMessage | iEmployee | null) => ({id: id, data: data});
+interface ArrayIData {
+    data: Array<iBooking | iRoom | iMessage | iEmployee> | null
+}
+
+interface ArrayIRooms extends ArrayIData {
+    rooms: Array<iRoom> | null;
+}
+
+interface iData {
+    data: iBooking | iRoom | iMessage | iEmployee | null
+}
+
+const getAllData = (aData: ArrayIData) => aData.data;
+const getOneData = (aData: ArrayIData, id: number) => aData.data?.find((items) => items.id === id);
+const addData = (data: iData) => data;
+const editData = (id: number, data: iData) => ({ id: id, data: data });
 const deleteData = (id: number) => id;
 
-export const dataAvailableRoomsNumber = (data: Array<iRoom> | null) => data?.filter((room: iRoom) => room.status === 'Available').map(room => room.number).sort((a, b) => {
+export const dataAvailableRoomsNumber = (aData: ArrayIRooms) => aData.rooms?.filter((room: iRoom) => room.status === 'Available').map(room => room.number).sort((a, b) => {
     if (a > b) {
         return 1;
     } else if (a < b) {
@@ -22,7 +34,7 @@ export const delay = (time = 200) => {
     });
 }
 
-export const FakeApi = (path: string, uri: FakesUri, id = 0, data = null, aData = null) => {
+export const FakeApi = (path: string, uri: FakesUri, id = 0, data: iData, aData: ArrayIRooms) => {
     return new Promise((resolve, reject) => {
         switch (path) {
             case uri.getAll:
