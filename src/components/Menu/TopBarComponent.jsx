@@ -37,6 +37,7 @@ const IconsListStyled = styled.ul`
 
 const IconStyled = styled.li`
     cursor: pointer;
+    transform: ${props => !props.$visibleLateral ? 'scaleX(-1)' : ''};
     svg {
         width: 28px;
         height: 28px;
@@ -69,8 +70,8 @@ const TopBarComponent = ({ setVisibleLateral, visibleLateral, title}) => {
     return (
         <HeaderStyled>
             <DivStyled>
-                <IconStyled onClick={isMenuVisibleHandle}>
-                    {visibleLateral ? <AiOutlineMenuFold/> : <FaArrowRight />}
+                <IconStyled $visibleLateral={visibleLateral} onClick={isMenuVisibleHandle}>
+                    <AiOutlineMenuFold/>
                 </IconStyled>
                 <span>{title}</span>
             </DivStyled>
