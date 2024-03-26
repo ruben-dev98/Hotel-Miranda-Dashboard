@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 interface TransformDataProps {
     field: ObjectFieldsBooking | ObjectFieldsEmployee | ObjectFieldsRoom,
-    data: iRoom | iBooking | iEmployee
+    data: iRoom & iBooking & iEmployee
 }
 
 const transformData = ({ field, data }: TransformDataProps) => {
@@ -14,7 +14,7 @@ const transformData = ({ field, data }: TransformDataProps) => {
 }
 
 interface DetailsProps {
-    data: iRoom | iBooking | iEmployee,
+    data: iRoom & iBooking & iEmployee,
     object__fields: ObjectFieldsBooking[] | ObjectFieldsEmployee[] | ObjectFieldsRoom[]
 }
 
