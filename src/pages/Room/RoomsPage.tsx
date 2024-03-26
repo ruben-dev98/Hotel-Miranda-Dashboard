@@ -5,7 +5,6 @@ import { SpanStyled, SpanStyledCheckOut, SpanStyledTableFirst, SpanStyledTableSe
 import OrderComponent from "../../components/OrderComponent";
 import { roomsOrder } from "../../assets/data/order";
 import { LinkStyled } from "../../styled/LinkStyled";
-import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useMemo, useState } from "react";
 import { getAllRooms } from "../../features/rooms/roomsSlice";
 import { deleteRoom, getRooms } from "../../features/rooms/roomsAsyncThunk";
@@ -16,6 +15,10 @@ import styled from "styled-components";
 import MySwal from "../../app/MySwal";
 import { ORDER_ROOMS_INITIAL_STATE, TAB_ROOMS_INITIAL_STATE } from "../../helpers/varHelpers";
 import { ButtonStyledNew, ButtonStyledViewNotes } from "../../styled/ButtonStyled";
+import { ActionProps, DataTableProps, HandleClickDeleteProps, iRoom } from "../../entitys/Data";
+import { useAppDispatch, useAppSelector } from "../../hook/useStore";
+import { ThunkDispatch } from "@reduxjs/toolkit";
+import { RootState } from "../../app/store";
 
 
 const ImgStyled = styled.img`
@@ -23,22 +26,7 @@ const ImgStyled = styled.img`
     height: 100px;
 `;
 
-interface handleClickDeleteProps {
-    event: ,
-    dispatch: ,
-    id: number
-}
-
-interface ActionProps {
-    id: number,
-    dispatch: 
-}
-
-interface DataTableProps {
-    dispatch: 
-}
-
-const handleClickDelete = async (event, dispatch, id) => {
+const handleClickDelete = async ({event, dispatch, id}: HandleClickDeleteProps) => {
     event.stopPropagation();
     try {
         await dispatch(deleteRoom(id)).unwrap()
@@ -49,7 +37,7 @@ const handleClickDelete = async (event, dispatch, id) => {
     }
 }
 
-const action = (id, dispatch) => {
+const action = ({id, dispatch}: ActionProps) => {
     return (
         <DivStyledActions>
             <ButtonStyledIcon as={LinkStyled} to={`edit/${id}`} onClick={(event) => event.stopPropagation()}><EditStyled></EditStyled></ButtonStyledIcon>
@@ -60,10 +48,10 @@ const action = (id, dispatch) => {
 
 }
 
-const dataTable = (dispatch) => [
+const dataTable = ({dispatch}: DataTableProps) => [
     {
         'label': 'Image',
-        display: row => <ImgStyled src={row.foto} />
+        display: (row: iRoom) => <ImgStyled src={row.foto} />
     },
     {
         'label': 'Number',
@@ -79,12 +67,12 @@ const dataTable = (dispatch) => [
     },
     {
         'label': 'Amenities',
-        display: row => row.amenities.length > 0 ?
+        display: (row: iRoom) => row.amenities?.length > 0 ?
             <ButtonStyledViewNotes onClick={(event) => {
                 event.stopPropagation()
                 const title = 'Info Amenities';
                 const html = (<ul>
-                    {row.amenities.map((amen, index) => {
+                    {row.amenities?.map((amen, index) => {
                         return <li key={index}>
                             {amen}
                         </li>;
@@ -97,31 +85,31 @@ const dataTable = (dispatch) => [
     },
     {
         'label': 'Price',
-        display: row => (<><SpanStyledTableFirst>{(row.price)}</SpanStyledTableFirst><br /><SpanStyledTableSecond>/Night</SpanStyledTableSecond></>)
+        display: (row: iRoom) => (<><SpanStyledTableFirst>{(row.price)}</SpanStyledTableFirst><br /><SpanStyledTableSecond>/Night</SpanStyledTableSecond></>)
     },
     {
         'label': 'Offer Price',
-        display: row => (<><SpanStyledTableFirst>{(row.price - (row.price * row.discount / 100)).toFixed(2)}</SpanStyledTableFirst><br /><SpanStyledTableSecond>/Night</SpanStyledTableSecond></>)
+        display: (row: iRoom) => (<><SpanStyledTableFirst>{(row.price - (row.price * row.discount / 100)).toFixed(2)}</SpanStyledTableFirst><br /><SpanStyledTableSecond>/Night</SpanStyledTableSecond></>)
     },
     {
         'label': 'Status',
-        display: row => row.status === 'Available' ?
+        display: (row: iRoom) => row.status === 'Available' ?
             <SpanStyled>Available</SpanStyled>
             :
             <SpanStyledCheckOut>Booked</SpanStyledCheckOut>
     },
     {
         'label': 'Actions',
-        display: row => action(row.id, dispatch)
+        display: (row: iRoom) => action({id: row.id, dispatch: dispatch})
     }
 ];
 
 const RoomsPage = () => {
-    const dispatch = useDispatch();
+    const dispatch: ThunkDispatch<RootState, any, any> = useAppDispatch();
     const [isLoading, setIsLoading] = useState(true);
     const [currentTab, setCurrentTab] = useState<string | boolean>(TAB_ROOMS_INITIAL_STATE);
     const [currentOrder, setCurrentOrder] = useState<string>(ORDER_ROOMS_INITIAL_STATE);
-    const data = useSelector(getAllRooms);
+    const data = useAppSelector(getAllRooms);
 
     const filteredRooms = useMemo(() => {
         const all = data.filter((item) => currentTab === TAB_ROOMS_INITIAL_STATE ? true : item.status === currentTab);
@@ -172,7 +160,7 @@ const RoomsPage = () => {
                     <OrderComponent setCurrentOrder={setCurrentOrder} data={roomsOrder} />
                 </div>
                 <TabsComponent setCurrentTab={setCurrentTab} data={rooms} currentTab={currentTab}></TabsComponent>
-                <TableComponent rows={filteredRooms} columns={dataTable(dispatch)} path={'rooms'}></TableComponent>
+                <TableComponent rows={filteredRooms} columns={dataTable({dispatch})} path={'rooms'}></TableComponent>
             </>
         </section>
     );

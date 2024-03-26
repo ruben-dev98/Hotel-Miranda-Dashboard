@@ -62,7 +62,7 @@ export const employeesSlice = createSlice({
                 deleteEmployee.rejected
             ), (state, action) => {
                 state.status = 'rejected';
-                state.error = action.error.message;
+                state.error = action.error.message || null;
             })
 
     }

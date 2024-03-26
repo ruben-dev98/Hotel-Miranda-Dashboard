@@ -26,7 +26,7 @@ export const messagesSlice = createSlice({
             state.error = null;
         })
         .addCase(getMessage.fulfilled, (state, action) => {
-            state.message.data = action.payload;
+            state.message = action.payload;
             state.status = 'fulfilled';
             state.error = null;
         })
@@ -39,8 +39,8 @@ export const messagesSlice = createSlice({
         .addCase(deleteMessage.fulfilled, (state, action) => {
             const index = state.data.findIndex((message) => message.id === action.payload);
             state.data.splice(index, 1);
-            state.message.status = 'fulfilled';
-            state.message.error = null;
+            state.status = 'fulfilled';
+            state.error = null;
         })
         .addMatcher(isAnyOf (
             getMessages.rejected,
@@ -49,7 +49,7 @@ export const messagesSlice = createSlice({
             deleteMessage.rejected 
             ), (state, action) => {
             state.status = 'rejected';
-            state.error = action.error.message;
+            state.error = action.error.message || null;
         })
         
     }

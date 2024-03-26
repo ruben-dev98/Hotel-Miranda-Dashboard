@@ -1,3 +1,6 @@
+import { ThunkDispatch } from "@reduxjs/toolkit"
+import { RootState } from "../app/store"
+
 export interface iBooking {
     id: number,
     full_name: string,
@@ -76,12 +79,12 @@ export interface ArrayIRooms extends ArrayIData {
 }
 
 export interface iData {
-    data: iBooking | iRoom | iMessage | iEmployee | null
+    data: iBooking | iRoom | iMessage | iEmployee
 }
 
 export interface EditDataThunk {
     id: number,
-    data: iEmployee | iBooking | iMessage | iBooking
+    data: iEmployee | iRoom | iMessage | iBooking
 }
 
 export interface ObjectFields {
@@ -98,4 +101,19 @@ export interface ObjectFieldsEmployee extends ObjectFields {
 
 export interface ObjectFieldsRoom extends ObjectFields {
     display: (field: iRoom) => JSX.Element;
+}
+
+export interface HandleClickDeleteProps {
+    event: React.MouseEvent<HTMLButtonElement>,
+    dispatch: ThunkDispatch<RootState, any, any>,
+    id: number
+}
+
+export interface ActionProps {
+    id: number,
+    dispatch: ThunkDispatch<RootState, any, any>
+}
+
+export interface DataTableProps {
+    dispatch: ThunkDispatch<RootState, any, any>
 }

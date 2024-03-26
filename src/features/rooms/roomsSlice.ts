@@ -72,7 +72,7 @@ export const roomsSlice = createSlice({
             availableRoomsNumber.rejected
             ), (state, action) => {
             state.status = 'rejected';
-            state.error = action.error.message;
+            state.error = action.error.message || null;
         })
         
     }

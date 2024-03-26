@@ -1,12 +1,12 @@
-import { ArrayIData, ArrayIRooms, FakesUri, iData, iRoom } from "../entitys/Data";
+import { FakesUri, iBooking, iEmployee, iMessage, iRoom } from "../entitys/Data";
 
-const getAllData = (aData: ArrayIData) => aData.data;
-const getOneData = (aData: ArrayIData, id: number) => aData.data?.find((items) => items.id === id);
-const addData = (data: iData) => data;
-const editData = (id: number, data: iData) => ({ id: id, data: data.data });
+const getAllData = (data: iEmployee[] | iBooking[] | iRoom[] | iMessage[] ) => data;
+const getOneData = (data: iEmployee[] | iBooking[] | iRoom[] | iMessage[], id: number) => data.find((item) => item.id === id);
+const addData = (data: iEmployee | iBooking | iMessage | iRoom) => data;
+const editData = (id: number, data: iMessage | iRoom | iBooking | iEmployee) => ({ id: id, data: data });
 const deleteData = (id: number) => id;
 
-export const dataAvailableRoomsNumber = (aData: ArrayIRooms) => aData.rooms?.filter((room: iRoom) => room.status === 'Available').map(room => room.number).sort((a, b) => {
+export const dataAvailableRoomsNumber = (data: iRoom[]) => data.filter((room) => room.status === 'Available').map(room => room.number).sort((a, b) => {
     if (a > b) {
         return 1;
     } else if (a < b) {
@@ -22,8 +22,8 @@ export const delay = (time = 200) => {
     });
 }
 
-export const FakeApi = (path: string, uri: FakesUri, id = 0, data: iData, aData: ArrayIRooms) => {
-    return new Promise((resolve, reject) => {
+export const FakeApi = (path: string, uri: FakesUri, id = 0, data: iRoom | iEmployee | iMessage | iBooking, aData: iRoom[] | iEmployee[] | iMessage[] | iBooking[]) => {
+    return new Promise<any>((resolve, reject) => {
         switch (path) {
             case uri.getAll:
                 resolve(getAllData(aData));
@@ -41,7 +41,7 @@ export const FakeApi = (path: string, uri: FakesUri, id = 0, data: iData, aData:
                 resolve(deleteData(id));
                 break;
             case uri.getRoomsNumber:
-                resolve(dataAvailableRoomsNumber(aData));
+                resolve(dataAvailableRoomsNumber((aData as iRoom[])));
                 break;
             default:
                 reject('Array not found');

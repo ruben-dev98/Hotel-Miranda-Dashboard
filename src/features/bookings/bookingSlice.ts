@@ -66,7 +66,7 @@ export const bookingsSlice = createSlice({
             deleteBooking.rejected 
             ), (state, action) => {
             state.status = 'rejected';
-            state.error = action.error?.message || null;
+            state.error = action.error.message || null;
         })
     }
 });
