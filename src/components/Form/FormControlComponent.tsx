@@ -4,17 +4,19 @@ import { iBooking, iEmployee, iRoom } from '../../entitys/Data';
 interface RenderProps {
     inputType: string,
     data: Array<string>,
-    name: string,
+    name: 'id' | 'full_name' | 'order_date' | 'check_in' | 'check_out' | 'special_request' | 'number' | 'price' | 'type' | 'status' | 'amenities' | 'room_status' | 'foto' | 'description' | 'phone' | 'email' | 'offer' | 'cancellation' | 'discount' | 'subject' | 'messages' | 'date' | 'read' | 'archived' | 'time_passed' | 'start_date' | 'job' | 'contact' | 'password',
     values: iEmployee | iBooking | iRoom,
 }
 
 interface FormControlProps {
     label: string,
     inputType: string,
-    name: string,
+    name: 'id' | 'full_name' | 'order_date' | 'check_in' | 'check_out' | 'special_request' | 'number' | 'price' | 'type' | 'status' | 'amenities' | 'room_status' | 'foto' | 'description' | 'phone' | 'email' | 'offer' | 'cancellation' | 'discount' | 'time_passed' | 'start_date' | 'job' | 'contact' | 'password',
     data?: Array<string>,
     values: iEmployee | iRoom | iBooking
 }
+
+
 
 const renderSwitch = ({inputType, data, name, values}: RenderProps) => {
     switch (inputType) {

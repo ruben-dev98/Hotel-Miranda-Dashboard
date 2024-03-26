@@ -14,11 +14,12 @@ import { DeleteStyled } from './../../styled/IconStyled';
 import styled from "styled-components";
 import MySwal from "../../app/MySwal";
 import { ORDER_ROOMS_INITIAL_STATE, TAB_ROOMS_INITIAL_STATE } from "../../helpers/varHelpers";
-import { ButtonStyledNew, ButtonStyledViewNotes } from "../../styled/ButtonStyled";
+import { ButtonStyledIcon, ButtonStyledNew, ButtonStyledViewNotes } from "../../styled/ButtonStyled";
 import { ActionProps, DataTableProps, HandleClickDeleteProps, iRoom } from "../../entitys/Data";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
+import { DivStyledActions } from "../../styled/DivStyled";
 
 
 const ImgStyled = styled.img`
@@ -41,7 +42,7 @@ const action = ({id, dispatch}: ActionProps) => {
     return (
         <DivStyledActions>
             <ButtonStyledIcon as={LinkStyled} to={`edit/${id}`} onClick={(event) => event.stopPropagation()}><EditStyled></EditStyled></ButtonStyledIcon>
-            <ButtonStyledIcon onClick={(event) => handleClickDelete(event, dispatch, id)}><DeleteStyled></DeleteStyled></ButtonStyledIcon>
+            <ButtonStyledIcon onClick={(event) => handleClickDelete({event, dispatch, id})}><DeleteStyled></DeleteStyled></ButtonStyledIcon>
         </DivStyledActions>
     )
 
@@ -116,13 +117,16 @@ const RoomsPage = () => {
 
         return all.sort((a, b) => {
             const order = currentOrder.split(' ');
-            if (a[order[0]] > b[order[0]]) {
-                if (order[1] === 'asc') {
+            const property = order[0] as keyof iRoom;
+            const orderType = order[1];
+
+            if (a[property] > b[property]) {
+                if (orderType === 'asc') {
                     return 1;
                 }
                 return -1;
-            } else if (a[order[0]] < b[order[0]]) {
-                if (order[1] === 'asc') {
+            } else if (a[property] < b[property]) {
+                if (orderType === 'asc') {
                     return -1;
                 }
                 return 1;

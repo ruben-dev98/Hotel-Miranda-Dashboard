@@ -1,17 +1,18 @@
 import FormControlComponent from "./FormControlComponent";
-import PropTypes from 'prop-types';
 import { useNavigate } from "react-router-dom";
 import { FaArrowLeftStyled } from "../../styled/IconStyled";
 import { FormStyledComponent } from "../../styled/FormStyled";
 import { ButtonStyled } from "../../styled/ButtonStyled";
+import { iBooking, iEmployee, iRoom } from "../../entitys/Data";
+import { FormControlProps } from "../../pages/Room/RoomFormPage";
 
 interface FormProps {
-    formControl: ,
-    data: ,
-    onHandleSubmit: ,
+    formControl: FormControlProps[],
+    data: iRoom | iBooking | iEmployee,
+    onHandleSubmit: React.FormEventHandler<HTMLFormElement>,
 }
 
-const FormComponent = ({ formControl, data, onHandleSubmit}) => {
+const FormComponent = ({ formControl, data, onHandleSubmit} : FormProps) => {
     const nav = useNavigate();
 
     return (

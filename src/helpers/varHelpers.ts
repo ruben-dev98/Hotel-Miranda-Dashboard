@@ -5,9 +5,9 @@ export const TAB_ROOMS_INITIAL_STATE: string = 'All Rooms';
 export const TAB_MESSAGE_INITIAL_STATE: string = 'All Contacts';
 export const TAB_EMPLOYEE_INITIAL_STATE: string = 'All Employees';
 
-export const ORDER_BOOKING_INITIAL_STATE: string = 'order_date';
-export const ORDER_ROOMS_INITIAL_STATE: string = 'number asc';
-export const ORDER_EMPLOYEE_INITIAL_STATE: string = 'start_date';
+export const ORDER_BOOKING_INITIAL_STATE = 'order_date';
+export const ORDER_ROOMS_INITIAL_STATE = 'number asc';
+export const ORDER_EMPLOYEE_INITIAL_STATE = 'start_date';
 
 export const ITEMS_PER_PAGE: number = 10;
 export const HALF_WAY_ITEMS_PER_PAGE: number = ITEMS_PER_PAGE/2;

@@ -70,18 +70,6 @@ export interface FakesUri {
     delete: string
 }
 
-export interface ArrayIData {
-    data: Array<iBooking | iRoom | iMessage | iEmployee> | null
-}
-
-export interface ArrayIRooms extends ArrayIData {
-    rooms: Array<iRoom> | null;
-}
-
-export interface iData {
-    data: iBooking | iRoom | iMessage | iEmployee
-}
-
 export interface EditDataThunk {
     id: number,
     data: iEmployee | iRoom | iMessage | iBooking
@@ -116,4 +104,8 @@ export interface ActionProps {
 
 export interface DataTableProps {
     dispatch: ThunkDispatch<RootState, any, any>
+}
+
+export interface DataProperties {
+    
 }

@@ -1,6 +1,6 @@
-import { ArrayIData } from "../entitys/Data";
+import { iBooking, iEmployee, iMessage, iRoom } from "../entitys/Data";
 
-export const lastId = (aData: ArrayIData) => {
-    const newId = aData.data !== null && aData.data[aData.data.length - 1].id + 1;
+export const lastId = (data: iRoom[] | iBooking[] | iEmployee[]) => {
+    const newId = data[data.length - 1].id + 1;
     return newId;
 };
