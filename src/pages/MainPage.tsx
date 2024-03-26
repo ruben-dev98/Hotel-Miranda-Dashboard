@@ -13,11 +13,11 @@ interface ContentProps {
 
 const content = ({visibleLateral, setVisibleLateral, title}: ContentProps) => {
     return (
-    <>
-        <SideBarComponent visibleLateral={visibleLateral} />
-        <TopBarComponent visibleLateral={visibleLateral} setVisibleLateral={setVisibleLateral} title={title}/>
-        <Outlet />
-    </>
+        <>
+            <SideBarComponent visibleLateral={visibleLateral} />
+            <TopBarComponent visibleLateral={visibleLateral} setVisibleLateral={setVisibleLateral} title={title}/>
+            <Outlet />
+        </>
     );
 };
 
@@ -56,11 +56,9 @@ const MainPage = () => {
     const path = useLocation().pathname;
     
     return (
-        <>
-            <WindowStyledComponent visibleLateral={visibleLateral}>
+        <WindowStyledComponent visibleLateral={visibleLateral}>
                 {content({visibleLateral, setVisibleLateral, title: title(path)})}
-            </WindowStyledComponent>
-        </>
+        </WindowStyledComponent>
     )
 }
 

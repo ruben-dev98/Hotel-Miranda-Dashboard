@@ -86,7 +86,6 @@ interface FormData extends EventTarget {
 }
 
 const SideBarComponent = ({ visibleLateral }: SideBarComponentProps) => {
-    const loc = useLocation().pathname;
     const context = useContext(UserContext);
 
     return (
@@ -95,7 +94,7 @@ const SideBarComponent = ({ visibleLateral }: SideBarComponentProps) => {
             <img src={logo} />
             <nav>
                 {links.map(({ icon, text, path }, index) =>
-                    <NavLinkStyled to={path} key={index} className={loc.includes(path.split('/')[0]) ? 'active' : ''}>
+                    <NavLinkStyled to={path} key={index}>
                         {React.createElement(icon)}
                         {text}
                     </NavLinkStyled>)

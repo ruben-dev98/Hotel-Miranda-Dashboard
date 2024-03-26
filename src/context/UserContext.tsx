@@ -20,7 +20,7 @@ export const UserContext = createContext<UserContextInit>({ state: { auth: false
 
 export const UserAuthProvider = ({ children } : UserAuthProviderProps) => {
     const initAuth = useLocalStorage({key: 'auth', action: 'get'});
-    const initUser: InitUser = JSON.parse(useLocalStorage({key: 'user', action: 'get'}) || '');
+    const initUser: InitUser = JSON.parse(useLocalStorage({key: 'user', action: 'get'}) || '{}');
     const { state, dispatch } = useUserAuth({isAuth: initAuth === '1' ? true : false, user: initUser ? initUser.user : '', email: initUser ? initUser.email : ''});
     useLocalStorage({key: 'auth', action: 'set', item: state.auth ? '1' : '0'});
     useLocalStorage({key: 'user', action: 'set', item: JSON.stringify({ user: state.user, email: state.email })});
