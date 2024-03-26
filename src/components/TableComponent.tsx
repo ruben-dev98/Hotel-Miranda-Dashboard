@@ -5,13 +5,13 @@ import usePaginate from './../hook/usePaginate';
 import { SpanStyledTableFirst } from '../styled/SpanStyled';
 import MySwal from '../app/MySwal';
 import { INITIAL_PAGE } from '../helpers/varHelpers';
-import { iBooking, iMessage, iEmployee, iRoom } from '../entitys/Data';
+import { iBooking, iMessage, iEmployee, iRoom, DataTableProps, DataProperties } from '../entitys/Data';
 import { useAppDispatch } from '../hook/useStore';
 import { ButtonStyled } from '../styled/ButtonStyled';
 
 interface TableProps {
     rows: iBooking[] | iMessage[] | iRoom[] | iEmployee[],
-    columns: ,
+    columns: DataProperties[],
     path : string
 }
 
@@ -44,7 +44,6 @@ const TableStyled = styled.table`
 
     
 `;
-
 
 const TableComponent = ({ rows, columns, path }: TableProps) => {
     const navigate = useNavigate();
@@ -83,7 +82,7 @@ const TableComponent = ({ rows, columns, path }: TableProps) => {
                                 }
                             }} key={index}>
                                 {columns.map((column, indx) => {
-                                    return <td key={indx}>{!column.display ? <SpanStyledTableFirst>{row[column.property]}</SpanStyledTableFirst> : column.display(row)}</td>;
+                                    return <td key={indx}>{!column.display ? <SpanStyledTableFirst>{row[(column.property as keyof iRoom & keyof iBooking & keyof iEmployee & keyof iMessage)]}</SpanStyledTableFirst> : column.display(row)}</td>;
                                 })}
                             </tr>
                         );

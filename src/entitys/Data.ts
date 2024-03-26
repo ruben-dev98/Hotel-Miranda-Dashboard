@@ -107,5 +107,7 @@ export interface DataTableProps {
 }
 
 export interface DataProperties {
-    
+    label: string;
+    property?: string;
+    display?: Function;
 }

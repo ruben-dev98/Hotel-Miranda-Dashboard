@@ -4,46 +4,45 @@ import { iBooking, iEmployee, iRoom } from '../../entitys/Data';
 interface RenderProps {
     inputType: string,
     data: Array<string>,
-    name: 'id' | 'full_name' | 'order_date' | 'check_in' | 'check_out' | 'special_request' | 'number' | 'price' | 'type' | 'status' | 'amenities' | 'room_status' | 'foto' | 'description' | 'phone' | 'email' | 'offer' | 'cancellation' | 'discount' | 'subject' | 'messages' | 'date' | 'read' | 'archived' | 'time_passed' | 'start_date' | 'job' | 'contact' | 'password',
-    values: iEmployee | iBooking | iRoom,
+    name: string,
+    values: iRoom | iBooking | iEmployee,
 }
 
 interface FormControlProps {
     label: string,
     inputType: string,
-    name: 'id' | 'full_name' | 'order_date' | 'check_in' | 'check_out' | 'special_request' | 'number' | 'price' | 'type' | 'status' | 'amenities' | 'room_status' | 'foto' | 'description' | 'phone' | 'email' | 'offer' | 'cancellation' | 'discount' | 'time_passed' | 'start_date' | 'job' | 'contact' | 'password',
+    name: string,
     data?: Array<string>,
-    values: iEmployee | iRoom | iBooking
+    values: iRoom | iBooking | iEmployee
 }
 
-
-
-const renderSwitch = ({inputType, data, name, values}: RenderProps) => {
+const renderSwitch = ({ inputType, data, name, values }: RenderProps) => {
+    const property = name as keyof iRoom & keyof iBooking & keyof iEmployee;
     switch (inputType) {
         case 'textarea':
-            return <textarea defaultValue={values ? values[name] : ''} rows={5} name={name}></textarea>
+            return <textarea defaultValue={values ? values[property] as string : ''} rows={5} name={name}></textarea>
         case 'select':
-            return (<select defaultValue={values ? values[name] : ''} name={name}>
+            return (<select defaultValue={values ? values[property] as string : ''} name={name}>
                 {data.map((element, index) => {
                     return <option key={index}>{element}</option>
                 })}
             </select>)
         case 'select multiple':
-            return (<select defaultValue={values ? values[name] : []} name={name} multiple>
+            return (<select defaultValue={values ? values[property] as string : []} name={name} multiple>
                 {data.map((element, index) => {
                     return <option key={index}>{element}</option>
                 })}
             </select>)
         case 'date': {
-            const date = new Date(values ? parseInt(values[name]) : '');
+            const date = new Date(values ? parseInt(values[property] as string) : '');
             const month = date.getMonth() + 1;
             const day = date.getDate();
             return <input defaultValue={values ? `${date.getFullYear()}-${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}` : ''} name={name} type={inputType} />
         }
         case 'number':
-            return <input defaultValue={values ? values[name] : 0} min={0} step='any' name={name} type={inputType} />
+            return <input defaultValue={values ? values[property] as string : 0} min={0} step='any' name={name} type={inputType} />
         default:
-            return <input defaultValue={values ? values[name] : ''} name={name} type={inputType} />
+            return <input defaultValue={values ? values[property] as string : ''} name={name} type={inputType} />
     }
 }
 
@@ -59,7 +58,7 @@ const FormControlComponent = ({ label, inputType, name, data = [], values }: For
             }
             <label>{label}</label>
             {
-                renderSwitch({inputType, data, name, values})
+                renderSwitch({ inputType, data, name, values })
             }
         </div>
     );

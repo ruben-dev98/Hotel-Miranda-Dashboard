@@ -15,7 +15,7 @@ import styled from "styled-components";
 import MySwal from "../../app/MySwal";
 import { ORDER_ROOMS_INITIAL_STATE, TAB_ROOMS_INITIAL_STATE } from "../../helpers/varHelpers";
 import { ButtonStyledIcon, ButtonStyledNew, ButtonStyledViewNotes } from "../../styled/ButtonStyled";
-import { ActionProps, DataTableProps, HandleClickDeleteProps, iRoom } from "../../entitys/Data";
+import { ActionProps, DataProperties, DataTableProps, HandleClickDeleteProps, iRoom } from "../../entitys/Data";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
@@ -49,7 +49,7 @@ const action = ({id, dispatch}: ActionProps) => {
 
 }
 
-const dataTable = ({dispatch}: DataTableProps) => [
+const dataTable = ({dispatch}: DataTableProps): DataProperties[] => [
     {
         'label': 'Image',
         display: (row: iRoom) => <ImgStyled src={row.foto} />
