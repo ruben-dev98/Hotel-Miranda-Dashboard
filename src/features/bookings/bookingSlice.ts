@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice, isAnyOf } from "@reduxjs/toolkit"
+import { createSlice, isAnyOf } from "@reduxjs/toolkit"
 import { addBooking, deleteBooking, editBooking, getBooking, getBookings } from "./bookingsAsyncThunk";
 import { iBooking } from "../../entitys/Data";
 import { RootState } from '../../app/store';
