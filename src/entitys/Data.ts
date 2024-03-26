@@ -55,7 +55,7 @@ export interface iRoom {
     cancellation: boolean,
     amenities: Array<string>,
     discount: number,
-    status: 'Available' | 'Booked'
+    status: string
 }
 
 export interface FakesUri {
@@ -81,7 +81,7 @@ export interface iData {
 
 export interface EditDataThunk {
     id: number,
-    data: iData
+    data: iEmployee | iBooking | iMessage | iBooking
 }
 
 export interface ObjectFields {

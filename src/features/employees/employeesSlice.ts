@@ -1,16 +1,24 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit"
 import { addEmployee, deleteEmployee, editEmployee, getEmployee, getEmployees } from "./employeesAsyncThunk";
+import { RootState } from "../../app/store";
+import { iEmployee } from "../../entitys/Data";
 
-
+interface EmployeeSliceState {
+    data: iEmployee[],
+    employee: iEmployee,
+    status: string,
+    error: string | null
+}
 
 export const employeesSlice = createSlice({
     name: 'employees',
     initialState: {
         data: [],
-        employee: {},
+        employee: {} as iEmployee,
         status: 'idle',
         error: null
-    },
+    } as EmployeeSliceState,
+    reducers: {},
     extraReducers: (builder) => {
         builder.addCase(getEmployees.fulfilled, (state, action) => {
             state.data = action.payload;
@@ -60,9 +68,9 @@ export const employeesSlice = createSlice({
     }
 });
 
-export const getAllEmployees = state => state.employees.data;
-export const employeesStatus = state => state.employees.status;
-export const getOneEmployee = state => state.employees.employee;
+export const getAllEmployees = (state: RootState) => state.employees.data;
+export const employeesStatus = (state: RootState) => state.employees.status;
+export const getOneEmployee = (state: RootState) => state.employees.employee;
 
 
 export default employeesSlice.reducer;

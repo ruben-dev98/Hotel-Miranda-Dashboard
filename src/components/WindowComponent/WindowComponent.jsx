@@ -1,12 +1,11 @@
-import { WindowStyled } from "../../styled/DivsStyled"
+//import { WindowStyled } from "../../styled/DivsStyled"
 import { PropTypes } from 'prop-types';
 
 const WindowStyledComponent = ({children, visibleLateral}) => {
 
     return (
-        <WindowStyled $visibleLateral = {visibleLateral}>
-            {children}
-        </WindowStyled>
+        {/*<WindowStyled $visibleLateral = {visibleLateral}>
+        </WindowStyled>*/}
     )
 }
 

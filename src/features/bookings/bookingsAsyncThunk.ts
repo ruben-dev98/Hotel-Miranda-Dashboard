@@ -21,7 +21,7 @@ export const addBooking = createAsyncThunk('bookings/addBooking', async (data: i
 
 export const editBooking = createAsyncThunk('bookings/editBooking', async ({id, data}: EditDataThunk) => {
     await delay();
-    return await FakeApi(URI_BOOKINGS.edit, URI_BOOKINGS, id, data, {data: null, rooms: null});
+    return await FakeApi(URI_BOOKINGS.edit, URI_BOOKINGS, id, {data}, {data: null, rooms: null});
 });
 
 export const deleteBooking = createAsyncThunk('bookings/deleteBooking', async (id: number) => {

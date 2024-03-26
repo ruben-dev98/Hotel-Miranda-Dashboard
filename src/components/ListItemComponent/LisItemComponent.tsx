@@ -11,9 +11,9 @@ const ListItemStyled = styled.li<{$isActive?: boolean}>`
 
 interface ListItemProps {
     index: number,
-    str: string,
-    setCurrentTab: Dispatch<SetStateAction<string>>,
-    currentTab: string,
+    str: string | boolean,
+    setCurrentTab: Dispatch<SetStateAction<string | boolean>>,
+    currentTab: string | boolean,
     children?: ReactNode
 }
 

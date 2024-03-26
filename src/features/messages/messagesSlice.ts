@@ -1,14 +1,24 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit"
 import { deleteMessage, editMessage, getMessage, getMessages } from "./messagesAsyncThunk";
+import { iMessage } from "../../entitys/Data";
+import { RootState } from "../../app/store";
+
+interface MessageSliceState {
+    data: iMessage[],
+    message: iMessage,
+    status: string,
+    error: string | null
+}
 
 export const messagesSlice = createSlice({
     name: 'messages',
     initialState: {
         data: [],
-        message: {},
+        message: {} as iMessage,
         status: 'idle',
         error: null
-    },
+    } as MessageSliceState,
+    reducers: {},
     extraReducers: (builder) => {
         builder.addCase(getMessages.fulfilled, (state, action) => {
             state.data = action.payload;
@@ -45,8 +55,8 @@ export const messagesSlice = createSlice({
     }
 });
 
-export const getAllMessages = state => state.messages.data;
-export const messagesStatus = state => state.messages.status;
-export const getOneMessage = state => state.messages.message;
+export const getAllMessages = (state: RootState) => state.messages.data;
+export const messagesStatus = (state: RootState) => state.messages.status;
+export const getOneMessage = (state: RootState) => state.messages.message;
 
 export default messagesSlice.reducer;

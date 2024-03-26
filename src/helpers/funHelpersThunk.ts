@@ -1,9 +1,9 @@
-import { ArrayIData, ArrayIRooms, FakesUri, iBooking, iData, iEmployee, iMessage, iRoom } from "../entitys/Data";
+import { ArrayIData, ArrayIRooms, FakesUri, iData, iRoom } from "../entitys/Data";
 
 const getAllData = (aData: ArrayIData) => aData.data;
 const getOneData = (aData: ArrayIData, id: number) => aData.data?.find((items) => items.id === id);
 const addData = (data: iData) => data;
-const editData = (id: number, data: iData) => ({ id: id, data: data });
+const editData = (id: number, data: iData) => ({ id: id, data: data.data });
 const deleteData = (id: number) => id;
 
 export const dataAvailableRoomsNumber = (aData: ArrayIRooms) => aData.rooms?.filter((room: iRoom) => room.status === 'Available').map(room => room.number).sort((a, b) => {
