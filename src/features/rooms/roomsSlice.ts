@@ -6,7 +6,7 @@ import { RootState } from "../../app/store";
 interface RoomSliceState {
     data: iRoom[],
     room: iRoom,
-    roomsAvailable: iRoom[],
+    roomsAvailable: string[],
     status: string,
     error: string | null
 }

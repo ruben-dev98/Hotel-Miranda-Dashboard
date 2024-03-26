@@ -1,5 +1,5 @@
 
-import BookingListComponent from '../components/BookingListComponent';
+//import BookingListComponent from '../components/BookingListComponent';
 //import CalendarComponent from '../components/Calendar/CalendarComponent';
 import KPIsComponent from '../components/KPIsComponent';
 import MessageListComponent from '../components/MessageListComponent';
@@ -19,10 +19,10 @@ const DashboardPage = () => {
                 <KPIsComponent icon={<ImEnter />} number={400} text={'Check In'}></KPIsComponent>
                 <KPIsComponent icon={<ImExit />} number={200} text={'Check Out'}></KPIsComponent>
             </div>
-            <div className='no__use'>
-                {/*<CalendarComponent></CalendarComponent>*/}
+            {/*<div className='no__use'>
+                <CalendarComponent></CalendarComponent>
                 <BookingListComponent></BookingListComponent>
-            </div>
+            </div>*/}
             <StatsComponent></StatsComponent>
             <MessageListComponent></MessageListComponent>
         </section>

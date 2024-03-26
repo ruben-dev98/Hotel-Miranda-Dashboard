@@ -1,16 +1,28 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { lastId } from "../../app/getItemsId";
+import { lastId } from "../../app/getItenId";
 import FormComponent from '../../components/Form/FormComponent';
-import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useState } from "react";
 import { addBooking, editBooking, getBooking } from "../../features/bookings/bookingsAsyncThunk";
-import { getAllBookings, getOneBooking } from "../../features/bookings/bookingsSlice";
+import { getAllBookings, getOneBooking } from "../../features/bookings/bookingSlice";
 import Loading from "../../components/Loading";
 import { availableRooms } from "../../features/rooms/roomsSlice";
 import { availableRoomsNumber } from "../../features/rooms/roomsAsyncThunk";
 import MySwal from "../../app/MySwal";
+import { useAppDispatch, useAppSelector } from "../../hook/useStore";
+import { FormControlPropsBooking, iBooking } from "../../entitys/Data";
 
-const formControl = (rooms) => [
+interface FormData extends EventTarget {
+    full_name: HTMLFormElement, 
+    check_in: HTMLFormElement,
+    check_out: HTMLFormElement,
+    number: HTMLFormElement,
+    email: HTMLFormElement,
+    phone: HTMLFormElement,
+    special_request: HTMLFormElement
+
+}
+
+const formControl = (rooms: string[]): FormControlPropsBooking[]  => [
     {
         'label': 'Nombre y Apellidos',
         'input': 'text',
@@ -52,37 +64,42 @@ const formControl = (rooms) => [
 const BookingFormPage = () => {
     const navigate = useNavigate();
     const loc = useLocation().pathname;
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const [showSpinner, setShowSpinner] = useState(true);
     const { id } = useParams();
-    const booking = useSelector(getOneBooking);
-    const bookings = useSelector(getAllBookings);
-    const rooms = useSelector(availableRooms);
+    const booking = useAppSelector(getOneBooking);
+    const bookings = useAppSelector(getAllBookings);
+    const rooms = useAppSelector(availableRooms);
 
-    const onCreateBooking = async (event) => {
+    const onCreateBooking = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const newId = lastId(bookings);
-        const booking = {
+        const booking: iBooking = {
             id: newId,
             full_name: '',
-            order_date: Date.now(),
+            order_date: Date.now().toString(),
             check_in: '',
             check_out: '',
             special_request: '',
-            number: '',
+            number: 0,
             phone: '',
             email: '',
             status: 'In Progress',
             amenities: [],
             type: '',
-            description: ''
+            description: '',
+            price: 0,
+            room_status: '',
+            foto: ''
         }
         
         formControl(rooms).forEach((control) => {
+            const element = event.target as FormData;
+            const property = control.name as keyof iBooking;
             if(control.input === 'date') {
-                booking[control.name] = new Date(event.target[control.name].value).getTime();
+                (booking[property] as string) = String(new Date(element[control.name].value).getTime());
             } else {
-                booking[control.name] = event.target[control.name].value;
+                (booking[property] as string | number) = element[control.name].value;
             }
         });
 
@@ -91,8 +108,8 @@ const BookingFormPage = () => {
         if(loc.includes('edit')) {
             try {
                 navigate('/bookings');
-                await dispatch(editBooking({id: id, data: booking}));
-                MySwal('', html, false, 2000, 'success', true);
+                await dispatch(editBooking({id: parseInt(id || ''), data: booking}));
+                MySwal({title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true});
             } catch (error) {
                 console.log(error);
             }
@@ -100,7 +117,7 @@ const BookingFormPage = () => {
             try {
                 navigate('/bookings');
                 await dispatch(addBooking(booking));
-                MySwal('', html, false, 2000, 'success', true);
+                MySwal({title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true});
             } catch (error) {
                 console.log(error);
             }
@@ -109,7 +126,7 @@ const BookingFormPage = () => {
 
     const result = useCallback(async () => {
         await dispatch(availableRoomsNumber()).unwrap();
-        await dispatch(getBooking(parseInt(id))).unwrap();
+        await dispatch(getBooking(parseInt(id || ''))).unwrap();
         setShowSpinner(false);
     }, [id, dispatch]);
 
@@ -120,7 +137,7 @@ const BookingFormPage = () => {
     return (
         <section className="content">
             {showSpinner ? <Loading></Loading> :
-                <FormComponent path={loc} formControl={formControl(rooms)} data={booking} onHandleSubmit={onCreateBooking}></FormComponent>}
+                <FormComponent formControl={formControl(rooms)} data={booking} onHandleSubmit={onCreateBooking}></FormComponent>}
         </section>
     );
 
