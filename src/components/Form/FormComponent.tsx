@@ -3,11 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { FaArrowLeftStyled } from "../../styled/IconStyled";
 import { FormStyledComponent } from "../../styled/FormStyled";
 import { ButtonStyled } from "../../styled/ButtonStyled";
-import { iBooking, iEmployee, iRoom } from "../../entitys/Data";
-import { FormControlProps } from "../../pages/Room/RoomFormPage";
+import { FormControlPropsBooking, FormControlPropsEmployee, FormControlPropsRoom, iBooking, iEmployee, iRoom } from "../../entitys/Data";
 
 interface FormProps {
-    formControl: FormControlProps[],
+    formControl: FormControlPropsRoom[] | FormControlPropsBooking[] | FormControlPropsEmployee[],
     data: iRoom | iBooking | iEmployee,
     onHandleSubmit: React.FormEventHandler<HTMLFormElement>,
 }
