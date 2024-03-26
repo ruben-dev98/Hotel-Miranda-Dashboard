@@ -14,23 +14,24 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import { SwiperStyled } from "../../styled/SwiperStyled";
-import { ObjectFieldsRoom } from "../../entitys/Data";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
+import { ObjectFields, iRoom} from "../../entitys/Data";
 
 
-const object__fields: ObjectFieldsRoom[] = [
+const object__fields: ObjectFields[] = [
     {
         display: field => {
+            const room = field as iRoom;
             return (<DivDetails>
                 <DivDetailsPartFirst>
                     <DivDetailsComponents>
                         <div>
                             <SpanStyledDetailsLabel>Room Info</SpanStyledDetailsLabel><br></br>
-                            <SpanStyledDetailsValue>{field.type} - {field.number}</SpanStyledDetailsValue>
+                            <SpanStyledDetailsValue>{room.type} - {room.number}</SpanStyledDetailsValue>
                         </div>
                         <div>
                             <SpanStyledDetailsLabel>Price</SpanStyledDetailsLabel><br></br>
-                            <SpanStyledDetailsValue>${field.offer === true ? (field.price - (field.price * field.discount / 100)).toFixed(2) : field.price}<SpanStyledDetailsLabel> /Night</SpanStyledDetailsLabel></SpanStyledDetailsValue>
+                            <SpanStyledDetailsValue>${room.offer === true ? (room.price - (room.price * room.discount / 100)).toFixed(2) : room.price}<SpanStyledDetailsLabel> /Night</SpanStyledDetailsLabel></SpanStyledDetailsValue>
                         </div>
                     </DivDetailsComponents>
                     <DivDetailsComponents>
@@ -38,16 +39,16 @@ const object__fields: ObjectFieldsRoom[] = [
                     <DivDetailsComponents>
                         <div>
                             <SpanStyledDetailsLabel>Amenities</SpanStyledDetailsLabel><br></br>
-                            <AmenitiesStyled>{field.amenities.map((amen, index) => <li key={index}>{amen}</li>)}</AmenitiesStyled>
+                            <AmenitiesStyled>{room.amenities.map((amen, index) => <li key={index}>{amen}</li>)}</AmenitiesStyled>
                         </div>
                     </DivDetailsComponents>
                 </DivDetailsPartFirst>
                 <DivDetailsPart>
                     <DivDetailsSwiperLegend>
                         {
-                            field.status === 'Available' ?
-                                <SpanStyledCheckInLegend>{field.status}</SpanStyledCheckInLegend> :
-                                <SpanStyledCheckOutLegend>{field.status}</SpanStyledCheckOutLegend>
+                            room.status === 'Available' ?
+                                <SpanStyledCheckInLegend>{room.status}</SpanStyledCheckInLegend> :
+                                <SpanStyledCheckOutLegend>{room.status}</SpanStyledCheckOutLegend>
                         }
                     </DivDetailsSwiperLegend>
                     <SwiperStyled
@@ -59,19 +60,19 @@ const object__fields: ObjectFieldsRoom[] = [
                         onSlideChange={() => { }}
                     >
                         <SwiperSlide style={{ userSelect: 'none' }}>
-                            <img src={field.foto} />
+                            <img src={room.foto} />
                         </SwiperSlide>
                         <SwiperSlide style={{ userSelect: 'none' }}>
-                            <img src={field.foto} />
+                            <img src={room.foto} />
                         </SwiperSlide>
                         <SwiperSlide style={{ userSelect: 'none' }}>
-                            <img src={field.foto} />
+                            <img src={room.foto} />
                         </SwiperSlide>
                     </SwiperStyled>
                     <DivDetailsSwiper>
                         <div style={{ width: '80%', margin: '0px auto' }}>
-                            <SpanSwiperTitle>{field.type}</SpanSwiperTitle><br></br>
-                            <SpanSwiper>{field.description}</SpanSwiper>
+                            <SpanSwiperTitle>{room.type}</SpanSwiperTitle><br></br>
+                            <SpanSwiper>{room.description}</SpanSwiper>
                         </div>
                     </DivDetailsSwiper>
                 </DivDetailsPart>

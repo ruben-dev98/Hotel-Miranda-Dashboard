@@ -6,41 +6,42 @@ import Loading from '../../components/Loading';
 import DetailsComponent from '../../components/Details/DetailsComponent';
 import { SpanStyled, SpanStyledCheckOut, SpanStyledDetailsLabel, SpanStyledDetailsTitle, SpanStyledDetailsValue } from '../../styled/SpanStyled';
 import { useAppDispatch, useAppSelector } from '../../hook/useStore';
-import { ObjectFieldsEmployee } from '../../entitys/Data';
 import { DivDetails, DivDetailsComponents, DivDetailsPart, DivDetailsPartFirst } from '../../styled/DivStyled';
+import { ObjectFields, iEmployee } from '../../entitys/Data';
 
-const object__fields: ObjectFieldsEmployee[] = [
+const object__fields: ObjectFields[] = [
     {
-        display: (field) => {
+        display: field => {
+            const employee = field as iEmployee;
             return (
                 <DivDetails>
                     <DivDetailsPartFirst>
                         <SpanStyledDetailsTitle>
-                            {field.full_name}
+                            {employee.full_name}
                         </SpanStyledDetailsTitle><br></br>
                         <SpanStyledDetailsLabel>
-                            #{field.id}
+                            #{employee.id}
                         </SpanStyledDetailsLabel>
                         <DivDetailsComponents>
                             <div>
                                 <SpanStyledDetailsLabel>Email</SpanStyledDetailsLabel><br></br>
-                                <SpanStyledDetailsValue>{field.email}</SpanStyledDetailsValue>
+                                <SpanStyledDetailsValue>{employee.email}</SpanStyledDetailsValue>
                             </div>
                             <div>
                                 <SpanStyledDetailsLabel>Contact</SpanStyledDetailsLabel><br></br>
-                                <SpanStyledDetailsValue>{field.contact}</SpanStyledDetailsValue>
+                                <SpanStyledDetailsValue>{employee.contact}</SpanStyledDetailsValue>
                             </div>
                         </DivDetailsComponents>
                         <hr></hr>
                         <DivDetailsComponents>
                             <div>
                                 <SpanStyledDetailsLabel>Start Date</SpanStyledDetailsLabel><br></br>
-                                <SpanStyledDetailsValue>{field.start_date}</SpanStyledDetailsValue>
+                                <SpanStyledDetailsValue>{employee.start_date}</SpanStyledDetailsValue>
                             </div>
                             <div>
                                 <SpanStyledDetailsLabel>Status</SpanStyledDetailsLabel><br></br>
                                 <SpanStyledDetailsValue>
-                                    {field.status ?
+                                    {employee.status ?
                                         <SpanStyled>Active</SpanStyled> :
                                         <SpanStyledCheckOut>Inactive</SpanStyledCheckOut>
                                     }
@@ -50,12 +51,12 @@ const object__fields: ObjectFieldsEmployee[] = [
                         <DivDetailsComponents>
                             <div>
                                 <SpanStyledDetailsLabel>Description</SpanStyledDetailsLabel><br></br>
-                                <SpanStyledDetailsLabel>{field.description}</SpanStyledDetailsLabel>
+                                <SpanStyledDetailsLabel>{employee.description}</SpanStyledDetailsLabel>
                             </div>
                         </DivDetailsComponents>
                     </DivDetailsPartFirst>
                     <DivDetailsPart>
-                        <img src={field.foto} />
+                        <img src={employee.foto} />
                     </DivDetailsPart>
                 </DivDetails>
             )

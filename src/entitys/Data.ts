@@ -29,7 +29,7 @@ export interface iEmployee {
     description: string,
     job: string,
     contact: string,
-    status: boolean,
+    status: boolean | string,
     password: string
 }
 
@@ -76,19 +76,8 @@ export interface EditDataThunk {
 }
 
 export interface ObjectFields {
-    type: string;
-}
-
-export interface ObjectFieldsBooking extends ObjectFields {
-    display: (field: iBooking) => JSX.Element;
-}
-
-export interface ObjectFieldsEmployee extends ObjectFields {
-    display: (field: iEmployee) => JSX.Element;
-}
-
-export interface ObjectFieldsRoom extends ObjectFields {
-    display: (field: iRoom) => JSX.Element;
+    type: string,
+    display: (field: iBooking | iEmployee | iRoom) => JSX.Element
 }
 
 export interface HandleClickDeleteProps {
@@ -110,4 +99,23 @@ export interface DataProperties {
     label: string;
     property?: string;
     display?: Function;
+}
+
+interface FormControlProps {
+    label: string,
+    input: string,
+    data?: string[]
+    
+}
+
+export interface FormControlPropsRoom extends FormControlProps {
+    name: 'foto' | 'type' | 'number' | 'description' | 'price' | 'discount' | 'cancellation' | 'amenities'
+}
+
+export interface FormControlPropsEmployee extends FormControlProps {
+    name: 'foto' | 'full_name' | 'job' | 'email' | 'contact' | 'start_date' | 'description' | 'status' | 'password'
+}
+
+export interface FormControlPropsBooking extends FormControlProps {
+    name: '' | '' | '' | '' | '' | '' | ''
 }

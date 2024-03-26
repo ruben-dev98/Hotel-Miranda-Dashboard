@@ -7,14 +7,9 @@ import { lastId } from "../../app/getItenId";
 import FormComponent from "../../components/Form/FormComponent";
 import MySwal from "../../app/MySwal";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
-import { iRoom } from "../../entitys/Data";
+import { FormControlPropsRoom, iRoom } from "../../entitys/Data";
 
-export interface FormControlProps {
-    label: string,
-    input: string,
-    data?: string[],
-    name: 'foto' | 'type' | 'number' | 'description' | 'price' | 'discount' | 'cancellation' | 'amenities'
-}
+
 
 interface FormData extends EventTarget {
     foto: HTMLFormElement,
@@ -27,7 +22,7 @@ interface FormData extends EventTarget {
     amenities: HTMLFormElement
 }
 
-const formControl: FormControlProps[] = [
+const formControl: FormControlPropsRoom[] = [
     {
         'label': 'Foto',
         'input': 'text',
