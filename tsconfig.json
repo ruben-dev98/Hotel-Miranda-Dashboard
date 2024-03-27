@@ -22,7 +22,7 @@
     },
     "include": [
         "src"
-    ],
+, "cypress/helpers/getStyledTest.js"    ],
     "references": [
         {
             "path": "./tsconfig.node.json"
