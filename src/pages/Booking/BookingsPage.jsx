@@ -42,8 +42,8 @@ const handleClickDelete = async (event, dispatch, row) => {
 const action = (row, dispatch) => {
     return (
         <DivStyledActions>
-            <ButtonStyledIcon as={LinkStyled} to={`edit/${row.id}`} onClick={(event) => event.stopPropagation()}><EditStyled/></ButtonStyledIcon>
-            <ButtonStyledIcon onClick={(event) => handleClickDelete(event, dispatch, row)}><DeleteStyled/></ButtonStyledIcon>
+            <ButtonStyledIcon as={LinkStyled} to={`edit/${row.id}`} onClick={(event) => event.stopPropagation()}><EditStyled /></ButtonStyledIcon>
+            <ButtonStyledIcon onClick={(event) => handleClickDelete(event, dispatch, row)}><DeleteStyled /></ButtonStyledIcon>
             {/*<ButtonStyledViewNotes onClick={(event) => handleClickEdit(event, dispatch, row)}>Cancelada</ButtonStyledViewNotes>*/}
         </DivStyledActions>
     )
@@ -52,27 +52,27 @@ const action = (row, dispatch) => {
 const dataTable = (dispatch) => [
     {
         'label': 'Guest',
-        display: row => (<><SpanStyledTableFirst>{row.full_name}</SpanStyledTableFirst><br/><SpanStyledTableSecond>#{row.id}</SpanStyledTableSecond></>)
+        display: row => (<><SpanStyledTableFirst>{row.full_name}</SpanStyledTableFirst><br /><SpanStyledTableSecond>#{row.id}</SpanStyledTableSecond></>)
     },
     {
         'label': 'Order Date',
         display: row => {
             const order_date = new Date(parseInt(row.order_date, 10));
-            return (<><SpanStyledTableFirst>{order_date.toDateString().slice(3)}</SpanStyledTableFirst><br/><SpanStyledTableSecond>{order_date.toTimeString().slice(0, 8)}</SpanStyledTableSecond></>);
+            return (<><SpanStyledTableFirst>{order_date.toDateString().slice(3)}</SpanStyledTableFirst><br /><SpanStyledTableSecond>{order_date.toTimeString().slice(0, 8)}</SpanStyledTableSecond></>);
         },
     },
     {
         'label': 'Check In',
         display: row => {
             const check_in = new Date(parseInt(row.check_in, 10));
-            return (<><SpanStyledTableFirst>{check_in.toDateString().slice(3)}</SpanStyledTableFirst><br/><SpanStyledTableSecond>{check_in.toTimeString().slice(0, 8)}</SpanStyledTableSecond></>);
+            return (<><SpanStyledTableFirst>{check_in.toDateString().slice(3)}</SpanStyledTableFirst><br /><SpanStyledTableSecond>{check_in.toTimeString().slice(0, 8)}</SpanStyledTableSecond></>);
         },
     },
     {
         'label': 'Check Out',
         display: row => {
             const check_out = new Date(parseInt(row.check_out, 10));
-            return (<><SpanStyledTableFirst>{check_out.toDateString().slice(3)}</SpanStyledTableFirst><br/><SpanStyledTableSecond>{check_out.toTimeString().slice(0, 8)}</SpanStyledTableSecond></>);
+            return (<><SpanStyledTableFirst>{check_out.toDateString().slice(3)}</SpanStyledTableFirst><br /><SpanStyledTableSecond>{check_out.toTimeString().slice(0, 8)}</SpanStyledTableSecond></>);
         },
     },
     {
@@ -89,7 +89,7 @@ const dataTable = (dispatch) => [
     },
     {
         'label': 'Room Type',
-        display: row => (<><SpanStyledTableFirst>{row.type}</SpanStyledTableFirst><br/><SpanStyledTableSecond>{row.number}</SpanStyledTableSecond></>)
+        display: row => (<><SpanStyledTableFirst>{row.type}</SpanStyledTableFirst><br /><SpanStyledTableSecond>{row.number}</SpanStyledTableSecond></>)
 
     },
     {
@@ -136,7 +136,7 @@ const BookingsPage = () => {
         })
     }, [data, currentOrder, currentTab, debouncedSearchTerm]);
 
-    const inititalFecth = async () => {
+    const initialFetch = async () => {
         try {
             await dispatch(getBookings()).unwrap();
             setIsLoading(false);
@@ -146,10 +146,10 @@ const BookingsPage = () => {
     };
 
     useEffect(() => {
-        inititalFecth();
+        initialFetch();
     }, []);
 
-    if(isLoading) {
+    if (isLoading) {
         return (<section className='content'>
             <Loading></Loading>
         </section>)
@@ -157,15 +157,13 @@ const BookingsPage = () => {
 
     return (
         <section className='content'>
-                <>
-                    <div className="top__menu-table">
-                        <InputSearch value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Busqueda por nombre usuario"/>
-                        <ButtonStyledNew as={LinkStyled} to={'booking'}>+ New Booking</ButtonStyledNew>
-                        <OrderComponent setCurrentOrder={setCurrentOrder} data={bookingsOrder} />
-                    </div>
-                    <TabsComponent data={bookings} setCurrentTab={setCurrentTab} currentTab={currentTab}></TabsComponent>
-                    <TableComponent rows={filteredBookings} columns={dataTable(dispatch)} path={'bookings'}></TableComponent>
-                </>
+            <div className="top__menu-table">
+                <InputSearch value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Busqueda por nombre usuario" />
+                <ButtonStyledNew as={LinkStyled} to={'booking'}>+ New Booking</ButtonStyledNew>
+                <OrderComponent setCurrentOrder={setCurrentOrder} data={bookingsOrder} />
+            </div>
+            <TabsComponent data={bookings} setCurrentTab={setCurrentTab} currentTab={currentTab}></TabsComponent>
+            <TableComponent rows={filteredBookings} columns={dataTable(dispatch)} path={'bookings'}></TableComponent>
         </section>
     );
 }

@@ -75,7 +75,7 @@ const ContactPage = () => {
         return all;
     }, [data, currentTab]);
 
-    const inititalFecth = async () => {
+    const initialFetch = async () => {
         try {
             await dispatch(getMessages()).unwrap();
             setIsLoading(false);
@@ -85,7 +85,7 @@ const ContactPage = () => {
     };
 
     useEffect(() => {
-        inititalFecth();
+        initialFetch();
     }, []);
 
     if (isLoading) {

@@ -53,7 +53,7 @@ const BookingFormPage = () => {
     const navigate = useNavigate();
     const loc = useLocation().pathname;
     const dispatch = useDispatch();
-    const [showSpinner, setShowSpinner] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
     const { id } = useParams();
     const booking = useSelector(getOneBooking);
     const bookings = useSelector(getAllBookings);
@@ -77,9 +77,9 @@ const BookingFormPage = () => {
             type: '',
             description: ''
         }
-        
+
         formControl(rooms).forEach((control) => {
-            if(control.input === 'date') {
+            if (control.input === 'date') {
                 booking[control.name] = new Date(event.target[control.name].value).getTime();
             } else {
                 booking[control.name] = event.target[control.name].value;
@@ -88,10 +88,10 @@ const BookingFormPage = () => {
 
         const html = id ? <p>Update #{booking.id} Booking Successfully</p> : <p>Create #{booking.id} Booking Successfully</p>;
 
-        if(loc.includes('edit')) {
+        if (loc.includes('edit')) {
             try {
                 navigate('/bookings');
-                await dispatch(editBooking({id: id, data: booking}));
+                await dispatch(editBooking({ id: id, data: booking }));
                 MySwal('', html, false, 2000, 'success', true);
             } catch (error) {
                 console.log(error);
@@ -107,20 +107,25 @@ const BookingFormPage = () => {
         }
     }
 
-    const result = useCallback(async () => {
+    const initialFetch = async () => {
         await dispatch(availableRoomsNumber()).unwrap();
         await dispatch(getBooking(parseInt(id))).unwrap();
-        setShowSpinner(false);
-    }, [id, dispatch]);
+        setIsLoading(false);
+    };
 
     useEffect(() => {
-        result();
-    }, [result]);
+        initialFetch();
+    }, []);
+
+    if (isLoading) {
+        return (<section className='content'>
+            <Loading></Loading>
+        </section>)
+    }
 
     return (
         <section className="content">
-            {showSpinner ? <Loading></Loading> :
-                <FormComponent path={loc} formControl={formControl(rooms)} data={booking} onHandleSubmit={onCreateBooking}></FormComponent>}
+            <FormComponent path={loc} formControl={formControl(rooms)} data={booking} onHandleSubmit={onCreateBooking}></FormComponent>
         </section>
     );
 

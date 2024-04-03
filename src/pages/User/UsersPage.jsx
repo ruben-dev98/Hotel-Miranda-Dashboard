@@ -104,7 +104,7 @@ const UsersPage = () => {
         })
     }, [data, currentOrder, currentTab, debouncedSearchTerm]);
 
-    const inititalFecth = async () => {
+    const initialFetch = async () => {
         try {
             await dispatch(getEmployees()).unwrap();
             setIsLoading(false);
@@ -114,7 +114,7 @@ const UsersPage = () => {
     };
 
     useEffect(() => {
-        inititalFecth();
+        initialFetch();
     }, []);
 
     if (isLoading) {

@@ -58,7 +58,7 @@ const formControl = [
 const RoomFormPage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [showSpinner, setShowSpinner] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
     const room = useSelector(getOneRoom);
     const rooms = useSelector(getAllRooms);
     const loc = useLocation().pathname;
@@ -120,23 +120,28 @@ const RoomFormPage = () => {
         }
     }
 
-    const result = useCallback(async () => {
+    const initialFetch = async () => {
         try {
             await dispatch(getRoom(parseInt(id))).unwrap();
-            setShowSpinner(false);
+            setIsLoading(false);
         } catch (error) {
             console.log(error);
         }
-    }, [id, dispatch]);
+    };
 
     useEffect(() => {
-        result();
-    }, [result])
+        initialFetch();
+    }, [])
+
+    if (isLoading) {
+        return (<section className='content'>
+            <Loading></Loading>
+        </section>)
+    }
 
     return (
         <section className="content">
-            {showSpinner ? <Loading></Loading> :
-                <FormComponent path={loc} data={room} formControl={formControl} onHandleSubmit={onCreateRoom}></FormComponent>}
+            <FormComponent path={loc} data={room} formControl={formControl} onHandleSubmit={onCreateRoom}></FormComponent>
         </section>
     )
 }

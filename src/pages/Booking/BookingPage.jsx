@@ -7,7 +7,7 @@ import Loading from "../../components/Loading";
 import DetailsComponent from "../../components/Details/DetailsComponent";
 import { AmenitiesStyled } from "../../styled/ListStyled";
 import { SpanStyledDetailsLabel, SpanStyledDetailsValue, SpanStyledDetailsTitle, SpanSwiperTitle, SpanSwiper, SpanStyledInProgressLegend, SpanStyledCheckOutLegend, SpanStyledCheckInLegend } from "../../styled/SpanStyled";
-import { DivDetailsComponents, DivDetails, DivDetailsPart, DivDetailsSwiper, DivDetailsSwiperLegend, DivDetailsPartFirst, DivDetailsContent} from "../../styled/DivsStyled";
+import { DivDetailsComponents, DivDetails, DivDetailsPart, DivDetailsSwiper, DivDetailsSwiperLegend, DivDetailsPartFirst, DivDetailsContent } from "../../styled/DivsStyled";
 import { Navigation } from 'swiper/modules';
 import { SwiperSlide } from 'swiper/react';
 
@@ -65,13 +65,13 @@ const object__fields = [
                     </DivDetailsPartFirst>
                     <DivDetailsPart>
                         <DivDetailsSwiperLegend>
-                        {
-                            field.status === 'Check In' ?
-                                <SpanStyledCheckInLegend>{field.status}</SpanStyledCheckInLegend> :
-                                field.status === 'Check Out' ?
-                                    <SpanStyledCheckOutLegend>{field.status}</SpanStyledCheckOutLegend> :
-                                    <SpanStyledInProgressLegend>{field.status}</SpanStyledInProgressLegend>
-                        }
+                            {
+                                field.status === 'Check In' ?
+                                    <SpanStyledCheckInLegend>{field.status}</SpanStyledCheckInLegend> :
+                                    field.status === 'Check Out' ?
+                                        <SpanStyledCheckOutLegend>{field.status}</SpanStyledCheckOutLegend> :
+                                        <SpanStyledInProgressLegend>{field.status}</SpanStyledInProgressLegend>
+                            }
                         </DivDetailsSwiperLegend>
                         <SwiperStyled
                             // install Swiper modules
@@ -108,26 +108,28 @@ const object__fields = [
 
 const BookingPage = () => {
     const dispatch = useDispatch();
-    const [showSpinner, setShowSpinner] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
     const { id } = useParams();
     const booking = useSelector(getOneBooking);
 
-    const result = useCallback(async () => {
+    const initialFetch = async () => {
         await dispatch(getBooking(parseInt(id))).unwrap();
-        setShowSpinner(false);
-    }, [id, dispatch]);
+        setIsLoading(false);
+    };
 
     useEffect(() => {
-        result();
-    }, [result]);
+        initialFetch();
+    }, []);
+
+    if (isLoading) {
+        return (<section className='content'>
+            <Loading></Loading>
+        </section>)
+    }
 
     return (
-
         <section className="content">
-            {showSpinner ? <Loading></Loading> : <>
-                <DetailsComponent data={booking} object__fields={object__fields}></DetailsComponent>
-            </>
-            }
+            <DetailsComponent data={booking} object__fields={object__fields}></DetailsComponent>
         </section>
     );
 

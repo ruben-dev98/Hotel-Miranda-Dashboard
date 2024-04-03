@@ -61,7 +61,7 @@ const formControl = [
 const UserFormPage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [showSpinner, setShowSpinner] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
     const user = useSelector(getOneEmployee);
     const users = useSelector(getAllEmployees);
     const loc = useLocation().pathname;
@@ -107,23 +107,28 @@ const UserFormPage = () => {
         }
     }
 
-    const result = useCallback(async () => {
+    const initialFetch = async () => {
         try {
             await dispatch(getEmployee(parseInt(id))).unwrap();
-            setShowSpinner(false);
+            setIsLoading(false);
         } catch (error) {
             console.log(error);
         }
-    }, [id, dispatch]);
+    };
 
     useEffect(() => {
-        result();
-    }, [result])
+        initialFetch();
+    }, []);
+
+    if (isLoading) {
+        return (<section className='content'>
+            <Loading></Loading>
+        </section>)
+    }
 
     return (
         <section className="content">
-            {showSpinner ? <Loading></Loading> :
-                <FormComponent path={loc} data={user} formControl={formControl} onHandleSubmit={onCreateUser}></FormComponent>}
+            <FormComponent path={loc} data={user} formControl={formControl} onHandleSubmit={onCreateUser}></FormComponent>
         </section>
     )
 }

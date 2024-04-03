@@ -130,7 +130,7 @@ const RoomsPage = () => {
         })
     }, [data, currentOrder, currentTab]);
 
-    const inititalFecth = async () => {
+    const initialFetch = async () => {
         try {
             await dispatch(getRooms()).unwrap();
             setIsLoading(false);
@@ -140,7 +140,7 @@ const RoomsPage = () => {
     };
 
     useEffect(() => {
-        inititalFecth();
+        initialFetch();
     }, []);
 
     if (isLoading) {
@@ -149,17 +149,14 @@ const RoomsPage = () => {
         </section>)
     }
 
-
     return (
         <section className='content'>
-            <>
-                <div className="top__menu-table">
-                    <ButtonStyledNew as={LinkStyled} to={'room'}>+ New Room</ButtonStyledNew>
-                    <OrderComponent setCurrentOrder={setCurrentOrder} data={roomsOrder} />
-                </div>
-                <TabsComponent setCurrentTab={setCurrentTab} data={rooms} currentTab={currentTab}></TabsComponent>
-                <TableComponent rows={filteredRooms} columns={dataTable(dispatch)} path={'rooms'}></TableComponent>
-            </>
+            <div className="top__menu-table">
+                <ButtonStyledNew as={LinkStyled} to={'room'}>+ New Room</ButtonStyledNew>
+                <OrderComponent setCurrentOrder={setCurrentOrder} data={roomsOrder} />
+            </div>
+            <TabsComponent setCurrentTab={setCurrentTab} data={rooms} currentTab={currentTab}></TabsComponent>
+            <TableComponent rows={filteredRooms} columns={dataTable(dispatch)} path={'rooms'}></TableComponent>
         </section>
     );
 }
