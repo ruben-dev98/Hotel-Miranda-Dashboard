@@ -47,7 +47,7 @@ const TableComponent = ({ rows, columns, path }) => {
 
     return (
         <>
-            <TableStyled $path={path}>
+            <TableStyled>
                 <thead>
                     <tr>
                         {columns.map((element, index) => <th key={index}>{element.label}</th>)}
