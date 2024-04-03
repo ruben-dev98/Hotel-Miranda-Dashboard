@@ -65,7 +65,7 @@ const BookingFormPage = () => {
     const navigate = useNavigate();
     const loc = useLocation().pathname;
     const dispatch = useAppDispatch();
-    const [showSpinner, setShowSpinner] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
     const { id } = useParams();
     const booking = useAppSelector(getOneBooking);
     const bookings = useAppSelector(getAllBookings);
@@ -124,20 +124,25 @@ const BookingFormPage = () => {
         }
     }
 
-    const result = useCallback(async () => {
+    const initialFetch = async () => {
         await dispatch(availableRoomsNumber()).unwrap();
         await dispatch(getBooking(parseInt(id || ''))).unwrap();
-        setShowSpinner(false);
-    }, [id, dispatch]);
+        setIsLoading(false);
+    };
 
     useEffect(() => {
-        result();
-    }, [result]);
+        initialFetch();
+    }, []);
+
+    if(isLoading) {
+        return (<section className='content'>
+            <Loading></Loading>
+        </section>)
+    }
 
     return (
         <section className="content">
-            {showSpinner ? <Loading></Loading> :
-                <FormComponent formControl={formControl(rooms)} data={booking} onHandleSubmit={onCreateBooking}></FormComponent>}
+            <FormComponent formControl={formControl(rooms)} data={booking} onHandleSubmit={onCreateBooking}></FormComponent>
         </section>
     );
 

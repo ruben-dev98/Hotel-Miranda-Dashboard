@@ -107,7 +107,7 @@ const UsersPage = () => {
         })
     }, [data, currentOrder, currentTab, debouncedSearchTerm]);
 
-    const inititalFecth = async () => {
+    const initialFetch = async () => {
         try {
             await dispatch(getEmployees()).unwrap();
             setIsLoading(false);
@@ -117,7 +117,7 @@ const UsersPage = () => {
     };
 
     useEffect(() => {
-        inititalFecth();
+        initialFetch();
     }, []);
 
     if (isLoading) {
@@ -128,15 +128,13 @@ const UsersPage = () => {
 
     return (
         <section className='content'>
-            <>
-                <div className="top__menu-table">
-                    <InputSearch value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Busqueda por nombre usuario" />
-                    <ButtonStyledNew as={LinkStyled} to={'user'}>+ New Employee</ButtonStyledNew>
-                    <OrderComponent setCurrentOrder={setCurrentOrder} data={usersOrder}></OrderComponent>
-                </div>
-                <TabsComponent setCurrentTab={setCurrentTab} data={users} currentTab={currentTab}></TabsComponent>
-                <TableComponent rows={filteredUsers} columns={dataTable({dispatch})} path={'users'}></TableComponent>
-            </>
+            <div className="top__menu-table">
+                <InputSearch value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Busqueda por nombre usuario" />
+                <ButtonStyledNew as={LinkStyled} to={'user'}>+ New Employee</ButtonStyledNew>
+                <OrderComponent setCurrentOrder={setCurrentOrder} data={usersOrder}></OrderComponent>
+            </div>
+            <TabsComponent setCurrentTab={setCurrentTab} data={users} currentTab={currentTab}></TabsComponent>
+            <TableComponent rows={filteredUsers} columns={dataTable({dispatch})} path={'users'}></TableComponent>
         </section>
     );
 }

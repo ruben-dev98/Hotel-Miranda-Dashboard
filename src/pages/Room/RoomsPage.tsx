@@ -136,7 +136,7 @@ const RoomsPage = () => {
         })
     }, [data, currentOrder, currentTab]);
 
-    const inititalFecth = async () => {
+    const initialFetch = async () => {
         try {
             await dispatch(getRooms()).unwrap();
             setIsLoading(false);
@@ -146,7 +146,7 @@ const RoomsPage = () => {
     };
 
     useEffect(() => {
-        inititalFecth();
+        initialFetch();
     }, []);
 
     if (isLoading) {
@@ -154,7 +154,6 @@ const RoomsPage = () => {
             <Loading></Loading>
         </section>)
     }
-
 
     return (
         <section className='content'>

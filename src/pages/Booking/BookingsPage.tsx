@@ -139,7 +139,7 @@ const BookingsPage = () => {
         })
     }, [data, currentOrder, currentTab, debouncedSearchTerm]);
 
-    const inititalFecth = async () => {
+    const initialFetch = async () => {
         try {
             await dispatch(getBookings()).unwrap();
             setIsLoading(false);
@@ -149,7 +149,7 @@ const BookingsPage = () => {
     };
 
     useEffect(() => {
-        inititalFecth();
+        initialFetch();
     }, []);
 
     if(isLoading) {
@@ -160,15 +160,13 @@ const BookingsPage = () => {
 
     return (
         <section className='content'>
-                <>
-                    <div className="top__menu-table">
-                        <InputSearch value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Busqueda por nombre usuario"/>
-                        <ButtonStyledNew as={LinkStyled} to={'booking'}>+ New Booking</ButtonStyledNew>
-                        <OrderComponent setCurrentOrder={setCurrentOrder} data={bookingsOrder} />
-                    </div>
-                    <TabsComponent data={bookings} setCurrentTab={setCurrentTab} currentTab={currentTab}></TabsComponent>
-                    <TableComponent rows={filteredBookings} columns={dataTable({dispatch})} path={'bookings'}></TableComponent>
-                </>
+            <div className="top__menu-table">
+                <InputSearch value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Busqueda por nombre usuario"/>
+                <ButtonStyledNew as={LinkStyled} to={'booking'}>+ New Booking</ButtonStyledNew>
+                <OrderComponent setCurrentOrder={setCurrentOrder} data={bookingsOrder} />
+            </div>
+            <TabsComponent data={bookings} setCurrentTab={setCurrentTab} currentTab={currentTab}></TabsComponent>
+            <TableComponent rows={filteredBookings} columns={dataTable({dispatch})} path={'bookings'}></TableComponent>
         </section>
     );
 }

@@ -84,7 +84,7 @@ const ContactPage = () => {
         return all;
     }, [data, currentTab]);
 
-    const inititalFecth = async () => {
+    const initialFetch = async () => {
         try {
             await dispatch(getMessages()).unwrap();
             setIsLoading(false);
@@ -94,7 +94,7 @@ const ContactPage = () => {
     };
 
     useEffect(() => {
-        inititalFecth();
+        initialFetch();
     }, []);
 
     if (isLoading) {
@@ -107,11 +107,9 @@ const ContactPage = () => {
 
     return (
         <section className='content'>
-            <>
-                <MessageListComponent />
-                <TabsComponent setCurrentTab={setCurrentTab} data={message} currentTab={currentTab}></TabsComponent>
-                <TableComponent rows={filteredMessages} columns={dataTable({ dispatch })} path={''}></TableComponent>
-            </>
+            <MessageListComponent />
+            <TabsComponent setCurrentTab={setCurrentTab} data={message} currentTab={currentTab}></TabsComponent>
+            <TableComponent rows={filteredMessages} columns={dataTable({ dispatch })} path={''}></TableComponent>
         </section>
     );
 }

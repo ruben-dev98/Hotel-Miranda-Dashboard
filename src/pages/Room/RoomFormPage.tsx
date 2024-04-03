@@ -72,7 +72,7 @@ const formControl: FormControlPropsRoom[] = [
 const RoomFormPage = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const [showSpinner, setShowSpinner] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
     const room = useAppSelector(getOneRoom);
     const rooms = useAppSelector(getAllRooms);
     const loc = useLocation().pathname;
@@ -136,23 +136,22 @@ const RoomFormPage = () => {
         }
     }
 
-    const result = useCallback(async () => {
+    const initialFetch =async () => {
         try {
             await dispatch(getRoom(parseInt(id || ''))).unwrap();
-            setShowSpinner(false);
+            setIsLoading(false);
         } catch (error) {
             console.log(error);
         }
-    }, [id, dispatch]);
+    };
 
     useEffect(() => {
-        result();
-    }, [result])
+        initialFetch();
+    }, [])
 
     return (
         <section className="content">
-            {showSpinner ? <Loading></Loading> :
-                <FormComponent data={room} formControl={formControl} onHandleSubmit={onCreateRoom}></FormComponent>}
+            <FormComponent data={room} formControl={formControl} onHandleSubmit={onCreateRoom}></FormComponent>
         </section>
     )
 }

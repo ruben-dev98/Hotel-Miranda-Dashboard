@@ -109,26 +109,28 @@ const object__fields: ObjectFields[] = [
 
 const BookingPage = () => {
     const dispatch = useAppDispatch();
-    const [showSpinner, setShowSpinner] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
     const { id } = useParams();
     const booking = useAppSelector(getOneBooking);
 
-    const result = useCallback(async () => {
+    const initialFetch = async () => {
         await dispatch(getBooking(parseInt(id || ''))).unwrap();
-        setShowSpinner(false);
-    }, [id, dispatch]);
+        setIsLoading(false);
+    };
 
     useEffect(() => {
-        result();
-    }, [result]);
+        initialFetch();
+    }, []);
+
+    if(isLoading) {
+        return (<section className='content'>
+            <Loading></Loading>
+        </section>)
+    }
 
     return (
-
         <section className="content">
-            {showSpinner ? <Loading></Loading> : <>
-                <DetailsComponent data={booking} object__fields={object__fields}></DetailsComponent>
-            </>
-            }
+            <DetailsComponent data={booking} object__fields={object__fields}></DetailsComponent>
         </section>
     );
 

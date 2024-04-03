@@ -67,28 +67,32 @@ const object__fields: ObjectFields[] = [
 
 const UserPage = () => {
     const dispatch = useAppDispatch();
-    const [showSpinner, setShowSpinner] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
     const user = useAppSelector(getOneEmployee);
     const { id } = useParams();
 
-    const result = useCallback(async () => {
+    const initialFetch = async () => {
         try {
             await dispatch(getEmployee(parseInt(id || ''))).unwrap();
-            setShowSpinner(false);
+            setIsLoading(false);
         } catch (error) {
             console.log(error);
         }
-    }, [id, dispatch]);
+    };
 
     useEffect(() => {
-        result();
-    }, [result])
+        initialFetch();
+    }, [])
+
+    if (isLoading) {
+        return (<section className='content'>
+            <Loading></Loading>
+        </section>)
+    }
 
     return (
         <section className="content">
-            {showSpinner ? <Loading></Loading> : <>
-                <DetailsComponent data={user} object__fields={object__fields}></DetailsComponent>
-            </>}
+            <DetailsComponent data={user} object__fields={object__fields}></DetailsComponent>
         </section>
     )
 }
