@@ -9,10 +9,17 @@ import { iBooking, iMessage, iEmployee, iRoom, DataTableProps, DataProperties } 
 import { useAppDispatch } from '../hook/useStore';
 import { ButtonStyled } from '../styled/ButtonStyled';
 
+type DataKey = keyof iRoom & keyof iBooking & keyof iEmployee & keyof iMessage;
+type Data = iBooking | iMessage | iRoom | iEmployee;
+
 interface TableProps {
     rows: iBooking[] | iMessage[] | iRoom[] | iEmployee[],
     columns: DataProperties[],
-    path : string
+    path: string
+}
+
+interface RowTypes {
+    row: Data
 }
 
 const TableStyled = styled.table`
@@ -48,7 +55,28 @@ const TableStyled = styled.table`
 const TableComponent = ({ rows, columns, path }: TableProps) => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const {data_per_page, currentPage, setCurrentPage, max_page} = usePaginate(rows);
+    const showMessage = ({ row }: RowTypes) => {
+        dispatch(getMessage(row.id)).then((result) => {
+            const title = 'Details Message';
+            const htmlCode = (<>
+                <p><strong>Full Name: </strong> ${result.payload.full_name}</p>
+                <p><strong>Subject: </strong>  ${result.payload.subject}</p>
+                <p><strong>Message: </strong> ${result.payload.messages}</p>
+            </>);
+            return MySwal({ title, html: htmlCode, showConfirmButton: false });
+        }).catch(error => {
+            console.log(error)
+        });
+    }
+
+    const handleDetails = ({ row }: RowTypes) => {
+        if (path !== '') {
+            navigate(`${row.id}`)
+        } else {
+            showMessage({ row });
+        }
+    }
+    const { data_per_page, currentPage, setCurrentPage, max_page } = usePaginate(rows);
 
     return (
         <>
@@ -61,36 +89,17 @@ const TableComponent = ({ rows, columns, path }: TableProps) => {
                 <tbody>
                     {data_per_page.map((row, index) => {
                         return (
-                            <tr onClick={() => {
-                                if (path !== '') {
-                                    navigate(`${row.id}`)
-                                } else {
-                                    const showMessage = () => {
-                                        dispatch(getMessage(row.id)).then((result) => {
-                                        const title = 'Details Message';
-                                        const htmlCode = (<>
-                                            <p><strong>Full Name: </strong> ${result.payload.full_name}</p>
-                                            <p><strong>Subject: </strong>  ${result.payload.subject}</p>
-                                            <p><strong>Message: </strong> ${result.payload.messages}</p>
-                                            </>);
-                                        return MySwal({title, html: htmlCode, showConfirmButton: false});
-                                        }).catch(error => {
-                                            console.log(error)
-                                        });
-                                    }
-                                    showMessage();
-                                }
-                            }} key={index}>
+                            <tr onClick={() => handleDetails({ row })} key={index}>
                                 {columns.map((column, indx) => {
-                                    return <td key={indx}>{!column.display ? <SpanStyledTableFirst>{row[(column.property as keyof iRoom & keyof iBooking & keyof iEmployee & keyof iMessage)]}</SpanStyledTableFirst> : column.display(row)}</td>;
+                                    return <td key={indx}>{!column.display ? <SpanStyledTableFirst>{row[column.property as DataKey]}</SpanStyledTableFirst> : column.display(row)}</td>;
                                 })}
                             </tr>
                         );
                     })}
                 </tbody>
             </TableStyled>
-            <ButtonStyled style={{marginRight: 20}} disabled={currentPage === INITIAL_PAGE ? true : false} onClick={() => setCurrentPage((prev) => --prev)}>Prev</ButtonStyled>
-            <ButtonStyled disabled={currentPage === max_page ? true : false} onClick={() => setCurrentPage((prev) => ++prev)}>Next</ButtonStyled>
+            <ButtonStyled style={{ marginRight: 20 }} disabled={currentPage === INITIAL_PAGE ? true : false} onClick={() => setCurrentPage((prev) => prev - 1)}>Prev</ButtonStyled>
+            <ButtonStyled disabled={currentPage === max_page ? true : false} onClick={() => setCurrentPage((prev) => prev + 1)}>Next</ButtonStyled>
 
         </>
     );
