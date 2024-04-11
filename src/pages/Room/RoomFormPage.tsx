@@ -1,6 +1,6 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { getAllRooms, getOneRoom } from '../../features/rooms/roomsSlice';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { addRoom, editRoom, getRoom } from '../../features/rooms/roomsAsyncThunk';
 import Loading from "../../components/Loading";
 import { lastId } from "../../app/getItenId";
@@ -144,6 +144,10 @@ const RoomFormPage = () => {
             console.log(error);
         }
     };
+
+    if(isLoading) {
+        return <Loading/>;
+    }
 
     useEffect(() => {
         initialFetch();

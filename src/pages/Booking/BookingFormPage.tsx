@@ -1,7 +1,7 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { lastId } from "../../app/getItenId";
 import FormComponent from '../../components/Form/FormComponent';
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { addBooking, editBooking, getBooking } from "../../features/bookings/bookingsAsyncThunk";
 import { getAllBookings, getOneBooking } from "../../features/bookings/bookingSlice";
 import Loading from "../../components/Loading";

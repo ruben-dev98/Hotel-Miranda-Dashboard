@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getBooking } from "../../features/bookings/bookingsAsyncThunk";
 import Loading from "../../components/Loading";
 import DetailsComponent from "../../components/Details/DetailsComponent";

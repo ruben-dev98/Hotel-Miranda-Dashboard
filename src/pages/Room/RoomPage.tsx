@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { getOneRoom } from '../../features/rooms/roomsSlice';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getRoom } from '../../features/rooms/roomsAsyncThunk';
 import Loading from "../../components/Loading";
 import DetailsComponent from "../../components/Details/DetailsComponent";

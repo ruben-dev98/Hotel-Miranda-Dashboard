@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getOneEmployee } from '../../features/employees/employeesSlice';
 import { getEmployee } from '../../features/employees/employeesAsyncThunk';
 import Loading from '../../components/Loading';

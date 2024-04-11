@@ -1,6 +1,6 @@
 import FormComponent from '../../components/Form/FormComponent';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getAllEmployees, getOneEmployee } from '../../features/employees/employeesSlice';
 import { addEmployee, editEmployee, getEmployee } from '../../features/employees/employeesAsyncThunk';
 import Loading from '../../components/Loading';
