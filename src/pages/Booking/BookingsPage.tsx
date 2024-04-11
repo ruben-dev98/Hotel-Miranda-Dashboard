@@ -16,8 +16,7 @@ import MySwal from "../../app/MySwal";
 import { useDebounce } from "@uidotdev/usehooks";
 import { InputSearch } from "../../styled/InputStyled";
 import { ORDER_BOOKING_INITIAL_STATE, TAB_BOOKING_INITIAL_STATE } from "../../helpers/varHelpers";
-import { ActionProps, DataProperties, DataTableProps, HandleClickDeleteProps } from "../../entitys/Data";
-import { iBooking } from './../../entitys/Data';
+import { ActionProps, DataProperties, DataTableProps, HandleClickDeleteProps, iBooking } from "../../entitys/Data";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
 
 
