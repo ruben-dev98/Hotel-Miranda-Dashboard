@@ -35,8 +35,8 @@ export const messagesSlice = createSlice({
             state.error = null;
         })
         .addCase(deleteMessage.fulfilled, (state, action) => {
-            const index = state.data.findIndex((message) => message._id === action.payload);
-            state.data.splice(index, 1);
+            console.log(action.payload);
+            state.data = state.data.filter((message) => message._id !== action.payload._id);
             state.status = 'fulfilled';
             state.error = null;
         })

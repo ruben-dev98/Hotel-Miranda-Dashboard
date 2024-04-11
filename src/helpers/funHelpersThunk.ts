@@ -14,8 +14,10 @@ const getAllData = async (path: string) => {
 };
 const getOneData = async (path: string, id: string) => {
     try {
+        console.log(`${SERVER}${path}/${id}`);
         const apiData = await fetch(`${SERVER}${path}/${id}`);
         const json = await apiData.json();
+        console.log(json);
         return await json.data;
     } catch(error) {
         console.error(error);
@@ -69,9 +71,9 @@ export const delay = (time = 200) => {
     });
 }
 
-export const FakeApi = (path: string, uri: FakesUri, id = '', data: dataType = {} as dataType) => {
+export const FakeApi = (path: string, operation: number, uri: FakesUri, id = '', data: dataType = {} as dataType) => {
     return new Promise<any>((resolve, reject) => {
-        switch (path) {
+        switch (operation) {
             case uri.getAll:
                 resolve(getAllData(path));
                 break;

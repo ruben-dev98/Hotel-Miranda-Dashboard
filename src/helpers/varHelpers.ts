@@ -18,33 +18,45 @@ export const METHOD_POST = 'POST';
 export const METHOD_PUT = 'PUT';
 export const METHOD_DELETE = 'DELETE';
 
+export const OPERATION_GET_ALL = 1;
+export const OPERATION_GET_ONE = 2;
+export const OPERATION_ADD = 3;
+export const OPERATION_EDIT = 4;
+export const OPERATION_DELETE = 5;
+export const OPERATION_AVAILABLE_ROOMS = 6;
+
+export const PATH_BOOKING = '/bookings';
+export const PATH_ROOM = '/rooms';
+export const PATH_EMPLOYEE = '/employees';
+export const PATH_MESSAGE = '/messages';
+
 export const URI_ROOM: FakesUri = {
-    getAll: '/rooms',
-    getOne: '/rooms',
-    edit: '/rooms',
-    add: '/rooms',
-    getRoomsNumber: 'get/allNumberRoom',
-    delete: '/rooms'
+    getAll: OPERATION_GET_ALL,
+    getOne: OPERATION_GET_ONE,
+    edit: OPERATION_EDIT,
+    add: OPERATION_ADD,
+    getRoomsNumber: OPERATION_AVAILABLE_ROOMS,
+    delete: OPERATION_DELETE
 };
 export const URI_MESSAGE: FakesUri = {
-    getAll: '/messages',
-    getOne: '/messages',
-    edit: '/messages',
-    delete: '/messages'
+    getAll: OPERATION_GET_ALL,
+    getOne: OPERATION_GET_ONE,
+    edit: OPERATION_EDIT,
+    delete: OPERATION_DELETE
 };
 export const URI_EMPLOYEE: FakesUri = {
-    getAll: '/employees',
-    getOne: '/employees',
-    edit: '/employees',
-    add: '/employees',
-    delete: '/employees'
+    getAll: OPERATION_GET_ALL,
+    getOne: OPERATION_GET_ONE,
+    edit: OPERATION_EDIT,
+    add: OPERATION_ADD,
+    delete: OPERATION_DELETE
 };
 export const URI_BOOKINGS: FakesUri = {
-    getAll: '/bookings',
-    getOne: '/bookings',
-    edit: '/bookings',
-    add: '/bookings',
-    delete: '/bookings'
+    getAll: OPERATION_GET_ALL,
+    getOne: OPERATION_GET_ONE,
+    edit: OPERATION_EDIT,
+    add: OPERATION_ADD,
+    delete: OPERATION_DELETE
 };
 
 export const SERVER: string = 'http://localhost:3000';

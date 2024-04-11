@@ -39,7 +39,7 @@ export const employeesSlice = createSlice({
                 state.error = null;
             })
             .addCase(deleteEmployee.fulfilled, (state, action) => {
-                state.data = state.data.filter((employee) => employee._id !== action.payload);
+                state.data = state.data.filter((employee) => employee._id !== action.payload._id);
                 state.status = 'fulfilled';
                 state.error = null;
             })

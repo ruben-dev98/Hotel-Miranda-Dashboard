@@ -57,12 +57,12 @@ export interface iRoom {
 }
 
 export interface FakesUri {
-    getAll: string,
-    getOne: string,
-    edit: string,
-    add?: string,
-    getRoomsNumber?: string,
-    delete: string
+    getAll: number,
+    getOne: number,
+    edit: number,
+    add?: number,
+    getRoomsNumber?: number,
+    delete: number
 }
 
 export interface EditDataThunk {
