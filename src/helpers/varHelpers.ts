@@ -14,33 +14,37 @@ export const HALF_WAY_ITEMS_PER_PAGE: number = ITEMS_PER_PAGE/2;
 export const INITIAL_PAGE: number = 1;
 export const NUMBER_ONE: number = 1;
 
+export const METHOD_POST = 'POST';
+export const METHOD_PUT = 'PUT';
+export const METHOD_DELETE = 'DELETE';
+
 export const URI_ROOM: FakesUri = {
     getAll: '/rooms',
-    getOne: '/rooms/:id',
-    edit: '/rooms/:id',
-    add: '/rooms/:id',
+    getOne: '/rooms',
+    edit: '/rooms',
+    add: '/rooms',
     getRoomsNumber: 'get/allNumberRoom',
-    delete: '/rooms/:id'
+    delete: '/rooms'
 };
 export const URI_MESSAGE: FakesUri = {
-    getAll: '/messages/',
-    getOne: '/messages/:id',
-    edit: '/messages/:id',
-    delete: '/messages/:id'
+    getAll: '/messages',
+    getOne: '/messages',
+    edit: '/messages',
+    delete: '/messages'
 };
 export const URI_EMPLOYEE: FakesUri = {
-    getAll: '/employees/',
-    getOne: '/employees/:id',
-    edit: '/employees/:id',
-    add: '/employees/:id',
-    delete: '/employees/:id'
+    getAll: '/employees',
+    getOne: '/employees',
+    edit: '/employees',
+    add: '/employees',
+    delete: '/employees'
 };
 export const URI_BOOKINGS: FakesUri = {
-    getAll: '/bookings/',
-    getOne: '/bookings/:id',
-    edit: '/bookings/:id',
-    add: '/bookings/:id',
-    delete: '/bookings/:id'
+    getAll: '/bookings',
+    getOne: '/bookings',
+    edit: '/bookings',
+    add: '/bookings',
+    delete: '/bookings'
 };
 
 export const SERVER: string = 'http://localhost:3000';

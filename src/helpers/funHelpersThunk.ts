@@ -1,23 +1,57 @@
 import { FakesUri, iBooking, iEmployee, iMessage, iRoom } from "../entities/Data";
-import { SERVER } from "./varHelpers";
+import { METHOD_DELETE, METHOD_POST, METHOD_PUT, SERVER } from "./varHelpers";
 
-type data = iEmployee | iBooking | iMessage | iRoom;
+type dataType = iEmployee | iBooking | iMessage | iRoom;
 
 const getAllData = async (path: string) => {
     try {
-        //const data = await fetch(`${SERVER}${path}`);
-        //const json = data.json();
-        //return json;
+        const apiData = await fetch(`${SERVER}${path}`);
+        const json = await apiData.json();
+        return await json.data;
     } catch(error) {
         console.error(error);
     }
 };
-const getOneData = (path: string, id: string) => {
-
+const getOneData = async (path: string, id: string) => {
+    try {
+        const apiData = await fetch(`${SERVER}${path}/${id}`);
+        const json = await apiData.json();
+        return await json.data;
+    } catch(error) {
+        console.error(error);
+    }
 };
-const addData = (path: string, data: data) => data;
-const editData = (path: string, id: string, data: data) => ({ id: id, data: data });
-const deleteData = (path: string, id: string) => id;
+const addData = async (path: string, data: dataType) => {
+    try {
+        const apiData = await fetch(`${SERVER}${path}`, {
+            method: METHOD_POST,
+            body: JSON.stringify(data)
+        });
+        const json = await apiData.json();
+        return await json.data;
+    } catch(error) {
+        console.error(error);
+    }
+};
+const editData = async (path: string, id: string, data: dataType) => {
+    try {
+        const apiData = await fetch(`${SERVER}${path}/${id}`, {
+            method: METHOD_PUT,
+            body: JSON.stringify(data)
+        });
+        const json = await apiData.json();
+        return await json.data;
+    } catch(error) {
+        console.error(error);
+    }
+}
+const deleteData = async (path: string, id: string) => {
+    const apiData = await fetch(`${SERVER}${path}/${id}`, {
+        method: METHOD_DELETE
+    });
+    const json = await apiData.json();
+    return await json.data;
+};
 
 export const dataAvailableRoomsNumber = (data: iRoom[]) => data.filter((room) => room.status === 'Available').map(room => room.number).sort((a, b) => {
     if (a > b) {
@@ -35,7 +69,7 @@ export const delay = (time = 200) => {
     });
 }
 
-export const FakeApi = (path: string, uri: FakesUri, id = '', data: data = {} as data) => {
+export const FakeApi = (path: string, uri: FakesUri, id = '', data: dataType = {} as dataType) => {
     return new Promise<any>((resolve, reject) => {
         switch (path) {
             case uri.getAll:

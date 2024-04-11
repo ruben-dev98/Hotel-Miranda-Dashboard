@@ -24,8 +24,7 @@ export const bookingsSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getBookings.fulfilled, (state, action) => {
-                const { data } = action.payload;
-                state.data = data;
+                state.data = action.payload;
                 state.status = 'fulfilled';
                 state.error = null;
             })
