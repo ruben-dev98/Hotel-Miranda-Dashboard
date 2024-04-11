@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react';
 import { addRoom, editRoom, getRoom } from '../../features/rooms/roomsAsyncThunk';
 import Loading from "../../components/Loading";
 import FormComponent from "../../components/Form/FormComponent";
-import MySwal from "../../app/MySwal";
+import MySweetAlert from "../../app/MySweetAlert";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
-import { FormControlPropsRoom, iRoom } from "../../entitys/Data";
+import { FormControlPropsRoom, iRoom } from "../../entities/Data";
 
 
 
@@ -117,7 +117,7 @@ const RoomFormPage = () => {
             try {
                 navigate('/rooms');
                 await dispatch(editRoom({ id: id || '', data: room })).unwrap();
-                MySwal({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
+                MySweetAlert({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
             } catch (error) {
                 console.log(error);
             }
@@ -125,7 +125,7 @@ const RoomFormPage = () => {
             try {
                 navigate('/rooms');
                 dispatch(addRoom(room)).unwrap();
-                MySwal({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
+                MySweetAlert({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
             } catch (error) {
                 console.log(error);
             }

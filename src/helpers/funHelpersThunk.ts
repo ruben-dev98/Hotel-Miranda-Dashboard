@@ -1,4 +1,4 @@
-import { FakesUri, iBooking, iEmployee, iMessage, iRoom } from "../entitys/Data";
+import { FakesUri, iBooking, iEmployee, iMessage, iRoom } from "../entities/Data";
 import { SERVER } from "./varHelpers";
 
 type data = iEmployee | iBooking | iMessage | iRoom;

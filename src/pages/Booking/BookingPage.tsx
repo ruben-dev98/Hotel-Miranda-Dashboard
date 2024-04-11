@@ -13,7 +13,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import { SwiperStyled } from "../../styled/SwiperStyled";
-import { ObjectFields, iBooking } from "../../entitys/Data";
+import { ObjectFields, iBooking } from "../../entities/Data";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
 import { getOneBooking } from '../../features/bookings/bookingSlice';
 

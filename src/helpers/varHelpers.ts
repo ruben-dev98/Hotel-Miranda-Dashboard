@@ -1,4 +1,4 @@
-import { FakesUri } from "../entitys/Data";
+import { FakesUri } from "../entities/Data";
 
 export const TAB_BOOKING_INITIAL_STATE: string = 'All Bookings';
 export const TAB_ROOMS_INITIAL_STATE: string = 'All Rooms';

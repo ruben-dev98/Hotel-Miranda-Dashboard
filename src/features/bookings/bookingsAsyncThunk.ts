@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { URI_BOOKINGS } from '../../helpers/varHelpers';
 import { FakeApi, delay } from '../../helpers/funHelpersThunk';
-import { EditDataThunk, iBooking } from "../../entitys/Data";
+import { EditDataThunk, iBooking } from "../../entities/Data";
 
 export const getBookings = createAsyncThunk('bookings/getBookings', async () => {
     await delay();

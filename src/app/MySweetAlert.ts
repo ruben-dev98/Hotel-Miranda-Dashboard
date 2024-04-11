@@ -14,7 +14,7 @@ interface SwalProps {
 
 const PersonalSwal = withReactContent(Swal);
 
-const MySwal = ({title, html, showConfirmButton, timer, icon, timerProgressBar}: SwalProps) => {
+const MySweetAlert = ({title, html, showConfirmButton, timer, icon, timerProgressBar}: SwalProps) => {
     
     PersonalSwal.fire({
         title: title,
@@ -26,4 +26,4 @@ const MySwal = ({title, html, showConfirmButton, timer, icon, timerProgressBar}:
     });
 }
 
-export default MySwal;
+export default MySweetAlert;

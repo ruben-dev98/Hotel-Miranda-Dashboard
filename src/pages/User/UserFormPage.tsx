@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import { getAllEmployees, getOneEmployee } from '../../features/employees/employeesSlice';
 import { addEmployee, editEmployee, getEmployee } from '../../features/employees/employeesAsyncThunk';
 import Loading from '../../components/Loading';
-import MySwal from '../../app/MySwal';
-import { FormControlPropsEmployee, iEmployee } from '../../entitys/Data';
+import MySweetAlert from '../../app/MySweetAlert';
+import { FormControlPropsEmployee, iEmployee } from '../../entities/Data';
 import { useAppDispatch, useAppSelector } from '../../hook/useStore';
 
 interface FormData extends EventTarget {
@@ -104,7 +104,7 @@ const UserFormPage = () => {
             try {
                 navigate('/users');
                 await dispatch(editEmployee({ id: id || '', data: user })).unwrap();
-                MySwal({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
+                MySweetAlert({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
             } catch (error) {
                 console.log(error);
             }
@@ -112,7 +112,7 @@ const UserFormPage = () => {
             try {
                 navigate('/users');
                 await dispatch(addEmployee(user)).unwrap();
-                MySwal({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
+                MySweetAlert({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
             } catch (error) {
                 console.log(error);
             }

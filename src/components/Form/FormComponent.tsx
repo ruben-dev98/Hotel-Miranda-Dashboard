@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { FaArrowLeftStyled } from "../../styled/IconStyled";
 import { FormStyledComponent } from "../../styled/FormStyled";
 import { ButtonStyled } from "../../styled/ButtonStyled";
-import { FormControlPropsBooking, FormControlPropsEmployee, FormControlPropsRoom, iBooking, iEmployee, iRoom } from "../../entitys/Data";
+import { FormControlPropsBooking, FormControlPropsEmployee, FormControlPropsRoom, iBooking, iEmployee, iRoom } from "../../entities/Data";
 
 interface FormProps {
     formControl: FormControlPropsRoom[] | FormControlPropsBooking[] | FormControlPropsEmployee[],

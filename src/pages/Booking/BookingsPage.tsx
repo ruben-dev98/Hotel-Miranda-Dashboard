@@ -12,11 +12,11 @@ import { deleteBooking, getBookings } from "../../features/bookings/bookingsAsyn
 import Loading from "../../components/Loading";
 import { DivStyledActions } from "../../styled/DivStyled";
 import { DeleteStyled, EditStyled } from "../../styled/IconStyled";
-import MySwal from "../../app/MySwal";
+import MySweetAlert from "../../app/MySweetAlert";
 import { useDebounce } from "@uidotdev/usehooks";
 import { InputSearch } from "../../styled/InputStyled";
 import { ORDER_BOOKING_INITIAL_STATE, TAB_BOOKING_INITIAL_STATE } from "../../helpers/varHelpers";
-import { ActionProps, DataProperties, DataTableProps, HandleClickDeleteProps, iBooking } from "../../entitys/Data";
+import { ActionProps, DataProperties, DataTableProps, HandleClickDeleteProps, iBooking } from "../../entities/Data";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
 
 
@@ -34,7 +34,7 @@ const handleClickDelete = async ({ event, dispatch, id }: HandleClickDeleteProps
     try {
         await dispatch(deleteBooking(id)).unwrap();
         const html = <p>Delete #{id} Booking Successfully</p>;
-        MySwal({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
+        MySweetAlert({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
     } catch (error) {
         console.log(error)
     }
@@ -83,7 +83,7 @@ const dataTable = ({ dispatch }: DataTableProps): DataProperties[] => [
                 event.stopPropagation()
                 const title = 'Info Special Request';
                 const html = (<p>${row.special_request}</p>);
-                MySwal({ title, html, showConfirmButton: false });
+                MySweetAlert({ title, html, showConfirmButton: false });
             }}>View Notes</ButtonStyledViewNotes>
             :
             <ButtonStyledViewNotes disabled>View Notes</ButtonStyledViewNotes>

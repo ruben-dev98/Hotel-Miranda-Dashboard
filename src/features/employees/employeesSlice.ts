@@ -1,7 +1,7 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit"
 import { addEmployee, deleteEmployee, editEmployee, getEmployee, getEmployees } from "./employeesAsyncThunk";
 import { RootState } from "../../app/store";
-import { iEmployee } from "../../entitys/Data";
+import { iEmployee } from "../../entities/Data";
 
 interface EmployeeSliceState {
     data: iEmployee[],

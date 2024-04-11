@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { URI_EMPLOYEE } from "../../helpers/varHelpers";
 import { FakeApi, delay } from "../../helpers/funHelpersThunk";
-import { EditDataThunk, iEmployee } from "../../entitys/Data";
+import { EditDataThunk, iEmployee } from "../../entities/Data";
 
 export const getEmployees = createAsyncThunk('employees/getEmployees', async () => {
     await delay();

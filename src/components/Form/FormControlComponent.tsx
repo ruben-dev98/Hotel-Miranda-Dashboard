@@ -1,6 +1,6 @@
 
 import { ReactNode } from 'react';
-import { iBooking, iEmployee, iRoom } from '../../entitys/Data';
+import { iBooking, iEmployee, iRoom } from '../../entities/Data';
 
 interface RenderProps {
     inputType: string,

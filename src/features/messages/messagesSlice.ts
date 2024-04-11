@@ -1,6 +1,6 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit"
 import { deleteMessage, editMessage, getMessage, getMessages } from "./messagesAsyncThunk";
-import { iMessage } from "../../entitys/Data";
+import { iMessage } from "../../entities/Data";
 import { RootState } from "../../app/store";
 
 interface MessageSliceState {

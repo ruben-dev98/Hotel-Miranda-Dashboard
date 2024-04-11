@@ -1,5 +1,5 @@
 
-import { ObjectFields, iBooking, iEmployee, iRoom } from '../../entitys/Data';
+import { ObjectFields, iBooking, iEmployee, iRoom } from '../../entities/Data';
 import { ButtonStyled } from '../../styled/ButtonStyled';
 import { FaArrowLeftStyled } from '../../styled/IconStyled';
 import { useNavigate } from 'react-router-dom';

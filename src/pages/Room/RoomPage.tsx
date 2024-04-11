@@ -15,7 +15,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import { SwiperStyled } from "../../styled/SwiperStyled";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
-import { ObjectFields, iRoom } from "../../entitys/Data";
+import { ObjectFields, iRoom } from "../../entities/Data";
 
 
 const object__fields: ObjectFields[] = [

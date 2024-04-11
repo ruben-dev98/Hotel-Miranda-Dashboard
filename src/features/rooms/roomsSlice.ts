@@ -1,6 +1,6 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit"
 import { addRoom, availableRoomsNumber, deleteRoom, editRoom, getRoom, getRooms } from "./roomsAsyncThunk";
-import { iRoom } from "../../entitys/Data";
+import { iRoom } from "../../entities/Data";
 import { RootState } from "../../app/store";
 
 interface RoomSliceState {

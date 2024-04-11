@@ -6,9 +6,9 @@ import { getAllBookings, getOneBooking } from "../../features/bookings/bookingSl
 import Loading from "../../components/Loading";
 import { availableRooms } from "../../features/rooms/roomsSlice";
 import { availableRoomsNumber } from "../../features/rooms/roomsAsyncThunk";
-import MySwal from "../../app/MySwal";
+import MySweetAlert from "../../app/MySweetAlert";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
-import { FormControlPropsBooking, iBooking, iRoom } from "../../entitys/Data";
+import { FormControlPropsBooking, iBooking, iRoom } from "../../entities/Data";
 
 interface FormData extends EventTarget {
     full_name: HTMLFormElement,
@@ -101,7 +101,7 @@ const BookingFormPage = () => {
             try {
                 navigate('/bookings');
                 await dispatch(editBooking({ id: id || '', data: booking }));
-                MySwal({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
+                MySweetAlert({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
             } catch (error) {
                 console.log(error);
             }
@@ -109,7 +109,7 @@ const BookingFormPage = () => {
             try {
                 navigate('/bookings');
                 await dispatch(addBooking(booking));
-                MySwal({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
+                MySweetAlert({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
             } catch (error) {
                 console.log(error);
             }

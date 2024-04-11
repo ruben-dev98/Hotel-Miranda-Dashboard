@@ -12,10 +12,10 @@ import Loading from "../../components/Loading";
 import { EditStyled } from "../../styled/IconStyled";
 import { DeleteStyled } from './../../styled/IconStyled';
 import styled from "styled-components";
-import MySwal from "../../app/MySwal";
+import MySweetAlert from "../../app/MySweetAlert";
 import { ORDER_ROOMS_INITIAL_STATE, TAB_ROOMS_INITIAL_STATE } from "../../helpers/varHelpers";
 import { ButtonStyledIcon, ButtonStyledNew, ButtonStyledViewNotes } from "../../styled/ButtonStyled";
-import { ActionProps, DataProperties, DataTableProps, HandleClickDeleteProps, iRoom } from "../../entitys/Data";
+import { ActionProps, DataProperties, DataTableProps, HandleClickDeleteProps, iRoom } from "../../entities/Data";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
@@ -32,7 +32,7 @@ const handleClickDelete = async ({ event, dispatch, id }: HandleClickDeleteProps
     try {
         await dispatch(deleteRoom(id)).unwrap()
         const html = <p>Delete #{id} Room Successfully</p>
-        MySwal({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
+        MySweetAlert({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
     } catch (error) {
         console.log(error)
     }
@@ -79,7 +79,7 @@ const dataTable = ({ dispatch }: DataTableProps): DataProperties[] => [
                         </li>;
                     })}
                 </ul>);
-                MySwal({ title, html, showConfirmButton: false })
+                MySweetAlert({ title, html, showConfirmButton: false })
             }}>View Amenities</ButtonStyledViewNotes>
             :
             <ButtonStyledViewNotes disabled>View Amenities</ButtonStyledViewNotes>

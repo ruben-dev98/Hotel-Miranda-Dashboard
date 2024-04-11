@@ -7,7 +7,7 @@ import DetailsComponent from '../../components/Details/DetailsComponent';
 import { SpanStyled, SpanStyledCheckOut, SpanStyledDetailsLabel, SpanStyledDetailsTitle, SpanStyledDetailsValue } from '../../styled/SpanStyled';
 import { useAppDispatch, useAppSelector } from '../../hook/useStore';
 import { DivDetails, DivDetailsComponents, DivDetailsPart, DivDetailsPartFirst } from '../../styled/DivStyled';
-import { ObjectFields, iEmployee } from '../../entitys/Data';
+import { ObjectFields, iEmployee } from '../../entities/Data';
 
 const object__fields: ObjectFields[] = [
     {

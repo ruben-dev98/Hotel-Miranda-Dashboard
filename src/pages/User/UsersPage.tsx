@@ -13,10 +13,10 @@ import Loading from "../../components/Loading";
 import { useDebounce } from "@uidotdev/usehooks";
 import { DeleteStyled, EditStyled } from "../../styled/IconStyled";
 import { DivStyledActions } from "../../styled/DivStyled";
-import MySwal from "../../app/MySwal";
+import MySweetAlert from "../../app/MySweetAlert";
 import { InputSearch } from "../../styled/InputStyled";
 import { ORDER_EMPLOYEE_INITIAL_STATE, TAB_EMPLOYEE_INITIAL_STATE } from "../../helpers/varHelpers";
-import { ActionProps, DataProperties, DataTableProps, HandleClickDeleteProps, iEmployee } from "../../entitys/Data";
+import { ActionProps, DataProperties, DataTableProps, HandleClickDeleteProps, iEmployee } from "../../entities/Data";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
@@ -26,7 +26,7 @@ const handleClickDelete = async ({event, dispatch, id}: HandleClickDeleteProps) 
     try {
         await dispatch(deleteEmployee(id)).unwrap()
         const html = <p>Delete #{id} Employee Successfully</p>;
-        MySwal({title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true});
+        MySweetAlert({title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true});
     } catch(error) {
         console.log(error);
     }

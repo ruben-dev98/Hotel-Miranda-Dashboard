@@ -6,7 +6,7 @@ import { links } from '../../assets/data/navLink';
 import React, { FormEventHandler } from 'react';
 import { useContext } from 'react';
 import { UserContext } from '../../context/UserContext';
-import MySwal from '../../app/MySwal';
+import MySweetAlert from '../../app/MySweetAlert';
 import Swal from 'sweetalert2';
 import { ButtonStyled, ButtonStyledViewNotes } from '../../styled/ButtonStyled';
 
@@ -125,7 +125,7 @@ const SideBarComponent = ({ visibleLateral }: SideBarComponentProps) => {
                                 <ButtonStyled type="submit">Edit User</ButtonStyled>
                             </div>
                         </form>);
-                    return MySwal({ title: 'Update User', html: html, showConfirmButton: false });
+                    return MySweetAlert({ title: 'Update User', html: html, showConfirmButton: false });
                 }}>Editar</ButtonStyledViewNotes>
             </div>
         </SideBarStyled>

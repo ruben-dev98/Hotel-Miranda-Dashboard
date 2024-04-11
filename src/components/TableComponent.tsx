@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { getMessage } from '../features/messages/messagesAsyncThunk';
 import usePaginate from './../hook/usePaginate';
 import { SpanStyledTableFirst } from '../styled/SpanStyled';
-import MySwal from '../app/MySwal';
+import MySweetAlert from '../app/MySweetAlert';
 import { INITIAL_PAGE } from '../helpers/varHelpers';
-import { iBooking, iMessage, iEmployee, iRoom, DataTableProps, DataProperties } from '../entitys/Data';
+import { iBooking, iMessage, iEmployee, iRoom, DataTableProps, DataProperties } from '../entities/Data';
 import { useAppDispatch } from '../hook/useStore';
 import { ButtonStyled } from '../styled/ButtonStyled';
 
@@ -63,7 +63,7 @@ const TableComponent = ({ rows, columns, path }: TableProps) => {
                 <p><strong>Subject: </strong>  ${result.payload.subject}</p>
                 <p><strong>Message: </strong> ${result.payload.messages}</p>
             </>);
-            return MySwal({ title, html: htmlCode, showConfirmButton: false });
+            return MySweetAlert({ title, html: htmlCode, showConfirmButton: false });
         }).catch(error => {
             console.log(error)
         });

@@ -1,6 +1,6 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit"
 import { addBooking, deleteBooking, editBooking, getBooking, getBookings } from "./bookingsAsyncThunk";
-import { iBooking } from "../../entitys/Data";
+import { iBooking } from "../../entities/Data";
 import { RootState } from '../../app/store';
 
 

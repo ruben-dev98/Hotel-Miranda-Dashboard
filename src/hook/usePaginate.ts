@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react"
 import { HALF_WAY_ITEMS_PER_PAGE, INITIAL_PAGE, ITEMS_PER_PAGE, NUMBER_ONE } from "../helpers/varHelpers";
-import { iBooking, iEmployee, iMessage, iRoom } from "../entitys/Data";
+import { iBooking, iEmployee, iMessage, iRoom } from "../entities/Data";
 
 const usePaginate = (data: Array<iBooking | iRoom | iMessage | iEmployee>) => {
     const [currentPage, setCurrentPage] = useState<number>(INITIAL_PAGE);

@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { URI_ROOM } from "../../helpers/varHelpers";
 import { FakeApi, delay } from "../../helpers/funHelpersThunk";
-import { EditDataThunk, iRoom } from "../../entitys/Data";
+import { EditDataThunk, iRoom } from "../../entities/Data";
 
 
 

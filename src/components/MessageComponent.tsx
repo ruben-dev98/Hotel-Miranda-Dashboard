@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import MySwal from '../app/MySwal';
-import { iMessage } from '../entitys/Data';
+import MySweetAlert from '../app/MySweetAlert';
+import { iMessage } from '../entities/Data';
 import { ReactNode } from 'react';
 
 const MessageComponentStyled = styled.div`
@@ -62,7 +62,7 @@ const MessageComponent = ({message}: MessageProps) => {
                         <strong>Message:</strong> {message.messages}
                     </p>
                     );
-                return MySwal({title: title, html: html, showConfirmButton: false});
+                return MySweetAlert({title: title, html: html, showConfirmButton: false});
             }}>{message.messages.slice(0, 50).concat('...')}</p>
             <div>
                 <img src={message.photo} />

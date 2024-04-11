@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"; 
 import { URI_MESSAGE } from "../../helpers/varHelpers";
 import { FakeApi, delay } from "../../helpers/funHelpersThunk";
-import { iMessage } from "../../entitys/Data";
+import { iMessage } from "../../entities/Data";
 
 export const getMessages = createAsyncThunk('messages/getMessages', async () => {
     await delay();

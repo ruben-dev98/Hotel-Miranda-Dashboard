@@ -8,11 +8,11 @@ import { deleteMessage, editMessage, getMessages } from "../features/messages/me
 import { getAllMessages } from "../features/messages/messagesSlice";
 import Loading from "../components/Loading";
 import { DeleteStyled } from './../styled/IconStyled';
-import MySwal from "../app/MySwal";
+import MySweetAlert from "../app/MySweetAlert";
 import { DivStyledActions } from "../styled/DivStyled";
 import { SpanStyledTableFirst, SpanStyledTableSecond } from "../styled/SpanStyled";
 import { TAB_MESSAGE_INITIAL_STATE } from "../helpers/varHelpers";
-import { DataProperties, DataTableProps, HandleClickDeleteProps, iMessage } from "../entitys/Data";
+import { DataProperties, DataTableProps, HandleClickDeleteProps, iMessage } from "../entities/Data";
 import { useAppDispatch, useAppSelector } from "../hook/useStore";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
@@ -27,7 +27,7 @@ const handleClickDelete = async ({ event, dispatch, id }: HandleClickDeleteProps
     try {
         await dispatch(deleteMessage(id)).unwrap()
         const html = <p>Delete #{id} Message Successfully</p>
-        MySwal({title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true});
+        MySweetAlert({title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true});
     } catch (error) {
         console.log(error)
     }
