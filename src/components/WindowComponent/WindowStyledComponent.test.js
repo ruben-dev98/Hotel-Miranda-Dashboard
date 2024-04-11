@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import WindowStyledComponent from "./WindowComponent";
-import { getStyledTest } from "../../helpers/getStyledTest";
+import { getStyledTest } from "../../../cypress/helpers/getStyledTest";
 
 describe('WindowStyled', () => {
 
