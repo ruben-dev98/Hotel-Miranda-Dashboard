@@ -12,7 +12,7 @@ const TabsComponent = ({data, setCurrentTab, currentTab}) => {
     return (
         <ListStyled>
             {data.map((str, index) => 
-            <ListItemComponent index={index} setCurrentTab={setCurrentTab} currentTab={currentTab} str={str.value}>
+            <ListItemComponent key={index} setCurrentTab={setCurrentTab} currentTab={currentTab} str={str.value}>
                 {str.label}
             </ListItemComponent>)}
         </ListStyled>
