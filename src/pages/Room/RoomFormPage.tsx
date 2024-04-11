@@ -71,17 +71,10 @@ const formControl: FormControlPropsRoom[] = [
 
 const RoomFormPage = () => {
     const navigate = useNavigate();
-<<<<<<< HEAD:src/pages/Room/RoomFormPage.jsx
-    const dispatch = useDispatch();
-    const [isLoading, setIsLoading] = useState(true);
-    const room = useSelector(getOneRoom);
-    const rooms = useSelector(getAllRooms);
-=======
     const dispatch = useAppDispatch();
     const [isLoading, setIsLoading] = useState(true);
     const room = useAppSelector(getOneRoom);
     const rooms = useAppSelector(getAllRooms);
->>>>>>> typescript:src/pages/Room/RoomFormPage.tsx
     const loc = useLocation().pathname;
     const { id } = useParams();
 
@@ -143,48 +136,26 @@ const RoomFormPage = () => {
         }
     }
 
-<<<<<<< HEAD:src/pages/Room/RoomFormPage.jsx
-    const initialFetch = async () => {
-        try {
-            await dispatch(getRoom(parseInt(id))).unwrap();
-=======
     const initialFetch =async () => {
         try {
             await dispatch(getRoom(parseInt(id || ''))).unwrap();
->>>>>>> typescript:src/pages/Room/RoomFormPage.tsx
             setIsLoading(false);
         } catch (error) {
             console.log(error);
         }
     };
-<<<<<<< HEAD:src/pages/Room/RoomFormPage.jsx
-=======
 
     if(isLoading) {
         return <Loading/>;
     }
->>>>>>> typescript:src/pages/Room/RoomFormPage.tsx
 
     useEffect(() => {
         initialFetch();
     }, [])
-<<<<<<< HEAD:src/pages/Room/RoomFormPage.jsx
-
-    if (isLoading) {
-        return (<section className='content'>
-            <Loading></Loading>
-        </section>)
-    }
-
-    return (
-        <section className="content">
-            <FormComponent path={loc} data={room} formControl={formControl} onHandleSubmit={onCreateRoom}></FormComponent>
-=======
 
     return (
         <section className="content">
             <FormComponent data={room} formControl={formControl} onHandleSubmit={onCreateRoom}></FormComponent>
->>>>>>> typescript:src/pages/Room/RoomFormPage.tsx
         </section>
     )
 }
