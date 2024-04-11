@@ -2,39 +2,34 @@ import { ThunkDispatch } from "@reduxjs/toolkit"
 import { RootState } from "../app/store"
 
 export interface iBooking {
-    id: number,
+    _id?: string, 
     full_name: string,
     order_date: string,
     check_in: string,
     check_out: string,
     special_request: string,
-    number: number,
-    price: number,
-    type: string,
     status: string,
-    amenities: Array<string>,
-    room_status: string,
-    foto: string,
-    description: string,
+    discount: number,
     phone: string,
-    email: string
+    email: string,
+    room: iRoom
 }
 
 export interface iEmployee {
-    foto: string,
+    _id?: string, 
+    photo: string,
     full_name: string,
-    id: number,
     email: string,
     start_date: string,
     description: string,
     job: string,
     contact: string,
-    status: boolean | string,
+    status: boolean,
     password: string
 }
 
 export interface iMessage {
-    id: number,
+    _id?: string, 
     full_name: string,
     email: string,
     phone: string,
@@ -43,19 +38,19 @@ export interface iMessage {
     date: string,
     read: boolean,
     archived: boolean,
-    foto: string,
+    photo: string,
     time_passed: string
 }
 
 export interface iRoom {
-    id: number,
-    foto: string,
+    _id?: string, 
+    photo: Array<string>,
     type: string,
     number: number,
     description: string,
     offer: boolean,
     price: number,
-    cancellation: boolean,
+    cancellation: string,
     amenities: Array<string>,
     discount: number,
     status: string
@@ -71,7 +66,7 @@ export interface FakesUri {
 }
 
 export interface EditDataThunk {
-    id: number,
+    id: string,
     data: iEmployee | iRoom | iMessage | iBooking
 }
 
@@ -83,11 +78,11 @@ export interface ObjectFields {
 export interface HandleClickDeleteProps {
     event: React.MouseEvent<HTMLButtonElement>,
     dispatch: ThunkDispatch<RootState, any, any>,
-    id: number
+    id: string
 }
 
 export interface ActionProps {
-    id: number,
+    id: string,
     dispatch: ThunkDispatch<RootState, any, any>
 }
 
@@ -105,15 +100,14 @@ interface FormControlProps {
     label: string,
     input: string,
     data?: string[]
-    
 }
 
 export interface FormControlPropsRoom extends FormControlProps {
-    name: 'foto' | 'type' | 'number' | 'description' | 'price' | 'discount' | 'cancellation' | 'amenities'
+    name: 'photo' | 'type' | 'number' | 'description' | 'price' | 'discount' | 'cancellation' | 'amenities'
 }
 
 export interface FormControlPropsEmployee extends FormControlProps {
-    name: 'foto' | 'full_name' | 'job' | 'email' | 'contact' | 'start_date' | 'description' | 'status' | 'password'
+    name: 'photo' | 'full_name' | 'job' | 'email' | 'contact' | 'start_date' | 'description' | 'status' | 'password'
 }
 
 export interface FormControlPropsBooking extends FormControlProps {

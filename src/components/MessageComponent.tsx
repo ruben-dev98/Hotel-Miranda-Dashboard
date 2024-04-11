@@ -65,7 +65,7 @@ const MessageComponent = ({message}: MessageProps) => {
                 return MySwal({title: title, html: html, showConfirmButton: false});
             }}>{message.messages.slice(0, 50).concat('...')}</p>
             <div>
-                <img src={message.foto} />
+                <img src={message.photo} />
                 <p>
                     <SpanStyled>{message.full_name}</SpanStyled>
                     <SpanStyledHour>{message.time_passed}</SpanStyledHour>

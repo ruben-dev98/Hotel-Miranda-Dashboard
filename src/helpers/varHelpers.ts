@@ -15,30 +15,32 @@ export const INITIAL_PAGE: number = 1;
 export const NUMBER_ONE: number = 1;
 
 export const URI_ROOM: FakesUri = {
-    getAll: 'get/rooms',
-    getOne: 'get/room',
-    edit: 'edit/room',
-    add: 'add/room',
+    getAll: '/rooms',
+    getOne: '/rooms/:id',
+    edit: '/rooms/:id',
+    add: '/rooms/:id',
     getRoomsNumber: 'get/allNumberRoom',
-    delete: 'delete/room'
+    delete: '/rooms/:id'
 };
 export const URI_MESSAGE: FakesUri = {
-    getAll: 'get/messages',
-    getOne: 'get/message',
-    edit: 'edit/message',
-    delete: 'delete/message'
+    getAll: '/messages/',
+    getOne: '/messages/:id',
+    edit: '/messages/:id',
+    delete: '/messages/:id'
 };
 export const URI_EMPLOYEE: FakesUri = {
-    getAll: 'get/employees',
-    getOne: 'get/employee',
-    add: 'add/employee',
-    edit: 'edit/employee',
-    delete: 'delete/employee'
+    getAll: '/employees/',
+    getOne: '/employees/:id',
+    edit: '/employees/:id',
+    add: '/employees/:id',
+    delete: '/employees/:id'
 };
 export const URI_BOOKINGS: FakesUri = {
-    getAll: 'get/bookings',
-    getOne: 'get/booking',
-    add: 'add/booking',
-    edit: 'edit/booking',
-    delete: 'delete/booking'
+    getAll: '/bookings/',
+    getOne: '/bookings/:id',
+    edit: '/bookings/:id',
+    add: '/bookings/:id',
+    delete: '/bookings/:id'
 };
+
+export const SERVER: string = 'http://localhost:3000';

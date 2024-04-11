@@ -4,13 +4,12 @@ import { useEffect, useState } from 'react';
 import { getAllEmployees, getOneEmployee } from '../../features/employees/employeesSlice';
 import { addEmployee, editEmployee, getEmployee } from '../../features/employees/employeesAsyncThunk';
 import Loading from '../../components/Loading';
-import { lastId } from '../../app/getItenId';
 import MySwal from '../../app/MySwal';
 import { FormControlPropsEmployee, iEmployee } from '../../entitys/Data';
 import { useAppDispatch, useAppSelector } from '../../hook/useStore';
 
 interface FormData extends EventTarget {
-    foto: HTMLFormElement,
+    photo: HTMLFormElement,
     full_name: HTMLFormElement,
     start_date: HTMLFormElement,
     job: HTMLFormElement,
@@ -25,7 +24,7 @@ const formControl: FormControlPropsEmployee[] = [
     {
         'label': 'Foto',
         'input': 'text',
-        'name': 'foto'
+        'name': 'photo'
     },
     {
         'label': 'Nombre y Apellidos',
@@ -82,10 +81,8 @@ const UserFormPage = () => {
 
     const onCreateUser = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const newId = lastId(users);
         const user: iEmployee = {
-            id: parseInt(id || '') || newId,
-            foto: '',
+            photo: '',
             full_name: '',
             job: '',
             email: '',
@@ -98,15 +95,15 @@ const UserFormPage = () => {
 
         formControl.forEach((control) => {
             const element = event.target as FormData;
-            user[control.name] = element[control.name].value;
+            (user[control.name] as string) = element[control.name].value;
         });
 
-        const html = id ? <p>Update #{user.id} Employee Successfully</p> : <p>Create #{user.id} Employee Successfully</p>;
+        const html = id ? <p>Update #{user._id} Employee Successfully</p> : <p>Create #{user._id} Employee Successfully</p>;
 
         if (loc.includes('edit')) {
             try {
                 navigate('/users');
-                await dispatch(editEmployee({ id: parseInt(id || ''), data: user })).unwrap();
+                await dispatch(editEmployee({ id: id || '', data: user })).unwrap();
                 MySwal({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
             } catch (error) {
                 console.log(error);
@@ -124,7 +121,7 @@ const UserFormPage = () => {
 
     const initialFetch = async () => {
         try {
-            await dispatch(getEmployee(parseInt(id || ''))).unwrap();
+            await dispatch(getEmployee(id || '')).unwrap();
             setIsLoading(false);
         } catch (error) {
             console.log(error);

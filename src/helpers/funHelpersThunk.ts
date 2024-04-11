@@ -1,10 +1,23 @@
 import { FakesUri, iBooking, iEmployee, iMessage, iRoom } from "../entitys/Data";
+import { SERVER } from "./varHelpers";
 
-const getAllData = (data: iEmployee[] | iBooking[] | iRoom[] | iMessage[] ) => data;
-const getOneData = (data: iEmployee[] | iBooking[] | iRoom[] | iMessage[], id: number) => data.find((item) => item.id === id);
-const addData = (data: iEmployee | iBooking | iMessage | iRoom) => data;
-const editData = (id: number, data: iMessage | iRoom | iBooking | iEmployee) => ({ id: id, data: data });
-const deleteData = (id: number) => id;
+type data = iEmployee | iBooking | iMessage | iRoom;
+
+const getAllData = async (path: string) => {
+    try {
+        //const data = await fetch(`${SERVER}${path}`);
+        //const json = data.json();
+        //return json;
+    } catch(error) {
+        console.error(error);
+    }
+};
+const getOneData = (path: string, id: string) => {
+
+};
+const addData = (path: string, data: data) => data;
+const editData = (path: string, id: string, data: data) => ({ id: id, data: data });
+const deleteData = (path: string, id: string) => id;
 
 export const dataAvailableRoomsNumber = (data: iRoom[]) => data.filter((room) => room.status === 'Available').map(room => room.number).sort((a, b) => {
     if (a > b) {
@@ -22,26 +35,26 @@ export const delay = (time = 200) => {
     });
 }
 
-export const FakeApi = (path: string, uri: FakesUri, id = 0, data: iRoom | iEmployee | iMessage | iBooking, aData: iRoom[] | iEmployee[] | iMessage[] | iBooking[]) => {
+export const FakeApi = (path: string, uri: FakesUri, id = '', data: data = {} as data) => {
     return new Promise<any>((resolve, reject) => {
         switch (path) {
             case uri.getAll:
-                resolve(getAllData(aData));
+                resolve(getAllData(path));
                 break;
             case uri.getOne:
-                resolve(getOneData(aData, id));
+                resolve(getOneData(path, id));
                 break;
             case uri.add:
-                resolve(addData(data));
+                resolve(addData(path, data));
                 break;
             case uri.edit:
-                resolve(editData(id, data));
+                resolve(editData(path, id, data));
                 break;
             case uri.delete:
-                resolve(deleteData(id));
+                resolve(deleteData(path, id));
                 break;
             case uri.getRoomsNumber:
-                resolve(dataAvailableRoomsNumber((aData as iRoom[])));
+                resolve(dataAvailableRoomsNumber(([])));
                 break;
             default:
                 reject('Array not found');

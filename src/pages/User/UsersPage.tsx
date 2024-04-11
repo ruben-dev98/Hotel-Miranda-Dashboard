@@ -27,7 +27,6 @@ const handleClickDelete = async ({event, dispatch, id}: HandleClickDeleteProps) 
         await dispatch(deleteEmployee(id)).unwrap()
         const html = <p>Delete #{id} Employee Successfully</p>;
         MySwal({title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true});
-        
     } catch(error) {
         console.log(error);
     }
@@ -45,7 +44,7 @@ const action = ({id, dispatch}: ActionProps) => {
 const dataTable = ({dispatch}: DataTableProps): DataProperties[] => [
     {
         'label': 'Image',
-        display: (row: iEmployee) => <img src={row.foto} />
+        display: (row: iEmployee) => <img src={row.photo} />
     },
     {
         'label': 'Full Name',
@@ -79,7 +78,7 @@ const dataTable = ({dispatch}: DataTableProps): DataProperties[] => [
     },
     {
         'label': 'Actions',
-        display: (row: iEmployee) => action({id: row.id, dispatch})
+        display: (row: iEmployee) => action({id: row._id || '', dispatch})
     }
 ];
 
@@ -97,9 +96,9 @@ const UsersPage = () => {
         const all_search = all.filter((item) => currentTab === TAB_EMPLOYEE_INITIAL_STATE ? true : item.status === currentTab);
         const orderType = currentOrder as keyof iEmployee;
         return all_search.sort((a, b) => {
-            if (a[orderType] > b[orderType]) {
+            if ((a[orderType] || '') > (b[orderType] || '')) {
                 return 1;
-            } else if (a[orderType] < b[orderType]) {
+            } else if ((a[orderType] || '') < (b[orderType] || '') ) {
                 return -1;
             } else {
                 return 0;

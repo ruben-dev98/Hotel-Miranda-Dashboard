@@ -31,13 +31,11 @@ export const messagesSlice = createSlice({
             state.error = null;
         })
         .addCase(editMessage.fulfilled, (state, action) => {
-            const index = state.data.findIndex((message) => message.id === action.payload.id);
-            state.data[index].archived = true;
             state.status = 'fulfilled';
             state.error = null;
         })
         .addCase(deleteMessage.fulfilled, (state, action) => {
-            const index = state.data.findIndex((message) => message.id === action.payload);
+            const index = state.data.findIndex((message) => message._id === action.payload);
             state.data.splice(index, 1);
             state.status = 'fulfilled';
             state.error = null;

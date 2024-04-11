@@ -5,7 +5,7 @@ import Loading from "../../components/Loading";
 import DetailsComponent from "../../components/Details/DetailsComponent";
 import { AmenitiesStyled } from "../../styled/ListStyled";
 import { SpanStyledDetailsLabel, SpanStyledDetailsValue, SpanStyledDetailsTitle, SpanSwiperTitle, SpanSwiper, SpanStyledInProgressLegend, SpanStyledCheckOutLegend, SpanStyledCheckInLegend } from "../../styled/SpanStyled";
-import { DivDetailsComponents, DivDetails, DivDetailsPart, DivDetailsSwiper, DivDetailsSwiperLegend, DivDetailsPartFirst, DivDetailsContent} from "../../styled/DivStyled";
+import { DivDetailsComponents, DivDetails, DivDetailsPart, DivDetailsSwiper, DivDetailsSwiperLegend, DivDetailsPartFirst, DivDetailsContent } from "../../styled/DivStyled";
 import { Navigation } from 'swiper/modules';
 import { SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -27,9 +27,6 @@ const object__fields: ObjectFields[] = [
                         <SpanStyledDetailsTitle>
                             {booking.full_name}
                         </SpanStyledDetailsTitle><br></br>
-                        <SpanStyledDetailsLabel>
-                            #{booking.id}
-                        </SpanStyledDetailsLabel>
                         <DivDetailsComponents>
                             <div>
                                 <SpanStyledDetailsLabel>Check In</SpanStyledDetailsLabel><br></br>
@@ -44,11 +41,11 @@ const object__fields: ObjectFields[] = [
                         <DivDetailsComponents>
                             <div>
                                 <SpanStyledDetailsLabel>Room Info</SpanStyledDetailsLabel><br></br>
-                                <SpanStyledDetailsValue>{booking.type} - {booking.number}</SpanStyledDetailsValue>
+                                <SpanStyledDetailsValue>{booking.room.type} - {booking.room.number}</SpanStyledDetailsValue>
                             </div>
                             <div>
                                 <SpanStyledDetailsLabel>Price</SpanStyledDetailsLabel><br></br>
-                                <SpanStyledDetailsValue>${booking.price}<SpanStyledDetailsLabel> /Night</SpanStyledDetailsLabel></SpanStyledDetailsValue>
+                                <SpanStyledDetailsValue>${booking.room.price}<SpanStyledDetailsLabel> /Night</SpanStyledDetailsLabel></SpanStyledDetailsValue>
                             </div>
                         </DivDetailsComponents>
                         <DivDetailsComponents>
@@ -60,19 +57,19 @@ const object__fields: ObjectFields[] = [
                         <DivDetailsComponents>
                             <div>
                                 <SpanStyledDetailsLabel>Amenities</SpanStyledDetailsLabel><br></br>
-                                <AmenitiesStyled>{booking.amenities.map((amen, index) => <li key={index}>{amen}</li>)}</AmenitiesStyled>
+                                <AmenitiesStyled>{booking.room.amenities.map((amen, index) => <li key={index}>{amen}</li>)}</AmenitiesStyled>
                             </div>
                         </DivDetailsComponents>
                     </DivDetailsPartFirst>
                     <DivDetailsPart>
                         <DivDetailsSwiperLegend>
-                        {
-                            booking.status === 'Check In' ?
-                                <SpanStyledCheckInLegend>{booking.status}</SpanStyledCheckInLegend> :
-                                booking.status === 'Check Out' ?
-                                    <SpanStyledCheckOutLegend>{booking.status}</SpanStyledCheckOutLegend> :
-                                    <SpanStyledInProgressLegend>{booking.status}</SpanStyledInProgressLegend>
-                        }
+                            {
+                                booking.status === 'Check In' ?
+                                    <SpanStyledCheckInLegend>{booking.status}</SpanStyledCheckInLegend> :
+                                    booking.status === 'Check Out' ?
+                                        <SpanStyledCheckOutLegend>{booking.status}</SpanStyledCheckOutLegend> :
+                                        <SpanStyledInProgressLegend>{booking.status}</SpanStyledInProgressLegend>
+                            }
                         </DivDetailsSwiperLegend>
                         <SwiperStyled
                             // install Swiper modules
@@ -82,20 +79,16 @@ const object__fields: ObjectFields[] = [
                             onSwiper={() => { }}
                             onSlideChange={() => { }}
                         >
-                            <SwiperSlide style={{ userSelect: 'none' }}>
-                                <img src={booking.foto} />
-                            </SwiperSlide>
-                            <SwiperSlide style={{ userSelect: 'none' }}>
-                                <img src={booking.foto} />
-                            </SwiperSlide>
-                            <SwiperSlide style={{ userSelect: 'none' }}>
-                                <img src={booking.foto} />
-                            </SwiperSlide>
+                            {booking.room.photo.map((photo) => {
+                                return <SwiperSlide style={{ userSelect: 'none' }}>
+                                    <img src={photo} />
+                                </SwiperSlide>
+                            })}
                         </SwiperStyled>
                         <DivDetailsSwiper>
                             <DivDetailsContent>
-                                <SpanSwiperTitle>{booking.type}</SpanSwiperTitle><br></br>
-                                <SpanSwiper>{booking.description}</SpanSwiper>
+                                <SpanSwiperTitle>{booking.room.type}</SpanSwiperTitle><br></br>
+                                <SpanSwiper>{booking.room.description}</SpanSwiper>
                             </DivDetailsContent>
                         </DivDetailsSwiper>
                     </DivDetailsPart>
@@ -114,7 +107,7 @@ const BookingPage = () => {
     const booking = useAppSelector(getOneBooking);
 
     const initialFetch = async () => {
-        await dispatch(getBooking(parseInt(id || ''))).unwrap();
+        await dispatch(getBooking(id || '')).unwrap();
         setIsLoading(false);
     };
 
@@ -122,11 +115,11 @@ const BookingPage = () => {
         initialFetch();
     }, []);
 
-    if(isLoading) {
+    if (isLoading) {
         return (
-        <section className='content'>
-            <Loading></Loading>
-        </section>);
+            <section className='content'>
+                <Loading></Loading>
+            </section>);
     }
 
     return (

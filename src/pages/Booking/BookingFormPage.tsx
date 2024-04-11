@@ -1,5 +1,4 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { lastId } from "../../app/getItenId";
 import FormComponent from '../../components/Form/FormComponent';
 import { useEffect, useState } from "react";
 import { addBooking, editBooking, getBooking } from "../../features/bookings/bookingsAsyncThunk";
@@ -9,10 +8,10 @@ import { availableRooms } from "../../features/rooms/roomsSlice";
 import { availableRoomsNumber } from "../../features/rooms/roomsAsyncThunk";
 import MySwal from "../../app/MySwal";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
-import { FormControlPropsBooking, iBooking } from "../../entitys/Data";
+import { FormControlPropsBooking, iBooking, iRoom } from "../../entitys/Data";
 
 interface FormData extends EventTarget {
-    full_name: HTMLFormElement, 
+    full_name: HTMLFormElement,
     check_in: HTMLFormElement,
     check_out: HTMLFormElement,
     number: HTMLFormElement,
@@ -22,7 +21,7 @@ interface FormData extends EventTarget {
 
 }
 
-const formControl = (rooms: string[]): FormControlPropsBooking[]  => [
+const formControl = (rooms: string[]): FormControlPropsBooking[] => [
     {
         'label': 'Nombre y Apellidos',
         'input': 'text',
@@ -73,43 +72,36 @@ const BookingFormPage = () => {
 
     const onCreateBooking = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const newId = lastId(bookings);
         const booking: iBooking = {
-            id: newId,
             full_name: '',
             order_date: Date.now().toString(),
             check_in: '',
             check_out: '',
             special_request: '',
-            number: 0,
             phone: '',
             email: '',
             status: 'In Progress',
-            amenities: [],
-            type: '',
-            description: '',
-            price: 0,
-            room_status: '',
-            foto: ''
+            discount: 0,
+            room: {} as iRoom
         }
 
         formControl(rooms).forEach((control) => {
             const element = event.target as FormData;
             const property = control.name as keyof iBooking;
-            if(control.input === 'date') {
+            if (control.input === 'date') {
                 (booking[property] as string) = String(new Date(element[control.name].value).getTime());
             } else {
                 (booking[property] as string | number) = element[control.name].value;
             }
         });
 
-        const html = id ? <p>Update #{booking.id} Booking Successfully</p> : <p>Create #{booking.id} Booking Successfully</p>;
+        const html = id ? <p>Updated Booking Successfully</p> : <p>Created Booking Successfully</p>;
 
         if (loc.includes('edit')) {
             try {
                 navigate('/bookings');
-                await dispatch(editBooking({id: parseInt(id || ''), data: booking}));
-                MySwal({title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true});
+                await dispatch(editBooking({ id: id || '', data: booking }));
+                MySwal({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
             } catch (error) {
                 console.log(error);
             }
@@ -117,7 +109,7 @@ const BookingFormPage = () => {
             try {
                 navigate('/bookings');
                 await dispatch(addBooking(booking));
-                MySwal({title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true});
+                MySwal({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
             } catch (error) {
                 console.log(error);
             }
@@ -126,7 +118,7 @@ const BookingFormPage = () => {
 
     const initialFetch = async () => {
         await dispatch(availableRoomsNumber()).unwrap();
-        await dispatch(getBooking(parseInt(id || ''))).unwrap();
+        await dispatch(getBooking(id || '')).unwrap();
         setIsLoading(false);
     };
 
@@ -134,7 +126,7 @@ const BookingFormPage = () => {
         initialFetch();
     }, []);
 
-    if(isLoading) {
+    if (isLoading) {
         return (<section className='content'>
             <Loading></Loading>
         </section>)

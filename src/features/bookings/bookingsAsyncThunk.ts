@@ -1,30 +1,29 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import dataBookings from '../../assets/data/bookings.json';
 import { URI_BOOKINGS } from '../../helpers/varHelpers';
 import { FakeApi, delay } from '../../helpers/funHelpersThunk';
 import { EditDataThunk, iBooking } from "../../entitys/Data";
 
 export const getBookings = createAsyncThunk('bookings/getBookings', async () => {
     await delay();
-    return await FakeApi(URI_BOOKINGS.getAll, URI_BOOKINGS, 0, {} as iBooking, dataBookings);
+    return await FakeApi(URI_BOOKINGS.getAll, URI_BOOKINGS, '', {} as iBooking);
 });
 
-export const getBooking = createAsyncThunk('bookings/getBooking', async (id: number) => {
+export const getBooking = createAsyncThunk('bookings/getBooking', async (id: string) => {
     await delay();
-    return await FakeApi(URI_BOOKINGS.getOne, URI_BOOKINGS, id, {} as iBooking, dataBookings);
+    return await FakeApi(URI_BOOKINGS.getOne, URI_BOOKINGS, id, {} as iBooking);
 });
 
 export const addBooking = createAsyncThunk('bookings/addBooking', async (data: iBooking) => {
     await delay();
-    return await FakeApi(URI_BOOKINGS.add || '', URI_BOOKINGS, 0, data, []);
+    return await FakeApi(URI_BOOKINGS.add || '', URI_BOOKINGS, '', data);
 });
 
 export const editBooking = createAsyncThunk('bookings/editBooking', async ({id, data}: EditDataThunk) => {
     await delay();
-    return await FakeApi(URI_BOOKINGS.edit, URI_BOOKINGS, id, data, []);
+    return await FakeApi(URI_BOOKINGS.edit, URI_BOOKINGS, id, data);
 });
 
-export const deleteBooking = createAsyncThunk('bookings/deleteBooking', async (id: number) => {
+export const deleteBooking = createAsyncThunk('bookings/deleteBooking', async (id: string) => {
     await delay();
-    return await FakeApi(URI_BOOKINGS.delete, URI_BOOKINGS, id, {} as iBooking, []);
+    return await FakeApi(URI_BOOKINGS.delete, URI_BOOKINGS, id, {} as iBooking);
 });

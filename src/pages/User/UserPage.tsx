@@ -20,7 +20,7 @@ const object__fields: ObjectFields[] = [
                             {employee.full_name}
                         </SpanStyledDetailsTitle><br></br>
                         <SpanStyledDetailsLabel>
-                            #{employee.id}
+                            #{employee._id}
                         </SpanStyledDetailsLabel>
                         <DivDetailsComponents>
                             <div>
@@ -56,7 +56,7 @@ const object__fields: ObjectFields[] = [
                         </DivDetailsComponents>
                     </DivDetailsPartFirst>
                     <DivDetailsPart>
-                        <img src={employee.foto} />
+                        <img src={employee.photo} />
                     </DivDetailsPart>
                 </DivDetails>
             )
@@ -73,7 +73,7 @@ const UserPage = () => {
 
     const initialFetch = async () => {
         try {
-            await dispatch(getEmployee(parseInt(id || ''))).unwrap();
+            await dispatch(getEmployee(id || '')).unwrap();
             setIsLoading(false);
         } catch (error) {
             console.log(error);

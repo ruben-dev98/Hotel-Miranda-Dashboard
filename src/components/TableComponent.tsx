@@ -56,7 +56,7 @@ const TableComponent = ({ rows, columns, path }: TableProps) => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const showMessage = ({ row }: RowTypes) => {
-        dispatch(getMessage(row.id)).then((result) => {
+        dispatch(getMessage(row._id || '')).then((result) => {
             const title = 'Details Message';
             const htmlCode = (<>
                 <p><strong>Full Name: </strong> ${result.payload.full_name}</p>
@@ -71,7 +71,7 @@ const TableComponent = ({ rows, columns, path }: TableProps) => {
 
     const handleDetails = ({ row }: RowTypes) => {
         if (path !== '') {
-            navigate(`${row.id}`)
+            navigate(`${row._id}`)
         } else {
             showMessage({ row });
         }

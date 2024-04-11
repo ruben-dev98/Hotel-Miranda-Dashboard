@@ -23,51 +23,49 @@ export const bookingsSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-        .addCase(getBookings.fulfilled, (state, action) => {
-            state.data = action.payload;
-            state.status = 'fulfilled';
-            state.error = null;
-        })
-        .addCase(getBooking.fulfilled, (state, action) => {
-            state.booking = action.payload;
-            state.status = 'fulfilled';
-            state.error = null;
-        })
-        .addCase(addBooking.fulfilled, (state, action) => {
-            state.data.push(action.payload);
-            state.status = 'fulfilled';
-            state.error = null;
-        })
-        .addCase(editBooking.fulfilled, (state, action) => {
-            state.data = state.data.map((booking) => booking.id === action.payload.id ? action.payload.data : booking);
-            state.status = 'fulfilled';
-            state.error = null;
-        })
-        .addCase(deleteBooking.fulfilled, (state, action) => {
-            state.data = state.data.filter((booking) => booking.id !== action.payload);
-            state.status = 'fulfilled';
-            state.error = null;
-        })
-        .addMatcher(isAnyOf (
-            getBookings.pending,
-            getBooking.pending,
-            addBooking.pending,
-            editBooking.pending,
-            deleteBooking.pending 
+            .addCase(getBookings.fulfilled, (state, action) => {
+                state.data = action.payload;
+                state.status = 'fulfilled';
+                state.error = null;
+            })
+            .addCase(getBooking.fulfilled, (state, action) => {
+                state.booking = action.payload;
+                state.status = 'fulfilled';
+                state.error = null;
+            })
+            .addCase(addBooking.fulfilled, (state, action) => {
+                state.status = 'fulfilled';
+                state.error = null;
+            })
+            .addCase(editBooking.fulfilled, (state, action) => {
+                state.status = 'fulfilled';
+                state.error = null;
+            })
+            .addCase(deleteBooking.fulfilled, (state, action) => {
+                state.data = state.data.filter((booking) => booking._id !== action.payload);
+                state.status = 'fulfilled';
+                state.error = null;
+            })
+            .addMatcher(isAnyOf(
+                getBookings.pending,
+                getBooking.pending,
+                addBooking.pending,
+                editBooking.pending,
+                deleteBooking.pending
             ), (state, action) => {
-            state.status = 'pending';
-            state.error = null;
-        })
-        .addMatcher(isAnyOf(
-            getBookings.rejected,
-            getBooking.rejected,
-            addBooking.rejected,
-            editBooking.rejected,
-            deleteBooking.rejected 
+                state.status = 'pending';
+                state.error = null;
+            })
+            .addMatcher(isAnyOf(
+                getBookings.rejected,
+                getBooking.rejected,
+                addBooking.rejected,
+                editBooking.rejected,
+                deleteBooking.rejected
             ), (state, action) => {
-            state.status = 'rejected';
-            state.error = action.error.message || null;
-        })
+                state.status = 'rejected';
+                state.error = action.error.message || null;
+            })
     }
 });
 

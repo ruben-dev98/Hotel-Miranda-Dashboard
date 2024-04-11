@@ -1,4 +1,5 @@
 
+import { ReactNode } from 'react';
 import { iBooking, iEmployee, iRoom } from '../../entitys/Data';
 
 interface RenderProps {
@@ -47,15 +48,18 @@ const renderSwitch = ({ inputType, data, name, values }: RenderProps) => {
 }
 
 const FormControlComponent = ({ label, inputType, name, data = [], values }: FormControlProps) => {
-
+    let img: ReactNode;
+    if(name === 'photo' && values) {
+        if(Array.isArray((values as iRoom)[name])) {
+            img = (values as iRoom)[name].map((photo) => {
+                return <img src={photo} ></img>
+            })
+        }
+        img = <img src={((values as iEmployee)[name])} ></img>
+    }
     return (
         <div>
-
-            {name === 'foto' && values &&
-                <div>
-                    <img src={values[name]} ></img>
-                </div>
-            }
+            {img && img}
             <label>{label}</label>
             {
                 renderSwitch({ inputType, data, name, values })

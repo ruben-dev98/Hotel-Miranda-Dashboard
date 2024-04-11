@@ -3,7 +3,6 @@ import { getAllRooms, getOneRoom } from '../../features/rooms/roomsSlice';
 import { useEffect, useState } from 'react';
 import { addRoom, editRoom, getRoom } from '../../features/rooms/roomsAsyncThunk';
 import Loading from "../../components/Loading";
-import { lastId } from "../../app/getItenId";
 import FormComponent from "../../components/Form/FormComponent";
 import MySwal from "../../app/MySwal";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
@@ -12,7 +11,7 @@ import { FormControlPropsRoom, iRoom } from "../../entitys/Data";
 
 
 interface FormData extends EventTarget {
-    foto: HTMLFormElement,
+    photo: HTMLFormElement,
     type: HTMLFormElement,
     number: HTMLFormElement,
     description: HTMLFormElement,
@@ -26,7 +25,7 @@ const formControl: FormControlPropsRoom[] = [
     {
         'label': 'Foto',
         'input': 'text',
-        'name': 'foto'
+        'name': 'photo'
     },
     {
         'label': 'Room Type',
@@ -80,16 +79,14 @@ const RoomFormPage = () => {
 
     const onCreateRoom = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const newId = lastId(rooms);
         const room: iRoom = {
-            id: parseInt(id || '') || newId,
-            foto: '',
+            photo: [],
             type: '',
             number: 0,
             description: '',
             offer: false,
             price: 0,
-            cancellation: true,
+            cancellation: 'Lorem Ipsum',
             amenities: [],
             discount: 0,
             status: ''
@@ -114,12 +111,12 @@ const RoomFormPage = () => {
             room.offer = true;
         }
 
-        const html = id ? <p>Update #{room.id} Room Successfully</p> : <p>Create #{room.id} Room Successfully</p>;
+        const html = id ? <p>Update #{room._id} Room Successfully</p> : <p>Create #{room._id} Room Successfully</p>;
 
         if (loc.includes('edit')) {
             try {
                 navigate('/rooms');
-                await dispatch(editRoom({ id: parseInt(id || ''), data: room })).unwrap();
+                await dispatch(editRoom({ id: id || '', data: room })).unwrap();
                 MySwal({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
             } catch (error) {
                 console.log(error);
@@ -136,17 +133,17 @@ const RoomFormPage = () => {
         }
     }
 
-    const initialFetch =async () => {
+    const initialFetch = async () => {
         try {
-            await dispatch(getRoom(parseInt(id || ''))).unwrap();
+            await dispatch(getRoom(id || '')).unwrap();
             setIsLoading(false);
         } catch (error) {
             console.log(error);
         }
     };
 
-    if(isLoading) {
-        return <Loading/>;
+    if (isLoading) {
+        return <Loading />;
     }
 
     useEffect(() => {

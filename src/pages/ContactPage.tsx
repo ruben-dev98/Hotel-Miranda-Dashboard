@@ -44,9 +44,9 @@ const action = ({ row, dispatch }: ActionPropsMessage) => {
             {row.archived ?
                 <ButtonStyledPublish onClick={(event) => event.stopPropagation()}>Publish</ButtonStyledPublish>
                 :
-                <ButtonStyledArchived onClick={(event) => handleClickArchive({ event, dispatch, id: row.id })}>Archive</ButtonStyledArchived>
+                <ButtonStyledArchived onClick={(event) => handleClickArchive({ event, dispatch, id: row._id || '' })}>Archive</ButtonStyledArchived>
             }
-            <ButtonStyledIcon onClick={(event) => handleClickDelete({ event, dispatch, id: row.id })}><DeleteStyled></DeleteStyled></ButtonStyledIcon>
+            <ButtonStyledIcon onClick={(event) => handleClickDelete({ event, dispatch, id: row._id || '' })}><DeleteStyled></DeleteStyled></ButtonStyledIcon>
         </DivStyledActions>
     )
 }
@@ -56,7 +56,7 @@ const dataTable = ({ dispatch }: DataTableProps): DataProperties[] => [
         'label': 'Date',
         display: (row: iMessage) => {
             const date = new Date(parseInt(row.date, 10));
-            return (<><SpanStyledTableFirst>{date.toDateString().slice(3)}</SpanStyledTableFirst><br /><SpanStyledTableSecond>{date.toTimeString().slice(0, 8)} </SpanStyledTableSecond><SpanStyledTableSecond>#{row.id}</SpanStyledTableSecond></>);
+            return (<><SpanStyledTableFirst>{date.toDateString().slice(3)}</SpanStyledTableFirst><br /><SpanStyledTableSecond>{date.toTimeString().slice(0, 8)} </SpanStyledTableSecond><SpanStyledTableSecond>#{row._id}</SpanStyledTableSecond></>);
         }
     },
     {

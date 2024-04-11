@@ -15,7 +15,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import { SwiperStyled } from "../../styled/SwiperStyled";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
-import { ObjectFields, iRoom} from "../../entitys/Data";
+import { ObjectFields, iRoom } from "../../entitys/Data";
 
 
 const object__fields: ObjectFields[] = [
@@ -59,15 +59,11 @@ const object__fields: ObjectFields[] = [
                         onSwiper={() => { }}
                         onSlideChange={() => { }}
                     >
-                        <SwiperSlide style={{ userSelect: 'none' }}>
-                            <img src={room.foto} />
-                        </SwiperSlide>
-                        <SwiperSlide style={{ userSelect: 'none' }}>
-                            <img src={room.foto} />
-                        </SwiperSlide>
-                        <SwiperSlide style={{ userSelect: 'none' }}>
-                            <img src={room.foto} />
-                        </SwiperSlide>
+                        {room.photo.map((photo) => {
+                            return <SwiperSlide style={{ userSelect: 'none' }}>
+                                <img src={photo} />
+                            </SwiperSlide>
+                        })}
                     </SwiperStyled>
                     <DivDetailsSwiper>
                         <div style={{ width: '80%', margin: '0px auto' }}>
@@ -91,7 +87,7 @@ const RoomPage = () => {
 
     const initialFetch = async () => {
         try {
-            await dispatch(getRoom(parseInt(id || ''))).unwrap();
+            await dispatch(getRoom(id || '')).unwrap();
             setIsLoading(false);
         } catch (error) {
             console.log(error);
@@ -102,7 +98,7 @@ const RoomPage = () => {
         initialFetch();
     }, [])
 
-    if(isLoading) {
+    if (isLoading) {
         return (<section className='content'>
             <Loading></Loading>
         </section>)

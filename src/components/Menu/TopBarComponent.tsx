@@ -74,11 +74,7 @@ const TopBarComponent = ({ setVisibleLateral, visibleLateral, title}: TopBarComp
     return (
         <HeaderStyled>
             <DivStyled>
-<<<<<<< HEAD:src/components/Menu/TopBarComponent.jsx
-                <IconStyled $visibleLateral={visibleLateral} onClick={isMenuVisibleHandle}>
-=======
                 <IconStyled $visibleLateral = {visibleLateral} onClick={isMenuVisibleHandle}>
->>>>>>> typescript:src/components/Menu/TopBarComponent.tsx
                     <AiOutlineMenuFold/>
                 </IconStyled>
                 <h1 id='title'>{title}</h1>

@@ -27,32 +27,32 @@ const ImgStyled = styled.img`
     height: 100px;
 `;
 
-const handleClickDelete = async ({event, dispatch, id}: HandleClickDeleteProps) => {
+const handleClickDelete = async ({ event, dispatch, id }: HandleClickDeleteProps) => {
     event.stopPropagation();
     try {
         await dispatch(deleteRoom(id)).unwrap()
         const html = <p>Delete #{id} Room Successfully</p>
-        MySwal({title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true});
+        MySwal({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
     } catch (error) {
         console.log(error)
     }
 }
 
-const action = ({id, dispatch}: ActionProps) => {
+const action = ({ id, dispatch }: ActionProps) => {
     return (
         <DivStyledActions>
             <ButtonStyledIcon as={LinkStyled} to={`edit/${id}`} onClick={(event) => event.stopPropagation()}><EditStyled></EditStyled></ButtonStyledIcon>
-            <ButtonStyledIcon onClick={(event) => handleClickDelete({event, dispatch, id})}><DeleteStyled></DeleteStyled></ButtonStyledIcon>
+            <ButtonStyledIcon onClick={(event) => handleClickDelete({ event, dispatch, id })}><DeleteStyled></DeleteStyled></ButtonStyledIcon>
         </DivStyledActions>
     )
 
 
 }
 
-const dataTable = ({dispatch}: DataTableProps): DataProperties[] => [
+const dataTable = ({ dispatch }: DataTableProps): DataProperties[] => [
     {
         'label': 'Image',
-        display: (row: iRoom) => <ImgStyled src={row.foto} />
+        display: (row: iRoom) => row.photo.map((photo) => <ImgStyled src={photo} />)
     },
     {
         'label': 'Number',
@@ -79,7 +79,7 @@ const dataTable = ({dispatch}: DataTableProps): DataProperties[] => [
                         </li>;
                     })}
                 </ul>);
-                MySwal({title, html, showConfirmButton: false})
+                MySwal({ title, html, showConfirmButton: false })
             }}>View Amenities</ButtonStyledViewNotes>
             :
             <ButtonStyledViewNotes disabled>View Amenities</ButtonStyledViewNotes>
@@ -101,7 +101,7 @@ const dataTable = ({dispatch}: DataTableProps): DataProperties[] => [
     },
     {
         'label': 'Actions',
-        display: (row: iRoom) => action({id: row.id, dispatch: dispatch})
+        display: (row: iRoom) => action({ id: row._id || '', dispatch: dispatch })
     }
 ];
 
@@ -120,12 +120,12 @@ const RoomsPage = () => {
             const property = order[0] as keyof iRoom;
             const orderType = order[1];
 
-            if (a[property] > b[property]) {
+            if ((a[property] || '') > (b[property] || '')) {
                 if (orderType === 'asc') {
                     return 1;
                 }
                 return -1;
-            } else if (a[property] < b[property]) {
+            } else if ((a[property] || '') < (b[property] || '')) {
                 if (orderType === 'asc') {
                     return -1;
                 }
@@ -163,7 +163,7 @@ const RoomsPage = () => {
                     <OrderComponent setCurrentOrder={setCurrentOrder} data={roomsOrder} />
                 </div>
                 <TabsComponent setCurrentTab={setCurrentTab} data={rooms} currentTab={currentTab}></TabsComponent>
-                <TableComponent rows={filteredRooms} columns={dataTable({dispatch})} path={'rooms'}></TableComponent>
+                <TableComponent rows={filteredRooms} columns={dataTable({ dispatch })} path={'rooms'}></TableComponent>
             </>
         </section>
     );
