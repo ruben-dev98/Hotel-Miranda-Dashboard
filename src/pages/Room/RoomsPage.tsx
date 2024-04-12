@@ -13,7 +13,7 @@ import { EditStyled } from "../../styled/IconStyled";
 import { DeleteStyled } from './../../styled/IconStyled';
 import styled from "styled-components";
 import MySweetAlert from "../../app/MySweetAlert";
-import { ORDER_ROOMS_INITIAL_STATE, TAB_ROOMS_INITIAL_STATE } from "../../helpers/varHelpers";
+import { ORDER_ROOMS_INITIAL_STATE, TAB_ROOMS_INITIAL_STATE } from "../../helpers/constants";
 import { ButtonStyledIcon, ButtonStyledNew, ButtonStyledViewNotes } from "../../styled/ButtonStyled";
 import { ActionProps, DataProperties, DataTableProps, HandleClickDeleteProps, iRoom } from "../../entities/Data";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
@@ -52,7 +52,7 @@ const action = ({ id, dispatch }: ActionProps) => {
 const dataTable = ({ dispatch }: DataTableProps): DataProperties[] => [
     {
         'label': 'Image',
-        display: (row: iRoom) => row.photo.map((photo) => <ImgStyled src={photo} />)
+        display: (row: iRoom) => <ImgStyled src={row.photo[0]}/>
     },
     {
         'label': 'Number',

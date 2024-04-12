@@ -1,58 +1,129 @@
 import { FakesUri, iBooking, iEmployee, iMessage, iRoom } from "../entities/Data";
-import { METHOD_DELETE, METHOD_POST, METHOD_PUT, SERVER } from "./varHelpers";
+import { METHOD_DELETE, METHOD_POST, METHOD_PUT, SERVER, localStorageGetAction, localStorageTokenKey, statusCodeErrorNotFound, statusCodeForbidden, statusCodeOk, statusCodeUnauthorized } from "./constants";
+import { useLocalStorage } from "./useLocalStorage";
 
 type dataType = iEmployee | iBooking | iMessage | iRoom;
 
 const getAllData = async (path: string) => {
+    const token = useLocalStorage({key: localStorageTokenKey, action: localStorageGetAction}) || '';
     try {
-        const apiData = await fetch(`${SERVER}${path}`);
-        const json = await apiData.json();
-        return await json.data;
-    } catch(error) {
+        const apiData = await fetch(`${SERVER}${path}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }
+        );
+        if(apiData.status === statusCodeOk) {
+            const json = await apiData.json();
+            return await json.data;
+        } else if (apiData.status === statusCodeForbidden) {
+
+        } else if(apiData.status === statusCodeUnauthorized) {
+
+        }
+    } catch (error) {
         console.error(error);
     }
 };
+
 const getOneData = async (path: string, id: string) => {
+    const token = useLocalStorage({key: localStorageTokenKey, action: localStorageGetAction}) || '';
     try {
         console.log(`${SERVER}${path}/${id}`);
-        const apiData = await fetch(`${SERVER}${path}/${id}`);
-        const json = await apiData.json();
-        console.log(json);
-        return await json.data;
-    } catch(error) {
+        const apiData = await fetch(`${SERVER}${path}/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        if(apiData.status === statusCodeOk) {
+            const json = await apiData.json();
+            return await json.data;
+        } else if (apiData.status === statusCodeErrorNotFound) {
+
+        } else if (apiData.status === statusCodeForbidden) {
+
+        } else if(apiData.status === statusCodeUnauthorized) {
+
+        }
+    } catch (error) {
         console.error(error);
     }
 };
+
 const addData = async (path: string, data: dataType) => {
+    const token = useLocalStorage({key: localStorageTokenKey, action: localStorageGetAction}) || '';
     try {
         const apiData = await fetch(`${SERVER}${path}`, {
             method: METHOD_POST,
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization': `Bearer ${token}`
+            },
             body: JSON.stringify(data)
         });
-        const json = await apiData.json();
-        return await json.data;
-    } catch(error) {
+        if(apiData.status === statusCodeOk) {
+            const json = await apiData.json();
+            return await json.data;
+        } else if (apiData.status === statusCodeErrorNotFound) {
+
+        } else if (apiData.status === statusCodeForbidden) {
+
+        } else if(apiData.status === statusCodeUnauthorized) {
+
+        }
+    } catch (error) {
         console.error(error);
     }
 };
+
 const editData = async (path: string, id: string, data: dataType) => {
+    const token = useLocalStorage({key: localStorageTokenKey, action: localStorageGetAction}) || '';
     try {
         const apiData = await fetch(`${SERVER}${path}/${id}`, {
             method: METHOD_PUT,
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization': `Bearer ${token}`
+            },
             body: JSON.stringify(data)
         });
-        const json = await apiData.json();
-        return await json.data;
-    } catch(error) {
+        if(apiData.status === statusCodeOk) {
+            const json = await apiData.json();
+            return await json.data;
+        } else if (apiData.status === statusCodeErrorNotFound) {
+
+        } else if (apiData.status === statusCodeForbidden) {
+
+        } else if(apiData.status === statusCodeUnauthorized) {
+
+        }
+    } catch (error) {
         console.error(error);
     }
 }
+
 const deleteData = async (path: string, id: string) => {
-    const apiData = await fetch(`${SERVER}${path}/${id}`, {
-        method: METHOD_DELETE
+    const token = useLocalStorage({key: localStorageTokenKey, action: localStorageGetAction}) || '';
+    try {
+        const apiData = await fetch(`${SERVER}${path}/${id}`, {
+        method: METHOD_DELETE,
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
     });
-    const json = await apiData.json();
-    return await json.data;
+    if(apiData.status === statusCodeOk) {
+        const json = await apiData.json();
+        return await json.data;
+    } else if (apiData.status === statusCodeErrorNotFound) {
+        
+    } else if (apiData.status === statusCodeForbidden) {
+
+    } else if(apiData.status === statusCodeUnauthorized) {
+
+    }
+    } catch(error){
+        console.error(error);
+    }
 };
 
 export const dataAvailableRoomsNumber = (data: iRoom[]) => data.filter((room) => room.status === 'Available').map(room => room.number).sort((a, b) => {

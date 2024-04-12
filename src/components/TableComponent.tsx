@@ -4,7 +4,7 @@ import { getMessage } from '../features/messages/messagesAsyncThunk';
 import usePaginate from './../hook/usePaginate';
 import { SpanStyledTableFirst } from '../styled/SpanStyled';
 import MySweetAlert from '../app/MySweetAlert';
-import { INITIAL_PAGE } from '../helpers/varHelpers';
+import { INITIAL_PAGE } from '../helpers/constants';
 import { iBooking, iMessage, iEmployee, iRoom, DataTableProps, DataProperties } from '../entities/Data';
 import { useAppDispatch } from '../hook/useStore';
 import { ButtonStyled } from '../styled/ButtonStyled';
@@ -59,9 +59,9 @@ const TableComponent = ({ rows, columns, path }: TableProps) => {
         dispatch(getMessage(row._id || '')).then((result) => {
             const title = 'Details Message';
             const htmlCode = (<>
-                <p><strong>Full Name: </strong> ${result.payload.full_name}</p>
-                <p><strong>Subject: </strong>  ${result.payload.subject}</p>
-                <p><strong>Message: </strong> ${result.payload.messages}</p>
+                <p><strong>Full Name: </strong> {result.payload.full_name}</p>
+                <p><strong>Subject: </strong>  {result.payload.subject}</p>
+                <p><strong>Message: </strong> {result.payload.messages}</p>
             </>);
             return MySweetAlert({ title, html: htmlCode, showConfirmButton: false });
         }).catch(error => {

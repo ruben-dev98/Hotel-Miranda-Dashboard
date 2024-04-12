@@ -15,11 +15,17 @@ import { DeleteStyled, EditStyled } from "../../styled/IconStyled";
 import { DivStyledActions } from "../../styled/DivStyled";
 import MySweetAlert from "../../app/MySweetAlert";
 import { InputSearch } from "../../styled/InputStyled";
-import { ORDER_EMPLOYEE_INITIAL_STATE, TAB_EMPLOYEE_INITIAL_STATE } from "../../helpers/varHelpers";
+import { ORDER_EMPLOYEE_INITIAL_STATE, TAB_EMPLOYEE_INITIAL_STATE } from "../../helpers/constants";
 import { ActionProps, DataProperties, DataTableProps, HandleClickDeleteProps, iEmployee } from "../../entities/Data";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
+import styled from "styled-components";
+
+const ImgStyled = styled.img`
+    width: 128px;
+    height: 128px;
+`;
 
 const handleClickDelete = async ({event, dispatch, id}: HandleClickDeleteProps) => {
     event.stopPropagation();
@@ -44,7 +50,7 @@ const action = ({id, dispatch}: ActionProps) => {
 const dataTable = ({dispatch}: DataTableProps): DataProperties[] => [
     {
         'label': 'Image',
-        display: (row: iEmployee) => <img src={row.photo} />
+        display: (row: iEmployee) => <ImgStyled src={row.photo} />
     },
     {
         'label': 'Full Name',

@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { URI_EMPLOYEE } from "../../helpers/varHelpers";
+import { URI_EMPLOYEE } from "../../helpers/constants";
 import { FakeApi, delay } from "../../helpers/funHelpersThunk";
 import { EditDataThunk, iEmployee } from "../../entities/Data";
-import { PATH_EMPLOYEE } from './../../helpers/varHelpers';
+import { PATH_EMPLOYEE } from '../../helpers/constants';
 
 export const getEmployees = createAsyncThunk('employees/getEmployees', async () => {
     await delay();

@@ -79,8 +79,8 @@ const object__fields: ObjectFields[] = [
                             onSwiper={() => { }}
                             onSlideChange={() => { }}
                         >
-                            {booking.room.photo.map((photo) => {
-                                return <SwiperSlide style={{ userSelect: 'none' }}>
+                            {booking.room.photo.map((photo, index) => {
+                                return <SwiperSlide key={index} style={{ userSelect: 'none' }}>
                                     <img src={photo} />
                                 </SwiperSlide>
                             })}

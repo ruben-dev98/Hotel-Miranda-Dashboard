@@ -11,7 +11,7 @@ import { DeleteStyled } from './../styled/IconStyled';
 import MySweetAlert from "../app/MySweetAlert";
 import { DivStyledActions } from "../styled/DivStyled";
 import { SpanStyledTableFirst, SpanStyledTableSecond } from "../styled/SpanStyled";
-import { TAB_MESSAGE_INITIAL_STATE } from "../helpers/varHelpers";
+import { TAB_MESSAGE_INITIAL_STATE } from "../helpers/constants";
 import { DataProperties, DataTableProps, HandleClickDeleteProps, iMessage } from "../entities/Data";
 import { useAppDispatch, useAppSelector } from "../hook/useStore";
 import { ThunkDispatch } from "@reduxjs/toolkit";

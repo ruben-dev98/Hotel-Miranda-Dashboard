@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { PATH_BOOKING, URI_BOOKINGS } from '../../helpers/varHelpers';
+import { PATH_BOOKING, URI_BOOKINGS } from '../../helpers/constants';
 import { FakeApi, delay } from '../../helpers/funHelpersThunk';
 import { EditDataThunk, iBooking } from "../../entities/Data";
 

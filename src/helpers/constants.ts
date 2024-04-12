@@ -59,4 +59,21 @@ export const URI_BOOKINGS: FakesUri = {
     delete: OPERATION_DELETE
 };
 
+export const statusCodeErrorNotFound = 404;
+export const statusCodeUnauthorized = 401;
+export const statusCodeForbidden = 403;
+export const statusCodeInvalidData = 400;
+
+export const statusCodeCreated = 201;
+export const statusCodeOk = 200;
+
+export const statusCodeInternalServerError = 500;
+
+export const localStorageSetAction = 'set';
+export const localStorageGetAction = 'get';
+
+export const localStorageAuthKey = 'auth';
+export const localStorageUserKey = 'user';
+export const localStorageTokenKey = 'token';
+
 export const SERVER: string = 'http://localhost:3000';

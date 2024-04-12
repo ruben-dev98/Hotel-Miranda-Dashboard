@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"; 
-import { PATH_MESSAGE, URI_MESSAGE } from "../../helpers/varHelpers";
+import { PATH_MESSAGE, URI_MESSAGE } from "../../helpers/constants";
 import { FakeApi, delay } from "../../helpers/funHelpersThunk";
 import { iMessage } from "../../entities/Data";
 
