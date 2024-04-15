@@ -1,6 +1,5 @@
 
 import Swal, { SweetAlertIcon } from 'sweetalert2';
-import { ReactElementOr } from 'sweetalert2-react-content';
 
 interface SwalProps {
     title: string,
@@ -19,7 +18,7 @@ const MySweetAlertApi = ({title, html, showConfirmButton, icon}: SwalProps) => {
         icon: icon,
         timerProgressBar: true,
         toast: true,
-        position: icon && icon === 'error' ? 'bottom-end' : 'top-end' 
+        position: icon && icon === 'error' ? 'bottom-end' : 'top-end'
     });
 }
 

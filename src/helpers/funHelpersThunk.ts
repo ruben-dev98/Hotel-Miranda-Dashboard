@@ -135,29 +135,20 @@ export const delay = (time = 200) => {
 }
 
 export const callAPI = (path: string, operation: number, uri: FakesUri, id = '', data: dataType = {} as dataType) => {
-    return new Promise<any>((resolve, reject) => {
         switch (operation) {
             case uri.getAll:
-                resolve(getAllData(path));
-                break;
+                return (getAllData(path));
             case uri.getOne:
-                resolve(getOneData(path, id));
-                break;
+                return (getOneData(path, id));
             case uri.add:
-                resolve(addData(path, data));
-                break;
+                return (addData(path, data));
             case uri.edit:
-                resolve(editData(path, id, data));
-                break;
+                return (editData(path, id, data));
             case uri.delete:
-                resolve(deleteData(path, id));
-                break;
+                return (deleteData(path, id));
             case uri.getRoomsNumber:
-                resolve(dataAvailableRoomsNumber(([])));
-                break;
+                return dataAvailableRoomsNumber(([]));
             default:
-                reject('Error');
                 break;
-        }
-    });
+        };
 }
