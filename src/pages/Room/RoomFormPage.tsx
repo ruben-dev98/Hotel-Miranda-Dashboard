@@ -1,10 +1,9 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { getAllRooms, getOneRoom } from '../../features/rooms/roomsSlice';
+import { getOneRoom } from '../../features/rooms/roomsSlice';
 import { useEffect, useState } from 'react';
 import { addRoom, editRoom, getRoom } from '../../features/rooms/roomsAsyncThunk';
 import Loading from "../../components/Loading";
 import FormComponent from "../../components/Form/FormComponent";
-import MySweetAlert from "../../app/MySweetAlert";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
 import { FormControlPropsRoom, iRoom } from "../../entities/Data";
 
@@ -73,7 +72,6 @@ const RoomFormPage = () => {
     const dispatch = useAppDispatch();
     const [isLoading, setIsLoading] = useState(true);
     const room = useAppSelector(getOneRoom);
-    const rooms = useAppSelector(getAllRooms);
     const loc = useLocation().pathname;
     const { id } = useParams();
 
@@ -86,10 +84,10 @@ const RoomFormPage = () => {
             description: '',
             offer: false,
             price: 0,
-            cancellation: 'Lorem Ipsum',
+            cancellation: '',
             amenities: [],
             discount: 0,
-            status: ''
+            status: 'Available'
         };
 
         formControl.forEach((control) => {
@@ -110,45 +108,32 @@ const RoomFormPage = () => {
         if (room.discount > 0) {
             room.offer = true;
         }
-
-        const html = id ? <p>Update #{room._id} Room Successfully</p> : <p>Create #{room._id} Room Successfully</p>;
-
-        if (loc.includes('edit')) {
-            try {
-                navigate('/rooms');
-                await dispatch(editRoom({ id: id || '', data: room })).unwrap();
-                MySweetAlert({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
-            } catch (error) {
-                console.log(error);
+        try {
+            if (loc.includes('edit')) {
+                await dispatch(editRoom({ id: id || '', data: room }));
+            } else {
+                await dispatch(addRoom(room));
             }
-        } else {
-            try {
-                navigate('/rooms');
-                dispatch(addRoom(room)).unwrap();
-                MySweetAlert({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
-            } catch (error) {
-                console.log(error);
-            }
-
+            navigate('/rooms');
+        } catch (error) {
+            console.error(error);
         }
     }
 
     const initialFetch = async () => {
-        try {
-            await dispatch(getRoom(id || '')).unwrap();
-            setIsLoading(false);
-        } catch (error) {
-            console.log(error);
-        }
+        await dispatch(getRoom(id || '')).unwrap();
+        setIsLoading(false);
     };
-
-    if (isLoading) {
-        return <Loading />;
-    }
 
     useEffect(() => {
         initialFetch();
     }, [])
+
+    if (isLoading) {
+        return (<section className='content'>
+            <Loading></Loading>
+        </section>)
+    }
 
     return (
         <section className="content">

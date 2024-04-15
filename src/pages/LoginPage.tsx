@@ -19,7 +19,7 @@ const LoginPage = () => {
         const element = event.target as FormData;
         const employee = await loginInApi(element.user.value, element.password.value);
         if(employee.email) {
-            dispatch({type: 'login', payload: {auth: true, user: employee.full_name, email: employee.email, token: employee.token}});
+            dispatch({type: 'login', payload: {auth: true, user: employee.user, email: employee.email, token: employee.token}});
             navigate('/');
         }
     }

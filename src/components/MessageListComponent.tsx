@@ -46,7 +46,7 @@ const MessageListComponent = () => {
             onSlideChange={() => {}}
         >
             
-            {data.map((message, index) => {
+            {data && data.map((message, index) => {
             return (
                 <SwiperSlide style={{userSelect: 'none'}} key={index}>
                     <MessageComponent message={message} />

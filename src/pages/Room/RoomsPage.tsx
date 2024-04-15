@@ -113,6 +113,9 @@ const RoomsPage = () => {
     const data = useAppSelector(getAllRooms);
 
     const filteredRooms = useMemo(() => {
+        if(!data) {
+            return data;
+        }
         const all = data.filter((item) => currentTab === TAB_ROOMS_INITIAL_STATE ? true : item.status === currentTab);
 
         return all.sort((a, b) => {

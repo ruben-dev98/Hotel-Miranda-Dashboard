@@ -1,12 +1,13 @@
 import MySweetAlertApi from "../app/MySweetAlertApi";
 import { FakesUri, iBooking, iEmployee, iMessage, iRoom } from "../entities/Data";
-import { METHOD_DELETE, METHOD_POST, METHOD_PUT, SERVER, connectionError, dataNotFoundError, forbiddenError, localStorageGetAction, localStorageTokenKey, statusCodeErrorNotFound, statusCodeForbidden, statusCodeOk, statusCodeUnauthorized, unauthorizedError } from "./constants";
-import { useLocalStorage } from "./useLocalStorage";
+import { METHOD_DELETE, METHOD_POST, METHOD_PUT, SERVER, connectionError, localStorageGetAction, localStorageTokenKey } from "./constants";
+import { personalMessage } from "./personalMessage";
+import { accessToLocalStorage } from "./accessToLocalStorage";
 
 type dataType = iEmployee | iBooking | iMessage | iRoom;
 
 const getAllData = async (path: string) => {
-    const token = useLocalStorage({ key: localStorageTokenKey, action: localStorageGetAction }) || '';
+    const token = accessToLocalStorage({ key: localStorageTokenKey, action: localStorageGetAction }) || '';
     try {
         const apiData = await fetch(`${SERVER}${path}`, {
             headers: {
@@ -17,20 +18,17 @@ const getAllData = async (path: string) => {
         );
 
         const json = await apiData.json();
-        if (apiData.status === statusCodeOk) {
+        if (apiData.ok) {
             return await json.data;
-        } else if (apiData.status === statusCodeForbidden) {
-            MySweetAlertApi({ title: forbiddenError, icon: 'error' })
-        } else if (apiData.status === statusCodeUnauthorized) {
-            MySweetAlertApi({ title: unauthorizedError, icon: 'error' })
         }
     } catch (error) {
         console.error(error);
+        MySweetAlertApi({ title: connectionError, icon: 'error' })
     }
 };
 
 const getOneData = async (path: string, id: string) => {
-    const token = useLocalStorage({ key: localStorageTokenKey, action: localStorageGetAction }) || '';
+    const token = accessToLocalStorage({ key: localStorageTokenKey, action: localStorageGetAction }) || '';
     try {
         console.log(`${SERVER}${path}/${id}`);
         const apiData = await fetch(`${SERVER}${path}/${id}`, {
@@ -41,22 +39,18 @@ const getOneData = async (path: string, id: string) => {
         });
 
         const json = await apiData.json();
-        if (apiData.status === statusCodeOk) {
+        if (apiData.ok) {
             return await json.data;
-        } else if (apiData.status === statusCodeErrorNotFound) {
-            MySweetAlertApi({ title: dataNotFoundError, icon: 'error' })
-        } else if (apiData.status === statusCodeForbidden) {
-            MySweetAlertApi({ title: forbiddenError, icon: 'error' })
-        } else if (apiData.status === statusCodeUnauthorized) {
-            MySweetAlertApi({ title: unauthorizedError, icon: 'error' })
         }
+        MySweetAlertApi({ title: `${personalMessage(path)} #${id} could not be found`, icon: 'success' });
     } catch (error) {
         console.error(error);
+        MySweetAlertApi({ title: connectionError, icon: 'error' })
     }
 };
 
 const addData = async (path: string, data: dataType) => {
-    const token = useLocalStorage({ key: localStorageTokenKey, action: localStorageGetAction }) || '';
+    const token = accessToLocalStorage({ key: localStorageTokenKey, action: localStorageGetAction }) || '';
     try {
         const apiData = await fetch(`${SERVER}${path}`, {
             method: METHOD_POST,
@@ -68,22 +62,19 @@ const addData = async (path: string, data: dataType) => {
         });
 
         const json = await apiData.json();
-        if (apiData.status === statusCodeOk) {
+        if (apiData.ok) {
+            MySweetAlertApi({ title: `${personalMessage(path)} #${json.data._id} was successfully added`, icon: 'success' })
             return await json.data;
-        } else if (apiData.status === statusCodeErrorNotFound) {
-            MySweetAlertApi({ title: dataNotFoundError, icon: 'error' })
-        } else if (apiData.status === statusCodeForbidden) {
-            MySweetAlertApi({ title: forbiddenError, icon: 'error' })
-        } else if (apiData.status === statusCodeUnauthorized) {
-            MySweetAlertApi({ title: unauthorizedError, icon: 'error' })
         }
+        MySweetAlertApi({ title: json.data, icon: 'error' });
     } catch (error) {
         console.error(error);
+        MySweetAlertApi({ title: connectionError, icon: 'error' });
     }
 };
 
 const editData = async (path: string, id: string, data: dataType) => {
-    const token = useLocalStorage({ key: localStorageTokenKey, action: localStorageGetAction }) || '';
+    const token = accessToLocalStorage({ key: localStorageTokenKey, action: localStorageGetAction }) || '';
     try {
         const apiData = await fetch(`${SERVER}${path}/${id}`, {
             method: METHOD_PUT,
@@ -93,24 +84,21 @@ const editData = async (path: string, id: string, data: dataType) => {
             },
             body: JSON.stringify(data)
         });
-        
+
         const json = await apiData.json();
-        if (apiData.status === statusCodeOk) {
+        if (apiData.ok) {
+            MySweetAlertApi({ title: `${personalMessage(path)} #${json.data._id} was successfully edited`, icon: 'success' })
             return await json.data;
-        } else if (apiData.status === statusCodeErrorNotFound) {
-            MySweetAlertApi({ title: dataNotFoundError, icon: 'error' })
-        } else if (apiData.status === statusCodeForbidden) {
-            MySweetAlertApi({ title: forbiddenError, icon: 'error' })
-        } else if (apiData.status === statusCodeUnauthorized) {
-            MySweetAlertApi({ title: unauthorizedError, icon: 'error' })
         }
+        MySweetAlertApi({ title: `${personalMessage(path)} #${id} could not be found`, icon: 'success' });
     } catch (error) {
         console.error(error);
+        MySweetAlertApi({ title: connectionError, icon: 'error' })
     }
 }
 
 const deleteData = async (path: string, id: string) => {
-    const token = useLocalStorage({ key: localStorageTokenKey, action: localStorageGetAction }) || '';
+    const token = accessToLocalStorage({ key: localStorageTokenKey, action: localStorageGetAction }) || '';
     try {
         const apiData = await fetch(`${SERVER}${path}/${id}`, {
             method: METHOD_DELETE,
@@ -120,18 +108,13 @@ const deleteData = async (path: string, id: string) => {
             }
         });
         const json = await apiData.json();
-        if (apiData.status === statusCodeOk) {
+        if (apiData.ok) {
             return await json.data;
-        } else if (apiData.status === statusCodeErrorNotFound) {
-            MySweetAlertApi({ title: dataNotFoundError, icon: 'error' })
-        } else if (apiData.status === statusCodeForbidden) {
-            MySweetAlertApi({ title: forbiddenError, icon: 'error' })
-        } else if (apiData.status === statusCodeUnauthorized) {
-            MySweetAlertApi({ title: unauthorizedError, icon: 'error' })
         }
+        MySweetAlertApi({ title: `${personalMessage(path)} #${id} could not be found`, icon: 'success' })
     } catch (error) {
         console.error(error);
-        MySweetAlertApi({ title: connectionError })
+        MySweetAlertApi({ title: connectionError, icon: 'error' });
     }
 };
 

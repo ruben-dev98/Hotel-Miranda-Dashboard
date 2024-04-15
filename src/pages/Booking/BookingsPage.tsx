@@ -123,6 +123,9 @@ const BookingsPage = () => {
     const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
     const filteredBookings = useMemo(() => {
+        if(!data) {
+            return data;
+        }
         const all = data.filter((item) => item.full_name.toLowerCase().includes(debouncedSearchTerm.toLowerCase()));
         const all_search = all.filter((item) => currentTab === TAB_BOOKING_INITIAL_STATE ? true : item.status === currentTab);
         const orderType = currentOrder as keyof iBooking;

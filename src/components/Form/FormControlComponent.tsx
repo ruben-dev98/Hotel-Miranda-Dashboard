@@ -21,15 +21,15 @@ const renderSwitch = ({ inputType, data, name, values }: RenderProps) => {
     const property = name as keyof iRoom & keyof iBooking & keyof iEmployee;
     switch (inputType) {
         case 'textarea':
-            return <textarea defaultValue={values ? values[property] as string : ''} rows={5} name={name}></textarea>
+            return <textarea required defaultValue={values ? values[property] as string : ''} rows={5} name={name}></textarea>
         case 'select':
-            return (<select defaultValue={values ? values[property] as string : ''} name={name}>
+            return (<select required defaultValue={values ? values[property] as string : ''} name={name}>
                 {data.map((element, index) => {
                     return <option key={index}>{element}</option>
                 })}
             </select>)
         case 'select multiple':
-            return (<select defaultValue={values ? values[property] as string : []} name={name} multiple>
+            return (<select required defaultValue={values ? values[property] as string : []} name={name} multiple>
                 {data.map((element, index) => {
                     return <option key={index}>{element}</option>
                 })}
@@ -38,12 +38,12 @@ const renderSwitch = ({ inputType, data, name, values }: RenderProps) => {
             const date = new Date(values ? parseInt(values[property] as string) : '');
             const month = date.getMonth() + 1;
             const day = date.getDate();
-            return <input defaultValue={values ? `${date.getFullYear()}-${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}` : ''} name={name} type={inputType} />
+            return <input required defaultValue={values ? `${date.getFullYear()}-${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}` : ''} name={name} type={inputType} />
         }
         case 'number':
-            return <input defaultValue={values ? values[property] as string : 0} min={0} step='any' name={name} type={inputType} />
+            return <input required defaultValue={values ? values[property] as string : 0} min={0} step='any' name={name} type={inputType} />
         default:
-            return <input defaultValue={values ? values[property] as string : ''} name={name} type={inputType} />
+            return <input required defaultValue={values ? values[property] as string : ''} name={name} type={inputType} />
     }
 }
 

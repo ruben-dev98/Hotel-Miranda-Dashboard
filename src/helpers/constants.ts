@@ -29,6 +29,7 @@ export const PATH_BOOKING = '/bookings';
 export const PATH_ROOM = '/rooms';
 export const PATH_EMPLOYEE = '/employees';
 export const PATH_MESSAGE = '/messages';
+export const LOGIN_PATH = '/login';
 
 export const URI_ROOM: FakesUri = {
     getAll: OPERATION_GET_ALL,
@@ -85,4 +86,4 @@ export const localStorageAuthKey = 'auth';
 export const localStorageUserKey = 'user';
 export const localStorageTokenKey = 'token';
 
-export const SERVER: string = 'http://localhost:3000';
+export const SERVER: string = import.meta.env.VITE_API_BASE;

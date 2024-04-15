@@ -109,7 +109,7 @@ const SideBarComponent = ({ visibleLateral }: SideBarComponentProps) => {
                         (<form className='edit__user-pop-up' onSubmit={(event) => {
                             event.preventDefault();
                             const element = event.target as FormData;
-                            context.dispatch({ type: 'edit', payload: { auth: false, user: element.user.value, email: element.email.value } });
+                            context.dispatch({ type: 'edit', payload: { auth: true, user: element.user.value, email: element.email.value, token: '' } });
                             Swal.close();
                         }}>
 

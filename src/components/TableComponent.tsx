@@ -87,7 +87,7 @@ const TableComponent = ({ rows, columns, path }: TableProps) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {data_per_page.map((row, index) => {
+                    {data_per_page && data_per_page.map((row, index) => {
                         return (
                             <tr onClick={() => handleDetails({ row })} key={index}>
                                 {columns.map((column, indx) => {

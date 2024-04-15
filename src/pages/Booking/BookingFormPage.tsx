@@ -2,11 +2,10 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import FormComponent from '../../components/Form/FormComponent';
 import { useEffect, useState } from "react";
 import { addBooking, editBooking, getBooking } from "../../features/bookings/bookingsAsyncThunk";
-import { getAllBookings, getOneBooking } from "../../features/bookings/bookingSlice";
+import { getOneBooking } from "../../features/bookings/bookingSlice";
 import Loading from "../../components/Loading";
 import { availableRooms } from "../../features/rooms/roomsSlice";
 import { availableRoomsNumber } from "../../features/rooms/roomsAsyncThunk";
-import MySweetAlert from "../../app/MySweetAlert";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
 import { FormControlPropsBooking, iBooking, iRoom } from "../../entities/Data";
 
@@ -67,7 +66,6 @@ const BookingFormPage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const { id } = useParams();
     const booking = useAppSelector(getOneBooking);
-    const bookings = useAppSelector(getAllBookings);
     const rooms = useAppSelector(availableRooms);
 
     const onCreateBooking = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -94,25 +92,16 @@ const BookingFormPage = () => {
                 (booking[property] as string | number) = element[control.name].value;
             }
         });
-
-        const html = id ? <p>Updated Booking Successfully</p> : <p>Created Booking Successfully</p>;
-
-        if (loc.includes('edit')) {
-            try {
-                navigate('/bookings');
+        try {
+            if (loc.includes('edit')) {
                 await dispatch(editBooking({ id: id || '', data: booking }));
-                MySweetAlert({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
-            } catch (error) {
-                console.log(error);
-            }
-        } else {
-            try {
-                navigate('/bookings');
+            } else {
                 await dispatch(addBooking(booking));
-                MySweetAlert({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
-            } catch (error) {
-                console.log(error);
             }
+            
+            navigate('/bookings');
+        } catch(error) {
+            console.error(error);
         }
     }
 

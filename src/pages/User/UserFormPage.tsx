@@ -1,10 +1,9 @@
 import FormComponent from '../../components/Form/FormComponent';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getAllEmployees, getOneEmployee } from '../../features/employees/employeesSlice';
+import { getOneEmployee } from '../../features/employees/employeesSlice';
 import { addEmployee, editEmployee, getEmployee } from '../../features/employees/employeesAsyncThunk';
 import Loading from '../../components/Loading';
-import MySweetAlert from '../../app/MySweetAlert';
 import { FormControlPropsEmployee, iEmployee } from '../../entities/Data';
 import { useAppDispatch, useAppSelector } from '../../hook/useStore';
 
@@ -75,7 +74,6 @@ const UserFormPage = () => {
     const dispatch = useAppDispatch();
     const [isLoading, setIsLoading] = useState(true);
     const user = useAppSelector(getOneEmployee);
-    const users = useAppSelector(getAllEmployees);
     const loc = useLocation().pathname;
     const { id } = useParams();
 
@@ -97,35 +95,21 @@ const UserFormPage = () => {
             const element = event.target as FormData;
             (user[control.name] as string) = element[control.name].value;
         });
-
-        const html = id ? <p>Update #{user._id} Employee Successfully</p> : <p>Create #{user._id} Employee Successfully</p>;
-
-        if (loc.includes('edit')) {
-            try {
-                navigate('/users');
+        try {
+            if (loc.includes('edit')) {
                 await dispatch(editEmployee({ id: id || '', data: user })).unwrap();
-                MySweetAlert({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
-            } catch (error) {
-                console.log(error);
-            }
-        } else {
-            try {
-                navigate('/users');
+            } else {
                 await dispatch(addEmployee(user)).unwrap();
-                MySweetAlert({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
-            } catch (error) {
-                console.log(error);
             }
+            navigate('/users');
+        } catch(error) {
+            console.error(error);
         }
     }
 
     const initialFetch = async () => {
-        try {
-            await dispatch(getEmployee(id || '')).unwrap();
-            setIsLoading(false);
-        } catch (error) {
-            console.log(error);
-        }
+        await dispatch(getEmployee(id || '')).unwrap();
+        setIsLoading(false);
     };
 
     useEffect(() => {

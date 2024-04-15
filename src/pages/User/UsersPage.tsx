@@ -2,7 +2,7 @@ import { users } from "../../assets/data/tabs";
 import { usersOrder } from "../../assets/data/order";
 import TableComponent from "../../components/TableComponent";
 import TabsComponent from "../../components/TabsComponent";
-import { SpanStyled, SpanStyledCheckOut, SpanStyledTableFirst } from "../../styled/SpanStyled";
+import { SpanStyled, SpanStyledCheckOut, SpanStyledTableFirst, SpanStyledTableSecond } from "../../styled/SpanStyled";
 import { ButtonStyledIcon, ButtonStyledNew } from "../../styled/ButtonStyled";
 import OrderComponent from '../../components/OrderComponent';
 import { LinkStyled } from "../../styled/LinkStyled";
@@ -66,7 +66,10 @@ const dataTable = ({dispatch}: DataTableProps): DataProperties[] => [
     },
     {
         'label': 'Start Date',
-        display: (row: iEmployee) => new Date(row.start_date).toLocaleDateString('es-Es')
+        display: (row: iEmployee) => {
+            const start_date = new Date(parseInt(row.start_date, 10));
+            return (<><SpanStyledTableFirst>{start_date.toDateString().slice(3)}</SpanStyledTableFirst><br /><SpanStyledTableSecond>{start_date.toTimeString().slice(0, 8)}</SpanStyledTableSecond></>);
+        }
     },
     {
         'label': 'Description',
@@ -98,6 +101,9 @@ const UsersPage = () => {
     const data = useAppSelector(getAllEmployees);
 
     const filteredUsers = useMemo(() => {
+        if(!data) {
+            return data;
+        }
         const all = data.filter((item) => item.full_name.toLowerCase().includes(debouncedSearchTerm.toLowerCase()));
         const all_search = all.filter((item) => currentTab === TAB_EMPLOYEE_INITIAL_STATE ? true : item.status === currentTab);
         const orderType = currentOrder as keyof iEmployee;

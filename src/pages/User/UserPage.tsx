@@ -36,7 +36,7 @@ const object__fields: ObjectFields[] = [
                         <DivDetailsComponents>
                             <div>
                                 <SpanStyledDetailsLabel>Start Date</SpanStyledDetailsLabel><br></br>
-                                <SpanStyledDetailsValue>{employee.start_date}</SpanStyledDetailsValue>
+                                <SpanStyledDetailsValue>{new Date(parseInt(employee.start_date)).toDateString().slice(3)}</SpanStyledDetailsValue>
                             </div>
                             <div>
                                 <SpanStyledDetailsLabel>Status</SpanStyledDetailsLabel><br></br>
