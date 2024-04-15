@@ -69,6 +69,15 @@ export const statusCodeOk = 200;
 
 export const statusCodeInternalServerError = 500;
 
+export const connectionError = 'Connection error';
+export const invalidDataError = 'Input data could have spelling problems or is empty';
+export const dataNotFoundError = 'Data could not be found';
+export const internalServerError = 'Internal Server Error';
+export const unauthorizedError = 'Unauthorized. The request lacks basic authentication';
+export const forbiddenError = 'Forbidden. The server understood the request but refused to authorize it.';
+export const successMessage = 'Success';
+export const loginSuccessful = 'Login Successfully';
+
 export const localStorageSetAction = 'set';
 export const localStorageGetAction = 'get';
 

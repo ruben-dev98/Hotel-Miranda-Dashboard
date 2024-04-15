@@ -3,7 +3,7 @@ import { FormEvent, useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import { FormStyledLogin } from "../styled/FormStyled";
 import { ButtonStyled } from "../styled/ButtonStyled";
-import { loginInApi } from "../features/login/loginAsyncThunk";
+import { loginInApi } from "../helpers/loginInApi";
 
 interface FormData extends EventTarget {
     user: HTMLFormElement,

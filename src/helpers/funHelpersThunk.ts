@@ -1,25 +1,28 @@
+import MySweetAlertApi from "../app/MySweetAlertApi";
 import { FakesUri, iBooking, iEmployee, iMessage, iRoom } from "../entities/Data";
-import { METHOD_DELETE, METHOD_POST, METHOD_PUT, SERVER, localStorageGetAction, localStorageTokenKey, statusCodeErrorNotFound, statusCodeForbidden, statusCodeOk, statusCodeUnauthorized } from "./constants";
+import { METHOD_DELETE, METHOD_POST, METHOD_PUT, SERVER, connectionError, dataNotFoundError, forbiddenError, localStorageGetAction, localStorageTokenKey, statusCodeErrorNotFound, statusCodeForbidden, statusCodeOk, statusCodeUnauthorized, unauthorizedError } from "./constants";
 import { useLocalStorage } from "./useLocalStorage";
 
 type dataType = iEmployee | iBooking | iMessage | iRoom;
 
 const getAllData = async (path: string) => {
-    const token = useLocalStorage({key: localStorageTokenKey, action: localStorageGetAction}) || '';
+    const token = useLocalStorage({ key: localStorageTokenKey, action: localStorageGetAction }) || '';
     try {
         const apiData = await fetch(`${SERVER}${path}`, {
             headers: {
+                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             }
         }
         );
-        if(apiData.status === statusCodeOk) {
-            const json = await apiData.json();
+
+        const json = await apiData.json();
+        if (apiData.status === statusCodeOk) {
             return await json.data;
         } else if (apiData.status === statusCodeForbidden) {
-
-        } else if(apiData.status === statusCodeUnauthorized) {
-
+            MySweetAlertApi({ title: forbiddenError, icon: 'error' })
+        } else if (apiData.status === statusCodeUnauthorized) {
+            MySweetAlertApi({ title: unauthorizedError, icon: 'error' })
         }
     } catch (error) {
         console.error(error);
@@ -27,23 +30,25 @@ const getAllData = async (path: string) => {
 };
 
 const getOneData = async (path: string, id: string) => {
-    const token = useLocalStorage({key: localStorageTokenKey, action: localStorageGetAction}) || '';
+    const token = useLocalStorage({ key: localStorageTokenKey, action: localStorageGetAction }) || '';
     try {
         console.log(`${SERVER}${path}/${id}`);
         const apiData = await fetch(`${SERVER}${path}/${id}`, {
             headers: {
+                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             }
         });
-        if(apiData.status === statusCodeOk) {
-            const json = await apiData.json();
+
+        const json = await apiData.json();
+        if (apiData.status === statusCodeOk) {
             return await json.data;
         } else if (apiData.status === statusCodeErrorNotFound) {
-
+            MySweetAlertApi({ title: dataNotFoundError, icon: 'error' })
         } else if (apiData.status === statusCodeForbidden) {
-
-        } else if(apiData.status === statusCodeUnauthorized) {
-
+            MySweetAlertApi({ title: forbiddenError, icon: 'error' })
+        } else if (apiData.status === statusCodeUnauthorized) {
+            MySweetAlertApi({ title: unauthorizedError, icon: 'error' })
         }
     } catch (error) {
         console.error(error);
@@ -51,25 +56,26 @@ const getOneData = async (path: string, id: string) => {
 };
 
 const addData = async (path: string, data: dataType) => {
-    const token = useLocalStorage({key: localStorageTokenKey, action: localStorageGetAction}) || '';
+    const token = useLocalStorage({ key: localStorageTokenKey, action: localStorageGetAction }) || '';
     try {
         const apiData = await fetch(`${SERVER}${path}`, {
             method: METHOD_POST,
             headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(data)
         });
-        if(apiData.status === statusCodeOk) {
-            const json = await apiData.json();
+
+        const json = await apiData.json();
+        if (apiData.status === statusCodeOk) {
             return await json.data;
         } else if (apiData.status === statusCodeErrorNotFound) {
-
+            MySweetAlertApi({ title: dataNotFoundError, icon: 'error' })
         } else if (apiData.status === statusCodeForbidden) {
-
-        } else if(apiData.status === statusCodeUnauthorized) {
-
+            MySweetAlertApi({ title: forbiddenError, icon: 'error' })
+        } else if (apiData.status === statusCodeUnauthorized) {
+            MySweetAlertApi({ title: unauthorizedError, icon: 'error' })
         }
     } catch (error) {
         console.error(error);
@@ -77,25 +83,26 @@ const addData = async (path: string, data: dataType) => {
 };
 
 const editData = async (path: string, id: string, data: dataType) => {
-    const token = useLocalStorage({key: localStorageTokenKey, action: localStorageGetAction}) || '';
+    const token = useLocalStorage({ key: localStorageTokenKey, action: localStorageGetAction }) || '';
     try {
         const apiData = await fetch(`${SERVER}${path}/${id}`, {
             method: METHOD_PUT,
             headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(data)
         });
-        if(apiData.status === statusCodeOk) {
-            const json = await apiData.json();
+        
+        const json = await apiData.json();
+        if (apiData.status === statusCodeOk) {
             return await json.data;
         } else if (apiData.status === statusCodeErrorNotFound) {
-
+            MySweetAlertApi({ title: dataNotFoundError, icon: 'error' })
         } else if (apiData.status === statusCodeForbidden) {
-
-        } else if(apiData.status === statusCodeUnauthorized) {
-
+            MySweetAlertApi({ title: forbiddenError, icon: 'error' })
+        } else if (apiData.status === statusCodeUnauthorized) {
+            MySweetAlertApi({ title: unauthorizedError, icon: 'error' })
         }
     } catch (error) {
         console.error(error);
@@ -103,26 +110,28 @@ const editData = async (path: string, id: string, data: dataType) => {
 }
 
 const deleteData = async (path: string, id: string) => {
-    const token = useLocalStorage({key: localStorageTokenKey, action: localStorageGetAction}) || '';
+    const token = useLocalStorage({ key: localStorageTokenKey, action: localStorageGetAction }) || '';
     try {
         const apiData = await fetch(`${SERVER}${path}/${id}`, {
-        method: METHOD_DELETE,
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    });
-    if(apiData.status === statusCodeOk) {
+            method: METHOD_DELETE,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
         const json = await apiData.json();
-        return await json.data;
-    } else if (apiData.status === statusCodeErrorNotFound) {
-        
-    } else if (apiData.status === statusCodeForbidden) {
-
-    } else if(apiData.status === statusCodeUnauthorized) {
-
-    }
-    } catch(error){
+        if (apiData.status === statusCodeOk) {
+            return await json.data;
+        } else if (apiData.status === statusCodeErrorNotFound) {
+            MySweetAlertApi({ title: dataNotFoundError, icon: 'error' })
+        } else if (apiData.status === statusCodeForbidden) {
+            MySweetAlertApi({ title: forbiddenError, icon: 'error' })
+        } else if (apiData.status === statusCodeUnauthorized) {
+            MySweetAlertApi({ title: unauthorizedError, icon: 'error' })
+        }
+    } catch (error) {
         console.error(error);
+        MySweetAlertApi({ title: connectionError })
     }
 };
 
@@ -142,7 +151,7 @@ export const delay = (time = 200) => {
     });
 }
 
-export const FakeApi = (path: string, operation: number, uri: FakesUri, id = '', data: dataType = {} as dataType) => {
+export const callAPI = (path: string, operation: number, uri: FakesUri, id = '', data: dataType = {} as dataType) => {
     return new Promise<any>((resolve, reject) => {
         switch (operation) {
             case uri.getAll:
@@ -164,7 +173,7 @@ export const FakeApi = (path: string, operation: number, uri: FakesUri, id = '',
                 resolve(dataAvailableRoomsNumber(([])));
                 break;
             default:
-                reject('Array not found');
+                reject('Error');
                 break;
         }
     });

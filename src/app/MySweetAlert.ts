@@ -1,11 +1,10 @@
 
-import { ReactElement } from 'react';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
+import withReactContent, { ReactElementOr } from 'sweetalert2-react-content';
 
 interface SwalProps {
     title: string,
-    html: ReactElement,
+    html: ReactElementOr<'html'>,
     showConfirmButton?: boolean | true,
     timer?: number | 0,
     icon?: SweetAlertIcon,
