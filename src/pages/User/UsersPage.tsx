@@ -16,7 +16,7 @@ import { DivStyledActions, DivStyledOptions, SectionContent } from "../../styled
 import MySweetAlert from "../../app/MySweetAlert";
 import { InputSearch } from "../../styled/InputStyled";
 import { ORDER_EMPLOYEE_INITIAL_STATE, TAB_EMPLOYEE_INITIAL_STATE } from "../../helpers/constants";
-import { ActionProps, DataProperties, DataTableProps, HandleClickDeleteProps, iEmployee } from "../../entities/Data";
+import { ActionProps, DataProperties, DataTableProps, HandleClickProps, iEmployee } from "../../entities/Data";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
@@ -27,7 +27,7 @@ const ImgStyled = styled.img`
     height: 128px;
 `;
 
-const handleClickDelete = async ({ event, dispatch, id }: HandleClickDeleteProps) => {
+const handleClickDelete = async ({ event, dispatch, id }: HandleClickProps) => {
     event.stopPropagation();
     try {
         await dispatch(deleteEmployee(id)).unwrap()

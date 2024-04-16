@@ -1,7 +1,42 @@
 import styled from 'styled-components';
 import MySweetAlert from '../app/MySweetAlert';
-import { iMessage } from '../entities/Data';
+import { HandleClickProps, iMessage } from '../entities/Data';
 import { ReactNode } from 'react';
+import { FaRegCheckCircle } from "react-icons/fa";
+import { RxCrossCircled } from "react-icons/rx";
+import { useAppDispatch } from '../hook/useStore';
+import { editMessage } from '../features/messages/messagesAsyncThunk';
+
+const IconStyled = styled.button`
+    cursor: pointer;
+    border: 0px;
+    background-color : transparent;
+
+    svg {
+        width: 24px;
+        height: 24px;
+    }
+`;
+
+const IconCheckStyled = styled(IconStyled)`
+    svg {
+        fill: #5AD07A;
+    }
+
+    path {
+        fill: #5AD07A;
+    }
+`
+
+const IconCrossStyled = styled(IconStyled)`
+    svg {
+        fill: #E23428;
+    }
+    
+    path {
+        fill: #E23428;
+    }
+`
 
 const MessageComponentStyled = styled.div`
     display: flex;
@@ -42,7 +77,7 @@ const SpanStyled = styled.span`
     color: #393939;
 `;
 
-const SpanStyledHour= styled(SpanStyled)`
+const SpanStyledHour = styled(SpanStyled)`
     font-size: 0.8em;
     color: #799283;
 `;
@@ -52,17 +87,23 @@ interface MessageProps {
     childrem?: ReactNode
 }
 
-const MessageComponent = ({message}: MessageProps) => {
+const MessageComponent = ({ message }: MessageProps) => {
+
+    const dispatch = useAppDispatch();
+
+    const handleEditAsRead = ({event, dispatch, id}: HandleClickProps) => {
+        dispatch(editMessage({ id: id, data: { read: true } as iMessage }));
+    }
 
     return (
         <MessageComponentStyled>
-            <p style={{cursor: 'pointer'}} onClick={() => {
+            <p style={{ cursor: 'pointer' }} onClick={() => {
                 const title = 'Info Message';
                 const html = (<p>
-                        <strong>Message:</strong> {message.messages}
-                    </p>
-                    );
-                return MySweetAlert({title: title, html: html, showConfirmButton: false});
+                    <strong>Message:</strong> {message.messages}
+                </p>
+                );
+                return MySweetAlert({ title: title, html: html, showConfirmButton: false });
             }}>{message.messages.slice(0, 50).concat('...')}</p>
             <div>
                 <img src={message.photo} />
@@ -70,7 +111,16 @@ const MessageComponent = ({message}: MessageProps) => {
                     <SpanStyled>{message.full_name}</SpanStyled>
                     <SpanStyledHour>{message.time_passed}</SpanStyledHour>
                 </p>
+                <div>
+                    <IconCheckStyled  onClick={(event) => handleEditAsRead({event, dispatch, id: message._id || ''})}>
+                        <FaRegCheckCircle />
+                    </IconCheckStyled>
+                    <IconCrossStyled>
+                        <RxCrossCircled />
+                    </IconCrossStyled>
+                </div>
             </div>
+
         </MessageComponentStyled>
     );
 };

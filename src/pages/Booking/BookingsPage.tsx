@@ -16,7 +16,7 @@ import MySweetAlert from "../../app/MySweetAlert";
 import { useDebounce } from "@uidotdev/usehooks";
 import { InputSearch } from "../../styled/InputStyled";
 import { ORDER_BOOKING_INITIAL_STATE, TAB_BOOKING_INITIAL_STATE } from "../../helpers/constants";
-import { ActionProps, DataProperties, DataTableProps, HandleClickDeleteProps, iBooking } from "../../entities/Data";
+import { ActionProps, DataProperties, DataTableProps, HandleClickProps, iBooking } from "../../entities/Data";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
 
 
@@ -29,7 +29,7 @@ import { useAppDispatch, useAppSelector } from "../../hook/useStore";
     }
 }*/
 
-const handleClickDelete = async ({ event, dispatch, id }: HandleClickDeleteProps) => {
+const handleClickDelete = async ({ event, dispatch, id }: HandleClickProps) => {
     event.stopPropagation();
     try {
         await dispatch(deleteBooking(id)).unwrap();

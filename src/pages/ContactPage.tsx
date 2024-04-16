@@ -12,7 +12,7 @@ import MySweetAlert from "../app/MySweetAlert";
 import { DivStyledActions, SectionContent } from "../styled/DivStyled";
 import { SpanStyledTableFirst, SpanStyledTableSecond } from "../styled/SpanStyled";
 import { TAB_MESSAGE_INITIAL_STATE } from "../helpers/constants";
-import { DataProperties, DataTableProps, HandleClickDeleteProps, iMessage } from "../entities/Data";
+import { DataProperties, DataTableProps, HandleClickProps, iMessage } from "../entities/Data";
 import { useAppDispatch, useAppSelector } from "../hook/useStore";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
@@ -22,7 +22,7 @@ interface ActionPropsMessage {
     dispatch: ThunkDispatch<RootState, any, any>
 }
 
-const handleClickDelete = async ({ event, dispatch, id }: HandleClickDeleteProps) => {
+const handleClickDelete = async ({ event, dispatch, id }: HandleClickProps) => {
     event.stopPropagation();
     try {
         await dispatch(deleteMessage(id)).unwrap()
@@ -33,7 +33,7 @@ const handleClickDelete = async ({ event, dispatch, id }: HandleClickDeleteProps
     }
 }
 
-const handleClickArchive = ({ event, dispatch, id }: HandleClickDeleteProps) => {
+const handleClickArchive = ({ event, dispatch, id }: HandleClickProps) => {
     event.stopPropagation();
     dispatch(editMessage({ id: id, data: { archived: true } as iMessage }));
 }

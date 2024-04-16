@@ -6,6 +6,7 @@ import { CiBellOn } from "react-icons/ci";
 import styled from 'styled-components';
 import { Dispatch, SetStateAction, useContext } from 'react';
 import { UserContext } from '../../context/UserContext';
+import MySweetAlertApi from '../../app/MySweetAlertApi';
 
 const HeaderStyled = styled.header`
     grid-area: header;
@@ -63,8 +64,9 @@ const TopBarComponent = ({ setVisibleLateral, visibleLateral, title}: TopBarComp
     const navigate = useNavigate();
     const context = useContext(UserContext);
     const logOutHandle = (): void => {
-        context.dispatch({type: 'logout', payload: {auth: false, user: '', email: ''}});
+        context.dispatch({type: 'logout', payload: {auth: false, user: '', email: '', token: ''}});
         navigate("/login");
+        MySweetAlertApi({title: 'Logout Successfully', icon: 'success'});
     }
 
     const isMenuVisibleHandle = (): void => {

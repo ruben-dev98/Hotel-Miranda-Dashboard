@@ -75,7 +75,7 @@ export interface ObjectFields {
     display: (field: iBooking | iEmployee | iRoom) => JSX.Element
 }
 
-export interface HandleClickDeleteProps {
+export interface HandleClickProps {
     event: React.MouseEvent<HTMLButtonElement>,
     dispatch: ThunkDispatch<RootState, any, any>,
     id: string
