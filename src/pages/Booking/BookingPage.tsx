@@ -5,7 +5,7 @@ import Loading from "../../components/Loading";
 import DetailsComponent from "../../components/Details/DetailsComponent";
 import { AmenitiesStyled } from "../../styled/ListStyled";
 import { SpanStyledDetailsLabel, SpanStyledDetailsValue, SpanStyledDetailsTitle, SpanSwiperTitle, SpanSwiper, SpanStyledInProgressLegend, SpanStyledCheckOutLegend, SpanStyledCheckInLegend } from "../../styled/SpanStyled";
-import { DivDetailsComponents, DivDetails, DivDetailsPart, DivDetailsSwiper, DivDetailsSwiperLegend, DivDetailsPartFirst, DivDetailsContent } from "../../styled/DivStyled";
+import { DivDetailsComponents, DivDetails, DivDetailsPart, DivDetailsSwiper, DivDetailsSwiperLegend, DivDetailsPartFirst, DivDetailsContent, SectionContent } from "../../styled/DivStyled";
 import { Navigation } from 'swiper/modules';
 import { SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -117,15 +117,16 @@ const BookingPage = () => {
 
     if (isLoading) {
         return (
-            <section className='content'>
+            <SectionContent>
                 <Loading></Loading>
-            </section>);
+            </SectionContent>
+        );
     }
 
     return (
-        <section className="content">
+        <SectionContent>
             <DetailsComponent data={booking} object__fields={object__fields}></DetailsComponent>
-        </section>
+        </SectionContent>
     );
 
 }

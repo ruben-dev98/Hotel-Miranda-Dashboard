@@ -9,7 +9,7 @@ import { getAllMessages } from "../features/messages/messagesSlice";
 import Loading from "../components/Loading";
 import { DeleteStyled } from './../styled/IconStyled';
 import MySweetAlert from "../app/MySweetAlert";
-import { DivStyledActions } from "../styled/DivStyled";
+import { DivStyledActions, SectionContent } from "../styled/DivStyled";
 import { SpanStyledTableFirst, SpanStyledTableSecond } from "../styled/SpanStyled";
 import { TAB_MESSAGE_INITIAL_STATE } from "../helpers/constants";
 import { DataProperties, DataTableProps, HandleClickDeleteProps, iMessage } from "../entities/Data";
@@ -27,7 +27,7 @@ const handleClickDelete = async ({ event, dispatch, id }: HandleClickDeleteProps
     try {
         await dispatch(deleteMessage(id)).unwrap()
         const html = <p>Delete #{id} Message Successfully</p>
-        MySweetAlert({title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true});
+        MySweetAlert({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
     } catch (error) {
         console.log(error)
     }
@@ -35,7 +35,7 @@ const handleClickDelete = async ({ event, dispatch, id }: HandleClickDeleteProps
 
 const handleClickArchive = ({ event, dispatch, id }: HandleClickDeleteProps) => {
     event.stopPropagation();
-    dispatch(editMessage(id));
+    dispatch(editMessage({ id: id, data: { archived: true } as iMessage }));
 }
 
 const action = ({ row, dispatch }: ActionPropsMessage) => {
@@ -86,7 +86,7 @@ const ContactPage = () => {
 
     const initialFetch = async () => {
         try {
-            await dispatch(getMessages()).unwrap();
+            await dispatch(getMessages());
             setIsLoading(false);
         } catch (error) {
             console.log(error);
@@ -99,18 +99,18 @@ const ContactPage = () => {
 
     if (isLoading) {
         return (
-            <section className='content'>
+            <SectionContent>
                 <Loading></Loading>
-            </section>
-        )
+            </SectionContent>
+        );
     }
 
     return (
-        <section className='content'>
+        <SectionContent>
             <MessageListComponent />
             <TabsComponent setCurrentTab={setCurrentTab} data={message} currentTab={currentTab}></TabsComponent>
             <TableComponent rows={filteredMessages} columns={dataTable({ dispatch })} path={''}></TableComponent>
-        </section>
+        </SectionContent>
     );
 }
 

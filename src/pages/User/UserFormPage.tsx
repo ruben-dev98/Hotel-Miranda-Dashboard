@@ -6,6 +6,7 @@ import { addEmployee, editEmployee, getEmployee } from '../../features/employees
 import Loading from '../../components/Loading';
 import { FormControlPropsEmployee, iEmployee } from '../../entities/Data';
 import { useAppDispatch, useAppSelector } from '../../hook/useStore';
+import { SectionContent } from '../../styled/DivStyled';
 
 interface FormData extends EventTarget {
     photo: HTMLFormElement,
@@ -102,7 +103,7 @@ const UserFormPage = () => {
                 await dispatch(addEmployee(user)).unwrap();
             }
             navigate('/users');
-        } catch(error) {
+        } catch (error) {
             console.error(error);
         }
     }
@@ -117,15 +118,17 @@ const UserFormPage = () => {
     }, [])
 
     if (isLoading) {
-        return (<section className='content'>
-            <Loading></Loading>
-        </section>)
+        return (
+            <SectionContent className='content'>
+                <Loading></Loading>
+            </SectionContent>
+        );
     }
 
     return (
-        <section className="content">
+        <SectionContent>
             <FormComponent data={user} formControl={formControl} onHandleSubmit={onCreateUser}></FormComponent>
-        </section>
+        </SectionContent>
     )
 }
 

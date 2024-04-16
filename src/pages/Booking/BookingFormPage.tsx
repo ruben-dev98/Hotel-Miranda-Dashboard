@@ -8,6 +8,7 @@ import { availableRooms } from "../../features/rooms/roomsSlice";
 import { availableRoomsNumber } from "../../features/rooms/roomsAsyncThunk";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
 import { FormControlPropsBooking, iBooking, iRoom } from "../../entities/Data";
+import { SectionContent } from "../../styled/DivStyled";
 
 interface FormData extends EventTarget {
     full_name: HTMLFormElement,
@@ -116,15 +117,17 @@ const BookingFormPage = () => {
     }, []);
 
     if (isLoading) {
-        return (<section className='content'>
+        return (
+        <SectionContent>
             <Loading></Loading>
-        </section>)
+        </SectionContent>
+        )
     }
 
     return (
-        <section className="content">
+        <SectionContent>
             <FormComponent formControl={formControl(rooms)} data={booking} onHandleSubmit={onCreateBooking}></FormComponent>
-        </section>
+        </SectionContent>
     );
 
 }

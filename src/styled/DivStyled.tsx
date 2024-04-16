@@ -78,3 +78,23 @@ export const WindowStyled = styled.div<{$visibleLateral?: boolean}>`
 
     
 `;
+
+export const DivStyledOptions = styled.div`
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+`;
+
+export const SectionContent = styled.section`
+    grid-area: content;
+    padding: 2rem;
+    background-color: #f8f8f8;
+    height: max-content;
+`;
+
+export const DivStyledKPIs = styled.div`
+    display: flex;
+    justify-content: space-evenly;
+    gap: 2rem;
+    margin-bottom: 40px;
+`;

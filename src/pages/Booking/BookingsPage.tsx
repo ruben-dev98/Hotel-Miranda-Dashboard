@@ -10,7 +10,7 @@ import { getAllBookings } from "../../features/bookings/bookingSlice";
 import { useEffect, useMemo, useState } from "react";
 import { deleteBooking, getBookings } from "../../features/bookings/bookingsAsyncThunk";
 import Loading from "../../components/Loading";
-import { DivStyledActions } from "../../styled/DivStyled";
+import { DivStyledActions, DivStyledOptions, SectionContent } from "../../styled/DivStyled";
 import { DeleteStyled, EditStyled } from "../../styled/IconStyled";
 import MySweetAlert from "../../app/MySweetAlert";
 import { useDebounce } from "@uidotdev/usehooks";
@@ -154,21 +154,23 @@ const BookingsPage = () => {
     }, []);
 
     if (isLoading) {
-        return (<section className='content'>
-            <Loading></Loading>
-        </section>)
+        return (
+            <SectionContent className='content'>
+                <Loading></Loading>
+            </SectionContent>
+        );
     }
 
     return (
-        <section className='content'>
-            <div className="top__menu-table">
+        <SectionContent>
+            <DivStyledOptions>
                 <InputSearch value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Busqueda por nombre usuario" />
                 <ButtonStyledNew as={LinkStyled} to={'booking'}>+ New Booking</ButtonStyledNew>
                 <OrderComponent setCurrentOrder={setCurrentOrder} data={bookingsOrder} />
-            </div>
+            </DivStyledOptions>
             <TabsComponent data={bookings} setCurrentTab={setCurrentTab} currentTab={currentTab}></TabsComponent>
             <TableComponent rows={filteredBookings} columns={dataTable({ dispatch })} path={'bookings'}></TableComponent>
-        </section>
+        </SectionContent>
     );
 }
 

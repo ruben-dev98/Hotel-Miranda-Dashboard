@@ -6,7 +6,7 @@ import Loading from "../../components/Loading";
 import DetailsComponent from "../../components/Details/DetailsComponent";
 import { AmenitiesStyled } from "../../styled/ListStyled";
 import { SpanStyledDetailsLabel, SpanStyledDetailsValue, SpanSwiperTitle, SpanSwiper, SpanStyledCheckOutLegend, SpanStyledCheckInLegend } from "../../styled/SpanStyled";
-import { DivDetailsComponents, DivDetails, DivDetailsPart, DivDetailsSwiper, DivDetailsSwiperLegend, DivDetailsPartFirst } from "../../styled/DivStyled";
+import { DivDetailsComponents, DivDetails, DivDetailsPart, DivDetailsSwiper, DivDetailsSwiperLegend, DivDetailsPartFirst, SectionContent } from "../../styled/DivStyled";
 import { Navigation } from 'swiper/modules';
 import { SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -99,15 +99,17 @@ const RoomPage = () => {
     }, [])
 
     if (isLoading) {
-        return (<section className='content'>
-            <Loading></Loading>
-        </section>)
+        return (
+            <SectionContent>
+                <Loading></Loading>
+            </SectionContent>
+        );
     }
 
     return (
-        <section className="content">
+        <SectionContent>
             <DetailsComponent data={room} object__fields={object__fields}></DetailsComponent>
-        </section>
+        </SectionContent>
     )
 }
 

@@ -19,7 +19,7 @@ import { ActionProps, DataProperties, DataTableProps, HandleClickDeleteProps, iR
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
-import { DivStyledActions } from "../../styled/DivStyled";
+import { DivStyledActions, DivStyledOptions, SectionContent } from "../../styled/DivStyled";
 
 
 const ImgStyled = styled.img`
@@ -52,7 +52,7 @@ const action = ({ id, dispatch }: ActionProps) => {
 const dataTable = ({ dispatch }: DataTableProps): DataProperties[] => [
     {
         'label': 'Image',
-        display: (row: iRoom) => <ImgStyled src={row.photo[0]}/>
+        display: (row: iRoom) => <ImgStyled src={row.photo[0]} />
     },
     {
         'label': 'Number',
@@ -113,7 +113,7 @@ const RoomsPage = () => {
     const data = useAppSelector(getAllRooms);
 
     const filteredRooms = useMemo(() => {
-        if(!data) {
+        if (!data) {
             return data;
         }
         const all = data.filter((item) => currentTab === TAB_ROOMS_INITIAL_STATE ? true : item.status === currentTab);
@@ -153,22 +153,22 @@ const RoomsPage = () => {
     }, []);
 
     if (isLoading) {
-        return (<section className='content'>
-            <Loading></Loading>
-        </section>)
+        return (
+            <SectionContent>
+                <Loading></Loading>
+            </SectionContent>
+        );
     }
 
     return (
-        <section className='content'>
-            <>
-                <div className="top__menu-table">
-                    <ButtonStyledNew as={LinkStyled} to={'room'}>+ New Room</ButtonStyledNew>
-                    <OrderComponent setCurrentOrder={setCurrentOrder} data={roomsOrder} />
-                </div>
-                <TabsComponent setCurrentTab={setCurrentTab} data={rooms} currentTab={currentTab}></TabsComponent>
-                <TableComponent rows={filteredRooms} columns={dataTable({ dispatch })} path={'rooms'}></TableComponent>
-            </>
-        </section>
+        <SectionContent>
+            <DivStyledOptions>
+                <ButtonStyledNew as={LinkStyled} to={'room'}>+ New Room</ButtonStyledNew>
+                <OrderComponent setCurrentOrder={setCurrentOrder} data={roomsOrder} />
+            </DivStyledOptions>
+            <TabsComponent setCurrentTab={setCurrentTab} data={rooms} currentTab={currentTab}></TabsComponent>
+            <TableComponent rows={filteredRooms} columns={dataTable({ dispatch })} path={'rooms'}></TableComponent>
+        </SectionContent>
     );
 }
 

@@ -6,6 +6,7 @@ import Loading from "../../components/Loading";
 import FormComponent from "../../components/Form/FormComponent";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
 import { FormControlPropsRoom, iRoom } from "../../entities/Data";
+import { SectionContent } from "../../styled/DivStyled";
 
 
 
@@ -130,15 +131,17 @@ const RoomFormPage = () => {
     }, [])
 
     if (isLoading) {
-        return (<section className='content'>
-            <Loading></Loading>
-        </section>)
+        return (
+            <SectionContent>
+                <Loading></Loading>
+            </SectionContent>
+        );
     }
 
     return (
-        <section className="content">
+        <SectionContent>
             <FormComponent data={room} formControl={formControl} onHandleSubmit={onCreateRoom}></FormComponent>
-        </section>
+        </SectionContent>
     )
 }
 

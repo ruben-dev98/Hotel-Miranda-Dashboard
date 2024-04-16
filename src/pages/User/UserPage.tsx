@@ -6,7 +6,7 @@ import Loading from '../../components/Loading';
 import DetailsComponent from '../../components/Details/DetailsComponent';
 import { SpanStyled, SpanStyledCheckOut, SpanStyledDetailsLabel, SpanStyledDetailsTitle, SpanStyledDetailsValue } from '../../styled/SpanStyled';
 import { useAppDispatch, useAppSelector } from '../../hook/useStore';
-import { DivDetails, DivDetailsComponents, DivDetailsPart, DivDetailsPartFirst } from '../../styled/DivStyled';
+import { DivDetails, DivDetailsComponents, DivDetailsPart, DivDetailsPartFirst, SectionContent } from '../../styled/DivStyled';
 import { ObjectFields, iEmployee } from '../../entities/Data';
 
 const object__fields: ObjectFields[] = [
@@ -85,15 +85,17 @@ const UserPage = () => {
     }, [])
 
     if (isLoading) {
-        return (<section className='content'>
-            <Loading></Loading>
-        </section>)
+        return (
+            <SectionContent>
+                <Loading></Loading>
+            </SectionContent>
+        );
     }
 
     return (
-        <section className="content">
+        <SectionContent>
             <DetailsComponent data={user} object__fields={object__fields}></DetailsComponent>
-        </section>
+        </SectionContent>
     )
 }
 

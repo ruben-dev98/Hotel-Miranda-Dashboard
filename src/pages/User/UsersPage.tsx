@@ -12,7 +12,7 @@ import { deleteEmployee, getEmployees } from "../../features/employees/employees
 import Loading from "../../components/Loading";
 import { useDebounce } from "@uidotdev/usehooks";
 import { DeleteStyled, EditStyled } from "../../styled/IconStyled";
-import { DivStyledActions } from "../../styled/DivStyled";
+import { DivStyledActions, DivStyledOptions, SectionContent } from "../../styled/DivStyled";
 import MySweetAlert from "../../app/MySweetAlert";
 import { InputSearch } from "../../styled/InputStyled";
 import { ORDER_EMPLOYEE_INITIAL_STATE, TAB_EMPLOYEE_INITIAL_STATE } from "../../helpers/constants";
@@ -27,27 +27,27 @@ const ImgStyled = styled.img`
     height: 128px;
 `;
 
-const handleClickDelete = async ({event, dispatch, id}: HandleClickDeleteProps) => {
+const handleClickDelete = async ({ event, dispatch, id }: HandleClickDeleteProps) => {
     event.stopPropagation();
     try {
         await dispatch(deleteEmployee(id)).unwrap()
         const html = <p>Delete #{id} Employee Successfully</p>;
-        MySweetAlert({title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true});
-    } catch(error) {
+        MySweetAlert({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
+    } catch (error) {
         console.log(error);
     }
 }
 
-const action = ({id, dispatch}: ActionProps) => {
+const action = ({ id, dispatch }: ActionProps) => {
     return (
         <DivStyledActions>
             <ButtonStyledIcon as={LinkStyled} to={`edit/${id}`} onClick={(event) => event.stopPropagation()}><EditStyled /></ButtonStyledIcon>
-            <ButtonStyledIcon onClick={(event) => handleClickDelete({event, dispatch, id})}><DeleteStyled /></ButtonStyledIcon>
+            <ButtonStyledIcon onClick={(event) => handleClickDelete({ event, dispatch, id })}><DeleteStyled /></ButtonStyledIcon>
         </DivStyledActions>
     )
 }
 
-const dataTable = ({dispatch}: DataTableProps): DataProperties[] => [
+const dataTable = ({ dispatch }: DataTableProps): DataProperties[] => [
     {
         'label': 'Image',
         display: (row: iEmployee) => <ImgStyled src={row.photo} />
@@ -87,7 +87,7 @@ const dataTable = ({dispatch}: DataTableProps): DataProperties[] => [
     },
     {
         'label': 'Actions',
-        display: (row: iEmployee) => action({id: row._id || '', dispatch})
+        display: (row: iEmployee) => action({ id: row._id || '', dispatch })
     }
 ];
 
@@ -101,7 +101,7 @@ const UsersPage = () => {
     const data = useAppSelector(getAllEmployees);
 
     const filteredUsers = useMemo(() => {
-        if(!data) {
+        if (!data) {
             return data;
         }
         const all = data.filter((item) => item.full_name.toLowerCase().includes(debouncedSearchTerm.toLowerCase()));
@@ -110,7 +110,7 @@ const UsersPage = () => {
         return all_search.sort((a, b) => {
             if ((a[orderType] || '') > (b[orderType] || '')) {
                 return 1;
-            } else if ((a[orderType] || '') < (b[orderType] || '') ) {
+            } else if ((a[orderType] || '') < (b[orderType] || '')) {
                 return -1;
             } else {
                 return 0;
@@ -132,21 +132,23 @@ const UsersPage = () => {
     }, []);
 
     if (isLoading) {
-        return (<section className='content'>
-            <Loading></Loading>
-        </section>)
+        return (
+            <SectionContent className='content'>
+                <Loading></Loading>
+            </SectionContent>
+        );
     }
 
     return (
-        <section className='content'>
-            <div className="top__menu-table">
+        <SectionContent>
+            <DivStyledOptions>
                 <InputSearch value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Busqueda por nombre usuario" />
                 <ButtonStyledNew as={LinkStyled} to={'user'}>+ New Employee</ButtonStyledNew>
                 <OrderComponent setCurrentOrder={setCurrentOrder} data={usersOrder}></OrderComponent>
-            </div>
+            </DivStyledOptions>
             <TabsComponent setCurrentTab={setCurrentTab} data={users} currentTab={currentTab}></TabsComponent>
-            <TableComponent rows={filteredUsers} columns={dataTable({dispatch})} path={'users'}></TableComponent>
-        </section>
+            <TableComponent rows={filteredUsers} columns={dataTable({ dispatch })} path={'users'}></TableComponent>
+        </SectionContent>
     );
 }
 
