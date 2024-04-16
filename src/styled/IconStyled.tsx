@@ -22,3 +22,8 @@ export const DeleteStyled = styled(IoTrashBinSharp)`
     width: 15px;
     height: 15px;
 `;
+
+export const IconImgStyled = styled.img`
+    display: block;
+    margin: 0 auto;
+`;

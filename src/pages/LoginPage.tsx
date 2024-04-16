@@ -4,6 +4,7 @@ import { UserContext } from "../context/UserContext";
 import { FormStyledLogin } from "../styled/FormStyled";
 import { ButtonStyled } from "../styled/ButtonStyled";
 import { loginInApi } from "../helpers/loginInApi";
+import { IconImgStyled } from "../styled/IconStyled";
 
 interface FormData extends EventTarget {
     user: HTMLFormElement,
@@ -29,6 +30,7 @@ const LoginPage = () => {
         <Navigate to='/' replace/> 
         :
         <FormStyledLogin onSubmit={onSubmitHandle}>
+            <IconImgStyled src="/icon.png"/>
             <div>
                 <label>Username</label>
                 <input type="text" defaultValue={'Muhammad3@yahoo.com'} name="user" placeholder="Muhammad3@yahoo.com"/>
