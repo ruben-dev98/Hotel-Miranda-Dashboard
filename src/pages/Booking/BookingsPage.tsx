@@ -15,19 +15,9 @@ import { DeleteStyled, EditStyled } from "../../styled/IconStyled";
 import MySweetAlert from "../../app/MySweetAlert";
 import { useDebounce } from "@uidotdev/usehooks";
 import { InputSearch } from "../../styled/InputStyled";
-import { ORDER_BOOKING_INITIAL_STATE, TAB_BOOKING_INITIAL_STATE } from "../../helpers/constants";
+import { ORDER_BOOKING_INITIAL_STATE, TAB_BOOKING_INITIAL_STATE, searchByFullName } from "../../helpers/constants";
 import { ActionProps, DataProperties, DataTableProps, HandleClickProps, iBooking } from "../../entities/Data";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
-
-
-/*const handleClickEdit = async (event, dispatch, row) => {
-    event.stopPropagation();
-    try {
-        await dispatch(editBooking(row.id)).unwrap()
-    } catch (error) {
-        console.log(error)
-    }
-}*/
 
 const handleClickDelete = async ({ event, dispatch, id }: HandleClickProps) => {
     event.stopPropagation();
@@ -45,7 +35,6 @@ const action = ({ id, dispatch }: ActionProps) => {
         <DivStyledActions>
             <ButtonStyledIcon as={LinkStyled} to={`edit/${id}`} onClick={(event) => event.stopPropagation()}><EditStyled /></ButtonStyledIcon>
             <ButtonStyledIcon onClick={(event) => handleClickDelete({ event, dispatch, id })}><DeleteStyled /></ButtonStyledIcon>
-            {/*<ButtonStyledViewNotes onClick={(event) => handleClickEdit(event, dispatch, row)}>Cancelada</ButtonStyledViewNotes>*/}
         </DivStyledActions>
     )
 }
@@ -164,7 +153,7 @@ const BookingsPage = () => {
     return (
         <SectionContent>
             <DivStyledOptions>
-                <InputSearch value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Busqueda por nombre usuario" />
+                <InputSearch value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder={searchByFullName} />
                 <ButtonStyledNew as={LinkStyled} to={'booking'}>+ New Booking</ButtonStyledNew>
                 <OrderComponent setCurrentOrder={setCurrentOrder} data={bookingsOrder} />
             </DivStyledOptions>

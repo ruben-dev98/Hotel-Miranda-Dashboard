@@ -80,10 +80,11 @@ export const unauthorizedError = 'Unauthorized. The request lacks basic authenti
 export const forbiddenError = 'Forbidden. The server understood the request but refused to authorize it.';
 export const successMessage = 'Success';
 export const loginSuccessful = 'Login Successfully';
-export const atLeastThreePhotos = '5 is the max number of urls on Foto input';
-export const notMoreThanFivePhotos = 'At least 3 urls on Foto input';
+export const atLeastThreePhotos = '5 is the max number of urls on Photo input';
+export const notMoreThanFivePhotos = 'At least 3 urls on Photo input';
 export const roomNumberAlreadyExist = 'Number already exist, choose another room number';
 export const roomNotExist = 'The room that you choose not exist';
+export const searchByFullName = 'Search by full name'
 
 export const localStorageSetAction = 'set';
 export const localStorageGetAction = 'get';

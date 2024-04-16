@@ -22,19 +22,19 @@ interface FormData extends EventTarget {
 
 const formControl: FormControlPropsEmployee[] = [
     {
-        'label': 'Foto',
+        'label': 'Photo',
         'input': 'text',
         'name': 'photo'
     },
     {
-        'label': 'Nombre y Apellidos',
+        'label': 'Full Name',
         'input': 'text',
         'name': 'full_name'
     },
     {
-        'label': 'Puesto',
+        'label': 'Job',
         'input': 'select',
-        'data': ['Manager', 'Recepción', 'Servicio de Habitaciones'],
+        'data': ['Manager', 'Receptionist', 'Room Service'],
         'name': 'job'
     },
     {
@@ -60,7 +60,7 @@ const formControl: FormControlPropsEmployee[] = [
     {
         'label': 'Status',
         'input': 'select',
-        'data': ['Activo', 'Inactivo'],
+        'data': ['Active', 'Inactive'],
         'name': 'status'
     },
     {
@@ -91,10 +91,15 @@ const UserFormPage = () => {
             status: false,
             password: ''
         };
-
+        const element = event.target as FormData;
+        
         formControl.forEach((control) => {
-            const element = event.target as FormData;
-            (user[control.name] as string) = element[control.name].value;
+            if(control.name === 'status') {
+                (user[control.name] as boolean) = element[control.name].value === 'Active' ? true : false;
+            } else {
+                (user[control.name] as string) = element[control.name].value;
+            }
+            
         });
         try {
             if (loc.includes('edit')) {

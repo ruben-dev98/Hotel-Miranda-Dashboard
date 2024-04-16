@@ -27,7 +27,7 @@ interface FormData extends EventTarget {
 
 const formControl = (rooms: string[]): FormControlPropsBooking[] => [
     {
-        'label': 'Nombre y Apellidos',
+        'label': 'Full Name',
         'input': 'text',
         'name': 'full_name'
     },

@@ -26,7 +26,7 @@ interface FormData extends EventTarget {
 
 const formControl: FormControlPropsRoom[] = [
     {
-        'label': 'Foto',
+        'label': 'Photo',
         'input': 'text',
         'name': 'photo'
     },

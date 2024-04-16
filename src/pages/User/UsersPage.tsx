@@ -15,7 +15,7 @@ import { DeleteStyled, EditStyled } from "../../styled/IconStyled";
 import { DivStyledActions, DivStyledOptions, SectionContent } from "../../styled/DivStyled";
 import MySweetAlert from "../../app/MySweetAlert";
 import { InputSearch } from "../../styled/InputStyled";
-import { ORDER_EMPLOYEE_INITIAL_STATE, TAB_EMPLOYEE_INITIAL_STATE } from "../../helpers/constants";
+import { ORDER_EMPLOYEE_INITIAL_STATE, TAB_EMPLOYEE_INITIAL_STATE, searchByFullName } from "../../helpers/constants";
 import { ActionProps, DataProperties, DataTableProps, HandleClickProps, iEmployee } from "../../entities/Data";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
 import { ThunkDispatch } from "@reduxjs/toolkit";
@@ -142,7 +142,7 @@ const UsersPage = () => {
     return (
         <SectionContent>
             <DivStyledOptions>
-                <InputSearch value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Busqueda por nombre usuario" />
+                <InputSearch value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder={searchByFullName} />
                 <ButtonStyledNew as={LinkStyled} to={'user'}>+ New Employee</ButtonStyledNew>
                 <OrderComponent setCurrentOrder={setCurrentOrder} data={usersOrder}></OrderComponent>
             </DivStyledOptions>

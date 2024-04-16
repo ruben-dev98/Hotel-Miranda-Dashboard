@@ -26,35 +26,35 @@ export const bookingsOrder: IOrder[] = [
 
 export const roomsOrder: IOrder[] = [
     {
-        label: 'Numero Habitacion',
+        label: 'Room Number',
         value: 'number asc'
     },
     {
-        label: 'Disponible',
+        label: 'Available',
         value: 'status asc'
     },
     {
 
-        label: 'Ocupada',
+        label: 'Booked',
         value: 'status desc'
     },
 
     {
-        label: 'Precio Mayor a Menor',
+        label: 'Price Highest to Lowest',
         value: 'price desc'
     },
     {
-        label: 'Precio Menor a Mayor',
+        label: 'Price Lowest to Highest',
         value: 'price asc'
     }
 ];
 
 export const usersOrder: IOrder[] = [
     {
-        label: 'Fecha De Alta',
+        label: 'Start Date',
         value: 'start_date'
     },
     {
-        label: 'Nombre',
+        label: 'Full Name',
         value: 'full_name'
     }]; 
