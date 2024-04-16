@@ -9,6 +9,9 @@ import { availableRoomsNumber } from "../../features/rooms/roomsAsyncThunk";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
 import { FormControlPropsBooking, iBooking, iRoom } from "../../entities/Data";
 import { SectionContent } from "../../styled/DivStyled";
+import { existRoomNumber } from './../../helpers/existRoomNumber';
+import MySweetAlertApi from "../../app/MySweetAlertApi";
+import { roomNotExist } from "../../helpers/constants";
 
 interface FormData extends EventTarget {
     full_name: HTMLFormElement,
@@ -17,6 +20,7 @@ interface FormData extends EventTarget {
     number: HTMLFormElement,
     email: HTMLFormElement,
     phone: HTMLFormElement,
+    discount: HTMLFormElement,
     special_request: HTMLFormElement
 
 }
@@ -47,6 +51,11 @@ const formControl = (rooms: string[]): FormControlPropsBooking[] => [
         'label': 'Email',
         'input': 'email',
         'name': 'email'
+    },
+    {
+        'label': 'Discount',
+        'input': 'number',
+        'name': 'discount'
     },
     {
         'label': 'Phone',
@@ -83,25 +92,32 @@ const BookingFormPage = () => {
             discount: 0,
             room: {} as iRoom
         }
-
-        formControl(rooms).forEach((control) => {
-            const element = event.target as FormData;
-            const property = control.name as keyof iBooking;
-            if (control.input === 'date') {
-                (booking[property] as string) = String(new Date(element[control.name].value).getTime());
-            } else {
-                (booking[property] as string | number) = element[control.name].value;
-            }
-        });
         try {
+            const element = event.target as FormData;
+            const room = await existRoomNumber(element['number'].value);
+            if (!room) {
+                MySweetAlertApi({ title: roomNotExist, icon: 'error' });
+                throw new Error(roomNotExist);
+            }
+            formControl(rooms).forEach((control) => {
+                const property = control.name as keyof iBooking;
+                if (control.input === 'date') {
+                    (booking[property] as string) = String(new Date(element[control.name].value).getTime());
+                } else if (control.name === 'number') {
+                    booking['room'] = { ...room };
+                } else {
+                    (booking[property] as string | number) = element[control.name].value;
+                }
+            });
+
             if (loc.includes('edit')) {
                 await dispatch(editBooking({ id: id || '', data: booking }));
             } else {
                 await dispatch(addBooking(booking));
             }
-            
+
             navigate('/bookings');
-        } catch(error) {
+        } catch (error) {
             console.error(error);
         }
     }
@@ -118,9 +134,9 @@ const BookingFormPage = () => {
 
     if (isLoading) {
         return (
-        <SectionContent>
-            <Loading></Loading>
-        </SectionContent>
+            <SectionContent>
+                <Loading></Loading>
+            </SectionContent>
         )
     }
 

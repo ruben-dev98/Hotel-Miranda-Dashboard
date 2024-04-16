@@ -111,5 +111,5 @@ export interface FormControlPropsEmployee extends FormControlProps {
 }
 
 export interface FormControlPropsBooking extends FormControlProps {
-    name: 'full_name' | 'check_in' | 'check_out' | 'number' | 'email' | 'phone' | 'special_request'
+    name: 'full_name' | 'check_in' | 'check_out' | 'number' | 'discount' | 'email' | 'phone' | 'special_request'
 }
