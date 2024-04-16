@@ -7,6 +7,8 @@ import styled from 'styled-components';
 import { Dispatch, SetStateAction, useContext } from 'react';
 import { UserContext } from '../../context/UserContext';
 import MySweetAlertApi from '../../app/MySweetAlertApi';
+import { accessToLocalStorage } from '../../helpers/accessToLocalStorage';
+import { isVisibleMenuKey, localStorageSetAction } from '../../helpers/constants';
 
 const HeaderStyled = styled.header`
     grid-area: header;
@@ -70,7 +72,11 @@ const TopBarComponent = ({ setVisibleLateral, visibleLateral, title}: TopBarComp
     }
 
     const isMenuVisibleHandle = (): void => {
-        setVisibleLateral((prev) => !prev);
+        setVisibleLateral((prev) => {
+            accessToLocalStorage({key: isVisibleMenuKey, item: !prev === true ? '1' : '0', action: localStorageSetAction});
+            return !prev;
+        });
+        
     }
 
     return (

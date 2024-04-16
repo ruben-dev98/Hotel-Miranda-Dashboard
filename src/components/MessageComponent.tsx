@@ -84,7 +84,7 @@ const SpanStyledHour = styled(SpanStyled)`
 
 interface MessageProps {
     message: iMessage,
-    childrem?: ReactNode
+    children?: ReactNode
 }
 
 const MessageComponent = ({ message }: MessageProps) => {
@@ -93,6 +93,10 @@ const MessageComponent = ({ message }: MessageProps) => {
 
     const handleEditAsRead = ({event, dispatch, id}: HandleClickProps) => {
         dispatch(editMessage({ id: id, data: { read: true } as iMessage }));
+    }
+
+    const handleEditAsNotRead = ({event, dispatch, id}: HandleClickProps) => {
+        dispatch(editMessage({ id: id, data: { read: false } as iMessage }));
     }
 
     return (
@@ -115,7 +119,7 @@ const MessageComponent = ({ message }: MessageProps) => {
                     <IconCheckStyled  onClick={(event) => handleEditAsRead({event, dispatch, id: message._id || ''})}>
                         <FaRegCheckCircle />
                     </IconCheckStyled>
-                    <IconCrossStyled>
+                    <IconCrossStyled onClick={(event) => handleEditAsNotRead({event, dispatch, id: message._id || ''})}>
                         <RxCrossCircled />
                     </IconCrossStyled>
                 </div>

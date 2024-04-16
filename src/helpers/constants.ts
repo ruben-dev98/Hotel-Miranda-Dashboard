@@ -85,5 +85,6 @@ export const localStorageGetAction = 'get';
 export const localStorageAuthKey = 'auth';
 export const localStorageUserKey = 'user';
 export const localStorageTokenKey = 'token';
+export const isVisibleMenuKey = 'menu';
 
 export const SERVER: string = import.meta.env.VITE_API_BASE;
