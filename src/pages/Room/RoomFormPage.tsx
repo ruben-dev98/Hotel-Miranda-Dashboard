@@ -7,6 +7,9 @@ import FormComponent from "../../components/Form/FormComponent";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
 import { FormControlPropsRoom, iRoom } from "../../entities/Data";
 import { SectionContent } from "../../styled/DivStyled";
+import MySweetAlertApi from "../../app/MySweetAlertApi";
+import { atLeastThreePhotos, notMoreThanFivePhotos, roomNumberAlreadyExist } from "../../helpers/constants";
+import { existRoomNumber } from "../../helpers/existRoomNumber";
 
 
 
@@ -78,6 +81,7 @@ const RoomFormPage = () => {
 
     const onCreateRoom = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        
         const room: iRoom = {
             photo: [],
             type: '',
@@ -91,25 +95,42 @@ const RoomFormPage = () => {
             status: 'Available'
         };
 
-        formControl.forEach((control) => {
-            const element = event.target as FormData;
-            const property = control.name as keyof iRoom;
-            if (control.input === 'select multiple') {
-                const selectedOptions = element[control.name].selectedOptions;
-                const values: string[] = [];
-                for (let i = 0; i < selectedOptions.length; i++) {
-                    values.push(selectedOptions[i].value)
-                }
-                (room[property] as string[]) = values;
-            } else {
-                (room[property] as string | number) = element[control.name].value;
-            }
-        });
-
-        if (room.discount > 0) {
-            room.offer = true;
-        }
         try {
+            const element = event.target as FormData;
+            const existRoom = await existRoomNumber(element['number'].value);
+            if(existRoom) {
+                MySweetAlertApi({ title: roomNumberAlreadyExist, icon: 'error' })
+                throw new Error(roomNumberAlreadyExist);
+            }
+            
+            formControl.forEach((control) => {
+                const property = control.name as keyof iRoom;    
+                if (control.input === 'select multiple') {
+                    const selectedOptions = element[control.name].selectedOptions;
+                    const values: string[] = [];
+                    for (let i = 0; i < selectedOptions.length; i++) {
+                        values.push(selectedOptions[i].value)
+                    }
+                    (room[property] as string[]) = values;
+                } else if (control.name === 'photo') {
+                    const values = element[control.name].value.split(',');
+                    if (values.length < 3) {
+                        MySweetAlertApi({ title: atLeastThreePhotos, icon: 'error' })
+                        throw new Error(atLeastThreePhotos);
+                    } else if (values.length > 5) {
+                        MySweetAlertApi({ title: notMoreThanFivePhotos, icon: 'error' })
+                        throw new Error(notMoreThanFivePhotos);
+                    }
+                    (room[property] as string[]) = values;
+                } else {
+                    (room[property] as string | number) = element[control.name].value;
+                }
+            });
+
+            if (room.discount > 0) {
+                room.offer = true;
+            }
+
             if (loc.includes('edit')) {
                 await dispatch(editRoom({ id: id || '', data: room }));
             } else {

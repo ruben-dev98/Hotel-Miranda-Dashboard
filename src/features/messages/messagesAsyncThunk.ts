@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"; 
 import { PATH_MESSAGE, URI_MESSAGE } from "../../helpers/constants";
-import { callAPI } from "../../helpers/funHelpersThunk";
+import { callAPI } from "../../helpers/actionsOnApi";
 import { EditDataThunk, iMessage } from "../../entities/Data";
 
 export const getMessages = createAsyncThunk('messages/getMessages', async () => {

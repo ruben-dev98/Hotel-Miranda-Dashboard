@@ -35,15 +35,7 @@ const MessageListComponent = () => {
 
     return (
         <SwiperStyled
-            // install Swiper modules
-            //modules={[Navigation, Pagination, Scrollbar, A11y]}
-            spaceBetween={50}
             slidesPerView={3}
-            //navigation
-            //pagination={{ clickable: true }}
-            //scrollbar={{ draggable: true }}
-            onSwiper={(swiper) => {}}
-            onSlideChange={() => {}}
         >
             
             {data && data.map((message, index) => {

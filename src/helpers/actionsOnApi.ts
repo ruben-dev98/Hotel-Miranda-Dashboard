@@ -118,15 +118,34 @@ const deleteData = async (path: string, id: string) => {
     }
 };
 
-export const dataAvailableRoomsNumber = (data: iRoom[]) => data.filter((room) => room.status === 'Available').map(room => room.number).sort((a, b) => {
-    if (a > b) {
-        return 1;
-    } else if (a < b) {
-        return -1;
-    } else {
-        return 0;
+export const dataAvailableRoomsNumber = async (path: string) => {
+    const token = accessToLocalStorage({ key: localStorageTokenKey, action: localStorageGetAction }) || '';
+    try {
+        const apiData = await fetch(`${SERVER}${path}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        }
+        );
+
+        const json = await apiData.json();
+        if (apiData.ok) {
+            const roomNumber: number = await json.data.map((item: iRoom) => item.number).sort((a: number, b: number) => {
+                if(a > b) {
+                    return 1;
+                } else if (a < b) {
+                    return -1;
+                }
+                return 0;
+            });
+            return await roomNumber;
+        }
+    } catch (error) {
+        console.error(error);
+        MySweetAlertApi({ title: connectionError, icon: 'error' })
     }
-})
+}
 
 export const delay = (time = 200) => {
     return new Promise((r) => {
@@ -137,17 +156,17 @@ export const delay = (time = 200) => {
 export const callAPI = (path: string, operation: number, uri: FakesUri, id = '', data: dataType = {} as dataType) => {
         switch (operation) {
             case uri.getAll:
-                return (getAllData(path));
+                return getAllData(path);
             case uri.getOne:
-                return (getOneData(path, id));
+                return getOneData(path, id);
             case uri.add:
-                return (addData(path, data));
+                return addData(path, data);
             case uri.edit:
-                return (editData(path, id, data));
+                return editData(path, id, data);
             case uri.delete:
-                return (deleteData(path, id));
+                return deleteData(path, id);
             case uri.getRoomsNumber:
-                return dataAvailableRoomsNumber(([]));
+                return dataAvailableRoomsNumber((path));
             default:
                 break;
         };

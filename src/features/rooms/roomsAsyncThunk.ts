@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { PATH_ROOM, URI_ROOM } from "../../helpers/constants";
-import { callAPI } from "../../helpers/funHelpersThunk";
+import { PATH_ROOM, PATH_ROOM_AVAILABLE, URI_ROOM } from "../../helpers/constants";
+import { callAPI } from "../../helpers/actionsOnApi";
 import { EditDataThunk, iRoom } from "../../entities/Data";
 
 
@@ -26,5 +26,5 @@ export const deleteRoom = createAsyncThunk('rooms/deleteRoom', async (id: string
 });
 
 export const availableRoomsNumber = createAsyncThunk('rooms/getRoomsNumber', async () => {
-    return await callAPI(PATH_ROOM, URI_ROOM.getRoomsNumber || 0, URI_ROOM, '', {} as iRoom);
+    return await callAPI(PATH_ROOM_AVAILABLE, URI_ROOM.getRoomsNumber || 0, URI_ROOM, '', {} as iRoom);
 });

@@ -8,6 +8,5 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
 
-TODO: 
-
-- Errors while creating && editing an item 
+# Insert Room
+- On new Room to fill photo input you have to write or paste an url from an image. It has to be at least 3 items with a comma between them, no spaces. And it cannot be more than 5

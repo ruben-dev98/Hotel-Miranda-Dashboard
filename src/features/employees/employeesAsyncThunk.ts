@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { URI_EMPLOYEE } from "../../helpers/constants";
-import { callAPI } from "../../helpers/funHelpersThunk";
+import { callAPI } from "../../helpers/actionsOnApi";
 import { EditDataThunk, iEmployee } from "../../entities/Data";
 import { PATH_EMPLOYEE } from '../../helpers/constants';
 

@@ -27,9 +27,11 @@ export const OPERATION_AVAILABLE_ROOMS = 6;
 
 export const PATH_BOOKING = '/bookings';
 export const PATH_ROOM = '/rooms';
+export const PATH_ROOM_AVAILABLE = `${PATH_ROOM}/?available=true`;
 export const PATH_EMPLOYEE = '/employees';
 export const PATH_MESSAGE = '/messages';
 export const LOGIN_PATH = '/login';
+export const ROOM_EXIST_PATH = `${PATH_ROOM}/existRoom`;
 
 export const URI_ROOM: FakesUri = {
     getAll: OPERATION_GET_ALL,
@@ -78,6 +80,9 @@ export const unauthorizedError = 'Unauthorized. The request lacks basic authenti
 export const forbiddenError = 'Forbidden. The server understood the request but refused to authorize it.';
 export const successMessage = 'Success';
 export const loginSuccessful = 'Login Successfully';
+export const atLeastThreePhotos = '5 is the max number of urls on Foto input';
+export const notMoreThanFivePhotos = 'At least 3 urls on Foto input';
+export const roomNumberAlreadyExist = 'Number already exist, choose another room number';
 
 export const localStorageSetAction = 'set';
 export const localStorageGetAction = 'get';

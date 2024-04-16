@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { PATH_BOOKING, URI_BOOKINGS } from '../../helpers/constants';
-import { callAPI } from '../../helpers/funHelpersThunk';
+import { callAPI } from '../../helpers/actionsOnApi';
 import { EditDataThunk, iBooking } from "../../entities/Data";
 
 export const getBookings = createAsyncThunk('bookings/getBookings', async () => {
