@@ -58,7 +58,7 @@ const dataTable = ({ dispatch }: DataTableProps): DataProperties[] => [
     },
     {
         'label': 'ID',
-        'property': 'id'
+        'property': '_id'
     },
     {
         'label': 'Email',
