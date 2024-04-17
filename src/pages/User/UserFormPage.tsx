@@ -7,6 +7,9 @@ import Loading from '../../components/Loading';
 import { FormControlPropsEmployee, iEmployee } from '../../entities/Data';
 import { useAppDispatch, useAppSelector } from '../../hook/useStore';
 import { SectionContent } from '../../styled/DivStyled';
+import { existUserEmail } from '../../helpers/existUserEmail';
+import MySweetAlertApi from '../../app/MySweetAlertApi';
+import { userEmailAlreadyExist } from '../../helpers/constants';
 
 interface FormData extends EventTarget {
     photo: HTMLFormElement,
@@ -75,34 +78,39 @@ const UserFormPage = () => {
     const dispatch = useAppDispatch();
     const [isLoading, setIsLoading] = useState(true);
     const user = useAppSelector(getOneEmployee);
-    const loc = useLocation().pathname;
     const { id } = useParams();
 
     const onCreateUser = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const user: iEmployee = {
-            photo: '',
-            full_name: '',
-            job: '',
-            email: '',
-            start_date: '',
-            description: '',
-            contact: '',
-            status: false,
-            password: ''
-        };
-        const element = event.target as FormData;
-        
-        formControl.forEach((control) => {
-            if(control.name === 'status') {
-                (user[control.name] as boolean) = element[control.name].value === 'Active' ? true : false;
-            } else {
-                (user[control.name] as string) = element[control.name].value;
-            }
-            
-        });
         try {
-            if (loc.includes('edit')) {
+
+            event.preventDefault();
+            const user: iEmployee = {
+                photo: '',
+                full_name: '',
+                job: '',
+                email: '',
+                start_date: '',
+                description: '',
+                contact: '',
+                status: false,
+                password: ''
+            };
+            const element = event.target as FormData;
+            const existEmployee = await existUserEmail(element['email'].value);
+            if (existEmployee && !id) {
+                MySweetAlertApi({ title: userEmailAlreadyExist, icon: 'error' });
+                throw new Error(userEmailAlreadyExist);
+            }
+            formControl.forEach((control) => {
+                if (control.name === 'status') {
+                    (user[control.name] as boolean) = element[control.name].value === 'Active' ? true : false;
+                } else {
+                    (user[control.name] as string) = element[control.name].value;
+                }
+
+            });
+
+            if (id) {
                 await dispatch(editEmployee({ id: id || '', data: user })).unwrap();
             } else {
                 await dispatch(addEmployee(user)).unwrap();

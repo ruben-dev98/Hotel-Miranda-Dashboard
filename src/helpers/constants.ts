@@ -32,6 +32,7 @@ export const PATH_EMPLOYEE = '/employees';
 export const PATH_MESSAGE = '/messages';
 export const LOGIN_PATH = '/login';
 export const ROOM_EXIST_PATH = `${PATH_ROOM}/existRoom`;
+export const EMPLOYEE_EXIST_PATH = `${PATH_EMPLOYEE}/existUser`;
 
 export const URI_ROOM: FakesUri = {
     getAll: OPERATION_GET_ALL,
@@ -84,7 +85,8 @@ export const atLeastThreePhotos = '5 is the max number of urls on Photo input';
 export const notMoreThanFivePhotos = 'At least 3 urls on Photo input';
 export const roomNumberAlreadyExist = 'Number already exist, choose another room number';
 export const roomNotExist = 'The room that you choose not exist';
-export const searchByFullName = 'Search by full name'
+export const searchByFullName = 'Search by Full Name';
+export const userEmailAlreadyExist = 'Email already exist, write another email';
 
 export const localStorageSetAction = 'set';
 export const localStorageGetAction = 'get';

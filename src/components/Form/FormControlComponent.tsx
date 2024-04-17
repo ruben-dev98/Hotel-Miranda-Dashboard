@@ -1,6 +1,7 @@
 
 import { ReactNode } from 'react';
 import { iBooking, iEmployee, iRoom } from '../../entities/Data';
+import styled from 'styled-components';
 
 interface RenderProps {
     inputType: string,
@@ -16,6 +17,12 @@ interface FormControlProps {
     data?: Array<string>,
     values: iRoom | iBooking | iEmployee
 }
+
+const ImgStyled = styled.img`
+    width: 125px;
+    height: 125px;
+    margin-right: 15px;
+`;
 
 const renderSwitch = ({ inputType, data, name, values }: RenderProps) => {
     const property = name as keyof iRoom & keyof iBooking & keyof iEmployee;
@@ -42,6 +49,8 @@ const renderSwitch = ({ inputType, data, name, values }: RenderProps) => {
         }
         case 'number':
             return <input required defaultValue={values ? values[property] as string : 0} min={0} step='any' name={name} type={inputType} />
+        case 'password':
+            return <input name={name} type={inputType} />
         default:
             return <input required defaultValue={values ? values[property] as string : ''} name={name} type={inputType} />
     }
@@ -51,12 +60,14 @@ const FormControlComponent = ({ label, inputType, name, data = [], values }: For
     let img: ReactNode;
     if(name === 'photo' && values) {
         if(Array.isArray((values as iRoom)[name])) {
-            img = (values as iRoom)[name].map((photo) => {
-                return <img src={photo} ></img>
+            img = (values as iRoom)[name].map((photo, index) => {
+                return <ImgStyled key={index} src={photo} />;
             })
+        } else {
+            img = <ImgStyled src={((values as iEmployee)[name])} />
         }
-        img = <img src={((values as iEmployee)[name])} ></img>
     }
+
     return (
         <div>
             {img && img}

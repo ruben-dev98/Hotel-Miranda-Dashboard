@@ -76,7 +76,6 @@ const RoomFormPage = () => {
     const dispatch = useAppDispatch();
     const [isLoading, setIsLoading] = useState(true);
     const room = useAppSelector(getOneRoom);
-    const loc = useLocation().pathname;
     const { id } = useParams();
 
     const onCreateRoom = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -98,7 +97,7 @@ const RoomFormPage = () => {
         try {
             const element = event.target as FormData;
             const existRoom = await existRoomNumber(element['number'].value);
-            if(existRoom) {
+            if(existRoom && !id) {
                 MySweetAlertApi({ title: roomNumberAlreadyExist, icon: 'error' })
                 throw new Error(roomNumberAlreadyExist);
             }
@@ -131,7 +130,7 @@ const RoomFormPage = () => {
                 room.offer = true;
             }
 
-            if (loc.includes('edit')) {
+            if (id) {
                 await dispatch(editRoom({ id: id || '', data: room }));
             } else {
                 await dispatch(addRoom(room));
