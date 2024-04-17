@@ -71,7 +71,7 @@ const dataTable = ({ dispatch }: DataTableProps): DataProperties[] => [
             <ButtonStyledViewNotes onClick={(event) => {
                 event.stopPropagation()
                 const title = 'Info Special Request';
-                const html = (<p>${row.special_request}</p>);
+                const html = (<p>{row.special_request}</p>);
                 MySweetAlert({ title, html, showConfirmButton: false });
             }}>View Notes</ButtonStyledViewNotes>
             :
