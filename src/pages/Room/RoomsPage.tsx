@@ -55,8 +55,13 @@ const dataTable = ({ dispatch }: DataTableProps): DataProperties[] => [
         display: (row: iRoom) => <ImgStyled src={row.photo[0]} />
     },
     {
-        'label': 'Number',
-        'property': 'number'
+        'label': 'Information',
+        display: (row: iRoom) => (
+            <>
+                <SpanStyledTableFirst>{row.type} - {row.number}</SpanStyledTableFirst><br />
+                <SpanStyledTableSecond>#{row._id}</SpanStyledTableSecond>
+            </>
+        )
     },
     {
         'label': 'ID',

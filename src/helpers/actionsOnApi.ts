@@ -118,7 +118,7 @@ const deleteData = async (path: string, id: string) => {
     }
 };
 
-export const dataAvailableRoomsNumber = async (path: string) => {
+const dataAvailableRoomsNumber = async (path: string) => {
     const token = accessToLocalStorage({ key: localStorageTokenKey, action: localStorageGetAction }) || '';
     try {
         const apiData = await fetch(`${SERVER}${path}`, {

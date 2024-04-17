@@ -53,16 +53,15 @@ const dataTable = ({ dispatch }: DataTableProps): DataProperties[] => [
         display: (row: iEmployee) => <ImgStyled src={row.photo} />
     },
     {
-        'label': 'Full Name',
-        'property': 'full_name'
-    },
-    {
-        'label': 'ID',
-        'property': '_id'
-    },
-    {
-        'label': 'Email',
-        'property': 'email'
+        'label': 'Information',
+        display: (row: iEmployee) => (
+            <>
+                <SpanStyledTableFirst>{row.full_name}</SpanStyledTableFirst><br />
+                <SpanStyledTableFirst>{row.email}</SpanStyledTableFirst><br />
+                <SpanStyledTableSecond>#{row._id}</SpanStyledTableSecond>
+            </>
+        )
+
     },
     {
         'label': 'Start Date',

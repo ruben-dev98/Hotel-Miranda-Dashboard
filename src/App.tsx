@@ -1,5 +1,5 @@
 import { Navigate, Outlet, Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
-import { ReactNode, useContext } from 'react';
+import { ReactNode, useContext, useState } from 'react';
 import { UserAuthProvider, UserContext } from './context/UserContext';
 import LoginPage from './pages/LoginPage';
 import MainPage from './pages/MainPage';
@@ -14,12 +14,12 @@ import RoomPage from './pages/Room/RoomPage';
 import BookingFormPage from './pages/Booking/BookingFormPage';
 import UserFormPage from './pages/User/UserFormPage';
 import RoomFormPage from './pages/Room/RoomFormPage';
+import { ThemeContext } from 'styled-components';
 
 interface PrivateRouteProps {
     redirect?: string,
     children?: ReactNode
 }
-
 
 const PrivateRoute = ({ redirect = "/login", children }: PrivateRouteProps) => {
     const context = useContext(UserContext);
@@ -54,10 +54,13 @@ const router = createBrowserRouter(createRoutesFromElements(
 ));
 
 function App() {
+    const [themeState, setThemeState] = useState('');
 
     return (
         <UserAuthProvider>
-            <RouterProvider router={router} />    
+            <ThemeContext.Provider value={{ themeState, setThemeState }}>
+                <RouterProvider router={router} />
+            </ThemeContext.Provider>
         </UserAuthProvider>
     );
 }

@@ -33,7 +33,7 @@ const LoginPage = () => {
             <IconImgStyled src="/icon.png"/>
             <div>
                 <label>Username</label>
-                <input type="text" defaultValue={'Muhammad3@yahoo.com'} name="user" placeholder="Muhammad3@yahoo.com"/>
+                <input type="text" defaultValue={'ruben.dopico.dev@gmail.com'} name="user" placeholder="ruben.dopico.dev@gmail.com"/>
             </div>
             <div>
                 <label>Password</label>
