@@ -54,6 +54,10 @@ const IconStyled = styled.li<{ $visibleLateral?: boolean; }>`
     }
 `;
 
+const TitleStyled = styled.h1`
+    color: ${props => props.theme && props.theme.text_main_alternative};
+`;
+
 interface TopBarComponentProps {
     setVisibleLateral: Dispatch<SetStateAction<boolean>>,
     visibleLateral: boolean,
@@ -91,7 +95,7 @@ const TopBarComponent = ({ setVisibleLateral, visibleLateral, title}: TopBarComp
                 <IconStyled $visibleLateral = {visibleLateral} onClick={isMenuVisibleHandle}>
                     <AiOutlineMenuFold/>
                 </IconStyled>
-                <h1 id='title'>{title}</h1>
+                <TitleStyled id='title'>{title}</TitleStyled>
             </DivStyled>
             <IconsListStyled>
                 <IconStyled>

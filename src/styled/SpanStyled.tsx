@@ -4,7 +4,7 @@ export const SpanStyled = styled.span`
     display: flex;
     justify-content: center;
     align-items: center;
-    color: ${props => props.theme && props.theme.main};
+    color: ${props => props.theme && props.theme.text_main_alternative};
     background-color: ${props => props.theme && props.theme.check};
     border-radius: 20px;
     width: 100px;
@@ -21,7 +21,6 @@ export const SpanStyledCheckOut = styled(SpanStyled)`
 `;
 
 export const SpanStyledInProgress = styled(SpanStyled)`
-    color: ${props => props.theme && props.theme.text_main_alternative};
     background-color: ${props => props.theme && props.theme.in_progress};
 `;
 
@@ -67,4 +66,8 @@ export const SpanStyledCheckInLegend = styled(SpanStyledCheckIn)`
 
 export const SpanStyledCheckOutLegend = styled(SpanStyledCheckOut)`
     width: 200px;
+`;
+
+export const StyledP = styled.p`
+    color: ${props => props.theme && props.theme.text_main_alternative};
 `;

@@ -9,6 +9,7 @@ import { UserContext } from '../../context/UserContext';
 import MySweetAlert from '../../app/MySweetAlert';
 import Swal from 'sweetalert2';
 import { ButtonStyled, ButtonStyledViewNotes } from '../../styled/ButtonStyled';
+import { StyledP } from '../../styled/SpanStyled';
 
 const SideBarStyled = styled.menu`
     grid-area: sidebar;
@@ -75,6 +76,10 @@ const NavLinkStyled = styled(NavLink)`
     
 `;
 
+const TitleStyled = styled.h2`
+    color: ${props => props.theme && props.theme.text_main_alternative};
+`;
+
 interface SideBarComponentProps {
     visibleLateral: boolean
 }
@@ -101,8 +106,8 @@ const SideBarComponent = ({ visibleLateral }: SideBarComponentProps) => {
             </nav>
             <div>
                 <img src={me} alt='' />
-                <h2>{context.state.user}</h2>
-                <p>{context.state.email}</p>
+                <TitleStyled >{context.state.user}</TitleStyled>
+                <StyledP>{context.state.email}</StyledP>
                 <ButtonStyledViewNotes onClick={() => {
                     const html =
                         (<form className='edit__user-pop-up' onSubmit={(event) => {

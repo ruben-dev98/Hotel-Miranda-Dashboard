@@ -19,6 +19,8 @@ import { ThunkDispatch } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { DivStyledActions, SectionContent } from "../../styled/DivStyled";
 import TableOptions from "../../components/TableOptions";
+import MySweetAlertApi from "../../app/MySweetAlertApi";
+import { isExistBooking } from "../../helpers/existBooking";
 
 
 const ImgStyled = styled.img`
@@ -29,6 +31,11 @@ const ImgStyled = styled.img`
 const handleClickDelete = async ({ event, dispatch, id }: HandleClickProps) => {
     event.stopPropagation();
     try {
+        const existBooking = await isExistBooking(id);
+        if(existBooking) {
+            MySweetAlertApi({title: '', icon: 'error'});
+            throw new Error('');
+        }
         await dispatch(deleteRoom(id)).unwrap()
         const html = <p>Delete #{id} Room Successfully</p>
         MySweetAlert({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
@@ -61,14 +68,6 @@ const dataTable = ({ dispatch }: DataTableProps): DataProperties[] => [
                 <SpanStyledTableSecond>#{row._id}</SpanStyledTableSecond>
             </>
         )
-    },
-    {
-        'label': 'ID',
-        'property': '_id'
-    },
-    {
-        'label': 'Room Type',
-        'property': 'type'
     },
     {
         'label': 'Amenities',

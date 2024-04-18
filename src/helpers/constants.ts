@@ -33,6 +33,8 @@ export const PATH_MESSAGE = '/messages';
 export const LOGIN_PATH = '/login';
 export const ROOM_EXIST_PATH = `${PATH_ROOM}/existRoom`;
 export const EMPLOYEE_EXIST_PATH = `${PATH_EMPLOYEE}/existUser`;
+export const BOOKING_EXIST_PATH = `${PATH_BOOKING}/existBooking`;
+
 
 export const URI_ROOM: FakesUri = {
     getAll: OPERATION_GET_ALL,

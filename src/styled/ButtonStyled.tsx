@@ -17,10 +17,12 @@ export const ButtonStyled = styled.button`
 `;
 
 export const ButtonStyledPublish = styled(ButtonStyled)`
+    color: ${props => props.theme && props.theme.text_main_alternative};
     background-color: ${props => props.theme && props.theme.check};
 `;
 
 export const ButtonStyledArchived = styled(ButtonStyled)`
+    color: ${props => props.theme && props.theme.text_main_alternative};
     background-color: ${props => props.theme && props.theme.secondary};
 `;
 

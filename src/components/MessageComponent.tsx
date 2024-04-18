@@ -6,6 +6,7 @@ import { FaRegCheckCircle } from "react-icons/fa";
 import { RxCrossCircled } from "react-icons/rx";
 import { useAppDispatch } from '../hook/useStore';
 import { editMessage } from '../features/messages/messagesAsyncThunk';
+import { StyledP } from '../styled/SpanStyled';
 
 const IconStyled = styled.button`
     cursor: pointer;
@@ -91,6 +92,15 @@ const MessageComponent = ({ message }: MessageProps) => {
 
     const dispatch = useAppDispatch();
 
+    const showMessage = (message: iMessage) => {
+        const title = 'Info Message';
+        const html = (<p>
+            <strong>Message:</strong> {message.messages}
+        </p>
+        );
+        MySweetAlert({ title: title, html: html, showConfirmButton: false });
+    }
+
     const handleEditAsRead = ({event, dispatch, id}: HandleClickProps) => {
         dispatch(editMessage({ id: id, data: { read: true } as iMessage }));
     }
@@ -101,14 +111,9 @@ const MessageComponent = ({ message }: MessageProps) => {
 
     return (
         <MessageComponentStyled>
-            <p style={{ cursor: 'pointer' }} onClick={() => {
-                const title = 'Info Message';
-                const html = (<p>
-                    <strong>Message:</strong> {message.messages}
-                </p>
-                );
-                return MySweetAlert({ title: title, html: html, showConfirmButton: false });
-            }}>{message.messages.slice(0, 50).concat('...')}</p>
+            <StyledP onClick={() => showMessage(message)}>
+                {message.messages.slice(0, 50).concat('...')}
+            </StyledP>
             <div>
                 <img src={message.photo} />
                 <p>

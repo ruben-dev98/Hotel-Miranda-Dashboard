@@ -61,7 +61,7 @@ export const themeDark: themeDefault = {
     check: "#5AD07A",
     email: "#B2B2B2",
     bg: "#787878",
-    view_notes: "#EEF9F2",
+    view_notes: "#393939",
     separator: "#799283",
     room_description: "#000000",
     amenities: "#135846",

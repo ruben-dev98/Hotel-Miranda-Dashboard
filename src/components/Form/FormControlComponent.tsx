@@ -58,12 +58,13 @@ const renderSwitch = ({ inputType, data, name, values }: RenderProps) => {
 
 const FormControlComponent = ({ label, inputType, name, data = [], values }: FormControlProps) => {
     let img: ReactNode;
-    if(name === 'photo' && values) {
+    if(name === 'photo' && values._id) {
         if(Array.isArray((values as iRoom)[name])) {
             img = (values as iRoom)[name].map((photo, index) => {
                 return <ImgStyled key={index} src={photo} />;
             })
         } else {
+            
             img = <ImgStyled src={((values as iEmployee)[name])} />
         }
     }
