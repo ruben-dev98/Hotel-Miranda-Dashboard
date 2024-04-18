@@ -99,6 +99,7 @@ const BookingFormPage = () => {
                 MySweetAlertApi({ title: roomNotExist, icon: 'error' });
                 throw new Error(roomNotExist);
             }
+            
             formControl(rooms).forEach((control) => {
                 const property = control.name as keyof iBooking;
                 if (control.input === 'date') {

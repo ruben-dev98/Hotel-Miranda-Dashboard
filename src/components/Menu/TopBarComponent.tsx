@@ -3,12 +3,14 @@ import { AiOutlineMenuFold } from "react-icons/ai";
 import { IoMdLogOut } from "react-icons/io";
 import { BiEnvelope } from "react-icons/bi";
 import { CiBellOn } from "react-icons/ci";
-import styled from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
 import { Dispatch, SetStateAction, useContext } from 'react';
 import { UserContext } from '../../context/UserContext';
 import MySweetAlertApi from '../../app/MySweetAlertApi';
 import { accessToLocalStorage } from '../../helpers/accessToLocalStorage';
 import { isVisibleMenuKey, localStorageSetAction } from '../../helpers/constants';
+import { FaAffiliatetheme } from "react-icons/fa";
+import { handleToggleTheme } from '../../helpers/toggleTheme';
 
 const HeaderStyled = styled.header`
     grid-area: header;
@@ -63,6 +65,8 @@ const DivStyled = styled.div`
 `;
 
 const TopBarComponent = ({ setVisibleLateral, visibleLateral, title}: TopBarComponentProps) => {
+    const themeContext = useContext(ThemeContext)!;
+    const setToggleThemeState: Dispatch<SetStateAction<string>> = themeContext.setThemeState;
     const navigate = useNavigate();
     const context = useContext(UserContext);
     const logOutHandle = (): void => {
@@ -96,6 +100,9 @@ const TopBarComponent = ({ setVisibleLateral, visibleLateral, title}: TopBarComp
                 </IconStyled>
                 <IconStyled id="test__log-out" onClick={logOutHandle}>
                     <IoMdLogOut />
+                </IconStyled>
+                <IconStyled onClick={() => handleToggleTheme(setToggleThemeState)}>
+                    <FaAffiliatetheme />
                 </IconStyled>
             </IconsListStyled>
         </HeaderStyled>

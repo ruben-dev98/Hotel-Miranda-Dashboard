@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import PropTypes from 'prop-types';
 import { ReactNode } from "react";
 
 const KPIsStyled = styled.div`
@@ -8,27 +7,27 @@ const KPIsStyled = styled.div`
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    background-color: #FFFFFF;
+    background-color: ${props => props.theme && props.theme.main};
     border-radius: 12px;
     gap: 32px;
     padding: 0rem 32px;
 
     &:hover {
-        box-shadow: 0px 16px 30px #00000014;
+        box-shadow: 0px 16px 30px ${props => props.theme && props.theme.hover_kpis};
 
         div {
-            background-color: #E23428;
+            background-color: ${props => props.theme && props.theme.secondary};
 
             svg {
-                fill: #FFF;
-                stroke: #FFF;
+                fill: ${props => props.theme && props.theme.main};
+                stroke: ${props => props.theme && props.theme.main};
             }
         }
     }
 `;
 
 const TextStyled = styled.span`
-    color: #393939;
+    color: ${props => props.theme && props.theme.text_main_alternative};
     font-family: 'Courier New', Courier, monospace;
     font-size: 2.5rem;
     font-weight: 600;
@@ -36,7 +35,7 @@ const TextStyled = styled.span`
 `;
 
 const TextStyledVar = styled(TextStyled)`
-    color: #787878;
+    color: ${props => props.theme && props.theme.text_secondary};
     font-family: 'Courier New', Courier, monospace;
     font-size: 1rem;
     font-weight: 300;
@@ -49,13 +48,13 @@ const IconStyled = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #FFEDEC;
+    background-color: ${props => props.theme && props.theme.secondary_alternative};
 
     svg {
         width: 28px;
         height: 28px;
-        fill: #E23428;
-        stroke: #E23428;
+        fill: ${props => props.theme && props.theme.secondary};
+        stroke: ${props => props.theme && props.theme.secondary};
     }
     
 
@@ -69,7 +68,6 @@ interface KPIsProps {
 }
 
 const KPIsComponent = ({ icon, number, text }: KPIsProps) => {
-
     return (
         <KPIsStyled>
             <IconStyled>
@@ -82,12 +80,6 @@ const KPIsComponent = ({ icon, number, text }: KPIsProps) => {
         </KPIsStyled>
     )
 }
-
-KPIsComponent.propTypes = {
-    icon: PropTypes.node,
-    number: PropTypes.number,
-    text: PropTypes.string
-};
 
 export default KPIsComponent;
 

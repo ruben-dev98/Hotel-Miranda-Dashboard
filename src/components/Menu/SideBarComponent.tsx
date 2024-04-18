@@ -13,7 +13,6 @@ import { ButtonStyled, ButtonStyledViewNotes } from '../../styled/ButtonStyled';
 const SideBarStyled = styled.menu`
     grid-area: sidebar;
     width: 100%;
-    background-color: #FFF;
     padding: 0rem;
     margin: 0rem;
 

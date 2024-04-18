@@ -2,7 +2,7 @@ import { bookings } from "../../assets/data/tabs";
 import TableComponent from "../../components/TableComponent";
 import TabsComponent from "../../components/TabsComponent";
 import { ButtonStyledIcon, ButtonStyledNew, ButtonStyledViewNotes } from "../../styled/ButtonStyled";
-import { SpanStyledCancelled, SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress, SpanStyledTableFirst, SpanStyledTableSecond } from "../../styled/SpanStyled";
+import { SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress, SpanStyledTableFirst, SpanStyledTableSecond } from "../../styled/SpanStyled";
 import OrderComponent from "../../components/OrderComponent";
 import { bookingsOrder } from "../../assets/data/order";
 import { LinkStyled } from "../../styled/LinkStyled";
@@ -91,8 +91,6 @@ const dataTable = ({ dispatch }: DataTableProps): DataProperties[] => [
                 return <SpanStyledCheckOut>{row.status}</SpanStyledCheckOut>
             } else if (row.status === 'In Progress') {
                 return <SpanStyledInProgress>{row.status}</SpanStyledInProgress>
-            } else {
-                return <SpanStyledCancelled>{row.status}</SpanStyledCancelled>
             }
         }
     },

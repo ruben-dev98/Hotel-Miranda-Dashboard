@@ -14,12 +14,12 @@ export const DivDetailsComponents = styled.div`
 `;
 
 export const DivDetailsComponentsSeparator = styled(DivDetailsComponents)`
-    border-bottom: 2px solid #799283;
+    border-bottom: 2px solid ${props => props.theme && props.theme.separator};
 `;
 
 export const DivDetails = styled.div`
     border-radius: 10px;
-    background-color: #FFF;
+    background-color: ${props => props.theme && props.theme.main};
     display: flex;
     gap: 50px;
 `;
@@ -43,7 +43,7 @@ export const DivDetailsSwiper = styled.div`
     width: 100%;
     z-index: 2;
     bottom: 0px;
-    background-color: rgb(0, 0, 0, 0.4);
+    background: rgb(0, 0, 0, 0.4);
     height: 130px;
 `;
 
@@ -64,6 +64,7 @@ export const DivDetailsContent = styled.div`
 `;
 
 export const WindowStyled = styled.div<{$visibleLateral?: boolean}>`
+    background-color: ${props => props.theme && props.theme.main};
     width: 100%;
     height: 80vh;
     display: grid;
@@ -88,7 +89,7 @@ export const DivStyledOptions = styled.div`
 export const SectionContent = styled.section`
     grid-area: content;
     padding: 2rem;
-    background-color: #f8f8f8;
+    background-color: ${props => props.theme && props.theme.bg};
     height: max-content;
 `;
 

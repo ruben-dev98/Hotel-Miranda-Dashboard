@@ -4,8 +4,8 @@ export const SpanStyled = styled.span`
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #FFF;
-    background-color: #5AD07A;
+    color: ${props => props.theme && props.theme.main};
+    background-color: ${props => props.theme && props.theme.check};
     border-radius: 20px;
     width: 100px;
     height: 50px;
@@ -13,39 +13,34 @@ export const SpanStyled = styled.span`
 `;
 
 export const SpanStyledCheckIn = styled(SpanStyled)`
-    background-color: #5AD07A;
+    background-color: ${props => props.theme && props.theme.check};
 `;
 
 export const SpanStyledCheckOut = styled(SpanStyled)`
-    background-color: #E23428;
+    background-color: ${props => props.theme && props.theme.secondary};
 `;
 
 export const SpanStyledInProgress = styled(SpanStyled)`
-    color: #393939;
-    background-color: #FF9C3A;
-`;
-
-export const SpanStyledCancelled = styled(SpanStyled)`
-    color: #FFF;
-    background-color: #575757;
+    color: ${props => props.theme && props.theme.text_main_alternative};
+    background-color: ${props => props.theme && props.theme.in_progress};
 `;
 
 export const SpanStyledTableSecond = styled.span`
-    color: #799283;
+    color: ${props => props.theme && props.theme.separator};
     font-size: 1rem;
 `;
 
 export const SpanStyledTableFirst = styled.span`
-    color: #393939;
+    color: ${props => props.theme && props.theme.text_main_alternative};
     font-size: 1.2rem;
 `;
 
 export const SpanStyledDetailsLabel = styled(SpanStyledTableSecond)`
-    color: #6E6E6E;
+    color: ${props => props.theme && props.theme.label_details};
 `;
 
 export const SpanStyledDetailsValue = styled(SpanStyledTableFirst)`
-    color: #212121;
+    color: ${props => props.theme && props.theme.value_details};
 `;
 
 export const SpanStyledDetailsTitle = styled(SpanStyledDetailsValue)`
@@ -58,7 +53,7 @@ export const SpanSwiperTitle = styled.span`
 `
 
 export const SpanSwiper = styled.span`
-        color: #FFFFFF70;
+        color: ${props => props.theme && props.theme.swiper};
         font-size: 0.8rem;
 `
 

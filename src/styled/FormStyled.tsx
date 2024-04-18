@@ -22,7 +22,7 @@ export const FormStyledComponent = styled.form`
     }
     
     label {
-        color: #393939;
+        color: ${props => props.theme && props.theme.text_main_alternative};
         display: block;
         margin-bottom: 0.75rem;
     }
@@ -33,7 +33,7 @@ export const FormStyledComponent = styled.form`
         border: 0em;
         display: block;
         width: 90%;
-        background-color: #FFF;
+        background-color: ${props => props.theme && props.theme.main};
         height: 3.75rem;
         margin-bottom: 0.75rem;
     }
@@ -54,7 +54,7 @@ export const FormStyledComponent = styled.form`
         width: 96.3%;
         display: block;
         margin-bottom: 0.75rem;
-        background-color: #FFF;
+        background-color: ${props => props.theme && props.theme.main};
     }
 
     button {

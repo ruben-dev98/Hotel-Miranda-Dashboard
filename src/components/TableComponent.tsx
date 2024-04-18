@@ -5,7 +5,7 @@ import usePaginate from './../hook/usePaginate';
 import { SpanStyledTableFirst } from '../styled/SpanStyled';
 import MySweetAlert from '../app/MySweetAlert';
 import { INITIAL_PAGE } from '../helpers/constants';
-import { iBooking, iMessage, iEmployee, iRoom, DataTableProps, DataProperties } from '../entities/Data';
+import { iBooking, iMessage, iEmployee, iRoom, DataProperties } from '../entities/Data';
 import { useAppDispatch } from '../hook/useStore';
 import { ButtonStyled } from '../styled/ButtonStyled';
 
@@ -26,7 +26,7 @@ const TableStyled = styled.table`
     width: 100%;
     padding: 2rem;
     border-radius: 20px;
-    background-color: #FFF;
+    background-color: ${props => props.theme && props.theme.main};
 
     thead > tr {
         height: 50px;
