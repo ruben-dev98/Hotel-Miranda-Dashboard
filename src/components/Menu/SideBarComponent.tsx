@@ -1,9 +1,9 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import logo from '../../assets/img/travl_claro.png';
+import logo from '../../assets/img/travl.png';
 import me from '../../assets/img/CV.png';
 import { links } from '../../assets/data/navLink';
-import React, { FormEventHandler } from 'react';
+import React from 'react';
 import { useContext } from 'react';
 import { UserContext } from '../../context/UserContext';
 import MySweetAlert from '../../app/MySweetAlert';
@@ -49,7 +49,7 @@ const NavLinkStyled = styled(NavLink)`
     text-decoration: none;
     padding: 0rem 32px;
     gap: 32px;
-    color: #799283;
+    color: ${props => props.theme.separator};
 
     
 
@@ -58,18 +58,18 @@ const NavLinkStyled = styled(NavLink)`
     }
 
     &.active {
-        border-left: 2px #E23428 solid;
-        color: #E23428;
+        border-left: 2px ${props => props.theme.secondary} solid;
+        color: ${props => props.theme.secondary};
 
         svg {
-            fill: #E23428;
+            fill: ${props => props.theme.secondary};
         }
     }
 
     svg {
         width: 28px;
         height: 28px;
-        fill: #799283;
+        fill: ${props => props.theme.separator};
     }
 
     

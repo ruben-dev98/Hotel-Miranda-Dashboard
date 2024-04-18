@@ -1,10 +1,8 @@
 import { users } from "../../assets/data/tabs";
 import { usersOrder } from "../../assets/data/order";
 import TableComponent from "../../components/TableComponent";
-import TabsComponent from "../../components/TabsComponent";
 import { SpanStyled, SpanStyledCheckOut, SpanStyledTableFirst, SpanStyledTableSecond } from "../../styled/SpanStyled";
-import { ButtonStyledIcon, ButtonStyledNew } from "../../styled/ButtonStyled";
-import OrderComponent from '../../components/OrderComponent';
+import { ButtonStyledIcon } from "../../styled/ButtonStyled";
 import { LinkStyled } from "../../styled/LinkStyled";
 import { useEffect, useMemo, useState } from "react";
 import { getAllEmployees } from "../../features/employees/employeesSlice";
@@ -12,10 +10,9 @@ import { deleteEmployee, getEmployees } from "../../features/employees/employees
 import Loading from "../../components/Loading";
 import { useDebounce } from "@uidotdev/usehooks";
 import { DeleteStyled, EditStyled } from "../../styled/IconStyled";
-import { DivStyledActions, DivStyledOptions, SectionContent } from "../../styled/DivStyled";
+import { DivStyledActions, SectionContent } from "../../styled/DivStyled";
 import MySweetAlert from "../../app/MySweetAlert";
-import { InputSearch } from "../../styled/InputStyled";
-import { ORDER_EMPLOYEE_INITIAL_STATE, TAB_EMPLOYEE_INITIAL_STATE, searchByFullName } from "../../helpers/constants";
+import { ORDER_EMPLOYEE_INITIAL_STATE, TAB_EMPLOYEE_INITIAL_STATE } from "../../helpers/constants";
 import { ActionProps, DataProperties, DataTableProps, HandleClickProps, iEmployee } from "../../entities/Data";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
 import { ThunkDispatch } from "@reduxjs/toolkit";
@@ -149,7 +146,8 @@ const UsersPage = () => {
             setCurrentOrder={setCurrentOrder} 
             setCurrentTab={setCurrentTab} 
             setSearchTerm={setSearchTerm} 
-            isUserOrBooking />
+            isUserOrBooking 
+            path="user"/>
             <TableComponent rows={filteredUsers} columns={dataTable({ dispatch })} path={'users'}></TableComponent>
         </SectionContent>
     );

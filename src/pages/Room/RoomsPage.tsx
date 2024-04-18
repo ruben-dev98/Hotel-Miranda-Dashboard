@@ -1,8 +1,6 @@
 import { rooms } from "../../assets/data/tabs";
-import TabsComponent from "../../components/TabsComponent";
 import TableComponent from '../../components/TableComponent';
 import { SpanStyled, SpanStyledCheckOut, SpanStyledTableFirst, SpanStyledTableSecond } from "../../styled/SpanStyled";
-import OrderComponent from "../../components/OrderComponent";
 import { roomsOrder } from "../../assets/data/order";
 import { LinkStyled } from "../../styled/LinkStyled";
 import { useEffect, useMemo, useState } from "react";
@@ -14,12 +12,12 @@ import { DeleteStyled } from './../../styled/IconStyled';
 import styled from "styled-components";
 import MySweetAlert from "../../app/MySweetAlert";
 import { ORDER_ROOMS_INITIAL_STATE, TAB_ROOMS_INITIAL_STATE } from "../../helpers/constants";
-import { ButtonStyledIcon, ButtonStyledNew, ButtonStyledViewNotes } from "../../styled/ButtonStyled";
+import { ButtonStyledIcon, ButtonStyledViewNotes } from "../../styled/ButtonStyled";
 import { ActionProps, DataProperties, DataTableProps, HandleClickProps, iRoom } from "../../entities/Data";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
-import { DivStyledActions, DivStyledOptions, SectionContent } from "../../styled/DivStyled";
+import { DivStyledActions, SectionContent } from "../../styled/DivStyled";
 import TableOptions from "../../components/TableOptions";
 
 
@@ -174,7 +172,7 @@ const RoomsPage = () => {
             dataOrder={roomsOrder}  
             setCurrentOrder={setCurrentOrder} 
             setCurrentTab={setCurrentTab} 
-            />
+            path="room"/>
             <TableComponent rows={filteredRooms} columns={dataTable({ dispatch })} path={'rooms'}></TableComponent>
         </SectionContent>
     );

@@ -1,5 +1,3 @@
-import Theme, { createGlobalStyle } from "styled-components";
-
 export interface themeDefault {
     main: string,
     secondary: string,
@@ -11,7 +9,6 @@ export interface themeDefault {
     text_menu_main: string,
     text_menu_secondary: string,
     check: string,
-    button_bg: string,
     email: string,
     bg: string,
     view_notes: string,
@@ -27,7 +24,7 @@ export interface themeDefault {
 
 
 export const themeLight: themeDefault = {
-    main: "#FFF",
+    main: "#FFF", 
     secondary: "#E23428",
     secondary_alternative: "#FFEDEC",
     text_main: "#799283",
@@ -37,7 +34,6 @@ export const themeLight: themeDefault = {
     text_menu_main: "#262626",
     text_menu_secondary: "#135846",
     check: "#5AD07A",
-    button_bg: "#EBF1EF",
     email: "#B2B2B2",
     bg: "#F8F8F8",
     view_notes: "#EEF9F2",
@@ -53,7 +49,7 @@ export const themeLight: themeDefault = {
 
 
 export const themeDark: themeDefault = {
-    main: "#000",
+    main: "#262626",
     secondary: "#E23428",
     secondary_alternative: "#EBF1EF",
     text_main: "#799283",
@@ -61,9 +57,8 @@ export const themeDark: themeDefault = {
     text_secondary: "#F8F8F8",
     in_progress: "#FF9C3A",
     text_menu_main: "#262626",
-    text_menu_secondary: "#135846",
+    text_menu_secondary: "#EBF1EF",
     check: "#5AD07A",
-    button_bg: "#393939",
     email: "#B2B2B2",
     bg: "#787878",
     view_notes: "#EEF9F2",
@@ -76,10 +71,3 @@ export const themeDark: themeDefault = {
     swiper_disabled: "#FFFFFF1A",
     hover_kpis: "#00000014"
 }
-
-export const GlobalStyles = createGlobalStyle<{ theme?: typeof Theme }>`
-    :root {
-        background-color: ${({ theme }) => theme.bg};
-        font-family: Poppins;
-    }
-`;

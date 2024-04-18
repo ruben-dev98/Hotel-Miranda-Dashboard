@@ -13,7 +13,7 @@ import { useAppDispatch, useAppSelector } from "../hook/useStore";
 
 
 const SwiperStyled = styled(Swiper)`
-    margin: 32px 0px 0px 0px;
+    margin: 0px;
     height: 250px;
 
     & .swiper-slide {

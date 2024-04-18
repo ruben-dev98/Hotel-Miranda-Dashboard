@@ -20,21 +20,21 @@ const IconStyled = styled.button`
 
 const IconCheckStyled = styled(IconStyled)`
     svg {
-        fill: #5AD07A;
+        fill: ${props => props.theme && props.theme.check};
     }
 
     path {
-        fill: #5AD07A;
+        fill: ${props => props.theme && props.theme.check};
     }
 `
 
 const IconCrossStyled = styled(IconStyled)`
     svg {
-        fill: #E23428;
+        fill: ${props => props.theme && props.theme.secondary};
     }
     
     path {
-        fill: #E23428;
+        fill: ${props => props.theme && props.theme.secondary};
     }
 `
 
@@ -43,7 +43,7 @@ const MessageComponentStyled = styled.div`
     justify-content: space-between;
     flex-direction: column;
     height: 100%;
-    background-color: #FFF;
+    background-color: ${props => props.theme && props.theme.main};
     border-radius: 20px;
     padding: 0.5rem 2.5rem;
 
@@ -74,12 +74,12 @@ const MessageComponentStyled = styled.div`
 
 const SpanStyled = styled.span`
     font-size: 1rem;
-    color: #393939;
+    color: ${props => props.theme && props.theme.text_main_alternative};
 `;
 
 const SpanStyledHour = styled(SpanStyled)`
     font-size: 0.8em;
-    color: #799283;
+    color: ${props => props.theme && props.theme.separator};
 `;
 
 interface MessageProps {

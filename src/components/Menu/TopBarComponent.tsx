@@ -17,6 +17,7 @@ const HeaderStyled = styled.header`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 91px;
 
     div {
         display: flex;
@@ -34,8 +35,9 @@ const HeaderStyled = styled.header`
 const IconsListStyled = styled.ul`
     display: flex;
     justify-content: flex-end;
-    gap: 2rem;
+    gap: 32px;
     list-style: none;
+    margin-right: 32px;
 `;
 
 const IconStyled = styled.li<{ $visibleLateral?: boolean; }>`
@@ -44,10 +46,10 @@ const IconStyled = styled.li<{ $visibleLateral?: boolean; }>`
     svg {
         width: 28px;
         height: 28px;
-        fill: #135846;
+        fill: ${props => props.theme && props.theme.text_menu_secondary};
 
         path {
-            fill: #135846;
+            fill: ${props => props.theme && props.theme.text_menu_secondary};
         }
     }
 `;

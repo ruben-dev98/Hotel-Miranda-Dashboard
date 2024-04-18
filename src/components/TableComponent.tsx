@@ -22,6 +22,10 @@ interface RowTypes {
     row: Data
 }
 
+const DivStyled = styled.div`
+    margin-top: 20px;
+`
+
 const TableStyled = styled.table`
     width: 100%;
     padding: 2rem;
@@ -99,9 +103,10 @@ const TableComponent = ({ rows, columns, path }: TableProps) => {
                     })}
                 </tbody>
             </TableStyled>
-            <ButtonStyled style={{ marginRight: 20 }} disabled={currentPage === INITIAL_PAGE ? true : false} onClick={() => setCurrentPage((prev) => prev - 1)}>Prev</ButtonStyled>
-            <ButtonStyled disabled={currentPage === max_page ? true : false} onClick={() => setCurrentPage((prev) => prev + 1)}>Next</ButtonStyled>
-
+            <DivStyled>
+                <ButtonStyled style={{ marginRight: 20 }} disabled={currentPage === INITIAL_PAGE ? true : false} onClick={() => setCurrentPage((prev) => prev - 1)}>Prev</ButtonStyled>
+                <ButtonStyled disabled={currentPage === max_page ? true : false} onClick={() => setCurrentPage((prev) => prev + 1)}>Next</ButtonStyled>
+            </DivStyled>
         </>
     );
 }

@@ -48,7 +48,7 @@ export const SpanStyledDetailsTitle = styled(SpanStyledDetailsValue)`
 `;
 
 export const SpanSwiperTitle = styled.span`
-        color: #FFF;
+        color: ${props => props.theme && props.theme.main};
         font-size: 1.3rem;
 `
 

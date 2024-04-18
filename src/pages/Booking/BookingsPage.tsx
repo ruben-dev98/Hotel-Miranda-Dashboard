@@ -1,21 +1,18 @@
 import { bookings } from "../../assets/data/tabs";
 import TableComponent from "../../components/TableComponent";
-import TabsComponent from "../../components/TabsComponent";
-import { ButtonStyledIcon, ButtonStyledNew, ButtonStyledViewNotes } from "../../styled/ButtonStyled";
+import { ButtonStyledIcon, ButtonStyledViewNotes } from "../../styled/ButtonStyled";
 import { SpanStyledCheckIn, SpanStyledCheckOut, SpanStyledInProgress, SpanStyledTableFirst, SpanStyledTableSecond } from "../../styled/SpanStyled";
-import OrderComponent from "../../components/OrderComponent";
 import { bookingsOrder } from "../../assets/data/order";
 import { LinkStyled } from "../../styled/LinkStyled";
 import { getAllBookings } from "../../features/bookings/bookingSlice";
 import { useEffect, useMemo, useState } from "react";
 import { deleteBooking, getBookings } from "../../features/bookings/bookingsAsyncThunk";
 import Loading from "../../components/Loading";
-import { DivStyledActions, DivStyledOptions, SectionContent } from "../../styled/DivStyled";
+import { DivStyledActions, SectionContent } from "../../styled/DivStyled";
 import { DeleteStyled, EditStyled } from "../../styled/IconStyled";
 import MySweetAlert from "../../app/MySweetAlert";
 import { useDebounce } from "@uidotdev/usehooks";
-import { InputSearch } from "../../styled/InputStyled";
-import { ORDER_BOOKING_INITIAL_STATE, TAB_BOOKING_INITIAL_STATE, searchByFullName } from "../../helpers/constants";
+import { ORDER_BOOKING_INITIAL_STATE, TAB_BOOKING_INITIAL_STATE } from "../../helpers/constants";
 import { ActionProps, DataProperties, DataTableProps, HandleClickProps, iBooking } from "../../entities/Data";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
 import TableOptions from "../../components/TableOptions";
@@ -159,7 +156,8 @@ const BookingsPage = () => {
             setCurrentOrder={setCurrentOrder} 
             setCurrentTab={setCurrentTab} 
             setSearchTerm={setSearchTerm} 
-            isUserOrBooking />
+            isUserOrBooking 
+            path="booking"/>
             <TableComponent rows={filteredBookings} columns={dataTable({ dispatch })} path={'bookings'}></TableComponent>
         </SectionContent>
     );

@@ -66,10 +66,11 @@ export const DivDetailsContent = styled.div`
 export const WindowStyled = styled.div<{$visibleLateral?: boolean}>`
     background-color: ${props => props.theme && props.theme.main};
     width: 100%;
+    min-height: 100vh;
     height: 100%;
     display: grid;
     grid-template-columns: 20% 80%;
-    grid-template-rows: 5% 95%;
+    grid-template-rows: .01fr 1fr;
     grid-template-areas: ${props => props.$visibleLateral ? 
     `'sidebar header'
     'sidebar content'`
@@ -90,7 +91,7 @@ export const SectionContent = styled.section`
     grid-area: content;
     padding: 2rem;
     background-color: ${props => props.theme && props.theme.bg};
-    height: max-content;
+    min-height: calc(100% - 91px);
 `;
 
 export const DivStyledKPIs = styled.div`

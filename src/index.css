@@ -1,6 +1,13 @@
+:root, #root {
+    min-height: 100vh;
+    height: 100%;
+}
+
 body {
     font-family: "Poppins", sans-serif;
     margin: 0px;
+    padding: 0px;
+    width: 100%;
 }
 
 .edit__user-pop-up {
