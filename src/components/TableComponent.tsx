@@ -33,6 +33,7 @@ const TableStyled = styled.table`
 
         th {
             padding: 0rem 0.5rem 0.5rem 0.5rem;
+            color: ${props => props.theme && props.theme.text_main};
         }
     }
 

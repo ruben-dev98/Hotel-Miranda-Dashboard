@@ -76,11 +76,11 @@ const dataTable = ({ dispatch }: DataTableProps): DataProperties[] => [
 const ContactPage = () => {
     const dispatch = useAppDispatch();
     const [isLoading, setIsLoading] = useState(true);
-    const [currentTab, setCurrentTab] = useState<string | boolean>(TAB_MESSAGE_INITIAL_STATE);
+    const [currentTab, setCurrentTab] = useState<string>(TAB_MESSAGE_INITIAL_STATE);
     const data = useAppSelector(getAllMessages);
 
     const filteredMessages = useMemo(() => {
-        const all = data.filter((item) => currentTab === TAB_MESSAGE_INITIAL_STATE ? true : item.archived === currentTab);
+        const all = data.filter((item) => currentTab === TAB_MESSAGE_INITIAL_STATE ? true : item.archived === true);
         return all;
     }, [data, currentTab]);
 

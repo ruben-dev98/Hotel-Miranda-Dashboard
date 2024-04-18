@@ -22,7 +22,6 @@ interface FormData extends EventTarget {
     phone: HTMLFormElement,
     discount: HTMLFormElement,
     special_request: HTMLFormElement
-
 }
 
 const formControl = (rooms: string[]): FormControlPropsBooking[] => [
@@ -94,7 +93,7 @@ const BookingFormPage = () => {
         }
         try {
             const element = event.target as FormData;
-            const room = await existRoomNumber(element['number'].value);
+            const room = id ? booking.room : await existRoomNumber(element['number'].value);
             if (!room) {
                 MySweetAlertApi({ title: roomNotExist, icon: 'error' });
                 throw new Error(roomNotExist);

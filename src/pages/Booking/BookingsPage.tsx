@@ -18,6 +18,7 @@ import { InputSearch } from "../../styled/InputStyled";
 import { ORDER_BOOKING_INITIAL_STATE, TAB_BOOKING_INITIAL_STATE, searchByFullName } from "../../helpers/constants";
 import { ActionProps, DataProperties, DataTableProps, HandleClickProps, iBooking } from "../../entities/Data";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
+import TableOptions from "../../components/TableOptions";
 
 const handleClickDelete = async ({ event, dispatch, id }: HandleClickProps) => {
     event.stopPropagation();
@@ -104,7 +105,7 @@ const BookingsPage = () => {
     const dispatch = useAppDispatch();
     const [searchTerm, setSearchTerm] = useState('');
     const [isLoading, setIsLoading] = useState(true);
-    const [currentTab, setCurrentTab] = useState<string | boolean>(TAB_BOOKING_INITIAL_STATE);
+    const [currentTab, setCurrentTab] = useState<string>(TAB_BOOKING_INITIAL_STATE);
     const [currentOrder, setCurrentOrder] = useState(ORDER_BOOKING_INITIAL_STATE);
     const data = useAppSelector(getAllBookings);
     const debouncedSearchTerm = useDebounce(searchTerm, 300);
@@ -150,12 +151,14 @@ const BookingsPage = () => {
 
     return (
         <SectionContent>
-            <DivStyledOptions>
-                <InputSearch value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder={searchByFullName} />
-                <ButtonStyledNew as={LinkStyled} to={'booking'}>+ New Booking</ButtonStyledNew>
-                <OrderComponent setCurrentOrder={setCurrentOrder} data={bookingsOrder} />
-            </DivStyledOptions>
-            <TabsComponent data={bookings} setCurrentTab={setCurrentTab} currentTab={currentTab}></TabsComponent>
+            <TableOptions 
+            currentTab={currentTab} 
+            data={bookings} 
+            dataOrder={bookingsOrder} 
+            searchTerm={searchTerm} 
+            setCurrentOrder={setCurrentOrder} 
+            setCurrentTab={setCurrentTab} 
+            setSearchTerm={setSearchTerm} />
             <TableComponent rows={filteredBookings} columns={dataTable({ dispatch })} path={'bookings'}></TableComponent>
         </SectionContent>
     );

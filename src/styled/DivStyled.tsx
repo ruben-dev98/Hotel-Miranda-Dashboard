@@ -66,10 +66,10 @@ export const DivDetailsContent = styled.div`
 export const WindowStyled = styled.div<{$visibleLateral?: boolean}>`
     background-color: ${props => props.theme && props.theme.main};
     width: 100%;
-    height: 80vh;
+    height: 100%;
     display: grid;
     grid-template-columns: 20% 80%;
-    grid-template-rows: 10% 90%;
+    grid-template-rows: 5% 95%;
     grid-template-areas: ${props => props.$visibleLateral ? 
     `'sidebar header'
     'sidebar content'`
@@ -82,8 +82,8 @@ export const WindowStyled = styled.div<{$visibleLateral?: boolean}>`
 
 export const DivStyledOptions = styled.div`
     display: flex;
-    justify-content: flex-end;
-    gap: 15px;
+    justify-content: space-between;
+    align-items: center;
 `;
 
 export const SectionContent = styled.section`

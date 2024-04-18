@@ -21,6 +21,7 @@ import { useAppDispatch, useAppSelector } from "../../hook/useStore";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import styled from "styled-components";
+import TableOptions from "../../components/TableOptions";
 
 const ImgStyled = styled.img`
     width: 128px;
@@ -94,7 +95,7 @@ const UsersPage = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const dispatch: ThunkDispatch<RootState, any, any> = useAppDispatch();
     const [isLoading, setIsLoading] = useState(true);
-    const [currentTab, setCurrentTab] = useState<string | boolean>(TAB_EMPLOYEE_INITIAL_STATE);
+    const [currentTab, setCurrentTab] = useState<string>(TAB_EMPLOYEE_INITIAL_STATE);
     const [currentOrder, setCurrentOrder] = useState(ORDER_EMPLOYEE_INITIAL_STATE);
     const debouncedSearchTerm = useDebounce(searchTerm, 300);
     const data = useAppSelector(getAllEmployees);
@@ -104,7 +105,7 @@ const UsersPage = () => {
             return data;
         }
         const all = data.filter((item) => item.full_name.toLowerCase().includes(debouncedSearchTerm.toLowerCase()));
-        const all_search = all.filter((item) => currentTab === TAB_EMPLOYEE_INITIAL_STATE ? true : item.status === currentTab);
+        const all_search = all.filter((item) => currentTab === TAB_EMPLOYEE_INITIAL_STATE ? true : currentTab === 'active' ? item.status === true : item.status === false);
         const orderType = currentOrder as keyof iEmployee;
         return all_search.sort((a, b) => {
             if ((a[orderType] || '') > (b[orderType] || '')) {
@@ -140,12 +141,14 @@ const UsersPage = () => {
 
     return (
         <SectionContent>
-            <DivStyledOptions>
-                <InputSearch value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder={searchByFullName} />
-                <ButtonStyledNew as={LinkStyled} to={'user'}>+ New Employee</ButtonStyledNew>
-                <OrderComponent setCurrentOrder={setCurrentOrder} data={usersOrder}></OrderComponent>
-            </DivStyledOptions>
-            <TabsComponent setCurrentTab={setCurrentTab} data={users} currentTab={currentTab}></TabsComponent>
+            <TableOptions 
+            currentTab={currentTab} 
+            data={users} 
+            dataOrder={usersOrder} 
+            searchTerm={searchTerm} 
+            setCurrentOrder={setCurrentOrder} 
+            setCurrentTab={setCurrentTab} 
+            setSearchTerm={setSearchTerm} />
             <TableComponent rows={filteredUsers} columns={dataTable({ dispatch })} path={'users'}></TableComponent>
         </SectionContent>
     );

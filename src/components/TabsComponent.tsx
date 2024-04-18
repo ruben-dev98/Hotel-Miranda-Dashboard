@@ -11,8 +11,8 @@ const ListStyled = styled.ul`
 
 interface TabsProps {
     data: ITabsObject[],
-    setCurrentTab: Dispatch<SetStateAction<string | boolean>>,
-    currentTab: string | boolean
+    setCurrentTab: Dispatch<SetStateAction<string>>,
+    currentTab: string
 }
 
 const TabsComponent = ({data, setCurrentTab, currentTab}: TabsProps) => {

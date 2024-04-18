@@ -20,6 +20,7 @@ import { useAppDispatch, useAppSelector } from "../../hook/useStore";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { DivStyledActions, DivStyledOptions, SectionContent } from "../../styled/DivStyled";
+import TableOptions from "../../components/TableOptions";
 
 
 const ImgStyled = styled.img`
@@ -113,7 +114,7 @@ const dataTable = ({ dispatch }: DataTableProps): DataProperties[] => [
 const RoomsPage = () => {
     const dispatch: ThunkDispatch<RootState, any, any> = useAppDispatch();
     const [isLoading, setIsLoading] = useState(true);
-    const [currentTab, setCurrentTab] = useState<string | boolean>(TAB_ROOMS_INITIAL_STATE);
+    const [currentTab, setCurrentTab] = useState<string>(TAB_ROOMS_INITIAL_STATE);
     const [currentOrder, setCurrentOrder] = useState<string>(ORDER_ROOMS_INITIAL_STATE);
     const data = useAppSelector(getAllRooms);
 
@@ -167,11 +168,13 @@ const RoomsPage = () => {
 
     return (
         <SectionContent>
-            <DivStyledOptions>
-                <ButtonStyledNew as={LinkStyled} to={'room'}>+ New Room</ButtonStyledNew>
-                <OrderComponent setCurrentOrder={setCurrentOrder} data={roomsOrder} />
-            </DivStyledOptions>
-            <TabsComponent setCurrentTab={setCurrentTab} data={rooms} currentTab={currentTab}></TabsComponent>
+            <TableOptions
+            currentTab={currentTab} 
+            data={rooms} 
+            dataOrder={roomsOrder}  
+            setCurrentOrder={setCurrentOrder} 
+            setCurrentTab={setCurrentTab} 
+            />
             <TableComponent rows={filteredRooms} columns={dataTable({ dispatch })} path={'rooms'}></TableComponent>
         </SectionContent>
     );

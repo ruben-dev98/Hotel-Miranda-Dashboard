@@ -1,6 +1,6 @@
 export interface ITabsObject {
     label: string,
-    value: string | boolean
+    value: string
 }
 
 interface ITabs {
@@ -44,7 +44,7 @@ const tabs: ITabs = {
         },
         {
             label: "Archived",
-            value: true
+            value: 'archived'
         },
     ],
     users: [
@@ -54,11 +54,11 @@ const tabs: ITabs = {
         },
         {
             label: "Active Employee",
-            value: true
+            value: 'active'
         },
         {
             label: "Inactive Employee",
-            value: false
+            value: 'inactive'
         },
     ]
 }

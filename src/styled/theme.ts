@@ -1,3 +1,5 @@
+import Theme, { createGlobalStyle } from "styled-components";
+
 export interface themeDefault {
     main: string,
     secondary: string,
@@ -74,3 +76,10 @@ export const themeDark: themeDefault = {
     swiper_disabled: "#FFFFFF1A",
     hover_kpis: "#00000014"
 }
+
+export const GlobalStyles = createGlobalStyle<{ theme?: typeof Theme }>`
+    :root {
+        background-color: ${({ theme }) => theme.bg};
+        font-family: Poppins;
+    }
+`;
