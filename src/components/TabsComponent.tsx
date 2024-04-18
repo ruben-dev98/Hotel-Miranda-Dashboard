@@ -7,6 +7,9 @@ const ListStyled = styled.ul`
     display: flex;
     justify-content: flex-start;
     padding-bottom: 2px;
+    width: 100%;
+
+    
 `;
 
 interface TabsProps {

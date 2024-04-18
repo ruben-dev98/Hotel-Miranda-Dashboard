@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 export const InputSearch = styled.input`
-    width: 210px;
+    width: 140px;
     height: 10px;
     font-family: "Poppins", sans-serif;
     border-radius: 20px;

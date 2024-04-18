@@ -8,6 +8,7 @@ import OrderComponent from "./OrderComponent"
 import TabsComponent from "./TabsComponent"
 import { ITabsObject } from "../assets/data/tabs"
 import { IOrder } from "../assets/data/order"
+import styled from "styled-components"
 
 interface TableOptionsProp {
     searchTerm?: string,
@@ -16,16 +17,25 @@ interface TableOptionsProp {
     data: ITabsObject[],
     currentTab: string,
     setCurrentOrder: Dispatch<React.SetStateAction<string>>,
-    dataOrder: IOrder[]
+    dataOrder: IOrder[],
+    isUserOrBooking?: boolean
 }
 
-const TableOptions = ({searchTerm, setSearchTerm, setCurrentTab, data, currentTab, setCurrentOrder, dataOrder} : TableOptionsProp) => {
+const DivStyledActions = styled.div`
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+`;
+
+const TableOptions = ({searchTerm, setSearchTerm, setCurrentTab, data, currentTab, setCurrentOrder, dataOrder, isUserOrBooking} : TableOptionsProp) => {
     
     return(<DivStyledOptions>
                 <TabsComponent setCurrentTab={setCurrentTab} data={data} currentTab={currentTab}></TabsComponent>
-                {(searchTerm && setSearchTerm) && <InputSearch value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder={searchByFullName} />}
-                <ButtonStyledNew as={LinkStyled} to={'room'}>+ New Room</ButtonStyledNew>
-                <OrderComponent setCurrentOrder={setCurrentOrder} data={dataOrder} />
+                <DivStyledActions>
+                    {isUserOrBooking && <InputSearch value={searchTerm} onChange={(event) => setSearchTerm && setSearchTerm(event.target.value)} placeholder={searchByFullName} />}
+                    <ButtonStyledNew as={LinkStyled} to={'room'}>+ New Room</ButtonStyledNew>
+                    <OrderComponent setCurrentOrder={setCurrentOrder} data={dataOrder} />
+                </DivStyledActions>
             </DivStyledOptions>
     )
 }

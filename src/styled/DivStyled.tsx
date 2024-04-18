@@ -82,7 +82,7 @@ export const WindowStyled = styled.div<{$visibleLateral?: boolean}>`
 
 export const DivStyledOptions = styled.div`
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
 `;
 
