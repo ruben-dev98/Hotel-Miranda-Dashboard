@@ -11,7 +11,7 @@ import { existUserEmail } from '../../helpers/existUserEmail';
 import MySweetAlertApi from '../../app/MySweetAlertApi';
 import { userEmailAlreadyExist } from '../../helpers/constants';
 
-interface FormData extends EventTarget {
+export interface FormDataUser extends EventTarget {
     photo: HTMLFormElement,
     full_name: HTMLFormElement,
     start_date: HTMLFormElement,
@@ -95,7 +95,7 @@ const UserFormPage = () => {
                 status: false,
                 password: ''
             };
-            const element = event.target as FormData;
+            const element = event.target as FormDataUser;
             const existEmployee = await existUserEmail(element['email'].value);
             if (existEmployee && !id) {
                 MySweetAlertApi({ title: userEmailAlreadyExist, icon: 'error' });

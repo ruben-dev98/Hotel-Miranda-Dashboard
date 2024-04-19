@@ -13,7 +13,7 @@ import { existRoomNumber } from './../../helpers/existRoomNumber';
 import MySweetAlertApi from "../../app/MySweetAlertApi";
 import { roomNotExist } from "../../helpers/constants";
 
-interface FormData extends EventTarget {
+export interface FormDataBookings extends EventTarget {
     full_name: HTMLFormElement,
     check_in: HTMLFormElement,
     check_out: HTMLFormElement,
@@ -92,7 +92,7 @@ const BookingFormPage = () => {
             room: {} as iRoom
         }
         try {
-            const element = event.target as FormData;
+            const element = event.target as FormDataBookings;
             const room = id ? booking.room : await existRoomNumber(element['number'].value);
             if (!room) {
                 MySweetAlertApi({ title: roomNotExist, icon: 'error' });

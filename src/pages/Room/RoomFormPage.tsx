@@ -13,7 +13,7 @@ import { existRoomNumber } from "../../helpers/existRoomNumber";
 
 
 
-interface FormData extends EventTarget {
+export interface FormDataRooms extends EventTarget {
     photo: HTMLFormElement,
     type: HTMLFormElement,
     number: HTMLFormElement,
@@ -95,7 +95,7 @@ const RoomFormPage = () => {
         };
 
         try {
-            const element = event.target as FormData;
+            const element = event.target as FormDataRooms;
             const existRoom = await existRoomNumber(element['number'].value);
             if(existRoom && !id) {
                 MySweetAlertApi({ title: roomNumberAlreadyExist, icon: 'error' })

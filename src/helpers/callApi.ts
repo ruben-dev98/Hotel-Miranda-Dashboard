@@ -108,12 +108,6 @@ const dataAvailableRoomsNumber = async (path: string) => {
     }
 }
 
-export const delay = (time = 200) => {
-    return new Promise((r) => {
-        setTimeout(r, time)
-    });
-}
-
 export const callAPI = ({path, operation, methods, id, data} : CallApiProps) => {
         switch (operation) {
             case methods.getAll:
