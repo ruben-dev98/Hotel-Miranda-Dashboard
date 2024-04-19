@@ -80,6 +80,9 @@ const ContactPage = () => {
     const data = useAppSelector(getAllMessages);
 
     const filteredMessages = useMemo(() => {
+        if(!data) {
+            return data;
+        }
         const all = data.filter((item) => currentTab === TAB_MESSAGE_INITIAL_STATE ? true : item.archived === true);
         return all;
     }, [data, currentTab]);

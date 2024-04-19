@@ -25,26 +25,31 @@ const SwiperStyled = styled(Swiper)`
 const MessageListComponent = () => {
     const dispatch = useAppDispatch();
     const data = useAppSelector(getAllMessages);
-    const status = useAppSelector(messagesStatus);
+
+    const initialFetch = async () => {
+        try {
+            await dispatch(getMessages()).unwrap();
+        } catch(error) {
+            console.error('error');
+        }
+    }
 
     useEffect(() => {
-        if(status === 'idle') {
-            dispatch(getMessages());
-        }
-    }, [status, dispatch])
+        initialFetch();
+    }, [])
 
     return (
         <SwiperStyled
             slidesPerView={3}
         >
             
-            {data && data.map((message, index) => {
+            {data && data.length > 0 ? data.map((message, index) => {
             return (
                 <SwiperSlide style={{userSelect: 'none'}} key={index}>
                     <MessageComponent message={message} />
                 </SwiperSlide>
                 )
-            })}
+            }): ''}
         </SwiperStyled>
     )
 }
