@@ -15,8 +15,9 @@ export const loginInApi = async (email: string, password: string) => {
                 password: password
             })
         });
+
         const json = await apiData.json();
-        if (apiData.status === statusCodeOk) {
+        if (apiData.ok) {
             MySweetAlertApi({ title: loginSuccessful, icon: 'success' })
             return await json.data;
         } else if(apiData.status === statusCodeErrorNotFound) {

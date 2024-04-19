@@ -17,6 +17,7 @@ export const NUMBER_ONE: number = 1;
 export const METHOD_POST = 'POST';
 export const METHOD_PUT = 'PUT';
 export const METHOD_DELETE = 'DELETE';
+export const METHOD_GET = 'GET';
 
 export const OPERATION_GET_ALL = 1;
 export const OPERATION_GET_ONE = 2;
@@ -44,12 +45,14 @@ export const URI_ROOM: FakesUri = {
     getRoomsNumber: OPERATION_AVAILABLE_ROOMS,
     delete: OPERATION_DELETE
 };
+
 export const URI_MESSAGE: FakesUri = {
     getAll: OPERATION_GET_ALL,
     getOne: OPERATION_GET_ONE,
     edit: OPERATION_EDIT,
     delete: OPERATION_DELETE
 };
+
 export const URI_EMPLOYEE: FakesUri = {
     getAll: OPERATION_GET_ALL,
     getOne: OPERATION_GET_ONE,
@@ -57,6 +60,7 @@ export const URI_EMPLOYEE: FakesUri = {
     add: OPERATION_ADD,
     delete: OPERATION_DELETE
 };
+
 export const URI_BOOKINGS: FakesUri = {
     getAll: OPERATION_GET_ALL,
     getOne: OPERATION_GET_ONE,
