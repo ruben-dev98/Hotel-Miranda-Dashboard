@@ -13,7 +13,7 @@ import { useAppDispatch, useAppSelector } from "../hook/useStore";
 
 
 const SwiperStyled = styled(Swiper)`
-    margin: 32px 0px 0px 0px;
+    margin: 0px;
     height: 250px;
 
     & .swiper-slide {
@@ -25,34 +25,31 @@ const SwiperStyled = styled(Swiper)`
 const MessageListComponent = () => {
     const dispatch = useAppDispatch();
     const data = useAppSelector(getAllMessages);
-    const status = useAppSelector(messagesStatus);
+
+    const initialFetch = async () => {
+        try {
+            await dispatch(getMessages()).unwrap();
+        } catch(error) {
+            console.error('error');
+        }
+    }
 
     useEffect(() => {
-        if(status === 'idle') {
-            dispatch(getMessages());
-        }
-    }, [status, dispatch])
+        initialFetch();
+    }, [])
 
     return (
         <SwiperStyled
-            // install Swiper modules
-            //modules={[Navigation, Pagination, Scrollbar, A11y]}
-            spaceBetween={50}
             slidesPerView={3}
-            //navigation
-            //pagination={{ clickable: true }}
-            //scrollbar={{ draggable: true }}
-            onSwiper={(swiper) => {}}
-            onSlideChange={() => {}}
         >
             
-            {data.map((message, index) => {
+            {data && data.length > 0 ? data.map((message, index) => {
             return (
                 <SwiperSlide style={{userSelect: 'none'}} key={index}>
                     <MessageComponent message={message} />
                 </SwiperSlide>
                 )
-            })}
+            }): ''}
         </SwiperStyled>
     )
 }

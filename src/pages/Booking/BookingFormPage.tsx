@@ -1,30 +1,32 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { lastId } from "../../app/getItenId";
 import FormComponent from '../../components/Form/FormComponent';
 import { useEffect, useState } from "react";
 import { addBooking, editBooking, getBooking } from "../../features/bookings/bookingsAsyncThunk";
-import { getAllBookings, getOneBooking } from "../../features/bookings/bookingSlice";
+import { getOneBooking } from "../../features/bookings/bookingSlice";
 import Loading from "../../components/Loading";
 import { availableRooms } from "../../features/rooms/roomsSlice";
 import { availableRoomsNumber } from "../../features/rooms/roomsAsyncThunk";
-import MySwal from "../../app/MySwal";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
-import { FormControlPropsBooking, iBooking } from "../../entitys/Data";
+import { FormControlPropsBooking, iBooking, iRoom } from "../../entities/Data";
+import { SectionContent } from "../../styled/DivStyled";
+import { existRoomNumber } from './../../helpers/existRoomNumber';
+import MySweetAlertApi from "../../app/MySweetAlertApi";
+import { roomNotExist } from "../../helpers/constants";
 
-interface FormData extends EventTarget {
-    full_name: HTMLFormElement, 
+export interface FormDataBookings extends EventTarget {
+    full_name: HTMLFormElement,
     check_in: HTMLFormElement,
     check_out: HTMLFormElement,
     number: HTMLFormElement,
     email: HTMLFormElement,
     phone: HTMLFormElement,
+    discount: HTMLFormElement,
     special_request: HTMLFormElement
-
 }
 
-const formControl = (rooms: string[]): FormControlPropsBooking[]  => [
+const formControl = (rooms: string[]): FormControlPropsBooking[] => [
     {
-        'label': 'Nombre y Apellidos',
+        'label': 'Full Name',
         'input': 'text',
         'name': 'full_name'
     },
@@ -50,6 +52,11 @@ const formControl = (rooms: string[]): FormControlPropsBooking[]  => [
         'name': 'email'
     },
     {
+        'label': 'Discount',
+        'input': 'number',
+        'name': 'discount'
+    },
+    {
         'label': 'Phone',
         'input': 'text',
         'name': 'phone'
@@ -68,65 +75,56 @@ const BookingFormPage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const { id } = useParams();
     const booking = useAppSelector(getOneBooking);
-    const bookings = useAppSelector(getAllBookings);
     const rooms = useAppSelector(availableRooms);
 
     const onCreateBooking = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const newId = lastId(bookings);
         const booking: iBooking = {
-            id: newId,
             full_name: '',
             order_date: Date.now().toString(),
             check_in: '',
             check_out: '',
             special_request: '',
-            number: 0,
             phone: '',
             email: '',
             status: 'In Progress',
-            amenities: [],
-            type: '',
-            description: '',
-            price: 0,
-            room_status: '',
-            foto: ''
+            discount: 0,
+            room: {} as iRoom
         }
+        try {
+            const element = event.target as FormDataBookings;
+            const room = id ? booking.room : await existRoomNumber(element['number'].value);
+            if (!room) {
+                MySweetAlertApi({ title: roomNotExist, icon: 'error' });
+                throw new Error(roomNotExist);
+            }
+            
+            formControl(rooms).forEach((control) => {
+                const property = control.name as keyof iBooking;
+                if (control.input === 'date') {
+                    (booking[property] as string) = String(new Date(element[control.name].value).getTime());
+                } else if (control.name === 'number') {
+                    booking['room'] = { ...room };
+                } else {
+                    (booking[property] as string | number) = element[control.name].value;
+                }
+            });
 
-        formControl(rooms).forEach((control) => {
-            const element = event.target as FormData;
-            const property = control.name as keyof iBooking;
-            if(control.input === 'date') {
-                (booking[property] as string) = String(new Date(element[control.name].value).getTime());
+            if (loc.includes('edit')) {
+                await dispatch(editBooking({ id: id || '', data: booking }));
             } else {
-                (booking[property] as string | number) = element[control.name].value;
-            }
-        });
-
-        const html = id ? <p>Update #{booking.id} Booking Successfully</p> : <p>Create #{booking.id} Booking Successfully</p>;
-
-        if (loc.includes('edit')) {
-            try {
-                navigate('/bookings');
-                await dispatch(editBooking({id: parseInt(id || ''), data: booking}));
-                MySwal({title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true});
-            } catch (error) {
-                console.log(error);
-            }
-        } else {
-            try {
-                navigate('/bookings');
                 await dispatch(addBooking(booking));
-                MySwal({title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true});
-            } catch (error) {
-                console.log(error);
             }
+
+            navigate('/bookings');
+        } catch (error) {
+            console.error(error);
         }
     }
 
     const initialFetch = async () => {
         await dispatch(availableRoomsNumber()).unwrap();
-        await dispatch(getBooking(parseInt(id || ''))).unwrap();
+        await dispatch(getBooking(id || '')).unwrap();
         setIsLoading(false);
     };
 
@@ -134,16 +132,18 @@ const BookingFormPage = () => {
         initialFetch();
     }, []);
 
-    if(isLoading) {
-        return (<section className='content'>
-            <Loading></Loading>
-        </section>)
+    if (isLoading) {
+        return (
+            <SectionContent>
+                <Loading></Loading>
+            </SectionContent>
+        )
     }
 
     return (
-        <section className="content">
+        <SectionContent>
             <FormComponent formControl={formControl(rooms)} data={booking} onHandleSubmit={onCreateBooking}></FormComponent>
-        </section>
+        </SectionContent>
     );
 
 }

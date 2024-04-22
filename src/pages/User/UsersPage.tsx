@@ -1,10 +1,8 @@
 import { users } from "../../assets/data/tabs";
 import { usersOrder } from "../../assets/data/order";
 import TableComponent from "../../components/TableComponent";
-import TabsComponent from "../../components/TabsComponent";
-import { SpanStyled, SpanStyledCheckOut, SpanStyledTableFirst } from "../../styled/SpanStyled";
-import { ButtonStyledIcon, ButtonStyledNew } from "../../styled/ButtonStyled";
-import OrderComponent from '../../components/OrderComponent';
+import { SpanStyled, SpanStyledCheckOut, SpanStyledTableFirst, SpanStyledTableSecond } from "../../styled/SpanStyled";
+import { ButtonStyledIcon } from "../../styled/ButtonStyled";
 import { LinkStyled } from "../../styled/LinkStyled";
 import { useEffect, useMemo, useState } from "react";
 import { getAllEmployees } from "../../features/employees/employeesSlice";
@@ -12,56 +10,63 @@ import { deleteEmployee, getEmployees } from "../../features/employees/employees
 import Loading from "../../components/Loading";
 import { useDebounce } from "@uidotdev/usehooks";
 import { DeleteStyled, EditStyled } from "../../styled/IconStyled";
-import { DivStyledActions } from "../../styled/DivStyled";
-import MySwal from "../../app/MySwal";
-import { InputSearch } from "../../styled/InputStyled";
-import { ORDER_EMPLOYEE_INITIAL_STATE, TAB_EMPLOYEE_INITIAL_STATE } from "../../helpers/varHelpers";
-import { ActionProps, DataProperties, DataTableProps, HandleClickDeleteProps, iEmployee } from "../../entitys/Data";
+import { DivStyledActions, SectionContent } from "../../styled/DivStyled";
+import MySweetAlert from "../../app/MySweetAlert";
+import { ORDER_EMPLOYEE_INITIAL_STATE, TAB_EMPLOYEE_INITIAL_STATE } from "../../helpers/constants";
+import { ActionProps, DataProperties, DataTableProps, HandleClickProps, iEmployee } from "../../entities/Data";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
+import styled from "styled-components";
+import TableOptions from "../../components/TableOptions";
 
-const handleClickDelete = async ({event, dispatch, id}: HandleClickDeleteProps) => {
+const ImgStyled = styled.img`
+    width: 128px;
+    height: 128px;
+`;
+
+const handleClickDelete = async ({ event, dispatch, id }: HandleClickProps) => {
     event.stopPropagation();
     try {
         await dispatch(deleteEmployee(id)).unwrap()
         const html = <p>Delete #{id} Employee Successfully</p>;
-        MySwal({title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true});
-        
-    } catch(error) {
+        MySweetAlert({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
+    } catch (error) {
         console.log(error);
     }
 }
 
-const action = ({id, dispatch}: ActionProps) => {
+const action = ({ id, dispatch }: ActionProps) => {
     return (
         <DivStyledActions>
             <ButtonStyledIcon as={LinkStyled} to={`edit/${id}`} onClick={(event) => event.stopPropagation()}><EditStyled /></ButtonStyledIcon>
-            <ButtonStyledIcon onClick={(event) => handleClickDelete({event, dispatch, id})}><DeleteStyled /></ButtonStyledIcon>
+            <ButtonStyledIcon onClick={(event) => handleClickDelete({ event, dispatch, id })}><DeleteStyled /></ButtonStyledIcon>
         </DivStyledActions>
     )
 }
 
-const dataTable = ({dispatch}: DataTableProps): DataProperties[] => [
+const dataTable = ({ dispatch }: DataTableProps): DataProperties[] => [
     {
         'label': 'Image',
-        display: (row: iEmployee) => <img src={row.foto} />
+        display: (row: iEmployee) => <ImgStyled src={row.photo} />
     },
     {
-        'label': 'Full Name',
-        'property': 'full_name'
-    },
-    {
-        'label': 'ID',
-        'property': 'id'
-    },
-    {
-        'label': 'Email',
-        'property': 'email'
+        'label': 'Information',
+        display: (row: iEmployee) => (
+            <>
+                <SpanStyledTableFirst>{row.full_name}</SpanStyledTableFirst><br />
+                <SpanStyledTableFirst>{row.email}</SpanStyledTableFirst><br />
+                <SpanStyledTableSecond>#{row._id}</SpanStyledTableSecond>
+            </>
+        )
+
     },
     {
         'label': 'Start Date',
-        display: (row: iEmployee) => new Date(row.start_date).toLocaleDateString('es-Es')
+        display: (row: iEmployee) => {
+            const start_date = new Date(parseInt(row.start_date, 10));
+            return (<><SpanStyledTableFirst>{start_date.toDateString().slice(3)}</SpanStyledTableFirst><br /><SpanStyledTableSecond>{start_date.toTimeString().slice(0, 8)}</SpanStyledTableSecond></>);
+        }
     },
     {
         'label': 'Description',
@@ -79,7 +84,7 @@ const dataTable = ({dispatch}: DataTableProps): DataProperties[] => [
     },
     {
         'label': 'Actions',
-        display: (row: iEmployee) => action({id: row.id, dispatch})
+        display: (row: iEmployee) => action({ id: row._id || '', dispatch })
     }
 ];
 
@@ -87,19 +92,22 @@ const UsersPage = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const dispatch: ThunkDispatch<RootState, any, any> = useAppDispatch();
     const [isLoading, setIsLoading] = useState(true);
-    const [currentTab, setCurrentTab] = useState<string | boolean>(TAB_EMPLOYEE_INITIAL_STATE);
+    const [currentTab, setCurrentTab] = useState<string>(TAB_EMPLOYEE_INITIAL_STATE);
     const [currentOrder, setCurrentOrder] = useState(ORDER_EMPLOYEE_INITIAL_STATE);
     const debouncedSearchTerm = useDebounce(searchTerm, 300);
     const data = useAppSelector(getAllEmployees);
 
     const filteredUsers = useMemo(() => {
+        if (!data) {
+            return data;
+        }
         const all = data.filter((item) => item.full_name.toLowerCase().includes(debouncedSearchTerm.toLowerCase()));
-        const all_search = all.filter((item) => currentTab === TAB_EMPLOYEE_INITIAL_STATE ? true : item.status === currentTab);
+        const all_search = all.filter((item) => currentTab === TAB_EMPLOYEE_INITIAL_STATE ? true : currentTab === 'active' ? item.status === true : item.status === false);
         const orderType = currentOrder as keyof iEmployee;
         return all_search.sort((a, b) => {
-            if (a[orderType] > b[orderType]) {
+            if ((a[orderType] || '') > (b[orderType] || '')) {
                 return 1;
-            } else if (a[orderType] < b[orderType]) {
+            } else if ((a[orderType] || '') < (b[orderType] || '')) {
                 return -1;
             } else {
                 return 0;
@@ -121,21 +129,27 @@ const UsersPage = () => {
     }, []);
 
     if (isLoading) {
-        return (<section className='content'>
-            <Loading></Loading>
-        </section>)
+        return (
+            <SectionContent className='content'>
+                <Loading></Loading>
+            </SectionContent>
+        );
     }
 
     return (
-        <section className='content'>
-            <div className="top__menu-table">
-                <InputSearch value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Busqueda por nombre usuario" />
-                <ButtonStyledNew as={LinkStyled} to={'user'}>+ New Employee</ButtonStyledNew>
-                <OrderComponent setCurrentOrder={setCurrentOrder} data={usersOrder}></OrderComponent>
-            </div>
-            <TabsComponent setCurrentTab={setCurrentTab} data={users} currentTab={currentTab}></TabsComponent>
-            <TableComponent rows={filteredUsers} columns={dataTable({dispatch})} path={'users'}></TableComponent>
-        </section>
+        <SectionContent>
+            <TableOptions 
+            currentTab={currentTab} 
+            data={users} 
+            dataOrder={usersOrder} 
+            searchTerm={searchTerm} 
+            setCurrentOrder={setCurrentOrder} 
+            setCurrentTab={setCurrentTab} 
+            setSearchTerm={setSearchTerm} 
+            isUserOrBooking 
+            path="user"/>
+            <TableComponent rows={filteredUsers} columns={dataTable({ dispatch })} path={'users'}></TableComponent>
+        </SectionContent>
     );
 }
 

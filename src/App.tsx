@@ -1,5 +1,5 @@
 import { Navigate, Outlet, Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
-import { ReactNode, useContext } from 'react';
+import { ReactNode, useContext, useState } from 'react';
 import { UserAuthProvider, UserContext } from './context/UserContext';
 import LoginPage from './pages/LoginPage';
 import MainPage from './pages/MainPage';
@@ -14,12 +14,15 @@ import RoomPage from './pages/Room/RoomPage';
 import BookingFormPage from './pages/Booking/BookingFormPage';
 import UserFormPage from './pages/User/UserFormPage';
 import RoomFormPage from './pages/Room/RoomFormPage';
+import { ThemeContext, ThemeProvider } from 'styled-components';
+import { accessToLocalStorage } from './helpers/accessToLocalStorage';
+import { lightTheme, localStorageGetAction, localStorageThemeKey } from './helpers/constants';
+import { themeDark, themeLight } from './styled/theme';
 
 interface PrivateRouteProps {
     redirect?: string,
     children?: ReactNode
 }
-
 
 const PrivateRoute = ({ redirect = "/login", children }: PrivateRouteProps) => {
     const context = useContext(UserContext);
@@ -54,10 +57,17 @@ const router = createBrowserRouter(createRoutesFromElements(
 ));
 
 function App() {
-
+    const theme = accessToLocalStorage({key: localStorageThemeKey, action: localStorageGetAction}) || lightTheme;
+    const [themeState, setThemeState] = useState(theme);
+    const themeContext = themeState === lightTheme ? themeLight : themeDark;
+    
     return (
         <UserAuthProvider>
-            <RouterProvider router={router} />    
+            <ThemeContext.Provider value={{themeState, setThemeState}}>
+                <ThemeProvider theme={themeContext}>
+                    <RouterProvider router={router} />
+                </ThemeProvider>
+            </ThemeContext.Provider>
         </UserAuthProvider>
     );
 }

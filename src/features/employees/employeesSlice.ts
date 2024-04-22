@@ -1,7 +1,7 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit"
 import { addEmployee, deleteEmployee, editEmployee, getEmployee, getEmployees } from "./employeesAsyncThunk";
 import { RootState } from "../../app/store";
-import { iEmployee } from "../../entitys/Data";
+import { iEmployee } from "../../entities/Data";
 
 interface EmployeeSliceState {
     data: iEmployee[],
@@ -31,18 +31,17 @@ export const employeesSlice = createSlice({
                 state.error = null;
             })
             .addCase(addEmployee.fulfilled, (state, action) => {
-                state.data.push(action.payload);
                 state.status = 'fulfilled';
                 state.error = null;
             })
             .addCase(editEmployee.fulfilled, (state, action) => {
-                state.data = state.data.map((employee) => employee.id === action.payload.id ? action.payload.data : employee);
                 state.status = 'fulfilled';
                 state.error = null;
             })
             .addCase(deleteEmployee.fulfilled, (state, action) => {
-                state.data = state.data.filter((employee) => employee.id !== action.payload);
+                state.data = state.data.filter((employee) => employee._id !== action.payload._id);
                 state.status = 'fulfilled';
+                state.error = null;
             })
             .addMatcher(isAnyOf(
                 getEmployees.pending,

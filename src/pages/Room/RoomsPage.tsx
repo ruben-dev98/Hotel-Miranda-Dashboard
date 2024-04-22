@@ -1,8 +1,6 @@
 import { rooms } from "../../assets/data/tabs";
-import TabsComponent from "../../components/TabsComponent";
 import TableComponent from '../../components/TableComponent';
 import { SpanStyled, SpanStyledCheckOut, SpanStyledTableFirst, SpanStyledTableSecond } from "../../styled/SpanStyled";
-import OrderComponent from "../../components/OrderComponent";
 import { roomsOrder } from "../../assets/data/order";
 import { LinkStyled } from "../../styled/LinkStyled";
 import { useEffect, useMemo, useState } from "react";
@@ -12,14 +10,17 @@ import Loading from "../../components/Loading";
 import { EditStyled } from "../../styled/IconStyled";
 import { DeleteStyled } from './../../styled/IconStyled';
 import styled from "styled-components";
-import MySwal from "../../app/MySwal";
-import { ORDER_ROOMS_INITIAL_STATE, TAB_ROOMS_INITIAL_STATE } from "../../helpers/varHelpers";
-import { ButtonStyledIcon, ButtonStyledNew, ButtonStyledViewNotes } from "../../styled/ButtonStyled";
-import { ActionProps, DataProperties, DataTableProps, HandleClickDeleteProps, iRoom } from "../../entitys/Data";
+import MySweetAlert from "../../app/MySweetAlert";
+import { ORDER_ROOMS_INITIAL_STATE, TAB_ROOMS_INITIAL_STATE } from "../../helpers/constants";
+import { ButtonStyledIcon, ButtonStyledViewNotes } from "../../styled/ButtonStyled";
+import { ActionProps, DataProperties, DataTableProps, HandleClickProps, iRoom } from "../../entities/Data";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
-import { DivStyledActions } from "../../styled/DivStyled";
+import { DivStyledActions, SectionContent } from "../../styled/DivStyled";
+import TableOptions from "../../components/TableOptions";
+import MySweetAlertApi from "../../app/MySweetAlertApi";
+import { isExistBooking } from "../../helpers/existBooking";
 
 
 const ImgStyled = styled.img`
@@ -27,44 +28,46 @@ const ImgStyled = styled.img`
     height: 100px;
 `;
 
-const handleClickDelete = async ({event, dispatch, id}: HandleClickDeleteProps) => {
+const handleClickDelete = async ({ event, dispatch, id }: HandleClickProps) => {
     event.stopPropagation();
     try {
+        const existBooking = await isExistBooking(id);
+        if(existBooking) {
+            MySweetAlertApi({title: '', icon: 'error'});
+            throw new Error('');
+        }
         await dispatch(deleteRoom(id)).unwrap()
         const html = <p>Delete #{id} Room Successfully</p>
-        MySwal({title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true});
+        MySweetAlert({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
     } catch (error) {
         console.log(error)
     }
 }
 
-const action = ({id, dispatch}: ActionProps) => {
+const action = ({ id, dispatch }: ActionProps) => {
     return (
         <DivStyledActions>
             <ButtonStyledIcon as={LinkStyled} to={`edit/${id}`} onClick={(event) => event.stopPropagation()}><EditStyled></EditStyled></ButtonStyledIcon>
-            <ButtonStyledIcon onClick={(event) => handleClickDelete({event, dispatch, id})}><DeleteStyled></DeleteStyled></ButtonStyledIcon>
+            <ButtonStyledIcon onClick={(event) => handleClickDelete({ event, dispatch, id })}><DeleteStyled></DeleteStyled></ButtonStyledIcon>
         </DivStyledActions>
     )
 
 
 }
 
-const dataTable = ({dispatch}: DataTableProps): DataProperties[] => [
+const dataTable = ({ dispatch }: DataTableProps): DataProperties[] => [
     {
         'label': 'Image',
-        display: (row: iRoom) => <ImgStyled src={row.foto} />
+        display: (row: iRoom) => <ImgStyled src={row.photo[0]} />
     },
     {
-        'label': 'Number',
-        'property': 'number'
-    },
-    {
-        'label': 'ID',
-        'property': 'id'
-    },
-    {
-        'label': 'Room Type',
-        'property': 'type'
+        'label': 'Information',
+        display: (row: iRoom) => (
+            <>
+                <SpanStyledTableFirst>{row.type} - {row.number}</SpanStyledTableFirst><br />
+                <SpanStyledTableSecond>#{row._id}</SpanStyledTableSecond>
+            </>
+        )
     },
     {
         'label': 'Amenities',
@@ -79,7 +82,7 @@ const dataTable = ({dispatch}: DataTableProps): DataProperties[] => [
                         </li>;
                     })}
                 </ul>);
-                MySwal({title, html, showConfirmButton: false})
+                MySweetAlert({ title, html, showConfirmButton: false })
             }}>View Amenities</ButtonStyledViewNotes>
             :
             <ButtonStyledViewNotes disabled>View Amenities</ButtonStyledViewNotes>
@@ -101,18 +104,21 @@ const dataTable = ({dispatch}: DataTableProps): DataProperties[] => [
     },
     {
         'label': 'Actions',
-        display: (row: iRoom) => action({id: row.id, dispatch: dispatch})
+        display: (row: iRoom) => action({ id: row._id || '', dispatch: dispatch })
     }
 ];
 
 const RoomsPage = () => {
     const dispatch: ThunkDispatch<RootState, any, any> = useAppDispatch();
     const [isLoading, setIsLoading] = useState(true);
-    const [currentTab, setCurrentTab] = useState<string | boolean>(TAB_ROOMS_INITIAL_STATE);
+    const [currentTab, setCurrentTab] = useState<string>(TAB_ROOMS_INITIAL_STATE);
     const [currentOrder, setCurrentOrder] = useState<string>(ORDER_ROOMS_INITIAL_STATE);
     const data = useAppSelector(getAllRooms);
 
     const filteredRooms = useMemo(() => {
+        if (!data) {
+            return data;
+        }
         const all = data.filter((item) => currentTab === TAB_ROOMS_INITIAL_STATE ? true : item.status === currentTab);
 
         return all.sort((a, b) => {
@@ -120,12 +126,12 @@ const RoomsPage = () => {
             const property = order[0] as keyof iRoom;
             const orderType = order[1];
 
-            if (a[property] > b[property]) {
+            if ((a[property] || '') > (b[property] || '')) {
                 if (orderType === 'asc') {
                     return 1;
                 }
                 return -1;
-            } else if (a[property] < b[property]) {
+            } else if ((a[property] || '') < (b[property] || '')) {
                 if (orderType === 'asc') {
                     return -1;
                 }
@@ -150,22 +156,24 @@ const RoomsPage = () => {
     }, []);
 
     if (isLoading) {
-        return (<section className='content'>
-            <Loading></Loading>
-        </section>)
+        return (
+            <SectionContent>
+                <Loading></Loading>
+            </SectionContent>
+        );
     }
 
     return (
-        <section className='content'>
-            <>
-                <div className="top__menu-table">
-                    <ButtonStyledNew as={LinkStyled} to={'room'}>+ New Room</ButtonStyledNew>
-                    <OrderComponent setCurrentOrder={setCurrentOrder} data={roomsOrder} />
-                </div>
-                <TabsComponent setCurrentTab={setCurrentTab} data={rooms} currentTab={currentTab}></TabsComponent>
-                <TableComponent rows={filteredRooms} columns={dataTable({dispatch})} path={'rooms'}></TableComponent>
-            </>
-        </section>
+        <SectionContent>
+            <TableOptions
+            currentTab={currentTab} 
+            data={rooms} 
+            dataOrder={roomsOrder}  
+            setCurrentOrder={setCurrentOrder} 
+            setCurrentTab={setCurrentTab} 
+            path="room"/>
+            <TableComponent rows={filteredRooms} columns={dataTable({ dispatch })} path={'rooms'}></TableComponent>
+        </SectionContent>
     );
 }
 

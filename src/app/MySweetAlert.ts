@@ -1,11 +1,10 @@
 
-import { ReactElement } from 'react';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
+import withReactContent, { ReactElementOr } from 'sweetalert2-react-content';
 
 interface SwalProps {
     title: string,
-    html: ReactElement,
+    html: ReactElementOr<'html'>,
     showConfirmButton?: boolean | true,
     timer?: number | 0,
     icon?: SweetAlertIcon,
@@ -14,7 +13,7 @@ interface SwalProps {
 
 const PersonalSwal = withReactContent(Swal);
 
-const MySwal = ({title, html, showConfirmButton, timer, icon, timerProgressBar}: SwalProps) => {
+const MySweetAlert = ({title, html, showConfirmButton, timer, icon, timerProgressBar}: SwalProps) => {
     
     PersonalSwal.fire({
         title: title,
@@ -26,4 +25,4 @@ const MySwal = ({title, html, showConfirmButton, timer, icon, timerProgressBar}:
     });
 }
 
-export default MySwal;
+export default MySweetAlert;

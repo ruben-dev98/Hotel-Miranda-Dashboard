@@ -1,19 +1,19 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import logo from '../../assets/img/travl_claro.png';
+import logo from '../../assets/img/travl.png';
 import me from '../../assets/img/CV.png';
 import { links } from '../../assets/data/navLink';
-import React, { FormEventHandler } from 'react';
+import React from 'react';
 import { useContext } from 'react';
 import { UserContext } from '../../context/UserContext';
-import MySwal from '../../app/MySwal';
+import MySweetAlert from '../../app/MySweetAlert';
 import Swal from 'sweetalert2';
 import { ButtonStyled, ButtonStyledViewNotes } from '../../styled/ButtonStyled';
+import { StyledP } from '../../styled/SpanStyled';
 
 const SideBarStyled = styled.menu`
     grid-area: sidebar;
     width: 100%;
-    background-color: #FFF;
     padding: 0rem;
     margin: 0rem;
 
@@ -50,7 +50,7 @@ const NavLinkStyled = styled(NavLink)`
     text-decoration: none;
     padding: 0rem 32px;
     gap: 32px;
-    color: #799283;
+    color: ${props => props.theme.separator};
 
     
 
@@ -59,21 +59,25 @@ const NavLinkStyled = styled(NavLink)`
     }
 
     &.active {
-        border-left: 2px #E23428 solid;
-        color: #E23428;
+        border-left: 2px ${props => props.theme.secondary} solid;
+        color: ${props => props.theme.secondary};
 
         svg {
-            fill: #E23428;
+            fill: ${props => props.theme.secondary};
         }
     }
 
     svg {
         width: 28px;
         height: 28px;
-        fill: #799283;
+        fill: ${props => props.theme.separator};
     }
 
     
+`;
+
+const TitleStyled = styled.h2`
+    color: ${props => props.theme && props.theme.text_main_alternative};
 `;
 
 interface SideBarComponentProps {
@@ -102,14 +106,14 @@ const SideBarComponent = ({ visibleLateral }: SideBarComponentProps) => {
             </nav>
             <div>
                 <img src={me} alt='' />
-                <h2>{context.state.user}</h2>
-                <p>{context.state.email}</p>
+                <TitleStyled >{context.state.user}</TitleStyled>
+                <StyledP>{context.state.email}</StyledP>
                 <ButtonStyledViewNotes onClick={() => {
                     const html =
                         (<form className='edit__user-pop-up' onSubmit={(event) => {
                             event.preventDefault();
                             const element = event.target as FormData;
-                            context.dispatch({ type: 'edit', payload: { auth: false, user: element.user.value, email: element.email.value } });
+                            context.dispatch({ type: 'edit', payload: { auth: true, user: element.user.value, email: element.email.value, token: '' } });
                             Swal.close();
                         }}>
 
@@ -125,7 +129,7 @@ const SideBarComponent = ({ visibleLateral }: SideBarComponentProps) => {
                                 <ButtonStyled type="submit">Edit User</ButtonStyled>
                             </div>
                         </form>);
-                    return MySwal({ title: 'Update User', html: html, showConfirmButton: false });
+                    return MySweetAlert({ title: 'Update User', html: html, showConfirmButton: false });
                 }}>Editar</ButtonStyledViewNotes>
             </div>
         </SideBarStyled>

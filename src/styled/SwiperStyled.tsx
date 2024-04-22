@@ -17,8 +17,8 @@ width: 100%;
 }
 
     .swiper-button-next, .swiper-button-prev {
-        border: 1px #FFF solid;
-        background-color: #FFFFFF47;
+        border: 1px ${props => props.theme && props.theme.main} solid;
+        background-color: ${props => props.theme && props.theme.swiper};
         width: 30px;
         height: 30px;
         border-radius: 10px;
@@ -27,7 +27,7 @@ width: 100%;
 
         &::after {
             font-size: 1.2rem;
-            color: #FFF;
+            color: ${props => props.theme && props.theme.main};
         }
     }
     
@@ -40,6 +40,6 @@ width: 100%;
     }
 
     .swiper-button-disabled {
-        background-color: #FFFFFF1A;
+        background-color: ${props => props.theme && props.theme.swiper_disabled};
     }
 `

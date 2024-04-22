@@ -22,7 +22,7 @@ export const FormStyledComponent = styled.form`
     }
     
     label {
-        color: #393939;
+        color: ${props => props.theme && props.theme.text_main_alternative};
         display: block;
         margin-bottom: 0.75rem;
     }
@@ -33,7 +33,9 @@ export const FormStyledComponent = styled.form`
         border: 0em;
         display: block;
         width: 90%;
-        background-color: #FFF;
+        border: 1px solid ${props => props.theme && props.theme.text_menu_secondary};
+        background-color: ${props => props.theme && props.theme.main};
+        color: ${props => props.theme && props.theme.text_main_alternative};
         height: 3.75rem;
         margin-bottom: 0.75rem;
     }
@@ -45,6 +47,9 @@ export const FormStyledComponent = styled.form`
         width: 90%;
         display: block;
         margin-bottom: 0.75rem;
+        border: 1px solid ${props => props.theme && props.theme.text_menu_secondary};
+        background-color: ${props => props.theme && props.theme.main};
+        color: ${props => props.theme && props.theme.text_main_alternative};
     }
 
     select {
@@ -54,7 +59,9 @@ export const FormStyledComponent = styled.form`
         width: 96.3%;
         display: block;
         margin-bottom: 0.75rem;
-        background-color: #FFF;
+        border: 1px solid ${props => props.theme && props.theme.text_menu_secondary};
+        background-color: ${props => props.theme && props.theme.main};
+        color: ${props => props.theme && props.theme.text_main_alternative};
     }
 
     button {

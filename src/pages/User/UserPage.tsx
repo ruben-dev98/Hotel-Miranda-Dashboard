@@ -6,8 +6,8 @@ import Loading from '../../components/Loading';
 import DetailsComponent from '../../components/Details/DetailsComponent';
 import { SpanStyled, SpanStyledCheckOut, SpanStyledDetailsLabel, SpanStyledDetailsTitle, SpanStyledDetailsValue } from '../../styled/SpanStyled';
 import { useAppDispatch, useAppSelector } from '../../hook/useStore';
-import { DivDetails, DivDetailsComponents, DivDetailsPart, DivDetailsPartFirst } from '../../styled/DivStyled';
-import { ObjectFields, iEmployee } from '../../entitys/Data';
+import { DivDetails, DivDetailsComponents, DivDetailsPart, DivDetailsPartFirst, SectionContent } from '../../styled/DivStyled';
+import { ObjectFields, iEmployee } from '../../entities/Data';
 
 const object__fields: ObjectFields[] = [
     {
@@ -20,7 +20,7 @@ const object__fields: ObjectFields[] = [
                             {employee.full_name}
                         </SpanStyledDetailsTitle><br></br>
                         <SpanStyledDetailsLabel>
-                            #{employee.id}
+                            #{employee._id}
                         </SpanStyledDetailsLabel>
                         <DivDetailsComponents>
                             <div>
@@ -36,7 +36,7 @@ const object__fields: ObjectFields[] = [
                         <DivDetailsComponents>
                             <div>
                                 <SpanStyledDetailsLabel>Start Date</SpanStyledDetailsLabel><br></br>
-                                <SpanStyledDetailsValue>{employee.start_date}</SpanStyledDetailsValue>
+                                <SpanStyledDetailsValue>{new Date(parseInt(employee.start_date)).toDateString().slice(3)}</SpanStyledDetailsValue>
                             </div>
                             <div>
                                 <SpanStyledDetailsLabel>Status</SpanStyledDetailsLabel><br></br>
@@ -56,7 +56,7 @@ const object__fields: ObjectFields[] = [
                         </DivDetailsComponents>
                     </DivDetailsPartFirst>
                     <DivDetailsPart>
-                        <img src={employee.foto} />
+                        <img src={employee.photo} />
                     </DivDetailsPart>
                 </DivDetails>
             )
@@ -73,7 +73,7 @@ const UserPage = () => {
 
     const initialFetch = async () => {
         try {
-            await dispatch(getEmployee(parseInt(id || ''))).unwrap();
+            await dispatch(getEmployee(id || '')).unwrap();
             setIsLoading(false);
         } catch (error) {
             console.log(error);
@@ -85,15 +85,17 @@ const UserPage = () => {
     }, [])
 
     if (isLoading) {
-        return (<section className='content'>
-            <Loading></Loading>
-        </section>)
+        return (
+            <SectionContent>
+                <Loading></Loading>
+            </SectionContent>
+        );
     }
 
     return (
-        <section className="content">
+        <SectionContent>
             <DetailsComponent data={user} object__fields={object__fields}></DetailsComponent>
-        </section>
+        </SectionContent>
     )
 }
 

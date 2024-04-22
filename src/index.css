@@ -1,5 +1,13 @@
+:root, #root {
+    min-height: 100vh;
+    height: 100%;
+}
+
 body {
     font-family: "Poppins", sans-serif;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
 }
 
 .edit__user-pop-up {
@@ -37,49 +45,4 @@ button {
 ul,
 li {
     list-style-type: none;
-}
-
-.kpis {
-    display: flex;
-    justify-content: space-evenly;
-    gap: 2rem;
-    margin-bottom: 40px;
-}
-
-.content {
-    grid-area: content;
-    padding: 2rem;
-    background-color: #f8f8f8;
-    height: max-content;
-}
-
-.top__menu-table {
-    display: flex;
-    justify-content: flex-end;
-    margin: 30px 0px;
-
-    a {
-        margin-right: 20px;
-    }
-}
-
-.no__use {
-    width: 60%;
-    margin: 0 auto;
-}
-
-.fc-button.fc-button-primary {
-    background-color: #135846;
-}
-
-.fc-button.fc-button-primary.fc-button-active {
-    background-color: #135846;
-}
-
-.fc-button.fc-button-primary:hover {
-    background-color: #135846;
-}
-
-.fc-button.fc-button-primary:focus-visible {
-    background-color: #135846;
 }

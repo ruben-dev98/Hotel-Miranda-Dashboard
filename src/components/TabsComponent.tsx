@@ -7,12 +7,14 @@ const ListStyled = styled.ul`
     display: flex;
     justify-content: flex-start;
     padding-bottom: 2px;
+    margin-right: 10px;
+    width: 100%;
 `;
 
 interface TabsProps {
     data: ITabsObject[],
-    setCurrentTab: Dispatch<SetStateAction<string | boolean>>,
-    currentTab: string | boolean
+    setCurrentTab: Dispatch<SetStateAction<string>>,
+    currentTab: string
 }
 
 const TabsComponent = ({data, setCurrentTab, currentTab}: TabsProps) => {

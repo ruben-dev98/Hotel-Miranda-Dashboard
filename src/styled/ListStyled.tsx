@@ -15,7 +15,7 @@ export const AmenitiesStyled = styled.ul`
         width: 150px;
         height: 50px;
         border-radius: 10px;
-        background-color: #E8F2EF;
-        color: #135846;
+        background-color: ${props => props.theme && props.theme.amenities};
+        color: ${props => props.theme && props.theme.text_menu_secondary};
     }
 `;

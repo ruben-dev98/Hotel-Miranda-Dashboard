@@ -3,17 +3,17 @@ import styled from "styled-components";
 
 const ListItemStyled = styled.li<{$isActive?: boolean}>`
     cursor: pointer;
-    width: 10%;
-    padding: 10px;
-    border-bottom: ${props => props.$isActive ? '2px solid #135846' : '1px solid #B2B2B2'};
-    color: ${props => props.$isActive ? '#135846' : '#B2B2B2'};
+    width: 40%;
+    padding: 0px 0px 10px 0px;
+    border-bottom: ${props => props.$isActive ? `2px solid ${props.theme.text_menu_secondary}` : `1px solid ${props.theme.email}`};
+    color: ${props => props.$isActive ? `${props.theme.text_menu_secondary}`  : `${props.theme.email}`};
 `;
 
 interface ListItemProps {
     index: number,
-    str: string | boolean,
-    setCurrentTab: Dispatch<SetStateAction<string | boolean>>,
-    currentTab: string | boolean,
+    str: string,
+    setCurrentTab: Dispatch<SetStateAction<string>>,
+    currentTab: string,
     children?: ReactNode
 }
 

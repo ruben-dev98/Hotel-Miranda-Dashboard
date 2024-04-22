@@ -6,7 +6,7 @@ import Loading from "../../components/Loading";
 import DetailsComponent from "../../components/Details/DetailsComponent";
 import { AmenitiesStyled } from "../../styled/ListStyled";
 import { SpanStyledDetailsLabel, SpanStyledDetailsValue, SpanSwiperTitle, SpanSwiper, SpanStyledCheckOutLegend, SpanStyledCheckInLegend } from "../../styled/SpanStyled";
-import { DivDetailsComponents, DivDetails, DivDetailsPart, DivDetailsSwiper, DivDetailsSwiperLegend, DivDetailsPartFirst } from "../../styled/DivStyled";
+import { DivDetailsComponents, DivDetails, DivDetailsPart, DivDetailsSwiper, DivDetailsSwiperLegend, DivDetailsPartFirst, SectionContent } from "../../styled/DivStyled";
 import { Navigation } from 'swiper/modules';
 import { SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -15,7 +15,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import { SwiperStyled } from "../../styled/SwiperStyled";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
-import { ObjectFields, iRoom} from "../../entitys/Data";
+import { ObjectFields, iRoom } from "../../entities/Data";
 
 
 const object__fields: ObjectFields[] = [
@@ -59,15 +59,11 @@ const object__fields: ObjectFields[] = [
                         onSwiper={() => { }}
                         onSlideChange={() => { }}
                     >
-                        <SwiperSlide style={{ userSelect: 'none' }}>
-                            <img src={room.foto} />
-                        </SwiperSlide>
-                        <SwiperSlide style={{ userSelect: 'none' }}>
-                            <img src={room.foto} />
-                        </SwiperSlide>
-                        <SwiperSlide style={{ userSelect: 'none' }}>
-                            <img src={room.foto} />
-                        </SwiperSlide>
+                        {room.photo.map((photo, index) => {
+                            return <SwiperSlide key={index} style={{ userSelect: 'none' }}>
+                                <img src={photo} />
+                            </SwiperSlide>
+                        })}
                     </SwiperStyled>
                     <DivDetailsSwiper>
                         <div style={{ width: '80%', margin: '0px auto' }}>
@@ -91,7 +87,7 @@ const RoomPage = () => {
 
     const initialFetch = async () => {
         try {
-            await dispatch(getRoom(parseInt(id || ''))).unwrap();
+            await dispatch(getRoom(id || '')).unwrap();
             setIsLoading(false);
         } catch (error) {
             console.log(error);
@@ -102,16 +98,18 @@ const RoomPage = () => {
         initialFetch();
     }, [])
 
-    if(isLoading) {
-        return (<section className='content'>
-            <Loading></Loading>
-        </section>)
+    if (isLoading) {
+        return (
+            <SectionContent>
+                <Loading></Loading>
+            </SectionContent>
+        );
     }
 
     return (
-        <section className="content">
+        <SectionContent>
             <DetailsComponent data={room} object__fields={object__fields}></DetailsComponent>
-        </section>
+        </SectionContent>
     )
 }
 

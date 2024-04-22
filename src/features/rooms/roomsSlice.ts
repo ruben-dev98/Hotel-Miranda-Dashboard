@@ -1,6 +1,6 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit"
 import { addRoom, availableRoomsNumber, deleteRoom, editRoom, getRoom, getRooms } from "./roomsAsyncThunk";
-import { iRoom } from "../../entitys/Data";
+import { iRoom } from "../../entities/Data";
 import { RootState } from "../../app/store";
 
 interface RoomSliceState {
@@ -33,17 +33,15 @@ export const roomsSlice = createSlice({
             state.error = null;
         })
         .addCase(addRoom.fulfilled, (state, action) => {
-            state.data.push(action.payload);
             state.status = 'fulfilled';
             state.error = null;
         })
         .addCase(editRoom.fulfilled, (state, action) => {
-            state.data = state.data.map((room) => room.id === action.payload.id ? action.payload.data : room);
             state.status = 'fulfilled';
             state.error = null;
         })
         .addCase(deleteRoom.fulfilled, (state, action) => {
-            state.data = state.data.filter((room) => room.id !== action.payload);
+            state.data = state.data.filter((room) => room._id !== action.payload._id);
             state.status = 'fulfilled';
             state.error = null;
         })

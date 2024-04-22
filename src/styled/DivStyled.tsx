@@ -14,12 +14,12 @@ export const DivDetailsComponents = styled.div`
 `;
 
 export const DivDetailsComponentsSeparator = styled(DivDetailsComponents)`
-    border-bottom: 2px solid #799283;
+    border-bottom: 2px solid ${props => props.theme && props.theme.separator};
 `;
 
 export const DivDetails = styled.div`
     border-radius: 10px;
-    background-color: #FFF;
+    background-color: ${props => props.theme && props.theme.main};
     display: flex;
     gap: 50px;
 `;
@@ -43,7 +43,7 @@ export const DivDetailsSwiper = styled.div`
     width: 100%;
     z-index: 2;
     bottom: 0px;
-    background-color: rgb(0, 0, 0, 0.4);
+    background: rgb(0, 0, 0, 0.4);
     height: 130px;
 `;
 
@@ -64,11 +64,13 @@ export const DivDetailsContent = styled.div`
 `;
 
 export const WindowStyled = styled.div<{$visibleLateral?: boolean}>`
+    background-color: ${props => props.theme && props.theme.main};
     width: 100%;
-    height: 80vh;
+    min-height: 100vh;
+    height: 100%;
     display: grid;
     grid-template-columns: 20% 80%;
-    grid-template-rows: 10% 90%;
+    grid-template-rows: .01fr 1fr;
     grid-template-areas: ${props => props.$visibleLateral ? 
     `'sidebar header'
     'sidebar content'`
@@ -77,4 +79,24 @@ export const WindowStyled = styled.div<{$visibleLateral?: boolean}>`
     'content content'`};
 
     
+`;
+
+export const DivStyledOptions = styled.div`
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+`;
+
+export const SectionContent = styled.section`
+    grid-area: content;
+    padding: 2rem;
+    background-color: ${props => props.theme && props.theme.bg};
+    min-height: calc(100% - 91px);
+`;
+
+export const DivStyledKPIs = styled.div`
+    display: flex;
+    justify-content: space-evenly;
+    gap: 2rem;
+    margin-bottom: 40px;
 `;

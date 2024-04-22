@@ -1,16 +1,18 @@
 import FormComponent from '../../components/Form/FormComponent';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getAllEmployees, getOneEmployee } from '../../features/employees/employeesSlice';
+import { getOneEmployee } from '../../features/employees/employeesSlice';
 import { addEmployee, editEmployee, getEmployee } from '../../features/employees/employeesAsyncThunk';
 import Loading from '../../components/Loading';
-import { lastId } from '../../app/getItenId';
-import MySwal from '../../app/MySwal';
-import { FormControlPropsEmployee, iEmployee } from '../../entitys/Data';
+import { FormControlPropsEmployee, iEmployee } from '../../entities/Data';
 import { useAppDispatch, useAppSelector } from '../../hook/useStore';
+import { SectionContent } from '../../styled/DivStyled';
+import { existUserEmail } from '../../helpers/existUserEmail';
+import MySweetAlertApi from '../../app/MySweetAlertApi';
+import { userEmailAlreadyExist } from '../../helpers/constants';
 
-interface FormData extends EventTarget {
-    foto: HTMLFormElement,
+export interface FormDataUser extends EventTarget {
+    photo: HTMLFormElement,
     full_name: HTMLFormElement,
     start_date: HTMLFormElement,
     job: HTMLFormElement,
@@ -23,19 +25,19 @@ interface FormData extends EventTarget {
 
 const formControl: FormControlPropsEmployee[] = [
     {
-        'label': 'Foto',
+        'label': 'Photo',
         'input': 'text',
-        'name': 'foto'
+        'name': 'photo'
     },
     {
-        'label': 'Nombre y Apellidos',
+        'label': 'Full Name',
         'input': 'text',
         'name': 'full_name'
     },
     {
-        'label': 'Puesto',
+        'label': 'Job',
         'input': 'select',
-        'data': ['Manager', 'Recepción', 'Servicio de Habitaciones'],
+        'data': ['Manager', 'Receptionist', 'Room Service'],
         'name': 'job'
     },
     {
@@ -61,7 +63,7 @@ const formControl: FormControlPropsEmployee[] = [
     {
         'label': 'Status',
         'input': 'select',
-        'data': ['Activo', 'Inactivo'],
+        'data': ['Active', 'Inactive'],
         'name': 'status'
     },
     {
@@ -76,59 +78,52 @@ const UserFormPage = () => {
     const dispatch = useAppDispatch();
     const [isLoading, setIsLoading] = useState(true);
     const user = useAppSelector(getOneEmployee);
-    const users = useAppSelector(getAllEmployees);
-    const loc = useLocation().pathname;
     const { id } = useParams();
 
     const onCreateUser = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const newId = lastId(users);
-        const user: iEmployee = {
-            id: parseInt(id || '') || newId,
-            foto: '',
-            full_name: '',
-            job: '',
-            email: '',
-            start_date: '',
-            description: '',
-            contact: '',
-            status: false,
-            password: ''
-        };
+        try {
 
-        formControl.forEach((control) => {
-            const element = event.target as FormData;
-            user[control.name] = element[control.name].value;
-        });
-
-        const html = id ? <p>Update #{user.id} Employee Successfully</p> : <p>Create #{user.id} Employee Successfully</p>;
-
-        if (loc.includes('edit')) {
-            try {
-                navigate('/users');
-                await dispatch(editEmployee({ id: parseInt(id || ''), data: user })).unwrap();
-                MySwal({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
-            } catch (error) {
-                console.log(error);
+            event.preventDefault();
+            const user: iEmployee = {
+                photo: '',
+                full_name: '',
+                job: '',
+                email: '',
+                start_date: '',
+                description: '',
+                contact: '',
+                status: false,
+                password: ''
+            };
+            const element = event.target as FormDataUser;
+            const existEmployee = await existUserEmail(element['email'].value);
+            if (existEmployee && !id) {
+                MySweetAlertApi({ title: userEmailAlreadyExist, icon: 'error' });
+                throw new Error(userEmailAlreadyExist);
             }
-        } else {
-            try {
-                navigate('/users');
+            formControl.forEach((control) => {
+                if (control.name === 'status') {
+                    (user[control.name] as boolean) = element[control.name].value === 'Active' ? true : false;
+                } else {
+                    (user[control.name] as string) = element[control.name].value;
+                }
+
+            });
+
+            if (id) {
+                await dispatch(editEmployee({ id: id || '', data: user })).unwrap();
+            } else {
                 await dispatch(addEmployee(user)).unwrap();
-                MySwal({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
-            } catch (error) {
-                console.log(error);
             }
+            navigate('/users');
+        } catch (error) {
+            console.error(error);
         }
     }
 
     const initialFetch = async () => {
-        try {
-            await dispatch(getEmployee(parseInt(id || ''))).unwrap();
-            setIsLoading(false);
-        } catch (error) {
-            console.log(error);
-        }
+        await dispatch(getEmployee(id || '')).unwrap();
+        setIsLoading(false);
     };
 
     useEffect(() => {
@@ -136,15 +131,17 @@ const UserFormPage = () => {
     }, [])
 
     if (isLoading) {
-        return (<section className='content'>
-            <Loading></Loading>
-        </section>)
+        return (
+            <SectionContent className='content'>
+                <Loading></Loading>
+            </SectionContent>
+        );
     }
 
     return (
-        <section className="content">
+        <SectionContent>
             <FormComponent data={user} formControl={formControl} onHandleSubmit={onCreateUser}></FormComponent>
-        </section>
+        </SectionContent>
     )
 }
 

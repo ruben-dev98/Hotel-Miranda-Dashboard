@@ -4,7 +4,7 @@ interface LocalStorageState {
     item?: string
 }
 
-const reducer = ({key, action, item} : LocalStorageState) => {
+const workWithLocalStorage = ({key, action, item} : LocalStorageState) => {
     switch(action) {
         case 'set':
             localStorage.setItem(key, item || '');
@@ -14,6 +14,6 @@ const reducer = ({key, action, item} : LocalStorageState) => {
     }
 }
 
-export const useLocalStorage = ({key, item, action}: LocalStorageState) => {
-    return reducer({key, item, action});
+export const accessToLocalStorage = ({key, item, action}: LocalStorageState) => {
+    return workWithLocalStorage({key, item, action});
 }

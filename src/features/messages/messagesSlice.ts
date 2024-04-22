@@ -1,6 +1,6 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit"
 import { deleteMessage, editMessage, getMessage, getMessages } from "./messagesAsyncThunk";
-import { iMessage } from "../../entitys/Data";
+import { iMessage } from "../../entities/Data";
 import { RootState } from "../../app/store";
 
 interface MessageSliceState {
@@ -31,14 +31,13 @@ export const messagesSlice = createSlice({
             state.error = null;
         })
         .addCase(editMessage.fulfilled, (state, action) => {
-            const index = state.data.findIndex((message) => message.id === action.payload.id);
+            const index = state.data.findIndex((message) => message._id === action.payload._id);
             state.data[index].archived = true;
             state.status = 'fulfilled';
             state.error = null;
         })
         .addCase(deleteMessage.fulfilled, (state, action) => {
-            const index = state.data.findIndex((message) => message.id === action.payload);
-            state.data.splice(index, 1);
+            state.data = state.data.filter((message) => message._id !== action.payload._id);
             state.status = 'fulfilled';
             state.error = null;
         })

@@ -4,6 +4,8 @@ import SideBarComponent from "../components/Menu/SideBarComponent";
 import TopBarComponent from "../components/Menu/TopBarComponent";
 import WindowStyledComponent from "../components/WindowComponent/WindowComponent";
 import { Dispatch } from "react";
+import { accessToLocalStorage } from "../helpers/accessToLocalStorage";
+import { isVisibleMenuKey, localStorageGetAction, localStorageSetAction } from "../helpers/constants";
 
 interface ContentProps {
     visibleLateral: boolean,
@@ -52,9 +54,9 @@ const title = (path: string) => {
 
 
 const MainPage = () => {
-    const [visibleLateral, setVisibleLateral] = useState(true);
+    const initialStateVisibleLateral = accessToLocalStorage({key: isVisibleMenuKey, action: localStorageGetAction}) === '1' ? true : false;
+    const [visibleLateral, setVisibleLateral] = useState(initialStateVisibleLateral);
     const path = useLocation().pathname;
-    
     return (
         <WindowStyledComponent visibleLateral={visibleLateral}>
                 {content({visibleLateral, setVisibleLateral, title: title(path)})}

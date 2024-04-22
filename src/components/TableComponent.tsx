@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { getMessage } from '../features/messages/messagesAsyncThunk';
 import usePaginate from './../hook/usePaginate';
 import { SpanStyledTableFirst } from '../styled/SpanStyled';
-import MySwal from '../app/MySwal';
-import { INITIAL_PAGE } from '../helpers/varHelpers';
-import { iBooking, iMessage, iEmployee, iRoom, DataTableProps, DataProperties } from '../entitys/Data';
+import MySweetAlert from '../app/MySweetAlert';
+import { INITIAL_PAGE } from '../helpers/constants';
+import { iBooking, iMessage, iEmployee, iRoom, DataProperties } from '../entities/Data';
 import { useAppDispatch } from '../hook/useStore';
 import { ButtonStyled } from '../styled/ButtonStyled';
 
@@ -22,17 +22,22 @@ interface RowTypes {
     row: Data
 }
 
+const DivStyled = styled.div`
+    margin-top: 20px;
+`
+
 const TableStyled = styled.table`
     width: 100%;
     padding: 2rem;
     border-radius: 20px;
-    background-color: #FFF;
+    background-color: ${props => props.theme && props.theme.main};
 
     thead > tr {
         height: 50px;
 
         th {
             padding: 0rem 0.5rem 0.5rem 0.5rem;
+            color: ${props => props.theme && props.theme.text_main};
         }
     }
 
@@ -56,14 +61,14 @@ const TableComponent = ({ rows, columns, path }: TableProps) => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const showMessage = ({ row }: RowTypes) => {
-        dispatch(getMessage(row.id)).then((result) => {
+        dispatch(getMessage(row._id || '')).then((result) => {
             const title = 'Details Message';
             const htmlCode = (<>
-                <p><strong>Full Name: </strong> ${result.payload.full_name}</p>
-                <p><strong>Subject: </strong>  ${result.payload.subject}</p>
-                <p><strong>Message: </strong> ${result.payload.messages}</p>
+                <p><strong>Full Name: </strong> {result.payload.full_name}</p>
+                <p><strong>Subject: </strong>  {result.payload.subject}</p>
+                <p><strong>Message: </strong> {result.payload.messages}</p>
             </>);
-            return MySwal({ title, html: htmlCode, showConfirmButton: false });
+            return MySweetAlert({ title, html: htmlCode, showConfirmButton: false });
         }).catch(error => {
             console.log(error)
         });
@@ -71,7 +76,7 @@ const TableComponent = ({ rows, columns, path }: TableProps) => {
 
     const handleDetails = ({ row }: RowTypes) => {
         if (path !== '') {
-            navigate(`${row.id}`)
+            navigate(`${row._id}`)
         } else {
             showMessage({ row });
         }
@@ -87,7 +92,7 @@ const TableComponent = ({ rows, columns, path }: TableProps) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {data_per_page.map((row, index) => {
+                    {data_per_page && data_per_page.map((row, index) => {
                         return (
                             <tr onClick={() => handleDetails({ row })} key={index}>
                                 {columns.map((column, indx) => {
@@ -98,9 +103,10 @@ const TableComponent = ({ rows, columns, path }: TableProps) => {
                     })}
                 </tbody>
             </TableStyled>
-            <ButtonStyled style={{ marginRight: 20 }} disabled={currentPage === INITIAL_PAGE ? true : false} onClick={() => setCurrentPage((prev) => prev - 1)}>Prev</ButtonStyled>
-            <ButtonStyled disabled={currentPage === max_page ? true : false} onClick={() => setCurrentPage((prev) => prev + 1)}>Next</ButtonStyled>
-
+            <DivStyled>
+                <ButtonStyled style={{ marginRight: 20 }} disabled={currentPage === INITIAL_PAGE ? true : false} onClick={() => setCurrentPage((prev) => prev - 1)}>Prev</ButtonStyled>
+                <ButtonStyled disabled={currentPage === max_page ? true : false} onClick={() => setCurrentPage((prev) => prev + 1)}>Next</ButtonStyled>
+            </DivStyled>
         </>
     );
 }

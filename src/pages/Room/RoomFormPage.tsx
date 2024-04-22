@@ -1,18 +1,20 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { getAllRooms, getOneRoom } from '../../features/rooms/roomsSlice';
+import { getOneRoom } from '../../features/rooms/roomsSlice';
 import { useEffect, useState } from 'react';
 import { addRoom, editRoom, getRoom } from '../../features/rooms/roomsAsyncThunk';
 import Loading from "../../components/Loading";
-import { lastId } from "../../app/getItenId";
 import FormComponent from "../../components/Form/FormComponent";
-import MySwal from "../../app/MySwal";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
-import { FormControlPropsRoom, iRoom } from "../../entitys/Data";
+import { FormControlPropsRoom, iRoom } from "../../entities/Data";
+import { SectionContent } from "../../styled/DivStyled";
+import MySweetAlertApi from "../../app/MySweetAlertApi";
+import { atLeastThreePhotos, notMoreThanFivePhotos, roomNumberAlreadyExist } from "../../helpers/constants";
+import { existRoomNumber } from "../../helpers/existRoomNumber";
 
 
 
-interface FormData extends EventTarget {
-    foto: HTMLFormElement,
+export interface FormDataRooms extends EventTarget {
+    photo: HTMLFormElement,
     type: HTMLFormElement,
     number: HTMLFormElement,
     description: HTMLFormElement,
@@ -24,9 +26,9 @@ interface FormData extends EventTarget {
 
 const formControl: FormControlPropsRoom[] = [
     {
-        'label': 'Foto',
+        'label': 'Photo',
         'input': 'text',
-        'name': 'foto'
+        'name': 'photo'
     },
     {
         'label': 'Room Type',
@@ -74,89 +76,92 @@ const RoomFormPage = () => {
     const dispatch = useAppDispatch();
     const [isLoading, setIsLoading] = useState(true);
     const room = useAppSelector(getOneRoom);
-    const rooms = useAppSelector(getAllRooms);
-    const loc = useLocation().pathname;
     const { id } = useParams();
 
     const onCreateRoom = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const newId = lastId(rooms);
+        
         const room: iRoom = {
-            id: parseInt(id || '') || newId,
-            foto: '',
+            photo: [],
             type: '',
             number: 0,
             description: '',
             offer: false,
             price: 0,
-            cancellation: true,
+            cancellation: '',
             amenities: [],
             discount: 0,
-            status: ''
+            status: 'Available'
         };
 
-        formControl.forEach((control) => {
-            const element = event.target as FormData;
-            const property = control.name as keyof iRoom;
-            if (control.input === 'select multiple') {
-                const selectedOptions = element[control.name].selectedOptions;
-                const values: string[] = [];
-                for (let i = 0; i < selectedOptions.length; i++) {
-                    values.push(selectedOptions[i].value)
-                }
-                (room[property] as string[]) = values;
-            } else {
-                (room[property] as string | number) = element[control.name].value;
-            }
-        });
-
-        if (room.discount > 0) {
-            room.offer = true;
-        }
-
-        const html = id ? <p>Update #{room.id} Room Successfully</p> : <p>Create #{room.id} Room Successfully</p>;
-
-        if (loc.includes('edit')) {
-            try {
-                navigate('/rooms');
-                await dispatch(editRoom({ id: parseInt(id || ''), data: room })).unwrap();
-                MySwal({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
-            } catch (error) {
-                console.log(error);
-            }
-        } else {
-            try {
-                navigate('/rooms');
-                dispatch(addRoom(room)).unwrap();
-                MySwal({ title: '', html, showConfirmButton: false, timer: 2000, icon: 'success', timerProgressBar: true });
-            } catch (error) {
-                console.log(error);
-            }
-
-        }
-    }
-
-    const initialFetch =async () => {
         try {
-            await dispatch(getRoom(parseInt(id || ''))).unwrap();
-            setIsLoading(false);
-        } catch (error) {
-            console.log(error);
-        }
-    };
+            const element = event.target as FormDataRooms;
+            const existRoom = await existRoomNumber(element['number'].value);
+            if(existRoom && !id) {
+                MySweetAlertApi({ title: roomNumberAlreadyExist, icon: 'error' })
+                throw new Error(roomNumberAlreadyExist);
+            }
+            
+            formControl.forEach((control) => {
+                const property = control.name as keyof iRoom;    
+                if (control.input === 'select multiple') {
+                    const selectedOptions = element[control.name].selectedOptions;
+                    const values: string[] = [];
+                    for (let i = 0; i < selectedOptions.length; i++) {
+                        values.push(selectedOptions[i].value)
+                    }
+                    (room[property] as string[]) = values;
+                } else if (control.name === 'photo') {
+                    const values = element[control.name].value.split(',');
+                    if (values.length < 3) {
+                        MySweetAlertApi({ title: atLeastThreePhotos, icon: 'error' })
+                        throw new Error(atLeastThreePhotos);
+                    } else if (values.length > 5) {
+                        MySweetAlertApi({ title: notMoreThanFivePhotos, icon: 'error' })
+                        throw new Error(notMoreThanFivePhotos);
+                    }
+                    (room[property] as string[]) = values;
+                } else {
+                    (room[property] as string | number) = element[control.name].value;
+                }
+            });
 
-    if(isLoading) {
-        return <Loading/>;
+            if (room.discount > 0) {
+                room.offer = true;
+            }
+
+            if (id) {
+                await dispatch(editRoom({ id: id || '', data: room }));
+            } else {
+                await dispatch(addRoom(room));
+            }
+            navigate('/rooms');
+        } catch (error) {
+            console.error(error);
+        }
     }
+
+    const initialFetch = async () => {
+        await dispatch(getRoom(id || '')).unwrap();
+        setIsLoading(false);
+    };
 
     useEffect(() => {
         initialFetch();
     }, [])
 
+    if (isLoading) {
+        return (
+            <SectionContent>
+                <Loading></Loading>
+            </SectionContent>
+        );
+    }
+
     return (
-        <section className="content">
+        <SectionContent>
             <FormComponent data={room} formControl={formControl} onHandleSubmit={onCreateRoom}></FormComponent>
-        </section>
+        </SectionContent>
     )
 }
 
