@@ -53,15 +53,15 @@ const action = ({ row, dispatch }: ActionPropsMessage) => {
 
 const dataTable = ({ dispatch }: DataTableProps): DataProperties[] => [
     {
-        'label': 'Date',
+        'label': 'Information',
         display: (row: iMessage) => {
             const date = new Date(parseInt(row.date, 10));
-            return (<><SpanStyledTableFirst>{date.toDateString().slice(3)}</SpanStyledTableFirst><br /><SpanStyledTableSecond>{date.toTimeString().slice(0, 8)} </SpanStyledTableSecond><SpanStyledTableSecond>#{row._id}</SpanStyledTableSecond></>);
+            return (<><SpanStyledTableFirst>#{row._id}</SpanStyledTableFirst><br /><SpanStyledTableSecond>{date.toDateString().slice(3)}</SpanStyledTableSecond><br/><SpanStyledTableSecond>{date.toTimeString().slice(0, 8)}</SpanStyledTableSecond></>);
         }
     },
     {
         'label': 'Customer',
-        display: (row: iMessage) => (<><SpanStyledTableFirst>{row.full_name}</SpanStyledTableFirst><br /><SpanStyledTableSecond>{row.email}/</SpanStyledTableSecond><SpanStyledTableSecond>{row.phone}</SpanStyledTableSecond></>)
+        display: (row: iMessage) => (<><SpanStyledTableFirst>{row.full_name}</SpanStyledTableFirst><br /><SpanStyledTableSecond>{row.email}</SpanStyledTableSecond><br/><SpanStyledTableSecond>{row.phone}</SpanStyledTableSecond></>)
     },
     {
         'label': 'Comment',
