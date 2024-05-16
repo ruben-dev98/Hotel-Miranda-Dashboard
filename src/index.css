@@ -1,8 +1,7 @@
 :root, #root {
     min-height: 100vh;
     height: 100%;
-    scrollbar-width: thin;
-    scroll-behavior: smooth;
+    overflow: hidden;
 }
 
 body {

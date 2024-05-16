@@ -9,7 +9,7 @@ import { useEffect, useMemo, useState } from "react";
 import { deleteBooking, getBookings } from "../../features/bookings/bookingsAsyncThunk";
 import Loading from "../../components/Loading";
 import { DivStyledActions, SectionContent } from "../../styled/DivStyled";
-import { DeleteStyled, EditStyled } from "../../styled/IconStyled";
+import { DeleteStyled, EditStyled, ImgRoomPhotoStyled } from "../../styled/IconStyled";
 import MySweetAlert from "../../app/MySweetAlert";
 import { useDebounce } from "@uidotdev/usehooks";
 import { ORDER_BOOKING_INITIAL_STATE, TAB_BOOKING_INITIAL_STATE } from "../../helpers/constants";
@@ -38,6 +38,10 @@ const action = ({ id, dispatch }: ActionProps) => {
 }
 
 const dataTable = ({ dispatch }: DataTableProps): DataProperties[] => [
+    {
+        'label': 'Image',
+        display: (row: iBooking) => <ImgRoomPhotoStyled src={row.room.photo[0]} />
+    },
     {
         'label': 'Guest',
         display: (row: iBooking) => (<><SpanStyledTableFirst>{row.full_name}</SpanStyledTableFirst><br /><SpanStyledTableSecond>#{row._id}</SpanStyledTableSecond></>)

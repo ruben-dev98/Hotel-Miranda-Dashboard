@@ -19,9 +19,13 @@ interface ListItemProps {
 
 const ListItemComponent = ({index, str, setCurrentTab, currentTab, children}: ListItemProps) => {
 
+    const handleClickSetCurrentTab = () => {
+        setCurrentTab(str);
+        
+    };
+
     return (
-        <ListItemStyled key={index} $isActive={currentTab === str ? true : false} onClick={() => {
-            setCurrentTab(str)}}>
+        <ListItemStyled key={index} $isActive={currentTab === str ? true : false} onClick={() => handleClickSetCurrentTab()}>
             {children}
         </ListItemStyled>
     );

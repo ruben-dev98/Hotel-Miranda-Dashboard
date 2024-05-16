@@ -7,7 +7,7 @@ import { useEffect, useMemo, useState } from "react";
 import { getAllRooms } from "../../features/rooms/roomsSlice";
 import { deleteRoom, getRooms } from "../../features/rooms/roomsAsyncThunk";
 import Loading from "../../components/Loading";
-import { EditStyled } from "../../styled/IconStyled";
+import { EditStyled, ImgRoomPhotoStyled } from "../../styled/IconStyled";
 import { DeleteStyled } from './../../styled/IconStyled';
 import styled from "styled-components";
 import MySweetAlert from "../../app/MySweetAlert";
@@ -21,12 +21,6 @@ import { DivStyledActions, SectionContent } from "../../styled/DivStyled";
 import TableOptions from "../../components/TableOptions";
 import MySweetAlertApi from "../../app/MySweetAlertApi";
 import { isExistBooking } from "../../helpers/existBooking";
-
-
-const ImgStyled = styled.img`
-    width: 200px;
-    height: 100px;
-`;
 
 const handleClickDelete = async ({ event, dispatch, id }: HandleClickProps) => {
     event.stopPropagation();
@@ -58,7 +52,7 @@ const action = ({ id, dispatch }: ActionProps) => {
 const dataTable = ({ dispatch }: DataTableProps): DataProperties[] => [
     {
         'label': 'Image',
-        display: (row: iRoom) => <ImgStyled src={row.photo[0]} />
+        display: (row: iRoom) => <ImgRoomPhotoStyled src={row.photo[0]} />
     },
     {
         'label': 'Information',

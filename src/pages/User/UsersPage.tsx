@@ -9,7 +9,7 @@ import { getAllEmployees } from "../../features/employees/employeesSlice";
 import { deleteEmployee, getEmployees } from "../../features/employees/employeesAsyncThunk";
 import Loading from "../../components/Loading";
 import { useDebounce } from "@uidotdev/usehooks";
-import { DeleteStyled, EditStyled } from "../../styled/IconStyled";
+import { DeleteStyled, EditStyled, ImgPersonStyled } from "../../styled/IconStyled";
 import { DivStyledActions, SectionContent } from "../../styled/DivStyled";
 import MySweetAlert from "../../app/MySweetAlert";
 import { ORDER_EMPLOYEE_INITIAL_STATE, TAB_EMPLOYEE_INITIAL_STATE } from "../../helpers/constants";
@@ -20,10 +20,7 @@ import { RootState } from "../../app/store";
 import styled from "styled-components";
 import TableOptions from "../../components/TableOptions";
 
-const ImgStyled = styled.img`
-    width: 128px;
-    height: 128px;
-`;
+
 
 const handleClickDelete = async ({ event, dispatch, id }: HandleClickProps) => {
     event.stopPropagation();
@@ -48,7 +45,7 @@ const action = ({ id, dispatch }: ActionProps) => {
 const dataTable = ({ dispatch }: DataTableProps): DataProperties[] => [
     {
         'label': 'Image',
-        display: (row: iEmployee) => <ImgStyled src={row.photo} />
+        display: (row: iEmployee) => <ImgPersonStyled src={row.photo} />
     },
     {
         'label': 'Information',
