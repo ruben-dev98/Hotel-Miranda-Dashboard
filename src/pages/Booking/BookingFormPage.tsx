@@ -106,7 +106,6 @@ const BookingFormPage = () => {
                     (bookingToCreate[property] as string) = String(new Date(element[control.name].value).getTime());
                 } else if (control.name === 'number') {
                     bookingToCreate['room'] = { ...room };
-                    console.log(room);
                 } else {
                     (bookingToCreate[property] as string | number) = element[control.name].value;
                 }
