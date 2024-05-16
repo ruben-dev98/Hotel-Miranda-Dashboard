@@ -15,13 +15,16 @@ interface FetchApiProps {
 
 export const fetchAPI = async ({ path, id, data, method }: FetchApiProps) => {
     const token = accessToLocalStorage({ key: localStorageTokenKey, action: localStorageGetAction }) || '';
-    const apiData = await fetch(`${SERVER}${path}`, {
+    const uri_path = id ? `${SERVER}${path}/${id}` : `${SERVER}${path}`;
+    
+    const apiData = await fetch(uri_path, {
+        method: method,
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
-        }
-    }
-    );
+        },
+        body: data && JSON.stringify(data)
+    });
     
-    return await apiData;
+    return apiData;
 }

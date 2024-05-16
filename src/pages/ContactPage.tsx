@@ -69,7 +69,7 @@ const dataTable = ({ dispatch }: DataTableProps): DataProperties[] => [
     },
     {
         'label': 'Comment',
-        display: (row: iMessage) => (<><SpanStyledTableFirst>Subject: </SpanStyledTableFirst><SpanStyledTableSecond>{row.subject.slice(0, 30).concat('...')}</SpanStyledTableSecond><br></br><SpanStyledTableFirst>Message: </SpanStyledTableFirst><SpanStyledTableSecond>{row.messages.slice(0, 50).concat('...')}</SpanStyledTableSecond></>)
+        display: (row: iMessage) => (<><SpanStyledTableFirst>Subject: </SpanStyledTableFirst><SpanStyledTableSecond>{row.subject.slice(0, 20).concat('...')}</SpanStyledTableSecond><br></br><SpanStyledTableFirst>Message: </SpanStyledTableFirst><SpanStyledTableSecond>{row.messages.slice(0, 30).concat('...')}</SpanStyledTableSecond></>)
     },
     {
         'label': 'Action',

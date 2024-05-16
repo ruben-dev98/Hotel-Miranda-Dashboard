@@ -79,7 +79,7 @@ const BookingFormPage = () => {
 
     const onCreateBooking = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const booking: iBooking = {
+        const bookingToCreate: iBooking = {
             full_name: '',
             order_date: Date.now().toString(),
             check_in: '',
@@ -91,6 +91,7 @@ const BookingFormPage = () => {
             discount: 0,
             room: {} as iRoom
         }
+        
         try {
             const element = event.target as FormDataBookings;
             const room = id ? booking.room : await existRoomNumber(element['number'].value);
@@ -102,18 +103,19 @@ const BookingFormPage = () => {
             formControl(rooms).forEach((control) => {
                 const property = control.name as keyof iBooking;
                 if (control.input === 'date') {
-                    (booking[property] as string) = String(new Date(element[control.name].value).getTime());
+                    (bookingToCreate[property] as string) = String(new Date(element[control.name].value).getTime());
                 } else if (control.name === 'number') {
-                    booking['room'] = { ...room };
+                    bookingToCreate['room'] = { ...room };
+                    console.log(room);
                 } else {
-                    (booking[property] as string | number) = element[control.name].value;
+                    (bookingToCreate[property] as string | number) = element[control.name].value;
                 }
             });
 
-            if (loc.includes('edit')) {
-                await dispatch(editBooking({ id: id || '', data: booking }));
+            if (id) {
+                await dispatch(editBooking({ id: id || '', data: bookingToCreate }));
             } else {
-                await dispatch(addBooking(booking));
+                await dispatch(addBooking(bookingToCreate));
             }
 
             navigate('/bookings');

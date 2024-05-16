@@ -66,7 +66,7 @@ const editData = async (path: string, id: string, data: dataType | undefined) =>
             MySweetAlertApi({ title: `${personalMessage(path)} #${json.data._id} was successfully edited`, icon: 'success' })
             return await json.data;
         }
-        MySweetAlertApi({ title: `${personalMessage(path)} #${id} could not be found`, icon: 'success' });
+        MySweetAlertApi({ title: `${personalMessage(path)} #${id} could not be found`, icon: 'error' });
     } catch (error) {
         console.error(error);
         MySweetAlertApi({ title: connectionError, icon: 'error' })
