@@ -1,7 +1,6 @@
 
 import KPIsComponent from '../components/KPIsComponent';
 import MessageListComponent from '../components/MessageListComponent';
-import StatsComponent from '../components/StatsComponent';
 import { FaCalendarCheck } from "react-icons/fa6";
 import { IoBedOutline } from "react-icons/io5";
 import { ImEnter } from "react-icons/im";
@@ -18,7 +17,6 @@ const DashboardPage = () => {
                 <KPIsComponent icon={<ImEnter />} number={400} text={'Check In'}></KPIsComponent>
                 <KPIsComponent icon={<ImExit />} number={200} text={'Check Out'}></KPIsComponent>
             </DivStyledKPIs>
-            <StatsComponent></StatsComponent>
             <MessageListComponent></MessageListComponent>
         </SectionContent>
     )

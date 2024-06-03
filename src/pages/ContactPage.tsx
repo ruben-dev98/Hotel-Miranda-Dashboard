@@ -7,7 +7,7 @@ import { useEffect, useMemo, useState } from "react";
 import { deleteMessage, editMessage, getMessages } from "../features/messages/messagesAsyncThunk";
 import { getAllMessages } from "../features/messages/messagesSlice";
 import Loading from "../components/Loading";
-import { DeleteStyled } from './../styled/IconStyled';
+import { DeleteStyled, ImgPersonStyled } from './../styled/IconStyled';
 import MySweetAlert from "../app/MySweetAlert";
 import { DivStyledActions, SectionContent } from "../styled/DivStyled";
 import { SpanStyledTableFirst, SpanStyledTableSecond } from "../styled/SpanStyled";
@@ -53,19 +53,23 @@ const action = ({ row, dispatch }: ActionPropsMessage) => {
 
 const dataTable = ({ dispatch }: DataTableProps): DataProperties[] => [
     {
-        'label': 'Date',
+        'label': 'Image',
+        display: (row: iMessage) => <ImgPersonStyled src={row.photo} />
+    },
+    {
+        'label': 'Information',
         display: (row: iMessage) => {
             const date = new Date(parseInt(row.date, 10));
-            return (<><SpanStyledTableFirst>{date.toDateString().slice(3)}</SpanStyledTableFirst><br /><SpanStyledTableSecond>{date.toTimeString().slice(0, 8)} </SpanStyledTableSecond><SpanStyledTableSecond>#{row._id}</SpanStyledTableSecond></>);
+            return (<><SpanStyledTableFirst>#{row._id}</SpanStyledTableFirst><br /><SpanStyledTableFirst>{date.toDateString().slice(3)}</SpanStyledTableFirst><br/><SpanStyledTableSecond>{date.toTimeString().slice(0, 8)}</SpanStyledTableSecond></>);
         }
     },
     {
         'label': 'Customer',
-        display: (row: iMessage) => (<><SpanStyledTableFirst>{row.full_name}</SpanStyledTableFirst><br /><SpanStyledTableSecond>{row.email}/</SpanStyledTableSecond><SpanStyledTableSecond>{row.phone}</SpanStyledTableSecond></>)
+        display: (row: iMessage) => (<><SpanStyledTableFirst>{row.full_name}</SpanStyledTableFirst><br /><SpanStyledTableSecond>{row.email}</SpanStyledTableSecond><br/><SpanStyledTableSecond>{row.phone}</SpanStyledTableSecond></>)
     },
     {
         'label': 'Comment',
-        display: (row: iMessage) => (<><SpanStyledTableFirst>Subject: </SpanStyledTableFirst><SpanStyledTableSecond>{row.subject.slice(0, 30).concat('...')}</SpanStyledTableSecond><br></br><SpanStyledTableFirst>Message: </SpanStyledTableFirst><SpanStyledTableSecond>{row.messages.slice(0, 50).concat('...')}</SpanStyledTableSecond></>)
+        display: (row: iMessage) => (<><SpanStyledTableFirst>Subject: </SpanStyledTableFirst><SpanStyledTableSecond>{row.subject.slice(0, 20).concat('...')}</SpanStyledTableSecond><br></br><SpanStyledTableFirst>Message: </SpanStyledTableFirst><SpanStyledTableSecond>{row.messages.slice(0, 30).concat('...')}</SpanStyledTableSecond></>)
     },
     {
         'label': 'Action',
@@ -110,7 +114,6 @@ const ContactPage = () => {
 
     return (
         <SectionContent>
-            <MessageListComponent />
             <TabsComponent setCurrentTab={setCurrentTab} data={message} currentTab={currentTab}></TabsComponent>
             <TableComponent rows={filteredMessages} columns={dataTable({ dispatch })} path={''}></TableComponent>
         </SectionContent>

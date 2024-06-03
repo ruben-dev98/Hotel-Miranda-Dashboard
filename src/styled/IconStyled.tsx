@@ -27,3 +27,13 @@ export const IconImgStyled = styled.img`
     display: block;
     margin: 0 auto;
 `;
+
+export const ImgRoomPhotoStyled = styled.img`
+    width: 200px;
+    height: 100px;
+`;
+
+export const ImgPersonStyled = styled.img`
+    width: 80px;
+    height: 80px;
+`;

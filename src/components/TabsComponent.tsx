@@ -8,7 +8,7 @@ const ListStyled = styled.ul`
     justify-content: flex-start;
     padding-bottom: 2px;
     margin-right: 10px;
-    width: 100%;
+    width: 99%;
 `;
 
 interface TabsProps {
