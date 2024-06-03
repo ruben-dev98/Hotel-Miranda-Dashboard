@@ -18,8 +18,8 @@ jobs:
       run: npm ci
     - name: Build Project
       run: npm run build
+    - run: ls -a
     - uses: actions/checkout@master
-      run: ls -a
     - uses: jakejarvis/s3-sync-action@master
       with:
         args: --acl public-read --delete
