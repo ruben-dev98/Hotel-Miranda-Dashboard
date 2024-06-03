@@ -19,6 +19,7 @@ jobs:
     - name: Build Project
       run: npm run build
     - uses: actions/checkout@master
+      run: ls -a
     - uses: jakejarvis/s3-sync-action@master
       with:
         args: --acl public-read --delete
@@ -27,4 +28,4 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION: 'eu-west-3' # optional: defaults to us-east-1
-        SOURCE_DIR: './dist'
+        SOURCE_DIR: 'dist'
