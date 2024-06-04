@@ -20,10 +20,8 @@ jobs:
       run: npm run build
       env: 
           VITE_API_BASE: ${{secrets.VITE_API_BASE}}
-    - name: Cypress run
+    - name: Cypress run with env
       uses: cypress-io/github-action@v6
-      with:
-        start: npm start
     - uses: jakejarvis/s3-sync-action@master
       with:
         args: --acl public-read --delete
