@@ -54,7 +54,7 @@ const title = (path: string) => {
 
 
 const MainPage = () => {
-    const initialStateVisibleLateral = accessToLocalStorage({key: isVisibleMenuKey, action: localStorageGetAction}) === '1' ? true : false;
+    const initialStateVisibleLateral = accessToLocalStorage({key: isVisibleMenuKey, action: localStorageGetAction}) === '0' ? false : true;
     const [visibleLateral, setVisibleLateral] = useState(initialStateVisibleLateral);
     const path = useLocation().pathname;
     return (

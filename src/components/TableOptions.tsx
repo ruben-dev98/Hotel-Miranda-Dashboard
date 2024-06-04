@@ -34,7 +34,7 @@ const TableOptions = ({searchTerm, setSearchTerm, setCurrentTab, data, currentTa
                 <TabsComponent setCurrentTab={setCurrentTab} data={data} currentTab={currentTab}></TabsComponent>
                 <DivStyledActions>
                     {isUserOrBooking && <InputSearch value={searchTerm} onChange={(event) => setSearchTerm && setSearchTerm(event.target.value)} placeholder={searchByFullName} />}
-                    <ButtonStyledNew as={LinkStyled} to={path}>+ New {`${path.charAt(0).toLocaleUpperCase()}${path.slice(1)}` }</ButtonStyledNew>
+                    <ButtonStyledNew id='new' as={LinkStyled} to={path}>+ New {`${path.charAt(0).toLocaleUpperCase()}${path.slice(1)}` }</ButtonStyledNew>
                     <OrderComponent setCurrentOrder={setCurrentOrder} data={dataOrder} />
                 </DivStyledActions>
             </DivStyledOptions>

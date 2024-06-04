@@ -12,7 +12,8 @@
     "preview": "vite preview",
     "test": "jest",
     "test-open": "jest --detectOpenHandles",
-    "cy": "cypress open"
+    "cy": "cypress open",
+    "cr": "cypress run --browser chrome"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.1",

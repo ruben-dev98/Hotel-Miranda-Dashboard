@@ -25,6 +25,7 @@ export const loginInApi = async (email: string, password: string) => {
         } else {
             MySweetAlertApi({ title: json.data, icon: 'error' })
         }
+        return null;
     } catch(error) {
         console.error(error);
     }
