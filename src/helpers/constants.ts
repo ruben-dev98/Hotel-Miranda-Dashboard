@@ -94,6 +94,7 @@ export const roomNumberAlreadyExist = 'Number already exist, choose another room
 export const roomNotExist = 'The room that you choose not exist';
 export const searchByFullName = 'Search by Full Name';
 export const userEmailAlreadyExist = 'Email already exist, write another email';
+export const errorExistBooking = "This room has one or more bookings, it couldn't be deleted"
 
 export const localStorageSetAction = 'set';
 export const localStorageGetAction = 'get';

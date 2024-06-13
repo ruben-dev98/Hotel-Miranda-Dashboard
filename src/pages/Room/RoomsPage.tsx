@@ -10,7 +10,7 @@ import Loading from "../../components/Loading";
 import { EditStyled, ImgRoomPhotoStyled } from "../../styled/IconStyled";
 import { DeleteStyled } from './../../styled/IconStyled';
 import MySweetAlert from "../../app/MySweetAlert";
-import { ORDER_ROOMS_INITIAL_STATE, TAB_ROOMS_INITIAL_STATE } from "../../helpers/constants";
+import { ORDER_ROOMS_INITIAL_STATE, TAB_ROOMS_INITIAL_STATE, errorExistBooking } from "../../helpers/constants";
 import { ButtonStyledIcon, ButtonStyledViewNotes } from "../../styled/ButtonStyled";
 import { ActionProps, DataProperties, DataTableProps, HandleClickProps, iRoom } from "../../entities/Data";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
@@ -26,8 +26,8 @@ const handleClickDelete = async ({ event, dispatch, id }: HandleClickProps) => {
     try {
         const existBooking = await isExistBooking(id);
         if (existBooking) {
-            MySweetAlertApi({ title: '', icon: 'error' });
-            throw new Error('');
+            MySweetAlertApi({ title: errorExistBooking, icon: 'error' });
+            throw new Error(errorExistBooking);
         }
         await dispatch(deleteRoom(id)).unwrap()
         const html = <p>Delete #{id} Room Successfully</p>
