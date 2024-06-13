@@ -9,7 +9,7 @@ import { useEffect, useMemo, useState } from "react";
 import { deleteBooking, getBookings } from "../../features/bookings/bookingsAsyncThunk";
 import Loading from "../../components/Loading";
 import { DivStyledActions, SectionContent } from "../../styled/DivStyled";
-import { DeleteStyled, EditStyled, ImgRoomPhotoStyled } from "../../styled/IconStyled";
+import { DeleteStyled, EditStyled } from "../../styled/IconStyled";
 import MySweetAlert from "../../app/MySweetAlert";
 import { useDebounce } from "@uidotdev/usehooks";
 import { ORDER_BOOKING_INITIAL_STATE, TAB_BOOKING_INITIAL_STATE } from "../../helpers/constants";
@@ -108,7 +108,7 @@ const BookingsPage = () => {
     const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
     const filteredBookings = useMemo(() => {
-        if(!data) {
+        if (!data) {
             return data;
         }
         const all = data.filter((item) => item.full_name.toLowerCase().includes(debouncedSearchTerm.toLowerCase()));
@@ -148,17 +148,17 @@ const BookingsPage = () => {
 
     return (
         <SectionContent>
-            <TableOptions 
-            currentTab={currentTab} 
-            data={bookings} 
-            dataOrder={bookingsOrder} 
-            searchTerm={searchTerm} 
-            setCurrentOrder={setCurrentOrder} 
-            setCurrentTab={setCurrentTab} 
-            setSearchTerm={setSearchTerm} 
-            isUserOrBooking 
-            path="booking"/>
-            <TableComponent rows={filteredBookings} columns={dataTable({ dispatch })} path={'bookings'}></TableComponent>
+            <TableOptions
+                currentTab={currentTab}
+                data={bookings}
+                dataOrder={bookingsOrder}
+                searchTerm={searchTerm}
+                setCurrentOrder={setCurrentOrder}
+                setCurrentTab={setCurrentTab}
+                setSearchTerm={setSearchTerm}
+                isUserOrBooking
+                path="booking" />
+            <TableComponent currentTab={currentTab} rows={filteredBookings} columns={dataTable({ dispatch })} path={'bookings'}></TableComponent>
         </SectionContent>
     );
 }

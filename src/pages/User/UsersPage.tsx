@@ -12,7 +12,7 @@ import { useDebounce } from "@uidotdev/usehooks";
 import { DeleteStyled, EditStyled, ImgPersonStyled } from "../../styled/IconStyled";
 import { DivStyledActions, SectionContent } from "../../styled/DivStyled";
 import MySweetAlert from "../../app/MySweetAlert";
-import { ORDER_EMPLOYEE_INITIAL_STATE, TAB_EMPLOYEE_INITIAL_STATE } from "../../helpers/constants";
+import { ORDER_EMPLOYEE_INITIAL_STATE, TAB_EMPLOYEE_INITIAL_STATE, ZERO } from "../../helpers/constants";
 import { ActionProps, DataProperties, DataTableProps, HandleClickProps, iEmployee } from "../../entities/Data";
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
 import { ThunkDispatch } from "@reduxjs/toolkit";
@@ -135,17 +135,17 @@ const UsersPage = () => {
 
     return (
         <SectionContent>
-            <TableOptions 
-            currentTab={currentTab} 
-            data={users} 
-            dataOrder={usersOrder} 
-            searchTerm={searchTerm} 
-            setCurrentOrder={setCurrentOrder} 
-            setCurrentTab={setCurrentTab} 
-            setSearchTerm={setSearchTerm} 
-            isUserOrBooking 
-            path="user"/>
-            <TableComponent rows={filteredUsers} columns={dataTable({ dispatch })} path={'users'}></TableComponent>
+            <TableOptions
+                currentTab={currentTab}
+                data={users}
+                dataOrder={usersOrder}
+                searchTerm={searchTerm}
+                setCurrentOrder={setCurrentOrder}
+                setCurrentTab={setCurrentTab}
+                setSearchTerm={setSearchTerm}
+                isUserOrBooking
+                path="user" />
+            <TableComponent currentTab={currentTab} rows={filteredUsers} columns={dataTable({ dispatch })} path={'users'}></TableComponent>
         </SectionContent>
     );
 }

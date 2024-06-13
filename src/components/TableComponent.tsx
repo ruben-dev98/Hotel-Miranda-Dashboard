@@ -4,10 +4,12 @@ import { getMessage } from '../features/messages/messagesAsyncThunk';
 import usePaginate from './../hook/usePaginate';
 import { SpanStyledTableFirst } from '../styled/SpanStyled';
 import MySweetAlert from '../app/MySweetAlert';
-import { INITIAL_PAGE } from '../helpers/constants';
+import { INITIAL_PAGE, ZERO } from '../helpers/constants';
 import { iBooking, iMessage, iEmployee, iRoom, DataProperties } from '../entities/Data';
 import { useAppDispatch } from '../hook/useStore';
 import { ButtonStyled } from '../styled/ButtonStyled';
+import { Dispatch, useEffect } from 'react';
+import { useMemo } from 'react';
 
 type DataKey = keyof iRoom & keyof iBooking & keyof iEmployee & keyof iMessage;
 type Data = iBooking | iMessage | iRoom | iEmployee;
@@ -15,7 +17,8 @@ type Data = iBooking | iMessage | iRoom | iEmployee;
 interface TableProps {
     rows: iBooking[] | iMessage[] | iRoom[] | iEmployee[],
     columns: DataProperties[],
-    path: string
+    path: string,
+    currentTab: string
 }
 
 interface RowTypes {
@@ -56,7 +59,7 @@ const TableStyled = styled.table`
     
 `;
 
-const TableComponent = ({ rows, columns, path }: TableProps) => {
+const TableComponent = ({ rows, columns, path, currentTab}: TableProps) => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const showMessage = ({ row }: RowTypes) => {
@@ -80,8 +83,12 @@ const TableComponent = ({ rows, columns, path }: TableProps) => {
             showMessage({ row });
         }
     }
-    
+
     const { data_per_page, currentPage, setCurrentPage, max_page } = usePaginate(rows);
+
+    useEffect(() => {
+        setCurrentPage(() => INITIAL_PAGE);
+    }, [currentTab])
 
     return (
         <>

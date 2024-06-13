@@ -13,6 +13,7 @@ export const ITEMS_PER_PAGE: number = 3;
 export const HALF_WAY_ITEMS_PER_PAGE: number = ITEMS_PER_PAGE/2;
 export const INITIAL_PAGE: number = 1;
 export const NUMBER_ONE: number = 1;
+export const ZERO: number = 0;
 
 export const METHOD_POST = 'POST';
 export const METHOD_PUT = 'PUT';

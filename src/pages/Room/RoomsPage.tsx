@@ -9,7 +9,6 @@ import { deleteRoom, getRooms } from "../../features/rooms/roomsAsyncThunk";
 import Loading from "../../components/Loading";
 import { EditStyled, ImgRoomPhotoStyled } from "../../styled/IconStyled";
 import { DeleteStyled } from './../../styled/IconStyled';
-import styled from "styled-components";
 import MySweetAlert from "../../app/MySweetAlert";
 import { ORDER_ROOMS_INITIAL_STATE, TAB_ROOMS_INITIAL_STATE } from "../../helpers/constants";
 import { ButtonStyledIcon, ButtonStyledViewNotes } from "../../styled/ButtonStyled";
@@ -26,8 +25,8 @@ const handleClickDelete = async ({ event, dispatch, id }: HandleClickProps) => {
     event.stopPropagation();
     try {
         const existBooking = await isExistBooking(id);
-        if(existBooking) {
-            MySweetAlertApi({title: '', icon: 'error'});
+        if (existBooking) {
+            MySweetAlertApi({ title: '', icon: 'error' });
             throw new Error('');
         }
         await dispatch(deleteRoom(id)).unwrap()
@@ -160,13 +159,13 @@ const RoomsPage = () => {
     return (
         <SectionContent>
             <TableOptions
-            currentTab={currentTab} 
-            data={rooms} 
-            dataOrder={roomsOrder}  
-            setCurrentOrder={setCurrentOrder} 
-            setCurrentTab={setCurrentTab} 
-            path="room"/>
-            <TableComponent rows={filteredRooms} columns={dataTable({ dispatch })} path={'rooms'}></TableComponent>
+                currentTab={currentTab}
+                data={rooms}
+                dataOrder={roomsOrder}
+                setCurrentOrder={setCurrentOrder}
+                setCurrentTab={setCurrentTab}
+                path="room" />
+            <TableComponent currentTab={currentTab} rows={filteredRooms} columns={dataTable({ dispatch })} path={'rooms'}></TableComponent>
         </SectionContent>
     );
 }

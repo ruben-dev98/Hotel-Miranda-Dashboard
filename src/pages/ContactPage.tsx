@@ -1,7 +1,6 @@
 import { message } from "../assets/data/tabs";
 import TableComponent from "../components/TableComponent";
 import TabsComponent from "../components/TabsComponent";
-import MessageListComponent from './../components/MessageListComponent';
 import { ButtonStyledArchived, ButtonStyledIcon, ButtonStyledPublish } from "../styled/ButtonStyled";
 import { useEffect, useMemo, useState } from "react";
 import { deleteMessage, editMessage, getMessages } from "../features/messages/messagesAsyncThunk";
@@ -115,7 +114,7 @@ const ContactPage = () => {
     return (
         <SectionContent>
             <TabsComponent setCurrentTab={setCurrentTab} data={message} currentTab={currentTab}></TabsComponent>
-            <TableComponent rows={filteredMessages} columns={dataTable({ dispatch })} path={''}></TableComponent>
+            <TableComponent currentTab={currentTab} rows={filteredMessages} columns={dataTable({ dispatch })} path={''}></TableComponent>
         </SectionContent>
     );
 }
