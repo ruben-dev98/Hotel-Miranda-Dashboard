@@ -97,6 +97,6 @@ export const SectionContent = styled.section`
 export const DivStyledKPIs = styled.div`
     display: flex;
     justify-content: space-evenly;
-    gap: 2rem;
+    gap: 1rem;
     margin-bottom: 40px;
 `;

@@ -91,6 +91,8 @@ interface FormData extends EventTarget {
 
 const SideBarComponent = ({ visibleLateral }: SideBarComponentProps) => {
     const context = useContext(UserContext);
+    const lengthEmail = context.state.email.length;
+    const halfLengthEmail = lengthEmail/2;
 
     return (
         visibleLateral &&
@@ -107,7 +109,11 @@ const SideBarComponent = ({ visibleLateral }: SideBarComponentProps) => {
             <div>
                 <img src={me} alt='' />
                 <TitleStyled >{context.state.user}</TitleStyled>
-                <StyledP>{context.state.email}</StyledP>
+                <StyledP>
+                    {context.state.email.substring(0, halfLengthEmail)}
+                    <br/>
+                    {context.state.email.substring(halfLengthEmail)}
+                </StyledP>
                 <ButtonStyledViewNotes onClick={() => {
                     const html =
                         (<form className='edit__user-pop-up' onSubmit={(event) => {

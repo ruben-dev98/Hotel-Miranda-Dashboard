@@ -29,7 +29,7 @@ const MessageListComponent = () => {
     const initialFetch = async () => {
         try {
             await dispatch(getMessages()).unwrap();
-        } catch(error) {
+        } catch (error) {
             console.error('error');
         }
     }
@@ -40,16 +40,19 @@ const MessageListComponent = () => {
 
     return (
         <SwiperStyled
-            slidesPerView={3}
+            slidesPerView={2}
         >
-            
-            {data && data.length > 0 ? data.map((message, index) => {
-            return (
-                <SwiperSlide style={{userSelect: 'none'}} key={index}>
-                    <MessageComponent message={message} />
-                </SwiperSlide>
-                )
-            }): ''}
+
+            {
+                data && data.length > 0 ? data.slice(0, 3).map((message, index) => {
+                    return (
+                        <SwiperSlide style={{ userSelect: 'none' }} key={index}>
+                            <MessageComponent message={message} />
+                        </SwiperSlide>
+                    )
+                })
+                    : ''
+            }
         </SwiperStyled>
     )
 }

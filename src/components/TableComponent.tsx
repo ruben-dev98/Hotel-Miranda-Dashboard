@@ -28,12 +28,11 @@ const DivStyled = styled.div`
 
 const TableStyled = styled.table`
     width: 100%;
-    padding: 2rem;
+    padding: 2rem 1rem;
     border-radius: 20px;
     background-color: ${props => props.theme && props.theme.main};
 
     thead > tr {
-        height: 50px;
 
         th {
             padding: 0rem 0.5rem 0.5rem 0.5rem;
@@ -81,6 +80,7 @@ const TableComponent = ({ rows, columns, path }: TableProps) => {
             showMessage({ row });
         }
     }
+    
     const { data_per_page, currentPage, setCurrentPage, max_page } = usePaginate(rows);
 
     return (

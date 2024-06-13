@@ -9,7 +9,7 @@ export const ORDER_BOOKING_INITIAL_STATE = 'order_date';
 export const ORDER_ROOMS_INITIAL_STATE = 'number asc';
 export const ORDER_EMPLOYEE_INITIAL_STATE = 'start_date';
 
-export const ITEMS_PER_PAGE: number = 4;
+export const ITEMS_PER_PAGE: number = 3;
 export const HALF_WAY_ITEMS_PER_PAGE: number = ITEMS_PER_PAGE/2;
 export const INITIAL_PAGE: number = 1;
 export const NUMBER_ONE: number = 1;

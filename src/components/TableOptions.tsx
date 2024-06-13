@@ -28,16 +28,19 @@ const DivStyledActions = styled.div`
     gap: 15px;
 `;
 
-const TableOptions = ({searchTerm, setSearchTerm, setCurrentTab, data, currentTab, setCurrentOrder, dataOrder, isUserOrBooking, path} : TableOptionsProp) => {
-    
-    return(<DivStyledOptions>
-                <TabsComponent setCurrentTab={setCurrentTab} data={data} currentTab={currentTab}></TabsComponent>
+const TableOptions = ({ searchTerm, setSearchTerm, setCurrentTab, data, currentTab, setCurrentOrder, dataOrder, isUserOrBooking, path }: TableOptionsProp) => {
+
+    return (
+        <>
+            <DivStyledOptions>
                 <DivStyledActions>
                     {isUserOrBooking && <InputSearch value={searchTerm} onChange={(event) => setSearchTerm && setSearchTerm(event.target.value)} placeholder={searchByFullName} />}
-                    <ButtonStyledNew id='new' as={LinkStyled} to={path}>+ New {`${path.charAt(0).toLocaleUpperCase()}${path.slice(1)}` }</ButtonStyledNew>
+                    <ButtonStyledNew id='new' as={LinkStyled} to={path}>+ New {`${path.charAt(0).toLocaleUpperCase()}${path.slice(1)}`}</ButtonStyledNew>
                     <OrderComponent setCurrentOrder={setCurrentOrder} data={dataOrder} />
                 </DivStyledActions>
             </DivStyledOptions>
+            <TabsComponent setCurrentTab={setCurrentTab} data={data} currentTab={currentTab}></TabsComponent>
+        </>
     )
 }
 

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { ReactNode } from "react";
 
 const KPIsStyled = styled.div`
-    width: 100%;
+    width: 18%;
     height: 125px;
     display: flex;
     justify-content: flex-start;

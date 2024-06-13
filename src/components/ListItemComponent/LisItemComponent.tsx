@@ -21,7 +21,6 @@ const ListItemComponent = ({index, str, setCurrentTab, currentTab, children}: Li
 
     const handleClickSetCurrentTab = () => {
         setCurrentTab(str);
-        
     };
 
     return (

@@ -60,7 +60,7 @@ const dataTable = ({ dispatch }: DataTableProps): DataProperties[] => [
         'label': 'Information',
         display: (row: iMessage) => {
             const date = new Date(parseInt(row.date, 10));
-            return (<><SpanStyledTableFirst>#{row._id}</SpanStyledTableFirst><br /><SpanStyledTableFirst>{date.toDateString().slice(3)}</SpanStyledTableFirst><br/><SpanStyledTableSecond>{date.toTimeString().slice(0, 8)}</SpanStyledTableSecond></>);
+            return (<><SpanStyledTableFirst>{date.toDateString().slice(3)}</SpanStyledTableFirst><br/><SpanStyledTableSecond>{date.toTimeString().slice(0, 8)}</SpanStyledTableSecond></>);
         }
     },
     {
@@ -69,7 +69,7 @@ const dataTable = ({ dispatch }: DataTableProps): DataProperties[] => [
     },
     {
         'label': 'Comment',
-        display: (row: iMessage) => (<><SpanStyledTableFirst>Subject: </SpanStyledTableFirst><SpanStyledTableSecond>{row.subject.slice(0, 20).concat('...')}</SpanStyledTableSecond><br></br><SpanStyledTableFirst>Message: </SpanStyledTableFirst><SpanStyledTableSecond>{row.messages.slice(0, 30).concat('...')}</SpanStyledTableSecond></>)
+        display: (row: iMessage) => (<><SpanStyledTableFirst>Subject: </SpanStyledTableFirst><br/><SpanStyledTableSecond>{row.subject.slice(0, 10).concat('...')}</SpanStyledTableSecond><br/><SpanStyledTableFirst>Message: </SpanStyledTableFirst><br/><SpanStyledTableSecond>{row.messages.slice(0, 15).concat('...')}</SpanStyledTableSecond></>)
     },
     {
         'label': 'Action',

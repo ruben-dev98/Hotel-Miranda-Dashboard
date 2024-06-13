@@ -39,12 +39,8 @@ const action = ({ id, dispatch }: ActionProps) => {
 
 const dataTable = ({ dispatch }: DataTableProps): DataProperties[] => [
     {
-        'label': 'Image',
-        display: (row: iBooking) => <ImgRoomPhotoStyled src={row.room.photo[0]} />
-    },
-    {
         'label': 'Guest',
-        display: (row: iBooking) => (<><SpanStyledTableFirst>{row.full_name}</SpanStyledTableFirst><br /><SpanStyledTableSecond>#{row._id}</SpanStyledTableSecond></>)
+        display: (row: iBooking) => (<SpanStyledTableFirst>{row.full_name}</SpanStyledTableFirst>)
     },
     {
         'label': 'Order Date',
