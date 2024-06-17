@@ -145,7 +145,7 @@ const UsersPage = () => {
                 setSearchTerm={setSearchTerm}
                 isUserOrBooking
                 path="user" />
-            <TableComponent currentTab={currentTab} rows={filteredUsers} columns={dataTable({ dispatch })} path={'users'}></TableComponent>
+            <TableComponent currentTab={currentTab} searchTerm={debouncedSearchTerm} rows={filteredUsers} columns={dataTable({ dispatch })} path={'users'}></TableComponent>
         </SectionContent>
     );
 }

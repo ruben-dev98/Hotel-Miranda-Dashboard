@@ -18,7 +18,8 @@ interface TableProps {
     rows: iBooking[] | iMessage[] | iRoom[] | iEmployee[],
     columns: DataProperties[],
     path: string,
-    currentTab: string
+    currentTab: string,
+    searchTerm?: string
 }
 
 interface RowTypes {
@@ -59,7 +60,7 @@ const TableStyled = styled.table`
     
 `;
 
-const TableComponent = ({ rows, columns, path, currentTab}: TableProps) => {
+const TableComponent = ({ rows, columns, path, currentTab, searchTerm}: TableProps) => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const showMessage = ({ row }: RowTypes) => {
@@ -88,7 +89,7 @@ const TableComponent = ({ rows, columns, path, currentTab}: TableProps) => {
 
     useEffect(() => {
         setCurrentPage(() => INITIAL_PAGE);
-    }, [currentTab])
+    }, [currentTab, searchTerm]);
 
     return (
         <>
