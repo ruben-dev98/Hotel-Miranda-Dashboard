@@ -17,7 +17,6 @@ import { ActionProps, DataProperties, DataTableProps, HandleClickProps, iEmploye
 import { useAppDispatch, useAppSelector } from "../../hook/useStore";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
-import styled from "styled-components";
 import TableOptions from "../../components/TableOptions";
 
 

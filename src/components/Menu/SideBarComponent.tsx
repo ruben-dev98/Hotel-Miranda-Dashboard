@@ -10,6 +10,10 @@ import MySweetAlert from '../../app/MySweetAlert';
 import Swal from 'sweetalert2';
 import { ButtonStyled, ButtonStyledViewNotes } from '../../styled/ButtonStyled';
 import { StyledP } from '../../styled/SpanStyled';
+import { useAppDispatch } from '../../hook/useStore';
+import { ThunkDispatch } from '@reduxjs/toolkit';
+import { RootState } from "../../app/store";
+import { editEmployee } from '../../features/employees/employeesAsyncThunk';
 
 const SideBarStyled = styled.menu`
     grid-area: sidebar;
@@ -91,6 +95,7 @@ interface FormData extends EventTarget {
 
 const SideBarComponent = ({ visibleLateral }: SideBarComponentProps) => {
     const context = useContext(UserContext);
+    const dispatch: ThunkDispatch<RootState, any, any> = useAppDispatch();
     const lengthEmail = context.state.email.length;
     const halfLengthEmail = lengthEmail/2;
 
@@ -122,7 +127,6 @@ const SideBarComponent = ({ visibleLateral }: SideBarComponentProps) => {
                             context.dispatch({ type: 'edit', payload: { auth: true, user: element.user.value, email: element.email.value, token: '' } });
                             Swal.close();
                         }}>
-
                             <div>
                                 <label>Full Name</label>
                                 <input type="text" defaultValue={context.state.user} name="user" placeholder="Full Name" />

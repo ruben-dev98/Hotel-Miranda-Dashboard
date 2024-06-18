@@ -21,7 +21,8 @@ const MySweetAlert = ({title, html, showConfirmButton, timer, icon, timerProgres
         showConfirmButton: showConfirmButton,
         timer: timer,
         icon: icon,
-        timerProgressBar: timerProgressBar
+        timerProgressBar: timerProgressBar,
+        width: '500px'
     });
 }
 

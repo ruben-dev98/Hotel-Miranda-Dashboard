@@ -1,6 +1,6 @@
 import { iEmployee } from "../entities/Data";
 import { accessToLocalStorage } from "./accessToLocalStorage";
-import { EMPLOYEE_EXIST_PATH, ROOM_EXIST_PATH, SERVER, localStorageGetAction, localStorageTokenKey } from "./constants";
+import { EMPLOYEE_EXIST_PATH, SERVER, localStorageGetAction, localStorageTokenKey } from "./constants";
 
 export const existUserEmail = async (email: string): Promise<iEmployee | undefined> => {
     const token = accessToLocalStorage({ key: localStorageTokenKey, action: localStorageGetAction }) || '';
